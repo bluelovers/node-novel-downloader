@@ -1,0 +1,44 @@
+{
+  "name": "novel-downloader",
+  "version": "1.0.0",
+  "description": "> node-novel core module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/node-novel-downloader.git"
+  },
+  "keywords": [
+    "node-novel",
+    "text",
+    "txt",
+    "novel",
+    "download",
+    "wenku8",
+    "syosetu",
+    "dmzj",
+    "acg",
+    "r15",
+    "r18",
+    "node-text"
+  ],
+  "bugs": {
+    "url": "https://github.com/bluelovers/node-novel-downloader/issues"
+  },
+  "homepage": "https://github.com/bluelovers/node-novel-downloader#readme",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "fs-iconv": "^1.3.3",
+    "jsdom-extra": "^1.0.3",
+    "moment-timezone": "^0.5.14",
+    "node-novel-info": "^2.2.2",
+    "shortid": "^2.2.8"
+  }
+}
