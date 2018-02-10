@@ -21,19 +21,23 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 		//'http://ncode.syosetu.com/n4805cx/',
 
 		//'http://ncode.syosetu.com/n1745ct/',
-		'https://ncode.syosetu.com/n3512ds/',
+
+		//'https://ncode.syosetu.com/n3512ds/',
+
+		'https://novel18.syosetu.com/n1413cw/',
 
 	].forEach(async function (value, index, array)
 	{
 		await Site.download(value, {
 			disableTxtdownload: true,
 			disableDownload: true,
-		}).tap(function (novel)
+		}).then(function (novel)
 		{
 			console.log(novel);
 
 			console.log(novel.novel_title);
-		});
+		})
+		;
 	});
 
 })();

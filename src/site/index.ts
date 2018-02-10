@@ -3,6 +3,8 @@
  */
 
 import bluebirdDecorator from '../decorator/bluebird';
+//import bluebirdDecorator from 'bluebird-decorator';
+
 import * as PromiseBluebird from 'bluebird';
 import { URL } from 'jsdom-extra';
 import * as path from "path";
@@ -48,7 +50,7 @@ export class NovelSite implements NovelSite.INovelSite
 		return new this(options, ...argv);
 	}
 
-	download(url: string | URL, options?): PromiseBluebird<NovelSite.INovel>
+	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -151,11 +153,13 @@ export namespace NovelSite
 		 * 只產生目錄結構 不下載內容
 		 */
 		disableDownload?: boolean,
+
+		disableCheckExists?: boolean,
 	}
 
 	export interface INovelSite
 	{
-		download(url: string | URL, options?): PromiseBluebird<NovelSite.INovel>;
+		download(url: string | URL, options?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
 
 		makeUrl(urlobj: NovelSite.IParseUrl, options?): URL;
 

@@ -7,7 +7,8 @@ import { retryRequest } from '../../fetch';
 import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
 import novelInfo, { mdconf_parse, IMdconfMeta } from 'node-novel-info';
-import { fromURL, IFromUrlOptions, URL, VirtualConsole } from 'jsdom-extra';
+import { fromURL, IFromUrlOptions, URL, VirtualConsole, IJSDOM, CookieJar } from 'jsdom-extra';
+import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 import NovelSite, { staticImplements } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
@@ -53,6 +54,8 @@ export class NovelSiteSyosetu extends NovelSite
 
 			if (!data.novel_id)
 			{
+				console.log(data);
+
 				throw new ReferenceError();
 			}
 
@@ -98,14 +101,20 @@ export class NovelSiteSyosetu extends NovelSite
 
 						if (fs.existsSync(file))
 						{
-							//console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
+							let txt = await fs.readFile(file);
+
+							if (txt)
+							{
+//								console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
+
+								return file;
+							}
 						}
 						else
 						{
 							console.log(`${chapter.chapter_title} ${pad}`);
 						}
 
-						let tryc = 0;
 						let fn;
 
 						if (downloadOptions.disableDownload)
@@ -142,20 +151,28 @@ export class NovelSiteSyosetu extends NovelSite
 											dom.$('#novel_p').text(),
 											dom.$('#novel_honbun').text(),
 											dom.$('#novel_a').text(),
-										].join('\n\n==================\n\n');
+										].filter(function (v)
+										{
+											return v;
+										}).join('\n\n==================\n\n');
 									})
 									;
 							};
 						}
 
-						let text = await fn()
-							.then(async function (text)
-							{
-								fs.outputFile(file, text);
+						//console.log(url);
 
-								return text;
-							})
-						;
+						await PromiseBluebird.resolve().then(function ()
+						{
+							return fn()
+								.then(async function (text)
+								{
+									await fs.outputFile(file, text);
+
+									return text;
+								})
+								;
+						});
 
 						return file;
 					})
@@ -244,8 +261,6 @@ export class NovelSiteSyosetu extends NovelSite
 		if (m = r.exec(url))
 		{
 			urlobj.novel_r18 = m[1];
-
-			return urlobj;
 		}
 
 		r = /txtdownload\/dlstart\/ncode\/(\d+)/;
@@ -283,8 +298,40 @@ export class NovelSiteSyosetu extends NovelSite
 			url = self.makeUrl(data, true);
 		}
 
-		return await fromURL(url, defaultJSDOMOptions)
-			.then(async function (dom)
+		let fromURLOptions = Object.assign({}, defaultJSDOMOptions, {
+			cookieJar: new LazyCookieJar(),
+		});
+
+		fromURLOptions.cookieJar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
+
+		return await fromURL(url, fromURLOptions)
+			.then(async function (dom: IJSDOM)
+			{
+				const $ = dom.$;
+
+				if (!$('#novel_contents').length || $('#modal .yes #yes18').length)
+				{
+					console.log(dom.url, dom._options);
+
+					$('#modal .yes #yes18').click();
+
+					dom._options.requestOptions.jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/', url);
+
+					//console.log(dom.serialize());
+
+					return fromURL(url, Object.assign(fromURLOptions, {
+
+						cookieJar: dom._options.requestOptions.jar._jar,
+						requestOptions: dom._options.requestOptions,
+
+					} as IFromUrlOptions));
+				}
+
+				//console.log(dom._options.requestOptions.jar);
+
+				return dom;
+			})
+			.then(async function (dom: IJSDOM)
 			{
 				let novel_title = dom.$('.novel_title').text();
 				let novel_author = dom.$('.novel_writername a').text();
@@ -315,7 +362,7 @@ export class NovelSiteSyosetu extends NovelSite
 					//console.log($('#novel_footer').find('.undernavi a[href*="txtdownload"]'));
 
 					let m;
-					let dt = dom.$('#novel_footer .undernavi a[href*="txtdownload"]').attr('href');
+					let dt = dom.$('#novel_footer .undernavi a[href*="txtdownload"]').prop('href');
 					if (m = dt.match(/ncode\/(\d+)/))
 					{
 						novel_syosetu_id = m[1];

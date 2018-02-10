@@ -5,7 +5,7 @@
 import * as request from 'request-promise';
 import * as Promise from 'bluebird';
 
-import fetch from 'lets-fetch';
+//import fetch from 'lets-fetch';
 //fetch.retry((tries) => tries <= 3);
 
 export interface IOptions extends request.RequestPromiseOptions
@@ -15,25 +15,34 @@ export interface IOptions extends request.RequestPromiseOptions
 	libRequest?: (url: string, options?: IOptions) => request.RequestPromise,
 }
 
-export function retryRequest(url, options: IOptions = {
-	retry: 3,
-	delay: 1000,
-})
+export function retryRequest(url, options: IOptions = {})
 {
-	let retry = options.retry;
+	options = Object.assign({
+		retry: 3,
+		delay: 1000,
+	}, options);
+
+	let retry = options.retry || 3;
 	let libRequest = options.libRequest || request;
 
 	let tries = 0;
+
+	if (url.href)
+	{
+		url = url.href;
+	}
 
 	function fn()
 	{
 		tries++;
 
-		return libRequest(url, options)
+		return libRequest(url.toString(), options)
 			.catch(function (err)
 			{
 				if (retry-- > 0)
 				{
+					console.warn(`fetch fail(${tries}), will wait ${options.delay}ms, for try again\n${url}`);
+
 					return Promise.delay(options.delay).then(fn);
 				}
 
@@ -41,10 +50,16 @@ export function retryRequest(url, options: IOptions = {
 
 				return Promise.reject(err);
 			})
-		;
+			;
 	}
 
-	return Promise.resolve(fn());
+	return Promise.resolve().then(function ()
+	{
+		return fn();
+	}).tapCatch(function (err)
+	{
+		console.log(err);
+	});
 }
 
 import * as self from './fetch';
