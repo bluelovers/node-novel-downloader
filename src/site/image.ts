@@ -2,20 +2,27 @@
  * Created by user on 2018/1/17/017.
  */
 
-import { trimFilename } from '../../lib/func';
-import * as fs from 'fs-extra';
-import * as path from 'path';
+import fs, { trimFilename } from 'fs-iconv';
+import * as request from 'request-promise';
+import { URL } from 'jsdom-extra';
 import * as Promise from 'bluebird';
-import * as fetch from 'node-fetch';
 
-export async function download_image(img, options: {
+import * as path from 'path';
+
+export function download_image(img: string | URL, options: {
 	name?: string,
 
 	dir?: string,
 	fromfile?: string,
 
 	prefix?: string,
-})
+}): Promise<{
+	body: Buffer;
+	url: URL;
+	dirname: string;
+	filename: string;
+	outputFile: string;
+}>
 {
 	let dirname = options.dir || path.dirname(options.fromfile);
 
@@ -24,7 +31,9 @@ export async function download_image(img, options: {
 		throw new Error();
 	}
 
-	let filename = options.name || path.basename(img);
+	let url = new URL(img);
+
+	let filename = options.name || path.basename(url.href);
 
 	if (typeof options.prefix == 'string')
 	{
@@ -33,13 +42,29 @@ export async function download_image(img, options: {
 
 	filename = trimFilename(filename);
 
-	await fs.ensureDir(dirname);
+	let file = path.join(dirname, filename);
 
-	return await fetch(img)
-		.then(function(res) {
-			let dest = fs.createWriteStream(path.join(dirname, filename));
-			res.body.pipe(dest);
-		});
+	let ret = request(url.href, {
+		encoding: null,
+		resolveWithFullResponse: true,
+	})
+		.then(async function (res)
+		{
+			//console.log(res);
+
+			await fs.saveFile(file, res.body);
+
+			return {
+				body: res.body as Buffer,
+				url,
+				dirname,
+				filename,
+				outputFile: file,
+			}
+		})
+	;
+
+	return Promise.resolve(ret);
 }
 
 export default download_image;

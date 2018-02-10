@@ -2,13 +2,12 @@
  * Created by user on 2017/12/22/022.
  */
 
-import { trimFilename } from '../../../lib/func';
 import * as Promise from 'bluebird';
 import * as moment from 'moment-timezone';
-import * as fs from 'fs-extra';
+import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
 import * as projectConfig from '../../../project.config';
-import { novelText } from '../../../lib/novel/text';
+import novelText from 'novel-text';
 import * as shortid from 'shortid';
 import { download_image } from '../image';
 import novelInfo, { mdconf_parse, IMdconfMeta } from 'node-novel-info';

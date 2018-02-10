@@ -2,12 +2,18 @@
  * Created by user on 2017/12/29/029.
  */
 
-import { download } from '../src/site/syosetu';
+import NovelSiteSyosetu from '../src/site/syosetu';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 
 (async () =>
 {
+
+	const Site = new NovelSiteSyosetu({
+		outputDir: './temp',
+	});
+
+	console.log(Site);
 
 	[
 		//
@@ -19,11 +25,13 @@ import { download } from '../src/site/syosetu';
 
 	].forEach(async function (value, index, array)
 	{
-		await download(value, {
+		await Site.download(value, {
 			disableTxtdownload: true,
 			disableDownload: true,
-		}).then(function (novel)
+		}).tap(function (novel)
 		{
+			console.log(novel);
+
 			console.log(novel.novel_title);
 		});
 	});
