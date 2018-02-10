@@ -473,15 +473,43 @@ export class NovelSiteSyosetu extends NovelSite
 					: 'narou'}.dip.jp/search.php?text=${url_data.novel_id}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, defaultJSDOMOptions)
 					.then(function (dom)
 					{
+						let h2 = dom.$(`div:has(> h2.search:has(> a[href*="${url_data.novel_id}"]))`).eq(0);
+
+						if (!h2.length)
+						{
+							h2 = dom.$(`h2:has(> a[href*="${url_data.novel_id}"])`).eq(0);
+						}
+
+						if (!h2.length)
+						{
+							return fromURL(`https://${url_data.novel_r18
+								? 'narou18'
+								: 'narou'}.dip.jp/search.php?text=${novel_title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, defaultJSDOMOptions)
+							;
+						}
+
+						return dom;
+					})
+					.then(function (dom)
+					{
+						console.log(dom.url);
+
 						let data: IMdconfMeta = {};
 
 						let h2 = dom.$(`div:has(> h2.search:has(> a[href*="${url_data.novel_id}"]))`).eq(0);
+
+						if (!h2.length)
+						{
+							h2 = dom.$(`h2:has(> a[href*="${url_data.novel_id}"])`).eq(0);
+						}
 
 						let search_left = h2.siblings('.search_left').eq(0);
 						let search_right = h2.siblings('.search_right').eq(0);
 
 						if (!h2.length)
 						{
+							console.log(111111111111111111111);
+
 							return data;
 						}
 
