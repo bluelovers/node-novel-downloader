@@ -4,8 +4,11 @@
 
 import { DecoratorUtils } from "decorator-utils";
 import * as Bluebird from "bluebird";
+import * as PromiseBluebird from 'bluebird';
 
-export default DecoratorUtils.createDecorator([
+export { PromiseBluebird }
+
+export const bluebirdDecorator = DecoratorUtils.createDecorator([
 	DecoratorUtils.declarationTypes.CLASS_METHOD,
 	DecoratorUtils.declarationTypes.CLASS_ACCESSOR,
 	DecoratorUtils.declarationTypes.OBJECT_LITERAL_METHOD,
@@ -26,3 +29,18 @@ export default DecoratorUtils.createDecorator([
 
 	return descriptor;
 }) as MethodDecorator;
+
+export function bluebirdDecorator2<T>(target: any, propertyKey: string, descriptor: PropertyDescriptor)
+{
+	/*
+	if (descriptor === undefined)
+	{
+		descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+	}
+	*/
+	descriptor.value = PromiseBluebird.method<T>(descriptor.value);
+
+	return descriptor;
+}
+
+export default bluebirdDecorator2;

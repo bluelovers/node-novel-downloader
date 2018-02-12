@@ -1,32 +1,22 @@
-/**
- * Created by user on 2017/12/22/022.
- */
-
 import { retryRequest } from '../../fetch';
 
 import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
-import novelInfo, { mdconf_parse, IMdconfMeta } from 'node-novel-info';
-import { fromURL, IFromUrlOptions, VirtualConsole, IJSDOM, CookieJar } from 'jsdom-extra';
+import novelInfo, { IMdconfMeta } from 'node-novel-info';
+import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
 
-import NovelSite, { staticImplements } from '../index';
+import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
-
-export const defaultJSDOMOptions: IFromUrlOptions = {
-	virtualConsole: new VirtualConsole,
-	runScripts: 'dangerously',
-	disableCheerio: true,
-};
 
 export interface INovel extends NovelSite.INovel
 {
 	novel_syosetu_id: string,
 }
 
-export interface IDownloadOptions extends NovelSite.IDownloadOptions
+export interface IDownloadOptions extends NovelSite.IDownloadOptions, NovelSite.IOptions
 {
 	/**
 	 * 不使用小說家提供的 txt 下載連結
@@ -34,222 +24,225 @@ export interface IDownloadOptions extends NovelSite.IDownloadOptions
 	disableTxtdownload?: boolean,
 }
 
-function dPromise<T>()
-{
-	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor)
-	{
-		if (descriptor === undefined)
-		{
-			descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-		}
-		var originalMethod = descriptor.value;
-
-		descriptor.value = function (...args): PromiseBluebird<T>
-		{
-			let self = this;
-
-			return PromiseBluebird.resolve().then(function ()
-			{
-				return originalMethod.apply(self, args);
-			});
-
-		};
-
-		return descriptor;
-	};
-}
-
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteSyosetu>>()
 export class NovelSiteSyosetu extends NovelSite
 {
 	static IDKEY = 'syosetu';
 
-	constructor(options: NovelSite.IOptions, ...argv)
+	constructor(options: IDownloadOptions, ...argv)
 	{
 		super(options, ...argv);
 	}
 
-	//@bluebirdDecorator
-	// @ts-ignore
-	async download(url: string | URL, downloadOptions: IDownloadOptions = {}): PromiseBluebird<INovel>
+	download(url: string | URL, downloadOptions: IDownloadOptions = {})
 	{
 		const self = this;
 
-		{
-			let data = self.parseUrl(url);
+		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime & IDownloadOptions>(downloadOptions);
 
-			if (!data.novel_id)
+		optionsRuntime[SYMBOL_CACHE] = {} as {
+			jar?,
+		};
+
+		optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
+
+		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
+
+		return PromiseBluebird
+			.bind(self)
+			.then(async function ()
 			{
-				console.log(data);
-
-				throw new ReferenceError();
-			}
-
-			url = self.makeUrl(data, true);
-		}
-
-		let novel = await self.get_volume_list(url);
-
-		//console.log(novel);
-
-		let idx = 0;
-
-		let path_novel = path.join(self.PATH_NOVEL_MAIN,
-			`${trimFilename(novel.novel_title)}_(${novel.url_data.novel_id})`
-		);
-
-		let ret = await PromiseBluebird
-			.mapSeries(novel.volume_list, function (volume, vid)
-			{
-				let dirname: string;
-
 				{
-					let _vid = vid.toString().padStart(4, '0') + '0';
+					let data = self.parseUrl(url);
 
-					dirname = path.join(path_novel,
-						`${_vid} ${trimFilename(volume.volume_title)}`
-					);
+					if (!data.novel_id)
+					{
+						console.log(data);
+
+						throw new ReferenceError();
+					}
+
+					url = self.makeUrl(data, true);
 				}
 
-				return PromiseBluebird
-					.mapSeries(volume.chapter_list, async function (chapter)
+				optionsRuntime.optionsJSDOM.cookieJar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
+
+				let novel = await self.get_volume_list<NovelSite.IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
+
+				//console.log(novel);
+
+				let idx = 0;
+
+				let path_novel = path.join(self.PATH_NOVEL_MAIN,
+					`${trimFilename(novel.novel_title)}_(${novel.url_data.novel_id})`
+				);
+
+				let ret = await PromiseBluebird
+					.mapSeries(novel.volume_list, function (volume, vid)
 					{
-						chapter.chapter_index = (idx++);
+						let dirname: string;
 
-						let ext = '.txt';
-						let cid = chapter.chapter_index.toString().padStart(4, '0') + '0';
-
-						let pad = chapter.chapter_date.format('YYYYMMDDHHmm');
-
-						let file = path.join(dirname,
-							`${cid}_${trimFilename(chapter.chapter_title)}\.${pad}${ext}`
-						);
-
-						if (fs.existsSync(file))
 						{
-							let txt = await fs.readFile(file);
+							let _vid = vid.toString().padStart(4, '0') + '0';
 
-							if (txt)
+							dirname = path.join(path_novel,
+								`${_vid} ${trimFilename(volume.volume_title)}`
+							);
+						}
+
+						return PromiseBluebird
+							.mapSeries(volume.chapter_list, async function (chapter)
 							{
-//								console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
+								chapter.chapter_index = (idx++);
+
+								let ext = '.txt';
+								let cid = chapter.chapter_index.toString().padStart(4, '0') + '0';
+
+								let pad = chapter.chapter_date.format('YYYYMMDDHHmm');
+
+								let file = path.join(dirname,
+									`${cid}_${trimFilename(chapter.chapter_title)}\.${pad}${ext}`
+								);
+
+								if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
+								{
+									let txt = await fs.readFile(file);
+
+									if (txt.toString())
+									{
+										//console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
+
+										return file;
+									}
+								}
+								else
+								{
+									//console.log(`${chapter.chapter_title} ${pad}`);
+								}
+
+								let fn;
+
+								if (optionsRuntime.disableDownload)
+								{
+									fn = async function ()
+									{
+										return '';
+									};
+								}
+								else if (!optionsRuntime.disableTxtdownload)
+								{
+									fn = function ()
+									{
+										return retryRequest(chapter.chapter_url, {
+											delay: 25000,
+											jar: optionsRuntime.optionsJSDOM.cookieJar,
+										});
+									}
+								}
+								else
+								{
+									let url = self.makeUrl({
+										chapter_id: chapter.chapter_id,
+										novel_id: novel.url_data.novel_id,
+									});
+
+									//console.log(url);
+
+									fn = function ()
+									{
+										return fromURL(url, optionsRuntime.optionsJSDOM)
+											.then(async function (dom)
+											{
+												return [
+													dom.$('#novel_p').text(),
+													dom.$('#novel_honbun').text(),
+													dom.$('#novel_a').text(),
+												].filter(function (v)
+												{
+													return v;
+												}).join('\n\n==================\n\n');
+											})
+											;
+									};
+								}
+
+								//console.log(url);
+
+								await PromiseBluebird.resolve().then(function ()
+								{
+									return fn()
+										.then(async function (text)
+										{
+											await fs.outputFile(file, text);
+
+											return text;
+										})
+										;
+								});
 
 								return file;
-							}
-						}
-						else
-						{
-							console.log(`${chapter.chapter_title} ${pad}`);
-						}
-
-						let fn;
-
-						if (downloadOptions.disableDownload)
-						{
-							fn = async function ()
-							{
-								return '';
-							};
-						}
-						else if (!downloadOptions.disableTxtdownload)
-						{
-							fn = function ()
-							{
-								return retryRequest(chapter.chapter_url, {
-									delay: 25000,
-								});
-							}
-						}
-						else
-						{
-							let url = self.makeUrl({
-								chapter_id: chapter.chapter_id,
-								novel_id: novel.url_data.novel_id,
-							});
-
-							//console.log(url);
-
-							fn = function ()
-							{
-								return fromURL(url, defaultJSDOMOptions)
-									.then(async function (dom)
-									{
-										return [
-											dom.$('#novel_p').text(),
-											dom.$('#novel_honbun').text(),
-											dom.$('#novel_a').text(),
-										].filter(function (v)
-										{
-											return v;
-										}).join('\n\n==================\n\n');
-									})
-									;
-							};
-						}
-
-						//console.log(url);
-
-						await PromiseBluebird.resolve().then(function ()
-						{
-							return fn()
-								.then(async function (text)
-								{
-									await fs.outputFile(file, text);
-
-									return text;
-								})
-								;
-						});
-
-						return file;
+							})
+							;
 					})
-					;
-			})
-			.tap(ls =>
-			{
-				let file = path.join(path_novel,
-					`${trimFilename(novel.novel_title)}.${novel.url_data.novel_id}.json`
-					)
+					.tap(ls =>
+					{
+						let file = path.join(path_novel,
+							`${trimFilename(novel.novel_title)}.${novel.url_data.novel_id}.json`
+							)
+						;
+
+						//console.log(ls);
+
+						return fs.outputJSON(file, novel, {
+							spaces: "\t",
+						});
+					})
 				;
 
-				//console.log(ls);
+				{
+					let options = {};
+					options[self.IDKEY] = {
+						txtdownload_id: novel.novel_syosetu_id,
+					};
 
-				return fs.outputJSON(file, novel, {
-					spaces: "\t",
-				});
+					let md = novelInfo.stringify({
+						novel: {
+							tags: [
+								self.IDKEY,
+							],
+							series: {
+								name: novel.novel_series_title || '',
+							},
+						},
+						options,
+						// @ts-ignore
+						link: novel.link || [],
+					}, novel, {
+						options: {
+							textlayout: {
+								allow_lf2: true,
+							}
+						},
+					});
+
+					let file = path.join(path_novel, `README.md`);
+					await fs.outputFile(file, md);
+				}
+
+				return novel;
 			})
-		;
+			.finally(function ()
+			{
+				if (0)
+				{
+					console.dir(optionsRuntime.optionsJSDOM.cookieJar, {
+						depth: null,
+						colors: true,
+					});
+				}
 
-		{
-			let options = {};
-			options[self.IDKEY] = {
-				txtdownload_id: novel.novel_syosetu_id,
-			};
-
-			let md = novelInfo.stringify({
-				novel: {
-					tags: [
-						self.IDKEY,
-					],
-					series: {
-						name: novel.novel_series_title,
-					},
-				},
-				options,
-				// @ts-ignore
-				link: novel.link || [],
-			}, novel, {
-				options: {
-					textlayout: {
-						allow_lf2: true,
-					}
-				},
-			});
-
-			let file = path.join(path_novel, `README.md`);
-			await fs.outputFile(file, md);
-		}
-
-		return novel;
+			})
+			;
 	}
 
 	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
@@ -258,8 +251,6 @@ export class NovelSiteSyosetu extends NovelSite
 
 		if (urlobj.novel_pid && urlobj.chapter_id)
 		{
-			let cid = (!bool && urlobj.chapter_id) ? '&cid=' + urlobj.chapter_id : '';
-
 			return new URL(`https://${subdomain}.syosetu.com/txtdownload/dlstart/ncode/${urlobj.novel_pid}/?no=${urlobj.chapter_id}&hankaku=0&code=utf-8&kaigyo=crlf`);
 		}
 
@@ -312,7 +303,7 @@ export class NovelSiteSyosetu extends NovelSite
 		return urlobj;
 	}
 
-	async get_volume_list(url: URL): Promise<INovel>
+	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: URL, optionsRuntime: Partial<T & IDownloadOptions> = {}): Promise<INovel>
 	{
 		const self = this;
 
@@ -327,20 +318,14 @@ export class NovelSiteSyosetu extends NovelSite
 			url = self.makeUrl(data, true);
 		}
 
-		let fromURLOptions = Object.assign({}, defaultJSDOMOptions, {
-			cookieJar: new LazyCookieJar(),
-		});
-
-		fromURLOptions.cookieJar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
-
-		return await fromURL(url, fromURLOptions)
+		return await fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
 
 				if (!$('#novel_contents').length || $('#modal .yes #yes18').length)
 				{
-					console.log(dom.url, dom._options);
+					//console.log(dom.url, dom._options);
 
 					$('#modal .yes #yes18').click();
 
@@ -348,10 +333,10 @@ export class NovelSiteSyosetu extends NovelSite
 
 					//console.log(dom.serialize());
 
-					return fromURL(url, Object.assign(fromURLOptions, {
+					return fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {
 
-						cookieJar: dom._options.requestOptions.jar._jar,
-						requestOptions: dom._options.requestOptions,
+						//cookieJar: dom._options.requestOptions.jar._jar,
+						//requestOptions: dom._options.requestOptions,
 
 					} as IFromUrlOptions));
 				}
@@ -513,7 +498,7 @@ export class NovelSiteSyosetu extends NovelSite
 
 				let a = await fromURL(`https://${url_data.novel_r18
 					? 'narou18'
-					: 'narou'}.dip.jp/search.php?text=${url_data.novel_id}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, defaultJSDOMOptions)
+					: 'narou'}.dip.jp/search.php?text=${url_data.novel_id}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
 					.then(function (dom)
 					{
 						let h2 = dom.$(`div:has(> h2.search:has(> a[href*="${url_data.novel_id}"]))`).eq(0);
@@ -529,7 +514,7 @@ export class NovelSiteSyosetu extends NovelSite
 
 							return fromURL(`https://${url_data.novel_r18
 								? 'narou18'
-								: 'narou'}.dip.jp/search.php?text=${novel_title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, defaultJSDOMOptions)
+								: 'narou'}.dip.jp/search.php?text=${novel_title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
 								;
 						}
 
@@ -537,7 +522,7 @@ export class NovelSiteSyosetu extends NovelSite
 					})
 					.then(function (dom)
 					{
-						console.log(dom.url);
+						//console.log(dom.url);
 
 						let data: IMdconfMeta = {};
 
@@ -633,3 +618,4 @@ export class NovelSiteSyosetu extends NovelSite
 }
 
 export default NovelSiteSyosetu;
+

@@ -8,6 +8,8 @@ import bluebirdDecorator from '../decorator/bluebird';
 import * as PromiseBluebird from 'bluebird';
 import { URL } from 'jsdom-url';
 import * as path from "path";
+import rootPath from "../../_root";
+import { IFromUrlOptions, VirtualConsole, IOptionsJSDOM } from 'jsdom-extra';
 
 //import * as moment from 'moment';
 import * as moment from 'moment-timezone';
@@ -17,37 +19,68 @@ export { moment };
 
 export { bluebirdDecorator, PromiseBluebird }
 
+export const SYMBOL_CACHE = Symbol.for('cache');
+
+export const defaultJSDOMOptions: IFromUrlOptions = {
+	virtualConsole: new VirtualConsole,
+	runScripts: 'dangerously',
+	disableCheerio: true,
+};
+
 export class NovelSite implements NovelSite.INovelSite
 {
 	public PATH_NOVEL_MAIN: string;
-	public options?: NovelSite.IOptions;
+	public optionsInit?: NovelSite.IOptions;
 
 	constructor(options: NovelSite.IOptions, ...argv)
 	{
-		this.options = options;
-		this.options.cwd = this.options.cwd || process.cwd();
+		this.optionsInit = options;
+		this.optionsInit.cwd = this.optionsInit.cwd || process.cwd();
 
-		if (!this.options.outputDir)
-		{
-			throw new ReferenceError(`options: outputDir is not set`);
-		}
+		[this.PATH_NOVEL_MAIN, this.optionsInit] = this.getOutputDir(this.optionsInit);
 
-		this.PATH_NOVEL_MAIN = path.join(this.options.outputDir, this.options.disableOutputDirPrefix ? '' : this.IDKEY);
-
-		if (!path.isAbsolute(this.PATH_NOVEL_MAIN))
-		{
-			this.PATH_NOVEL_MAIN = path.join(this.options.cwd, this.PATH_NOVEL_MAIN);
-		}
-
-		if (this.PATH_NOVEL_MAIN.indexOf(__dirname) == 0)
-		{
-			throw new ReferenceError(`path not allow "${this.PATH_NOVEL_MAIN}"`)
-		}
 	}
 
 	static create(options: NovelSite.IOptions, ...argv)
 	{
 		return new this(options, ...argv);
+	}
+
+	getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions]
+	{
+		options = Object.assign({}, this.optionsInit, options);
+
+		if (!options.outputDir)
+		{
+			throw new ReferenceError(`options: outputDir is not set`);
+		}
+
+		let p = path.join(options.outputDir, options.disableOutputDirPrefix ? '' : this.IDKEY);
+
+		if (!path.isAbsolute(p))
+		{
+			p = path.join(options.cwd, p);
+		}
+
+		rootPath.disablePaths.concat(__dirname).forEach(function (dir)
+		{
+			if (p.indexOf(__dirname) == 0)
+			{
+				throw new ReferenceError(`path not allow "${p}"`)
+			}
+		});
+
+		if (typeof novelName == 'string' || novelName)
+		{
+			if (!novelName)
+			{
+				throw new ReferenceError();
+			}
+
+			p = path.join(p, novelName);
+		}
+
+		return [p, options];
 	}
 
 	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>
@@ -60,7 +93,7 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	parseUrl(url: URL | string): NovelSite.IParseUrl
+	parseUrl(url: URL | string, options?): NovelSite.IParseUrl
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -85,8 +118,13 @@ export class NovelSite implements NovelSite.INovelSite
 	}
 }
 
-export namespace NovelSite
+export module NovelSite
 {
+	export interface IOptionsRuntime extends IOptions, IDownloadOptions
+	{
+
+	}
+
 	export interface IOptions
 	{
 		outputDir?: string,
@@ -104,6 +142,8 @@ export namespace NovelSite
 		chapter_id?,
 
 		novel_r18?,
+
+		[key: string]: any,
 	}
 
 	export interface IChapter
@@ -114,6 +154,8 @@ export namespace NovelSite
 		chapter_url?
 		chapter_url_data?
 		chapter_date?: moment.Moment,
+
+		[key: string]: any,
 	}
 
 	export interface IVolume
@@ -121,6 +163,8 @@ export namespace NovelSite
 		volume_index?
 		volume_title: string,
 		chapter_list: IChapter[],
+
+		[key: string]: any,
 	}
 
 	export interface INovel
@@ -159,6 +203,8 @@ export namespace NovelSite
 		disableDownload?: boolean,
 
 		disableCheckExists?: boolean,
+
+		optionsJSDOM?: IOptionsJSDOM,
 	}
 
 	export interface INovelSite
