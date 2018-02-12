@@ -7,8 +7,9 @@ import { retryRequest } from '../../fetch';
 import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
 import novelInfo, { mdconf_parse, IMdconfMeta } from 'node-novel-info';
-import { fromURL, IFromUrlOptions, URL, VirtualConsole, IJSDOM, CookieJar } from 'jsdom-extra';
+import { fromURL, IFromUrlOptions, VirtualConsole, IJSDOM, CookieJar } from 'jsdom-extra';
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
+import { URL } from 'jsdom-url';
 
 import NovelSite, { staticImplements } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
@@ -33,6 +34,31 @@ export interface IDownloadOptions extends NovelSite.IDownloadOptions
 	disableTxtdownload?: boolean,
 }
 
+function dPromise<T>()
+{
+	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor)
+	{
+		if (descriptor === undefined)
+		{
+			descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+		}
+		var originalMethod = descriptor.value;
+
+		descriptor.value = function (...args): PromiseBluebird<T>
+		{
+			let self = this;
+
+			return PromiseBluebird.resolve().then(function ()
+			{
+				return originalMethod.apply(self, args);
+			});
+
+		};
+
+		return descriptor;
+	};
+}
+
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteSyosetu>>()
 export class NovelSiteSyosetu extends NovelSite
 {
@@ -43,7 +69,7 @@ export class NovelSiteSyosetu extends NovelSite
 		super(options, ...argv);
 	}
 
-	@bluebirdDecorator
+	//@bluebirdDecorator
 	// @ts-ignore
 	async download(url: string | URL, downloadOptions: IDownloadOptions = {}): PromiseBluebird<INovel>
 	{
@@ -204,6 +230,9 @@ export class NovelSiteSyosetu extends NovelSite
 					tags: [
 						self.IDKEY,
 					],
+					series: {
+						name: novel.novel_series_title,
+					},
 				},
 				options,
 				// @ts-ignore
@@ -223,7 +252,7 @@ export class NovelSiteSyosetu extends NovelSite
 		return novel;
 	}
 
-	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean)
+	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
 	{
 		let subdomain = urlobj.novel_r18 ? 'novel18' : 'ncode';
 
@@ -350,6 +379,18 @@ export class NovelSiteSyosetu extends NovelSite
 
 				let _cache_dates = [];
 
+				let novel_series_title;
+
+				{
+					let a = dom.$('#novel_contents .series_title').text()
+						.replace(/[\r\n\t]+|^\s+|\s+$/g)
+					;
+					if (a)
+					{
+						novel_series_title = a;
+					}
+				}
+
 				let novel_syosetu_id;
 
 				{
@@ -426,6 +467,7 @@ export class NovelSiteSyosetu extends NovelSite
 
 							if (!data.chapter_id)
 							{
+								/*
 								console.log(a);
 								console.log(data);
 								console.log(href);
@@ -433,6 +475,7 @@ export class NovelSiteSyosetu extends NovelSite
 								console.log(new URL(href, dom.url));
 
 								console.log(dom._options);
+								*/
 
 								throw new Error()
 							}
@@ -482,10 +525,12 @@ export class NovelSiteSyosetu extends NovelSite
 
 						if (!h2.length)
 						{
+							//console.warn(`can not found keyword "${url_data.novel_id}", will try use title search`);
+
 							return fromURL(`https://${url_data.novel_r18
 								? 'narou18'
 								: 'narou'}.dip.jp/search.php?text=${novel_title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, defaultJSDOMOptions)
-							;
+								;
 						}
 
 						return dom;
@@ -508,7 +553,8 @@ export class NovelSiteSyosetu extends NovelSite
 
 						if (!h2.length)
 						{
-							console.log(111111111111111111111);
+							//console.log(111111111111111111111);
+							console.warn(`can not found keyword for ${url_data.novel_id}`);
 
 							return data;
 						}
@@ -524,9 +570,18 @@ export class NovelSiteSyosetu extends NovelSite
 						search_right.find('.keyword a')
 							.each(function (index, elem)
 							{
-								let k = dom.$(elem).text();
+								let k = dom.$(elem)
+									.text()
+									.trim()
+									.split(/[\/\s]/)
+									.map(function (s)
+									{
+										return s.trim();
+									})
+									.filter((v) => v)
+								;
 
-								data.novel.tags = data.novel.tags.concat(k.split('/'));
+								data.novel.tags = data.novel.tags.concat(k);
 							})
 						;
 
@@ -560,6 +615,8 @@ export class NovelSiteSyosetu extends NovelSite
 					novel_desc,
 					novel_date,
 					novel_publisher,
+
+					novel_series_title,
 
 					novel_syosetu_id,
 

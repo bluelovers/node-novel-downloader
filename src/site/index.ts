@@ -6,7 +6,7 @@ import bluebirdDecorator from '../decorator/bluebird';
 //import bluebirdDecorator from 'bluebird-decorator';
 
 import * as PromiseBluebird from 'bluebird';
-import { URL } from 'jsdom-extra';
+import { URL } from 'jsdom-url';
 import * as path from "path";
 
 //import * as moment from 'moment';
@@ -135,11 +135,15 @@ export namespace NovelSite
 		novel_date?: moment.Moment,
 		novel_publisher?: string,
 
+		novel_series_title?: string,
+
 		volume_list: IVolume[],
 
 		checkdate?: moment.Moment,
 
 		imgs?: string[],
+
+		[key: string]: any,
 	}
 
 	export interface INovelSiteStatic<T> extends Type<T & NovelSite.INovelSite>

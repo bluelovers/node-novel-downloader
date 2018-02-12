@@ -24,7 +24,10 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'https://ncode.syosetu.com/n3512ds/',
 
-		'https://novel18.syosetu.com/n1413cw/',
+		//'https://novel18.syosetu.com/n1413cw/',
+
+		//'https://ncode.syosetu.com/n4842df/',
+		'https://ncode.syosetu.com/n8697cx/',
 
 	].forEach(async function (value, index, array)
 	{

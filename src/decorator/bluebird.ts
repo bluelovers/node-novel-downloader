@@ -16,8 +16,13 @@ export default DecoratorUtils.createDecorator([
 
 	descriptor.value = function (...args): Bluebird<T>
 	{
-		let returnValue = method.apply(this, args);
+		let self = this;
 		//return returnValue instanceof Promise ? Bluebird.resolve(returnValue) : returnValue;
-		return Bluebird.resolve(returnValue);
+		return Bluebird.resolve().then(function ()
+		{
+			return method.apply(self, args);
+		});
 	};
+
+	return descriptor;
 }) as MethodDecorator;
