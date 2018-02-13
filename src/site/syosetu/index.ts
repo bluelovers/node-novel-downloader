@@ -235,7 +235,7 @@ export class NovelSiteSyosetu extends NovelSite
 			{
 				if (0)
 				{
-					console.dir(optionsRuntime.optionsJSDOM.cookieJar, {
+					console.dir((optionsRuntime.optionsJSDOM as IFromUrlOptions).cookieJar, {
 						depth: null,
 						colors: true,
 					});

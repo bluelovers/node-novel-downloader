@@ -9,7 +9,7 @@ import * as PromiseBluebird from 'bluebird';
 import { URL } from 'jsdom-url';
 import * as path from "path";
 import rootPath from "../../_root";
-import { IFromUrlOptions, VirtualConsole, IOptionsJSDOM } from 'jsdom-extra';
+import { IFromUrlOptions, VirtualConsole, IOptionsJSDOM, IFromFileOptions } from 'jsdom-extra';
 
 //import * as moment from 'moment';
 import * as moment from 'moment-timezone';
@@ -204,7 +204,7 @@ export module NovelSite
 
 		disableCheckExists?: boolean,
 
-		optionsJSDOM?: IOptionsJSDOM,
+		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM,
 	}
 
 	export interface INovelSite
