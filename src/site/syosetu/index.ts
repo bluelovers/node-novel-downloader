@@ -83,10 +83,16 @@ export class NovelSiteSyosetu extends NovelSite
 						let dirname: string;
 
 						{
-							let _vid = vid.toString().padStart(4, '0') + '0';
+							let _vid = '';
+
+							if (!optionsRuntime.noDirPrefix)
+							{
+								_vid = vid.toString().padStart(4, '0') + '0';
+								_vid += '_';
+							}
 
 							dirname = path.join(path_novel,
-								`${_vid} ${trimFilename(volume.volume_title)}`
+								`${_vid}${trimFilename(volume.volume_title)}`
 							);
 						}
 
@@ -96,13 +102,31 @@ export class NovelSiteSyosetu extends NovelSite
 								chapter.chapter_index = (idx++);
 
 								let ext = '.txt';
-								let cid = chapter.chapter_index.toString().padStart(4, '0') + '0';
 
-								let pad = chapter.chapter_date.format('YYYYMMDDHHmm');
+								let file: string;
 
-								let file = path.join(dirname,
-									`${cid}_${trimFilename(chapter.chapter_title)}\.${pad}${ext}`
-								);
+								{
+									let prefix = '';
+
+									if (!optionsRuntime.noFirePrefix)
+									{
+										prefix = chapter.chapter_index.toString()
+											.padStart(4, '0') + '0'
+										;
+										prefix += '_';
+									}
+
+									let pad = '';
+
+									if (!optionsRuntime.noFilePadend)
+									{
+										pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
+									}
+
+									file = path.join(dirname,
+										`${prefix}${trimFilename(chapter.chapter_title)}${pad}${ext}`
+									);
+								}
 
 								if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
 								{
@@ -303,7 +327,9 @@ export class NovelSiteSyosetu extends NovelSite
 		return urlobj;
 	}
 
-	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: URL, optionsRuntime: Partial<T & IDownloadOptions> = {}): Promise<INovel>
+	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: URL,
+		optionsRuntime: Partial<T & IDownloadOptions> = {}
+	): Promise<INovel>
 	{
 		const self = this;
 

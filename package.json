@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "> node-novel core module",
   "main": "index.js",
   "scripts": {
@@ -34,18 +34,17 @@
     "test": "test"
   },
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "bluebird-global": "^1.0.1",
+    "bluebird": "latest",
     "fs-iconv": "latest",
     "jsdom-extra": "latest",
-    "moment-timezone": "^0.5.14",
+    "moment-timezone": "latest",
     "node-novel-info": "latest",
     "novel-text": "latest",
-    "request": "^2.83.0",
-    "shortid": "^2.2.8"
+    "request": "latest",
+    "shortid": "latest"
   },
   "devDependencies": {
-    "bluebird-decorator": "^1.0.0",
-    "@types/request-promise": "^4.1.41"
+    "bluebird-decorator": "latest",
+    "@types/request-promise": "latest"
   }
 }

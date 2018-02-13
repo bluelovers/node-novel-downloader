@@ -131,6 +131,12 @@ export module NovelSite
 		cwd?: string,
 
 		disableOutputDirPrefix?: boolean,
+
+		noDirPrefix?: boolean,
+		noDirPadend?: boolean,
+
+		noFirePrefix?: boolean,
+		noFilePadend?: boolean,
 	}
 
 	export interface IParseUrl

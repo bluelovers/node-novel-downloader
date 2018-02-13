@@ -1,0 +1,5 @@
+import * as PromiseBluebird from 'bluebird';
+export { PromiseBluebird };
+export declare const bluebirdDecorator: MethodDecorator;
+export declare function bluebirdDecorator2<T>(target: any, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor;
+export default bluebirdDecorator2;
