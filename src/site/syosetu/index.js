@@ -11,6 +11,7 @@ const fs_iconv_1 = require("fs-iconv");
 const path = require("path");
 const node_novel_info_1 = require("node-novel-info");
 const jsdom_extra_1 = require("jsdom-extra");
+// @ts-ignore
 const jsdom_extra_2 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
 const index_1 = require("../index");
@@ -19,6 +20,12 @@ const index_3 = require("../index");
 let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
+    }
+    session(optionsRuntime) {
+        let url = optionsRuntime[index_1.SYMBOL_CACHE].url;
+        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new jsdom_extra_2.LazyCookieJar();
+        optionsRuntime.optionsJSDOM.cookieJar
+            .setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
     }
     download(url, downloadOptions = {}) {
         const self = this;
@@ -37,11 +44,12 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 }
                 url = self.makeUrl(data, true);
             }
-            optionsRuntime.optionsJSDOM.cookieJar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
+            optionsRuntime[index_1.SYMBOL_CACHE].url = url;
+            self.session(optionsRuntime);
             let novel = await self.get_volume_list(url, optionsRuntime);
             //console.log(novel);
             let idx = 0;
-            let path_novel = path.join(self.PATH_NOVEL_MAIN, `${fs_iconv_1.trimFilename(novel.novel_title)}_(${novel.url_data.novel_id})`);
+            let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
             let ret = await index_2.PromiseBluebird
                 .mapSeries(novel.volume_list, function (volume, vid) {
                 let dirname;
@@ -51,7 +59,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                         _vid = vid.toString().padStart(4, '0') + '0';
                         _vid += '_';
                     }
-                    dirname = path.join(path_novel, `${_vid}${fs_iconv_1.trimFilename(volume.volume_title)}`);
+                    dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
                 }
                 return index_2.PromiseBluebird
                     .mapSeries(volume.chapter_list, async function (chapter) {
@@ -69,7 +77,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                         if (!optionsRuntime.noFilePadend) {
                             pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
                         }
-                        file = path.join(dirname, `${prefix}${fs_iconv_1.trimFilename(chapter.chapter_title)}${pad}${ext}`);
+                        file = path.join(dirname, `${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`);
                     }
                     if (!optionsRuntime.disableCheckExists && fs_iconv_1.default.existsSync(file)) {
                         let txt = await fs_iconv_1.default.readFile(file);
@@ -126,7 +134,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 });
             })
                 .tap(ls => {
-                let file = path.join(path_novel, `${fs_iconv_1.trimFilename(novel.novel_title)}.${novel.url_data.novel_id}.json`);
+                let file = path.join(path_novel, `${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`);
                 //console.log(ls);
                 return fs_iconv_1.default.outputJSON(file, novel, {
                     spaces: "\t",

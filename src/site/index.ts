@@ -10,6 +10,7 @@ import { URL } from 'jsdom-url';
 import * as path from "path";
 import rootPath from "../../_root";
 import { IFromUrlOptions, VirtualConsole, IOptionsJSDOM, IFromFileOptions } from 'jsdom-extra';
+import fs, { trimFilename } from 'fs-iconv';
 
 //import * as moment from 'moment';
 import * as moment from 'moment-timezone';
@@ -81,6 +82,31 @@ export class NovelSite implements NovelSite.INovelSite
 		}
 
 		return [p, options];
+	}
+
+	trimFilenameChapter(name): string
+	{
+		return this.trimFilename(name);
+	}
+
+	trimFilenameVolume(name): string
+	{
+		return this.trimFilename(name);
+	}
+
+	trimFilenameNovel(name): string
+	{
+		return this.trimFilename(name);
+	}
+
+	trimFilename(name): string
+	{
+		return trimFilename(name);
+	}
+
+	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
+	{
+		return false;
 	}
 
 	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>

@@ -1,8 +1,3 @@
-/**
- * Created by user on 2017/12/6/006.
- */
-import { trimFilename } from '../../../lib/func';
-export { trimFilename };
 export declare function makeUrl(urlobj: any, page?: any): string;
 /**
  *

@@ -2,9 +2,7 @@
  * Created by user on 2017/12/6/006.
  */
 
-import { trimFilename } from '../../../lib/func';
-
-export { trimFilename };
+import fs from 'fs-iconv';
 
 export function makeUrl(urlobj, page?)
 {

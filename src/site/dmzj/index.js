@@ -3,8 +3,6 @@
  * Created by user on 2017/12/6/006.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-const func_1 = require("../../../lib/func");
-exports.trimFilename = func_1.trimFilename;
 function makeUrl(urlobj, page) {
     if (!urlobj.chapter_id) {
         if (!urlobj.volume_id) {

@@ -13,6 +13,7 @@ export interface IDownloadOptions extends NovelSite.IDownloadOptions, NovelSite.
 export declare class NovelSiteSyosetu extends NovelSite {
     static IDKEY: string;
     constructor(options: IDownloadOptions, ...argv: any[]);
+    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>): void;
     download(url: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<INovel>;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;

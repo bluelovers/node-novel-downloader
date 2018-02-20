@@ -4,6 +4,7 @@ import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
+// @ts-ignore
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
 
@@ -32,6 +33,17 @@ export class NovelSiteSyosetu extends NovelSite
 	constructor(options: IDownloadOptions, ...argv)
 	{
 		super(options, ...argv);
+	}
+
+	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>)
+	{
+		let url = optionsRuntime[SYMBOL_CACHE].url;
+
+		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
+
+		(optionsRuntime.optionsJSDOM.cookieJar as LazyCookieJar)
+			.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
+		;
 	}
 
 	download(url: string | URL, downloadOptions: IDownloadOptions = {})
@@ -65,7 +77,9 @@ export class NovelSiteSyosetu extends NovelSite
 					url = self.makeUrl(data, true);
 				}
 
-				optionsRuntime.optionsJSDOM.cookieJar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
+				optionsRuntime[SYMBOL_CACHE].url = url;
+
+				self.session(optionsRuntime);
 
 				let novel = await self.get_volume_list<NovelSite.IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
@@ -74,7 +88,7 @@ export class NovelSiteSyosetu extends NovelSite
 				let idx = 0;
 
 				let path_novel = path.join(self.PATH_NOVEL_MAIN,
-					`${trimFilename(novel.novel_title)}_(${novel.url_data.novel_id})`
+					`${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
 				);
 
 				let ret = await PromiseBluebird
@@ -92,7 +106,7 @@ export class NovelSiteSyosetu extends NovelSite
 							}
 
 							dirname = path.join(path_novel,
-								`${_vid}${trimFilename(volume.volume_title)}`
+								`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
 							);
 						}
 
@@ -124,7 +138,7 @@ export class NovelSiteSyosetu extends NovelSite
 									}
 
 									file = path.join(dirname,
-										`${prefix}${trimFilename(chapter.chapter_title)}${pad}${ext}`
+										`${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`
 									);
 								}
 
@@ -211,7 +225,7 @@ export class NovelSiteSyosetu extends NovelSite
 					.tap(ls =>
 					{
 						let file = path.join(path_novel,
-							`${trimFilename(novel.novel_title)}.${novel.url_data.novel_id}.json`
+							`${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`
 							)
 						;
 

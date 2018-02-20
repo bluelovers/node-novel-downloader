@@ -11,6 +11,7 @@ exports.PromiseBluebird = PromiseBluebird;
 const path = require("path");
 const _root_1 = require("../../_root");
 const jsdom_extra_1 = require("jsdom-extra");
+const fs_iconv_1 = require("fs-iconv");
 //import * as moment from 'moment';
 const moment = require("moment-timezone");
 exports.moment = moment;
@@ -51,6 +52,21 @@ class NovelSite {
             p = path.join(p, novelName);
         }
         return [p, options];
+    }
+    trimFilenameChapter(name) {
+        return this.trimFilename(name);
+    }
+    trimFilenameVolume(name) {
+        return this.trimFilename(name);
+    }
+    trimFilenameNovel(name) {
+        return this.trimFilename(name);
+    }
+    trimFilename(name) {
+        return fs_iconv_1.trimFilename(name);
+    }
+    static check(url, options) {
+        return false;
     }
     download(url, options) {
         throw new SyntaxError(`Function not implemented`);
