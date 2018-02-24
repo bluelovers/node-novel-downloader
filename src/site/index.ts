@@ -146,10 +146,7 @@ export class NovelSite implements NovelSite.INovelSite
 
 export module NovelSite
 {
-	export interface IOptionsRuntime extends IOptions, IDownloadOptions
-	{
-
-	}
+	export type IOptionsRuntime = IOptions & IDownloadOptions;
 
 	export interface IOptions
 	{

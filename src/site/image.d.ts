@@ -1,5 +1,6 @@
 /// <reference types="bluebird" />
 /// <reference types="node" />
+import { URL } from 'jsdom-extra';
 import * as Promise from 'bluebird';
 export declare function download_image(img: string | URL, options: {
     name?: string;

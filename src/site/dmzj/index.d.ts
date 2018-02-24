@@ -1,13 +1,17 @@
-export declare function makeUrl(urlobj: any, page?: any): string;
-/**
- *
- * @param url
- * @returns {{url: string; novel_id: null; volume_id: null; chapter_id: null}}
- */
-export declare function parseUrl(url: string): {
-    url: string;
-    novel_id: any;
-    volume_id: any;
-    chapter_id: any;
-};
-export default exports;
+/// <reference types="bluebird" />
+import NovelSite from '../index';
+import { PromiseBluebird } from '../index';
+export declare class NovelSiteDmzj extends NovelSite {
+    static IDKEY: string;
+    _makeUrl(urlobj: NovelSite.IParseUrl, page?: any): string;
+    makeUrl(urlobj: NovelSite.IParseUrl, bool?: number): URL;
+    parseUrl(url: string | URL): NovelSite.IParseUrl;
+    download(url: string | URL, downloadOptions?: NovelSite.IDownloadOptions): PromiseBluebird<any>;
+    _download_info(url: URL, optionsRuntime?: Partial<NovelSite.IOptionsRuntime>): Promise<{
+        url: URL;
+        data: any;
+        value: any[];
+    }>;
+    _downloadChapter(data: any, optionsRuntime: NovelSite.IOptionsRuntime): Promise<any>;
+}
+export default NovelSiteDmzj;

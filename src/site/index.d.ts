@@ -28,8 +28,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     readonly IDKEY: string;
 }
 export declare module NovelSite {
-    interface IOptionsRuntime extends IOptions, IDownloadOptions {
-    }
+    type IOptionsRuntime = IOptions & IDownloadOptions;
     interface IOptions {
         outputDir?: string;
         cwd?: string;

@@ -58,10 +58,37 @@ export function retryRequest(url, options: IOptions = {})
 		return fn();
 	}).tapCatch(function (err)
 	{
-		console.log(err);
+		console.error(err);
 	});
 }
 
+export function manyRequest(url_arr: any[], options: IOptions = {})
+{
+	options = Object.assign({
+		retry: 3,
+		delay: 1000,
+	}, options);
+
+	let libRequest = options.libRequest || request;
+
+	return Promise
+		.mapSeries(url_arr, function (url)
+		{
+			if (url.href)
+			{
+				url = url.href;
+			}
+
+			return libRequest(url.toString(), options);
+		})
+		.tapCatch(function (err)
+		{
+			console.error(err);
+		})
+		;
+}
+
 import * as self from './fetch';
+
 export default self;
 //export default exports;
