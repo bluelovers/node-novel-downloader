@@ -1,7 +1,7 @@
 {
   "name": "novel-downloader",
   "version": "1.1.5",
-  "description": "> node-novel core module",
+  "description": "novel site downloader ( dmzj / wenku8 / syosetu )",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,6 +23,7 @@
     "dmzj",
     "acg",
     "r15",
+    "fetch",
     "r18",
     "node-text"
   ],

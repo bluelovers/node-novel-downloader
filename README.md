@@ -1,21 +1,51 @@
-# novel-text
+# novel-downloader
 
-> node-novel core module
+> novel site downloader ( dmzj / wenku8 / syosetu )
 
 `npm install novel-text`
 
 ## demo
 
-* [node-novel](https://www.npmjs.com/search?q=node-novel)
+see [test](test)
 
 ```ts
-import novelText from 'novel-text';
+import NovelSiteSyosetu from 'novel-downloader/src/site/syosetu';
 
-let new_text = novelText.toStr(text);
 
-new_text = novelText.textlayout(new_text, options);
-new_text = novelText.replace(new_text, {
-	words: true,
-});
-new_text = novelText.trim(new_text);
+(async () =>
+{
+
+	const Site = new NovelSiteSyosetu({
+		outputDir: './temp',
+	});
+
+	console.log(Site);
+
+	[
+		//'https://novel18.syosetu.com/n1413cw/',
+	
+		'n6006cw',
+
+	].forEach(async function (value, index, array)
+	{
+		await Site.download(value, {
+			//disableTxtdownload: true,
+			//disableDownload: true,
+
+			//noFirePrefix: true,
+			//noFilePadend: true,
+		}).then(function (novel)
+		{
+			console.log(novel);
+
+			console.log(novel.novel_title);
+		})
+		;
+	});
+
+})();
 ```
+
+## link
+
+* [node-novel](https://www.npmjs.com/search?q=node-novel)
