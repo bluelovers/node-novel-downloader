@@ -271,8 +271,9 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                     resolveWithFullResponse: true,
                 })
                     .then(async function (ret) {
-                    pa.concat(ret.map(function (value, index, array) {
-                        return value.toString();
+                    pa = pa.concat(ret.map(function (value, index, array) {
+                        //console.log(value.body);
+                        return value.body.toString();
                     }));
                 });
             }
@@ -318,7 +319,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                 }
                 return _t;
             });
-            return pa.join();
+            return pa.join("\n");
         })
             .then(function (html) {
             return html

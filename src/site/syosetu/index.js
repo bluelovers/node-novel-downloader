@@ -38,7 +38,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
             .then(async function () {
             {
                 let data = self.parseUrl(url);
-                if (!data.novel_id) {
+                if (!data || !data.novel_id) {
                     console.log(data);
                     throw new ReferenceError();
                 }
@@ -188,16 +188,30 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
     }
     parseUrl(url) {
         let urlobj = {
-            url: new jsdom_url_1.URL(url),
+            url,
             novel_pid: null,
             novel_id: null,
             chapter_id: null,
             novel_r18: null,
         };
         //url = url.toString();
-        url = urlobj.url.href;
+        try {
+            urlobj.url = new jsdom_url_1.URL(url);
+            url = urlobj.url.href;
+        }
+        catch (e) {
+            console.warn(e.toString() + ` "${url}"`);
+        }
+        if (typeof url != 'string') {
+            throw new TypeError(url);
+        }
         let r;
         let m;
+        r = /^(n[\w]{6})$/;
+        if (m = r.exec(url)) {
+            urlobj.novel_id = m[1];
+            return urlobj;
+        }
         r = /(novel18)\.syosetu\.com/;
         if (m = r.exec(url)) {
             urlobj.novel_r18 = m[1];

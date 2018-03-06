@@ -425,9 +425,11 @@ export class NovelSiteDmzj extends NovelSite
 					})
 						.then(async function (ret)
 						{
-							pa.concat(ret.map(function (value, index, array)
+							pa = pa.concat(ret.map(function (value, index, array)
 							{
-								return value.toString();
+								//console.log(value.body);
+
+								return value.body.toString();
 							}))
 							;
 						})
@@ -500,7 +502,7 @@ export class NovelSiteDmzj extends NovelSite
 					return _t;
 				});
 
-				return pa.join();
+				return pa.join("\n");
 			})
 			.then(function (html)
 			{

@@ -67,7 +67,7 @@ export class NovelSiteSyosetu extends NovelSite
 				{
 					let data = self.parseUrl(url);
 
-					if (!data.novel_id)
+					if (!data || !data.novel_id)
 					{
 						console.log(data);
 
@@ -300,7 +300,7 @@ export class NovelSiteSyosetu extends NovelSite
 	parseUrl(url: string | URL): NovelSite.IParseUrl
 	{
 		let urlobj = {
-			url: new URL(url),
+			url,
 
 			novel_pid: null,
 			novel_id: null,
@@ -310,10 +310,31 @@ export class NovelSiteSyosetu extends NovelSite
 		};
 
 		//url = url.toString();
-		url = urlobj.url.href;
+
+		try
+		{
+			urlobj.url = new URL(url);
+			url = urlobj.url.href;
+		}
+		catch (e)
+		{
+			console.warn(e.toString() + ` "${url}"`);
+		}
+
+		if (typeof url != 'string')
+		{
+			throw new TypeError(url);
+		}
 
 		let r: RegExp;
 		let m;
+
+		r = /^(n[\w]{6})$/;
+		if (m = r.exec(url))
+		{
+			urlobj.novel_id = m[1];
+			return urlobj;
+		}
 
 		r = /(novel18)\.syosetu\.com/;
 		if (m = r.exec(url))
