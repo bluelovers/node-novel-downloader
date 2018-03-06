@@ -1,6 +1,6 @@
 # novel-downloader
 
-> novel site downloader ( dmzj / wenku8 / syosetu )
+> novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )
 
 `npm install novel-text`
 
