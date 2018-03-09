@@ -42,7 +42,18 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'n6789do',
 
-		'n6006cw',
+		//'n6006cw',
+
+		//'n2027de',
+
+		//'n9055cl',
+
+		//'n1354dw',
+
+		//'n5705ch',
+		//'http://novel18.syosetu.com/n9119ci/',
+
+		'http://ncode.syosetu.com/n1678cx/',
 
 	].forEach(async function (value, index, array)
 	{
@@ -50,7 +61,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 			disableTxtdownload: true,
 			disableDownload: true,
 
-			noFirePrefix: true,
+			//noFirePrefix: true,
 			noFilePadend: true,
 		}).then(function (novel)
 		{

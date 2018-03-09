@@ -2,7 +2,7 @@
 
 > novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )
 
-`npm install novel-text`
+`npm install novel-downloader`
 
 ## demo
 
