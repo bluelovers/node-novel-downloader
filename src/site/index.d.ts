@@ -37,6 +37,7 @@ export declare module NovelSite {
         noDirPadend?: boolean;
         noFirePrefix?: boolean;
         noFilePadend?: boolean;
+        startIndex?: number;
     }
     interface IParseUrl {
         url?: URL | string;
@@ -85,6 +86,7 @@ export declare module NovelSite {
         disableDownload?: boolean;
         disableCheckExists?: boolean;
         optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM;
+        startIndex?: number;
     }
     interface INovelSite {
         download(url: string | URL, options?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;

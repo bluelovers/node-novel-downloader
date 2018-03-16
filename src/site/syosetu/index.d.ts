@@ -4,12 +4,12 @@ import { PromiseBluebird } from '../index';
 export interface INovel extends NovelSite.INovel {
     novel_syosetu_id: string;
 }
-export interface IDownloadOptions extends NovelSite.IDownloadOptions, NovelSite.IOptions {
+export declare type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & {
     /**
      * 不使用小說家提供的 txt 下載連結
      */
     disableTxtdownload?: boolean;
-}
+};
 export declare class NovelSiteSyosetu extends NovelSite {
     static IDKEY: string;
     constructor(options: IDownloadOptions, ...argv: any[]);

@@ -160,6 +160,8 @@ export module NovelSite
 
 		noFirePrefix?: boolean,
 		noFilePadend?: boolean,
+
+		startIndex?: number,
 	}
 
 	export interface IParseUrl
@@ -234,6 +236,8 @@ export module NovelSite
 		disableCheckExists?: boolean,
 
 		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM,
+
+		startIndex?: number,
 	}
 
 	export interface INovelSite
