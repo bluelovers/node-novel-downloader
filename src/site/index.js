@@ -10,18 +10,15 @@ const PromiseBluebird = require("bluebird");
 exports.PromiseBluebird = PromiseBluebird;
 const path = require("path");
 const _root_1 = require("../../_root");
-const jsdom_extra_1 = require("jsdom-extra");
+const jsdom_1 = require("../jsdom");
+exports.defaultJSDOMOptions = jsdom_1.defaultJSDOMOptions;
+exports.createOptionsJSDOM = jsdom_1.createOptionsJSDOM;
 const fs_iconv_1 = require("fs-iconv");
 //import * as moment from 'moment';
 const moment = require("moment-timezone");
 exports.moment = moment;
 moment.fn.toJSON = function () { return this.format(); };
 exports.SYMBOL_CACHE = Symbol.for('cache');
-exports.defaultJSDOMOptions = {
-    virtualConsole: new jsdom_extra_1.VirtualConsole,
-    runScripts: 'dangerously',
-    disableCheerio: true,
-};
 class NovelSite {
     constructor(options, ...argv) {
         this.optionsInit = options;

@@ -21,7 +21,7 @@ import NovelSite from '../src/site/kakuyomu';
 	].forEach(async function (value, index, array)
 	{
 		await Site.download(value, {
-//			disableDownload: true,
+			disableDownload: true,
 
 			noFirePrefix: true,
 			noFilePadend: true,

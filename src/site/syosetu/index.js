@@ -17,6 +17,7 @@ const jsdom_url_1 = require("jsdom-url");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
+const jsdom_1 = require("../../jsdom");
 let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
@@ -31,8 +32,12 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
         const self = this;
         const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
         optionsRuntime[index_1.SYMBOL_CACHE] = {};
-        optionsRuntime.optionsJSDOM = Object.assign({}, index_1.defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
-        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new jsdom_extra_2.LazyCookieJar();
+        /*
+        optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
+
+        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
+        */
+        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
         return index_2.PromiseBluebird
             .bind(self)
             .then(async function () {

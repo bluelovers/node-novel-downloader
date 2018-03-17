@@ -16,6 +16,7 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import * as shortid from 'shortid';
 import { manyRequest } from '../../fetch';
+import { createOptionsJSDOM } from '../../jsdom';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteDmzj>>()
 export class NovelSiteDmzj extends NovelSite
@@ -78,7 +79,13 @@ export class NovelSiteDmzj extends NovelSite
 
 		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime>(downloadOptions);
 
+		/*
 		optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM, {
+			runScripts: 'dangerously',
+		});
+		*/
+
+		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM, {
 			runScripts: 'dangerously',
 		});
 

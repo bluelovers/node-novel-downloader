@@ -65,7 +65,9 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 //		'http://ncode.syosetu.com/n1721cj/',
 
-		'http://ncode.syosetu.com/n8162cb/',
+//		'http://ncode.syosetu.com/n8162cb/',
+
+		'http://ncode.syosetu.com/n6337cb/',
 
 	].forEach(async function (value, index, array)
 	{

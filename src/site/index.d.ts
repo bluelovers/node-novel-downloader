@@ -4,12 +4,12 @@
  */
 import bluebirdDecorator from '../decorator/bluebird';
 import * as PromiseBluebird from 'bluebird';
-import { IFromUrlOptions, IOptionsJSDOM } from 'jsdom-extra';
+import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
+export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM };
 import * as moment from 'moment-timezone';
 export { moment };
 export { bluebirdDecorator, PromiseBluebird };
 export declare const SYMBOL_CACHE: unique symbol;
-export declare const defaultJSDOMOptions: IFromUrlOptions;
 export declare class NovelSite implements NovelSite.INovelSite {
     PATH_NOVEL_MAIN: string;
     optionsInit?: NovelSite.IOptions;

@@ -9,7 +9,10 @@ import * as PromiseBluebird from 'bluebird';
 import { URL } from 'jsdom-url';
 import * as path from "path";
 import rootPath from "../../_root";
-import { IFromUrlOptions, VirtualConsole, IOptionsJSDOM, IFromFileOptions } from 'jsdom-extra';
+
+import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
+export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM }
+
 import fs, { trimFilename } from 'fs-iconv';
 
 //import * as moment from 'moment';
@@ -22,11 +25,7 @@ export { bluebirdDecorator, PromiseBluebird }
 
 export const SYMBOL_CACHE = Symbol.for('cache');
 
-export const defaultJSDOMOptions: IFromUrlOptions = {
-	virtualConsole: new VirtualConsole,
-	runScripts: 'dangerously',
-	disableCheerio: true,
-};
+
 
 export class NovelSite implements NovelSite.INovelSite
 {

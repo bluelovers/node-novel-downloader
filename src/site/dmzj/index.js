@@ -19,6 +19,7 @@ const index_2 = require("../index");
 const index_3 = require("../index");
 const shortid = require("shortid");
 const fetch_1 = require("../../fetch");
+const jsdom_1 = require("../../jsdom");
 let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
     _makeUrl(urlobj, page) {
         if (!urlobj.chapter_id) {
@@ -55,7 +56,12 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
     download(url, downloadOptions = {}) {
         const self = this;
         const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
-        optionsRuntime.optionsJSDOM = Object.assign({}, index_1.defaultJSDOMOptions, optionsRuntime.optionsJSDOM, {
+        /*
+        optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM, {
+            runScripts: 'dangerously',
+        });
+        */
+        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM, {
             runScripts: 'dangerously',
         });
         let path_main;

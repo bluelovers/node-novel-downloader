@@ -11,6 +11,7 @@ import { URL } from 'jsdom-url';
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
+import { createOptionsJSDOM } from '../../jsdom';
 
 export interface INovel extends NovelSite.INovel
 {
@@ -55,9 +56,13 @@ export class NovelSiteSyosetu extends NovelSite
 			jar?,
 		};
 
+		/*
 		optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
 
 		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
+		*/
+
+		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
 		return PromiseBluebird
 			.bind(self)
