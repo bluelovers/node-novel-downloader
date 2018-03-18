@@ -66,6 +66,7 @@ export class NovelSiteKakuyomu extends NovelSite
 
 		if (typeof url != 'string')
 		{
+			// @ts-ignore
 			throw new TypeError(url);
 		}
 

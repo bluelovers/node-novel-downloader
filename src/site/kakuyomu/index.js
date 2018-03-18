@@ -44,6 +44,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
             console.warn(e.toString() + ` "${url}"`);
         }
         if (typeof url != 'string') {
+            // @ts-ignore
             throw new TypeError(url);
         }
         let r;

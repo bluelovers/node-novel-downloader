@@ -7,6 +7,7 @@ import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 // @ts-ignore
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
+import { getFilePath, getVolumePath } from '../fs';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
@@ -37,9 +38,9 @@ export class NovelSiteSyosetu extends NovelSite
 
 	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>)
 	{
-		let url = optionsRuntime[SYMBOL_CACHE].url;
+		super.session(optionsRuntime);
 
-		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
+		let url = optionsRuntime[SYMBOL_CACHE].url;
 
 		(optionsRuntime.optionsJSDOM.cookieJar as LazyCookieJar)
 			.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
@@ -63,6 +64,8 @@ export class NovelSiteSyosetu extends NovelSite
 		*/
 
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+
+		console.log(optionsRuntime);
 
 		return PromiseBluebird
 			.bind(self)
@@ -98,53 +101,22 @@ export class NovelSiteSyosetu extends NovelSite
 				let ret = await PromiseBluebird
 					.mapSeries(novel.volume_list, function (volume, vid)
 					{
-						let dirname: string;
-
-						{
-							let _vid = '';
-
-							if (!optionsRuntime.noDirPrefix)
-							{
-								_vid = vid.toString().padStart(4, '0') + '0';
-								_vid += '_';
-							}
-
-							dirname = path.join(path_novel,
-								`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
-							);
-						}
+						let dirname = getVolumePath(self, {
+							path_novel,
+							volume, vid
+						}, optionsRuntime);
 
 						return PromiseBluebird
-							.mapSeries(volume.chapter_list, async function (chapter)
+							.mapSeries(volume.chapter_list, async function (chapter, cid)
 							{
 								chapter.chapter_index = (idx++);
 
-								let ext = '.txt';
-
-								let file: string;
-
-								{
-									let prefix = '';
-
-									if (!optionsRuntime.noFirePrefix)
-									{
-										prefix = chapter.chapter_index.toString()
-											.padStart(4, '0') + '0'
-										;
-										prefix += '_';
-									}
-
-									let pad = '';
-
-									if (!optionsRuntime.noFilePadend)
-									{
-										pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
-									}
-
-									file = path.join(dirname,
-										`${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`
-									);
-								}
+								let file = getFilePath(self, {
+									chapter, cid,
+									ext: '.txt',
+									dirname,
+									volume, vid,
+								}, optionsRuntime);
 
 								if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
 								{
@@ -327,6 +299,7 @@ export class NovelSiteSyosetu extends NovelSite
 
 		if (typeof url != 'string')
 		{
+			// @ts-ignore
 			throw new TypeError(url);
 		}
 
@@ -433,7 +406,7 @@ export class NovelSiteSyosetu extends NovelSite
 
 				{
 					let a = dom.$('#novel_contents .series_title').text()
-						.replace(/[\r\n\t]+|^\s+|\s+$/g)
+						.replace(/[\r\n\t]+|^\s+|\s+$/g, '')
 					;
 					if (a)
 					{

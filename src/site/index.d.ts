@@ -15,18 +15,20 @@ export declare class NovelSite implements NovelSite.INovelSite {
     optionsInit?: NovelSite.IOptions;
     constructor(options: NovelSite.IOptions, ...argv: any[]);
     static create(options: NovelSite.IOptions, ...argv: any[]): NovelSite;
-    getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions];
-    trimFilenameChapter(name: any): string;
-    trimFilenameVolume(name: any): string;
-    trimFilenameNovel(name: any): string;
-    trimFilename(name: any): string;
     static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
+    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): void;
     download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
     makeUrl(urlobj: NovelSite.IParseUrl, options?: any): URL;
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
     getStatic<T>(): typeof NovelSite;
     readonly IDKEY: string;
+    getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions];
+    trimFilenameChapter(name: any): string;
+    trimFilenameVolume(name: any): string;
+    trimFilenameNovel(name: any): string;
+    trimFilename(name: any): string;
 }
+export declare type IOptionsRuntime = NovelSite.IOptionsRuntime;
 export declare module NovelSite {
     type IOptionsRuntime = IOptions & IDownloadOptions;
     interface IOptions {
@@ -38,6 +40,8 @@ export declare module NovelSite {
         noFirePrefix?: boolean;
         noFilePadend?: boolean;
         startIndex?: number;
+        allowEmptyVolumeTitle?: boolean;
+        filePrefixMode?: number;
     }
     interface IParseUrl {
         url?: URL | string;

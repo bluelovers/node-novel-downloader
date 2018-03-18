@@ -10,7 +10,7 @@ import { URL } from 'jsdom-url';
 import * as path from "path";
 import rootPath from "../../_root";
 
-import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
+import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM, INovelOptionsJSDOM } from '../jsdom';
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM }
 
 import fs, { trimFilename } from 'fs-iconv';
@@ -44,6 +44,50 @@ export class NovelSite implements NovelSite.INovelSite
 	static create(options: NovelSite.IOptions, ...argv)
 	{
 		return new this(options, ...argv);
+	}
+
+	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
+	{
+		return false;
+	}
+
+	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime)
+	{
+		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+	}
+
+	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
+	makeUrl(urlobj: NovelSite.IParseUrl, options?): URL
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
+	parseUrl(url: URL | string, options?): NovelSite.IParseUrl
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
+	getStatic<T>(): typeof NovelSite
+	{
+		// @ts-ignore
+		return this.__proto__.constructor;
+	}
+
+	get IDKEY(): string
+	{
+		// @ts-ignore
+		let key = this.getStatic().IDKEY;
+
+		if (typeof key != 'string' || !key)
+		{
+			throw new SyntaxError(`IDKEY not implemented`);
+		}
+
+		return key;
 	}
 
 	getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions]
@@ -102,46 +146,9 @@ export class NovelSite implements NovelSite.INovelSite
 	{
 		return trimFilename(name);
 	}
-
-	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
-	{
-		return false;
-	}
-
-	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>
-	{
-		throw new SyntaxError(`Function not implemented`);
-	}
-
-	makeUrl(urlobj: NovelSite.IParseUrl, options?): URL
-	{
-		throw new SyntaxError(`Function not implemented`);
-	}
-
-	parseUrl(url: URL | string, options?): NovelSite.IParseUrl
-	{
-		throw new SyntaxError(`Function not implemented`);
-	}
-
-	getStatic<T>(): typeof NovelSite
-	{
-		// @ts-ignore
-		return this.__proto__.constructor;
-	}
-
-	get IDKEY(): string
-	{
-		// @ts-ignore
-		let key = this.getStatic().IDKEY;
-
-		if (typeof key != 'string' || !key)
-		{
-			throw new SyntaxError(`IDKEY not implemented`);
-		}
-
-		return key;
-	}
 }
+
+export type IOptionsRuntime = NovelSite.IOptionsRuntime;
 
 export module NovelSite
 {
@@ -161,6 +168,10 @@ export module NovelSite
 		noFilePadend?: boolean,
 
 		startIndex?: number,
+
+		allowEmptyVolumeTitle?: boolean,
+
+		filePrefixMode?: number,
 	}
 
 	export interface IParseUrl

@@ -12,13 +12,13 @@ export { LazyCookie, LazyCookieJar }
 export type INovelOptionsJSDOM = IFromUrlOptions & IOptionsJSDOM;
 
 export const defaultJSDOMOptions: IFromUrlOptions = {
-	virtualConsole: new VirtualConsole,
-	runScripts: 'dangerously',
+	//virtualConsole: new VirtualConsole,
+	//runScripts: 'dangerously',
 	disableCheerio: true,
 	minifyHTML: true,
 };
 
-export function createOptionsJSDOM(options: INovelOptionsJSDOM = {}, ...opts: INovelOptionsJSDOM[]): INovelOptionsJSDOM
+export function createOptionsJSDOM<T = INovelOptionsJSDOM>(options: Partial<T & INovelOptionsJSDOM> = {}, ...opts: INovelOptionsJSDOM[]): Partial<T & INovelOptionsJSDOM>
 {
 	options = Object.assign({}, defaultJSDOMOptions, options, ...opts);
 	options.cookieJar = options.cookieJar || new LazyCookieJar();

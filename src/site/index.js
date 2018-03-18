@@ -28,6 +28,33 @@ class NovelSite {
     static create(options, ...argv) {
         return new this(options, ...argv);
     }
+    static check(url, options) {
+        return false;
+    }
+    session(optionsRuntime) {
+        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+    }
+    download(url, options) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    makeUrl(urlobj, options) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    parseUrl(url, options) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    getStatic() {
+        // @ts-ignore
+        return this.__proto__.constructor;
+    }
+    get IDKEY() {
+        // @ts-ignore
+        let key = this.getStatic().IDKEY;
+        if (typeof key != 'string' || !key) {
+            throw new SyntaxError(`IDKEY not implemented`);
+        }
+        return key;
+    }
     getOutputDir(options, novelName) {
         options = Object.assign({}, this.optionsInit, options);
         if (!options.outputDir) {
@@ -61,30 +88,6 @@ class NovelSite {
     }
     trimFilename(name) {
         return fs_iconv_1.trimFilename(name);
-    }
-    static check(url, options) {
-        return false;
-    }
-    download(url, options) {
-        throw new SyntaxError(`Function not implemented`);
-    }
-    makeUrl(urlobj, options) {
-        throw new SyntaxError(`Function not implemented`);
-    }
-    parseUrl(url, options) {
-        throw new SyntaxError(`Function not implemented`);
-    }
-    getStatic() {
-        // @ts-ignore
-        return this.__proto__.constructor;
-    }
-    get IDKEY() {
-        // @ts-ignore
-        let key = this.getStatic().IDKEY;
-        if (typeof key != 'string' || !key) {
-            throw new SyntaxError(`IDKEY not implemented`);
-        }
-        return key;
     }
 }
 exports.NovelSite = NovelSite;

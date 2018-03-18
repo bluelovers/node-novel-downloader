@@ -8,6 +8,7 @@ import * as Promise from 'bluebird';
 export interface IOptions extends request.RequestPromiseOptions {
     retry?: number;
     delay?: number;
+    jar?: any;
     libRequest?: (url: string, options?: IOptions) => request.RequestPromise;
 }
 export declare function retryRequest(url: any, options?: IOptions): Promise<any>;

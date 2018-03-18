@@ -12,6 +12,9 @@ export interface IOptions extends request.RequestPromiseOptions
 {
 	retry?: number,
 	delay?: number,
+
+	jar?,
+
 	libRequest?: (url: string, options?: IOptions) => request.RequestPromise,
 }
 

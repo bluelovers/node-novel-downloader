@@ -11,9 +11,8 @@ const fs_iconv_1 = require("fs-iconv");
 const path = require("path");
 const node_novel_info_1 = require("node-novel-info");
 const jsdom_extra_1 = require("jsdom-extra");
-// @ts-ignore
-const jsdom_extra_2 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
+const fs_1 = require("../fs");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
@@ -23,8 +22,8 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
         super(options, ...argv);
     }
     session(optionsRuntime) {
+        super.session(optionsRuntime);
         let url = optionsRuntime[index_1.SYMBOL_CACHE].url;
-        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new jsdom_extra_2.LazyCookieJar();
         optionsRuntime.optionsJSDOM.cookieJar
             .setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
     }
@@ -38,6 +37,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
         optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
         */
         optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+        console.log(optionsRuntime);
         return index_2.PromiseBluebird
             .bind(self)
             .then(async function () {
@@ -57,33 +57,19 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
             let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
             let ret = await index_2.PromiseBluebird
                 .mapSeries(novel.volume_list, function (volume, vid) {
-                let dirname;
-                {
-                    let _vid = '';
-                    if (!optionsRuntime.noDirPrefix) {
-                        _vid = vid.toString().padStart(4, '0') + '0';
-                        _vid += '_';
-                    }
-                    dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
-                }
+                let dirname = fs_1.getVolumePath(self, {
+                    path_novel,
+                    volume, vid
+                }, optionsRuntime);
                 return index_2.PromiseBluebird
-                    .mapSeries(volume.chapter_list, async function (chapter) {
+                    .mapSeries(volume.chapter_list, async function (chapter, cid) {
                     chapter.chapter_index = (idx++);
-                    let ext = '.txt';
-                    let file;
-                    {
-                        let prefix = '';
-                        if (!optionsRuntime.noFirePrefix) {
-                            prefix = chapter.chapter_index.toString()
-                                .padStart(4, '0') + '0';
-                            prefix += '_';
-                        }
-                        let pad = '';
-                        if (!optionsRuntime.noFilePadend) {
-                            pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
-                        }
-                        file = path.join(dirname, `${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`);
-                    }
+                    let file = fs_1.getFilePath(self, {
+                        chapter, cid,
+                        ext: '.txt',
+                        dirname,
+                        volume, vid,
+                    }, optionsRuntime);
                     if (!optionsRuntime.disableCheckExists && fs_iconv_1.default.existsSync(file)) {
                         let txt = await fs_iconv_1.default.readFile(file);
                         if (txt.toString()) {
@@ -208,6 +194,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
             console.warn(e.toString() + ` "${url}"`);
         }
         if (typeof url != 'string') {
+            // @ts-ignore
             throw new TypeError(url);
         }
         let r;
@@ -269,7 +256,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
             let novel_series_title;
             {
                 let a = dom.$('#novel_contents .series_title').text()
-                    .replace(/[\r\n\t]+|^\s+|\s+$/g);
+                    .replace(/[\r\n\t]+|^\s+|\s+$/g, '');
                 if (a) {
                     novel_series_title = a;
                 }

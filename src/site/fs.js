@@ -1,0 +1,63 @@
+"use strict";
+/**
+ * Created by user on 2018/3/18/018.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const util_1 = require("../util");
+const path = require("path");
+function padStart(id, pad = '0', len = 4) {
+    return id.toString().padStart(len, '0') + pad;
+}
+exports.padStart = padStart;
+function getVolumePath(self, { volume, vid, path_novel, }, optionsRuntime) {
+    let dirname;
+    let _vid = '';
+    dirname = self.trimFilenameVolume(volume.volume_title);
+    if (!optionsRuntime.noDirPrefix) {
+        _vid = padStart(vid);
+        _vid += '_';
+    }
+    if (!dirname && optionsRuntime.allowEmptyVolumeTitle) {
+        dirname = vid.toString() + 'empty';
+    }
+    if (!dirname) {
+        throw new RangeError(`volume_title is empty`);
+    }
+    dirname = path.join(path_novel, `${_vid}${dirname}`);
+    return dirname;
+}
+exports.getVolumePath = getVolumePath;
+function getFilePath(self, { chapter, cid, dirname, ext = '.txt', volume, vid, }, optionsRuntime = {}) {
+    let file;
+    let prefix = '';
+    let pad = '';
+    file = self.trimFilenameChapter(chapter.chapter_title);
+    if (!optionsRuntime.noFirePrefix) {
+        let idx;
+        if (optionsRuntime.filePrefixMode || util_1.isUndef(chapter.chapter_index)) {
+            idx = cid;
+            if (optionsRuntime.startIndex) {
+                idx += optionsRuntime.startIndex;
+            }
+        }
+        else {
+            idx = chapter.chapter_index;
+        }
+        prefix = padStart(idx);
+        prefix += '_';
+    }
+    if (!optionsRuntime.noFilePadend && chapter.chapter_date) {
+        pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
+    }
+    if (!file) {
+        throw new RangeError(`chapter_title is empty`);
+    }
+    if (!dirname) {
+        throw new RangeError(`dirname is empty`);
+    }
+    file = path.join(dirname, `${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`);
+    return file;
+}
+exports.getFilePath = getFilePath;
+const self = require("./fs");
+exports.default = self;
