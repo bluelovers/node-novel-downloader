@@ -3,8 +3,18 @@
  * Created by user on 2018/3/18/018.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-function isUndef(v) {
-    return typeof v == 'undefined' || v === null;
+function isUndef(v, opts = null, strict) {
+    let bool = typeof v == 'undefined' || v === null;
+    if (!bool && !isUndef(opts)) {
+        opts = Array.isArray(opts) ? opts : [opts];
+        for (let t of opts) {
+            let bool = strict ? v === t : v == t;
+            if (bool) {
+                return bool;
+            }
+        }
+    }
+    return bool;
 }
 exports.isUndef = isUndef;
 const self = require("./util");

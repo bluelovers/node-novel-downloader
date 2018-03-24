@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fetch_1 = require("../../fetch");
 const fs_iconv_1 = require("fs-iconv");
 const path = require("path");
-const node_novel_info_1 = require("node-novel-info");
 const jsdom_extra_1 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
 const fs_1 = require("../fs");
@@ -26,35 +25,25 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
         let url = optionsRuntime[index_1.SYMBOL_CACHE].url;
         optionsRuntime.optionsJSDOM.cookieJar
             .setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
+        return this;
     }
     download(url, downloadOptions = {}) {
         const self = this;
         const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
-        optionsRuntime[index_1.SYMBOL_CACHE] = {};
-        /*
-        optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
-
-        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
-        */
         optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
         console.log(optionsRuntime);
         return index_2.PromiseBluebird
             .bind(self)
             .then(async function () {
-            {
-                let data = self.parseUrl(url);
-                if (!data || !data.novel_id) {
-                    console.log(data);
-                    throw new ReferenceError();
-                }
-                url = self.makeUrl(data, true);
-            }
+            url = this.createMainUrl(url);
             optionsRuntime[index_1.SYMBOL_CACHE].url = url;
             self.session(optionsRuntime);
             let novel = await self.get_volume_list(url, optionsRuntime);
             //console.log(novel);
             let idx = downloadOptions.startIndex || 0;
             let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
+            optionsRuntime[index_1.SYMBOL_CACHE].novel = novel;
+            optionsRuntime[index_1.SYMBOL_CACHE].path_novel = path_novel;
             let ret = await index_2.PromiseBluebird
                 .mapSeries(novel.volume_list, function (volume, vid) {
                 let dirname = fs_1.getVolumePath(self, {
@@ -131,33 +120,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                     spaces: "\t",
                 });
             });
-            {
-                let options = {};
-                options[self.IDKEY] = {
-                    txtdownload_id: novel.novel_syosetu_id,
-                };
-                let md = node_novel_info_1.default.stringify({
-                    novel: {
-                        tags: [
-                            self.IDKEY,
-                        ],
-                        series: {
-                            name: novel.novel_series_title || '',
-                        },
-                    },
-                    options,
-                    // @ts-ignore
-                    link: novel.link || [],
-                }, novel, {
-                    options: {
-                        textlayout: {
-                            allow_lf2: true,
-                        }
-                    },
-                });
-                let file = path.join(path_novel, `README.md`);
-                await fs_iconv_1.default.outputFile(file, md);
-            }
+            await self._saveReadme(optionsRuntime);
             return novel;
         })
             .finally(function () {
@@ -168,6 +131,18 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 });
             }
         });
+    }
+    _saveReadme(optionsRuntime, options = {}, ...opts) {
+        options[this.IDKEY] = {
+            txtdownload_id: optionsRuntime[index_1.SYMBOL_CACHE].novel.novel_syosetu_id,
+        };
+        return super._saveReadme(optionsRuntime, options, {
+            options: {
+                textlayout: {
+                    allow_lf2: true,
+                }
+            },
+        }, ...opts);
     }
     makeUrl(urlobj, bool) {
         let subdomain = urlobj.novel_r18 ? 'novel18' : 'ncode';
@@ -223,13 +198,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
     }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
-        {
-            let data = self.parseUrl(url);
-            if (!data.novel_id) {
-                throw new ReferenceError();
-            }
-            url = self.makeUrl(data, true);
-        }
+        url = this.createMainUrl(url);
         return await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;

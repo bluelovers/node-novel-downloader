@@ -11,10 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_iconv_1 = require("fs-iconv");
 const path = require("path");
-const node_novel_info_1 = require("node-novel-info");
 const jsdom_extra_1 = require("jsdom-extra");
-// @ts-ignore
-const jsdom_extra_2 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
 const index_1 = require("../index");
 const index_2 = require("../index");
@@ -63,35 +60,24 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
         return urlobj;
     }
     session(optionsRuntime) {
-        let url = optionsRuntime[index_1.SYMBOL_CACHE].url;
-        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new jsdom_extra_2.LazyCookieJar();
+        super.session(optionsRuntime);
+        return this;
     }
     download(url, downloadOptions = {}) {
         const self = this;
         const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
-        optionsRuntime[index_1.SYMBOL_CACHE] = {};
-        /*
-        optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
-
-        optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
-        */
         optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
         return index_2.PromiseBluebird
             .bind(self)
             .then(async function () {
-            {
-                let data = self.parseUrl(url);
-                if (!data || !data.novel_id) {
-                    console.log(data);
-                    throw new ReferenceError();
-                }
-                url = self.makeUrl(data, true);
-            }
+            url = this.createMainUrl(url);
             optionsRuntime[index_1.SYMBOL_CACHE].url = url;
             self.session(optionsRuntime);
             let novel = await self.get_volume_list(url, optionsRuntime);
             let idx = downloadOptions.startIndex || 0;
             let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
+            optionsRuntime[index_1.SYMBOL_CACHE].novel = novel;
+            optionsRuntime[index_1.SYMBOL_CACHE].path_novel = path_novel;
             let ret = await index_2.PromiseBluebird
                 .mapSeries(novel.volume_list, function (volume, vid) {
                 let dirname;
@@ -168,39 +154,22 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
                     spaces: "\t",
                 });
             });
-            {
-                let options = {};
-                let md = node_novel_info_1.default.stringify({
-                    novel: {
-                        tags: [
-                            self.IDKEY,
-                        ],
-                    },
-                    options,
-                    // @ts-ignore
-                    link: novel.link || [],
-                }, novel, {
-                    options: {
-                        textlayout: {
-                            allow_lf2: true,
-                        }
-                    },
-                });
-                let file = path.join(path_novel, `README.md`);
-                await fs_iconv_1.default.outputFile(file, md);
-            }
+            await self._saveReadme(optionsRuntime);
             return novel;
         });
     }
+    _saveReadme(optionsRuntime, options = {}, ...opts) {
+        return super._saveReadme(optionsRuntime, options, {
+            options: {
+                textlayout: {
+                    allow_lf2: true,
+                }
+            },
+        }, ...opts);
+    }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
-        {
-            let data = self.parseUrl(url);
-            if (!data.novel_id) {
-                throw new ReferenceError();
-            }
-            url = self.makeUrl(data, true);
-        }
+        url = this.createMainUrl(url);
         return await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;

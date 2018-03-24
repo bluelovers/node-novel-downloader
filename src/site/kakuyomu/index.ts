@@ -16,6 +16,7 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import { createOptionsJSDOM } from '../../jsdom';
+import { IOptionsRuntime } from '../index';
 
 export type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & {
 
@@ -94,9 +95,9 @@ export class NovelSiteKakuyomu extends NovelSite
 
 	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>)
 	{
-		let url = optionsRuntime[SYMBOL_CACHE].url;
+		super.session(optionsRuntime);
 
-		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
+		return this;
 	}
 
 	download(url: string | URL, downloadOptions: IDownloadOptions = {})
@@ -105,34 +106,13 @@ export class NovelSiteKakuyomu extends NovelSite
 
 		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime & IDownloadOptions>(downloadOptions);
 
-		optionsRuntime[SYMBOL_CACHE] = {} as {
-			jar?,
-		};
-
-		/*
-		optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
-
-		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
-		*/
-
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
 		return PromiseBluebird
 			.bind(self)
 			.then(async function ()
 			{
-				{
-					let data = self.parseUrl(url);
-
-					if (!data || !data.novel_id)
-					{
-						console.log(data);
-
-						throw new ReferenceError();
-					}
-
-					url = self.makeUrl(data, true);
-				}
+				url = this.createMainUrl(url as any);
 
 				optionsRuntime[SYMBOL_CACHE].url = url;
 
@@ -145,6 +125,9 @@ export class NovelSiteKakuyomu extends NovelSite
 				let path_novel = path.join(self.PATH_NOVEL_MAIN,
 					`${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
 				);
+
+				optionsRuntime[SYMBOL_CACHE].novel = novel;
+				optionsRuntime[SYMBOL_CACHE].path_novel = path_novel;
 
 				let ret = await PromiseBluebird
 					.mapSeries(novel.volume_list, function (volume, vid)
@@ -275,51 +258,31 @@ export class NovelSiteKakuyomu extends NovelSite
 					})
 				;
 
-				{
-					let options = {};
-
-					let md = novelInfo.stringify({
-						novel: {
-							tags: [
-								self.IDKEY,
-							],
-						},
-						options,
-						// @ts-ignore
-						link: novel.link || [],
-					}, novel, {
-						options: {
-							textlayout: {
-								allow_lf2: true,
-							}
-						},
-					});
-
-					let file = path.join(path_novel, `README.md`);
-					await fs.outputFile(file, md);
-				}
+				await self._saveReadme(optionsRuntime);
 
 				return novel;
 			})
 		;
 	}
 
-	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: URL,
+	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
+	{
+		return super._saveReadme(optionsRuntime, options, {
+			options: {
+				textlayout: {
+					allow_lf2: true,
+				}
+			},
+		}, ...opts);
+	}
+
+	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>
 	{
 		const self = this;
 
-		{
-			let data = self.parseUrl(url);
-
-			if (!data.novel_id)
-			{
-				throw new ReferenceError();
-			}
-
-			url = self.makeUrl(data, true);
-		}
+		url = this.createMainUrl(url as any);
 
 		return await fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)

@@ -9,7 +9,7 @@ import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
 import { getFilePath, getVolumePath } from '../fs';
 
-import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
+import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE, IOptionsRuntime } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import { createOptionsJSDOM } from '../../jsdom';
@@ -45,6 +45,8 @@ export class NovelSiteSyosetu extends NovelSite
 		(optionsRuntime.optionsJSDOM.cookieJar as LazyCookieJar)
 			.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
 		;
+
+		return this;
 	}
 
 	download(url: string | URL, downloadOptions: IDownloadOptions = {})
@@ -52,16 +54,6 @@ export class NovelSiteSyosetu extends NovelSite
 		const self = this;
 
 		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime & IDownloadOptions>(downloadOptions);
-
-		optionsRuntime[SYMBOL_CACHE] = {} as {
-			jar?,
-		};
-
-		/*
-		optionsRuntime.optionsJSDOM = Object.assign({}, defaultJSDOMOptions, optionsRuntime.optionsJSDOM);
-
-		optionsRuntime.optionsJSDOM.cookieJar = optionsRuntime.optionsJSDOM.cookieJar || new LazyCookieJar();
-		*/
 
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
@@ -71,18 +63,7 @@ export class NovelSiteSyosetu extends NovelSite
 			.bind(self)
 			.then(async function ()
 			{
-				{
-					let data = self.parseUrl(url);
-
-					if (!data || !data.novel_id)
-					{
-						console.log(data);
-
-						throw new ReferenceError();
-					}
-
-					url = self.makeUrl(data, true);
-				}
+				url = this.createMainUrl(url as any);
 
 				optionsRuntime[SYMBOL_CACHE].url = url;
 
@@ -97,6 +78,9 @@ export class NovelSiteSyosetu extends NovelSite
 				let path_novel = path.join(self.PATH_NOVEL_MAIN,
 					`${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
 				);
+
+				optionsRuntime[SYMBOL_CACHE].novel = novel;
+				optionsRuntime[SYMBOL_CACHE].path_novel = path_novel;
 
 				let ret = await PromiseBluebird
 					.mapSeries(novel.volume_list, function (volume, vid)
@@ -213,35 +197,7 @@ export class NovelSiteSyosetu extends NovelSite
 					})
 				;
 
-				{
-					let options = {};
-					options[self.IDKEY] = {
-						txtdownload_id: novel.novel_syosetu_id,
-					};
-
-					let md = novelInfo.stringify({
-						novel: {
-							tags: [
-								self.IDKEY,
-							],
-							series: {
-								name: novel.novel_series_title || '',
-							},
-						},
-						options,
-						// @ts-ignore
-						link: novel.link || [],
-					}, novel, {
-						options: {
-							textlayout: {
-								allow_lf2: true,
-							}
-						},
-					});
-
-					let file = path.join(path_novel, `README.md`);
-					await fs.outputFile(file, md);
-				}
+				await self._saveReadme(optionsRuntime);
 
 				return novel;
 			})
@@ -257,6 +213,21 @@ export class NovelSiteSyosetu extends NovelSite
 
 			})
 			;
+	}
+
+	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
+	{
+		options[this.IDKEY] = {
+			txtdownload_id: optionsRuntime[SYMBOL_CACHE].novel.novel_syosetu_id,
+		};
+
+		return super._saveReadme(optionsRuntime, options, {
+			options: {
+				textlayout: {
+					allow_lf2: true,
+				}
+			},
+		}, ...opts);
 	}
 
 	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
@@ -339,22 +310,13 @@ export class NovelSiteSyosetu extends NovelSite
 		return urlobj;
 	}
 
-	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: URL,
+	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>
 	{
 		const self = this;
 
-		{
-			let data = self.parseUrl(url);
-
-			if (!data.novel_id)
-			{
-				throw new ReferenceError();
-			}
-
-			url = self.makeUrl(data, true);
-		}
+		url = this.createMainUrl(url as any);
 
 		return await fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)

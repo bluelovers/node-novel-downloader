@@ -16,21 +16,29 @@ export declare class NovelSite implements NovelSite.INovelSite {
     constructor(options: NovelSite.IOptions, ...argv: any[]);
     static create(options: NovelSite.IOptions, ...argv: any[]): NovelSite;
     static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
-    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): void;
+    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): this;
     download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
+    get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & NovelSite.IDownloadOptions>): Promise<NovelSite.INovel>;
     makeUrl(urlobj: NovelSite.IParseUrl, options?: any): URL;
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
     getStatic<T>(): typeof NovelSite;
     readonly IDKEY: string;
     getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions];
+    protected _fixOptionsRuntime<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): T & NovelSite.IOptionsRuntime;
     trimFilenameChapter(name: any): string;
     trimFilenameVolume(name: any): string;
     trimFilenameNovel(name: any): string;
     trimFilename(name: any): string;
+    protected _saveReadme(optionsRuntime?: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
+        file: string;
+        md: string;
+    }>;
+    createMainUrl(url: string): URL;
+    createMainUrl(url: URL): URL;
 }
 export declare type IOptionsRuntime = NovelSite.IOptionsRuntime;
 export declare module NovelSite {
-    type IOptionsRuntime = IOptions & IDownloadOptions;
+    type IOptionsRuntime = IOptions & IDownloadOptions & {};
     interface IOptions {
         outputDir?: string;
         cwd?: string;

@@ -11,12 +11,17 @@ import * as path from "path";
 import rootPath from "../../_root";
 
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM, INovelOptionsJSDOM } from '../jsdom';
+
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM }
+import novelInfo, { IMdconfMeta } from 'node-novel-info';
+import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 import fs, { trimFilename } from 'fs-iconv';
 
 //import * as moment from 'moment';
 import * as moment from 'moment-timezone';
+import { isUndef } from '../util';
+
 moment.fn.toJSON = function () { return this.format(); };
 
 export { moment };
@@ -24,8 +29,6 @@ export { moment };
 export { bluebirdDecorator, PromiseBluebird }
 
 export const SYMBOL_CACHE = Symbol.for('cache');
-
-
 
 export class NovelSite implements NovelSite.INovelSite
 {
@@ -54,9 +57,20 @@ export class NovelSite implements NovelSite.INovelSite
 	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime)
 	{
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+
+		let url = optionsRuntime[SYMBOL_CACHE].url;
+
+		return this;
 	}
 
 	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
+	get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
+		optionsRuntime: Partial<T & NovelSite.IDownloadOptions> = {}
+	): Promise<NovelSite.INovel>
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -124,7 +138,20 @@ export class NovelSite implements NovelSite.INovelSite
 			p = path.join(p, novelName);
 		}
 
+		options = this._fixOptionsRuntime(options);
+
 		return [p, options];
+	}
+
+	protected _fixOptionsRuntime<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): T & NovelSite.IOptionsRuntime
+	{
+		optionsRuntime[SYMBOL_CACHE] = (optionsRuntime[SYMBOL_CACHE] || {}) as {
+			url?: URL,
+			path_novel?: string,
+			novel?: NovelSite.INovel,
+		};
+
+		return optionsRuntime;
 	}
 
 	trimFilenameChapter(name): string
@@ -146,13 +173,72 @@ export class NovelSite implements NovelSite.INovelSite
 	{
 		return trimFilename(name);
 	}
+
+	protected _saveReadme(optionsRuntime?: IOptionsRuntime, options = {}, ...opts)
+	{
+		const self = this;
+
+		if (isUndef(optionsRuntime)
+			|| isUndef(optionsRuntime[SYMBOL_CACHE], {})
+
+			|| isUndef(optionsRuntime[SYMBOL_CACHE].novel, {})
+			|| isUndef(optionsRuntime[SYMBOL_CACHE].path_novel, '')
+		)
+		{
+			throw new ReferenceError(`saveReadme`);
+		}
+
+		const novel = optionsRuntime[SYMBOL_CACHE].novel;
+		const path_novel = optionsRuntime[SYMBOL_CACHE].path_novel;
+
+		let md = novelInfo.stringify({
+			novel: {
+				tags: [
+					self.IDKEY,
+				],
+				series: {
+					name: novel.novel_series_title || novel.novel_title || '',
+				},
+			},
+			options,
+
+			link: novel.link || [],
+		}, novel, ...opts);
+
+		let file = path.join(path_novel, `README.md`);
+		return fs.outputFile(file, md)
+			.then(function ()
+			{
+				return {
+					file,
+					md,
+				};
+			})
+			;
+	}
+
+	createMainUrl(url: string): URL
+	createMainUrl(url: URL): URL
+	createMainUrl(url)
+	{
+		let data = this.parseUrl(url);
+
+		if (!data || !data.novel_id)
+		{
+			console.log(data);
+
+			throw new ReferenceError();
+		}
+
+		return this.makeUrl(data, true);
+	}
 }
 
 export type IOptionsRuntime = NovelSite.IOptionsRuntime;
 
 export module NovelSite
 {
-	export type IOptionsRuntime = IOptions & IDownloadOptions;
+	export type IOptionsRuntime = IOptions & IDownloadOptions & {};
 
 	export interface IOptions
 	{
