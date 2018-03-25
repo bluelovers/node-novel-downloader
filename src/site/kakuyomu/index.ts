@@ -2,7 +2,7 @@
  * Created by user on 2018/3/17/017.
  */
 
-import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/index';
+import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/base';
 
 import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';

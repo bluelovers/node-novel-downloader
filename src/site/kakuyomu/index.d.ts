@@ -1,7 +1,7 @@
 /**
  * Created by user on 2018/3/17/017.
  */
-import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/index';
+import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/base';
 import NovelSite from '../index';
 export declare class NovelSiteKakuyomu extends NovelSiteDemo {
     static readonly IDKEY: string;

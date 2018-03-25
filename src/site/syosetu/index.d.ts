@@ -1,7 +1,7 @@
 /// <reference types="bluebird" />
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
-import * as NovelSiteDemo from '../demo/index';
+import * as NovelSiteDemo from '../demo/base';
 export declare type INovel = NovelSiteDemo.INovel & {
     novel_syosetu_id: string;
 };

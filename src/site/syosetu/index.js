@@ -10,7 +10,7 @@ const jsdom_extra_1 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
 const index_1 = require("../index");
 const index_2 = require("../index");
-const NovelSiteDemo = require("../demo/index");
+const NovelSiteDemo = require("../demo/base");
 let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     constructor(options, ...argv) {
         super(options, ...argv);

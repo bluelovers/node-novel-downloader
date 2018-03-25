@@ -13,7 +13,7 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-import * as NovelSiteDemo from '../demo/index';
+import * as NovelSiteDemo from '../demo/base';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,

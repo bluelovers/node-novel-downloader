@@ -9,12 +9,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("../demo/index");
+const base_1 = require("../demo/base");
 const jsdom_extra_1 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
+const index_1 = require("../index");
 const index_2 = require("../index");
-const index_3 = require("../index");
-let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
+let NovelSiteKakuyomu = class NovelSiteKakuyomu extends base_1.default {
     /**
      * https://kakuyomu.jp/works/4852201425154898215/episodes/4852201425154936315
      */
@@ -123,7 +123,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
                         dd = da.attr('datetime').replace(/^\s+|\s+$/g, '');
                     }
                     if (dd) {
-                        chapter_date = index_3.moment(dd).local();
+                        chapter_date = index_2.moment(dd).local();
                         _cache_dates.push(chapter_date.unix());
                     }
                     let href = a.prop('href');
@@ -157,7 +157,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
                 }
             });
             _cache_dates.sort();
-            let novel_date = index_3.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
+            let novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             let data_meta = {};
             {
                 data_meta.novel = {};
@@ -181,13 +181,13 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
                 novel_desc,
                 novel_date,
                 novel_publisher,
-                volume_list, checkdate: index_3.moment().local(), imgs: [] });
+                volume_list, checkdate: index_2.moment().local(), imgs: [] });
         });
     }
 };
 NovelSiteKakuyomu.IDKEY = 'kakuyomu';
 NovelSiteKakuyomu = __decorate([
-    index_2.staticImplements()
+    index_1.staticImplements()
 ], NovelSiteKakuyomu);
 exports.NovelSiteKakuyomu = NovelSiteKakuyomu;
 exports.default = NovelSiteKakuyomu;
