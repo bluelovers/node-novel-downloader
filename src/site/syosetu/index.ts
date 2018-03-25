@@ -219,7 +219,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return super.download(url, downloadOptions);
 	}
 
-	protected _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime): string
+	protected _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime, cache): string
 	{
 		if (!ret)
 		{
@@ -369,7 +369,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 	{
 		const self = this;
 
-		url = this.createMainUrl(url as any);
+		url = await this.createMainUrl(url as any);
 
 		return await fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)

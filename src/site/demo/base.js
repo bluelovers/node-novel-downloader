@@ -29,7 +29,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
         return index_2.PromiseBluebird
             .bind(self)
             .then(async function () {
-            url = this.createMainUrl(url);
+            url = await this.createMainUrl(url);
             self.session(optionsRuntime, url);
             let novel = await self.get_volume_list(url, optionsRuntime);
             let idx = downloadOptions.startIndex || 0;
@@ -68,7 +68,12 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     }, optionsRuntime);
                     await self._fetchChapter(url, optionsRuntime)
                         .then(function (ret) {
-                        return self._parseChapter(ret, optionsRuntime);
+                        return self._parseChapter(ret, optionsRuntime, {
+                            file,
+                            novel,
+                            volume,
+                            chapter,
+                        });
                     })
                         .then(async function (text) {
                         await fs_iconv_1.default.outputFile(file, text);
@@ -87,7 +92,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             return novel;
         });
     }
-    _parseChapter(ret, optionsRuntime) {
+    _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
             return '';
         }

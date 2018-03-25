@@ -81,7 +81,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 		return urlobj;
 	}
 
-	protected _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime): string
+	protected _parseChapter<T>(ret, optionsRuntime, cache): string
 	{
 		if (!ret)
 		{
@@ -97,7 +97,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 	{
 		const self = this;
 
-		url = this.createMainUrl(url as any);
+		url = await this.createMainUrl(url as any);
 
 		return await fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)

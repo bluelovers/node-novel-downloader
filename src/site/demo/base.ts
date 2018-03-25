@@ -54,7 +54,7 @@ export class NovelSiteDemo extends _NovelSite
 			.bind(self)
 			.then(async function ()
 			{
-				url = this.createMainUrl(url);
+				url = await this.createMainUrl(url);
 
 				self.session(optionsRuntime, url);
 
@@ -118,7 +118,12 @@ export class NovelSiteDemo extends _NovelSite
 								await self._fetchChapter(url, optionsRuntime)
 									.then(function (ret)
 									{
-										return self._parseChapter(ret, optionsRuntime);
+										return self._parseChapter(ret, optionsRuntime, {
+											file,
+											novel,
+											volume,
+											chapter,
+										});
 									})
 									.then(async function (text: string)
 									{
@@ -152,7 +157,12 @@ export class NovelSiteDemo extends _NovelSite
 			;
 	}
 
-	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime): string
+	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
+		file: string,
+		novel: _NovelSite.INovel,
+		volume: _NovelSite.IVolume,
+		chapter: _NovelSite.IChapter,
+	}): string
 	{
 		if (!ret)
 		{

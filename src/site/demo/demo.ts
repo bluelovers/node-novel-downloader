@@ -2,27 +2,27 @@
  * Created by user on 2018/3/25/025.
  */
 
-import NovelSite, { staticImplements, SYMBOL_CACHE } from '../index';
+import _NovelSite, { staticImplements, SYMBOL_CACHE } from '../index';
 import { IDownloadOptions, INovel } from './base';
 import { IFetchChapter, IOptionsRuntime } from './base';
-import * as NovelSiteDemo from './base';
+import * as _NovelSiteBase from './base';
 import NovelSiteBase from './base';
 import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-@staticImplements<NovelSite.INovelSiteStatic<NovelSiteKakuyomu>>()
-export class NovelSiteKakuyomu extends NovelSiteBase
+@staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()
+export class NovelSiteDemo extends NovelSiteBase
 {
 	public static readonly IDKEY = '';
 
-	makeUrl(urlobj: NovelSite.IParseUrl, options?): URL
+	makeUrl(urlobj: _NovelSite.IParseUrl, options?): URL
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	parseUrl(url: URL | string, options?): NovelSite.IParseUrl
+	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -37,10 +37,12 @@ export class NovelSiteKakuyomu extends NovelSiteBase
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
-		optionsRuntime: Partial<T & IDownloadOptions> = {}
+	async get_volume_list<T = IOptionsRuntime>(url: string | URL,
+		optionsRuntime: Partial<T & IOptionsRuntime> = {}
 	): Promise<INovel>
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 }
+
+export default NovelSiteDemo;

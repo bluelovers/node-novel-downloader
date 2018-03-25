@@ -263,7 +263,12 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	protected _parseChapter<T>(dom, optionsRuntime: T & IOptionsRuntime)
+	protected _parseChapter<T>(dom, optionsRuntime: T & IOptionsRuntime, cache: {
+		file: string,
+		novel: NovelSite.INovel,
+		volume: NovelSite.IVolume,
+		chapter: NovelSite.IChapter,
+	})
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}

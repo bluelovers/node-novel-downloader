@@ -185,7 +185,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     download(url, downloadOptions = {}) {
         return super.download(url, downloadOptions);
     }
-    _parseChapter(ret, optionsRuntime) {
+    _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
             return '';
         }
@@ -280,7 +280,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
-        url = this.createMainUrl(url);
+        url = await this.createMainUrl(url);
         return await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;

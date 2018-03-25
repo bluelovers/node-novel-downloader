@@ -56,7 +56,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends base_1.default {
         }
         return urlobj;
     }
-    _parseChapter(ret, optionsRuntime) {
+    _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
             return '';
         }
@@ -64,7 +64,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends base_1.default {
     }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
-        url = this.createMainUrl(url);
+        url = await this.createMainUrl(url);
         return await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;

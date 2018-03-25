@@ -1,195 +1,164 @@
 "use strict";
 /**
- * Created by user on 2017/12/29/029.
+ * Created by user on 2018/3/25/025.
  */
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const func_1 = require("../../../lib/func");
-const jsdom_1 = require("../../../lib/jsdom");
-const Promise = require("bluebird");
-const moment = require("moment-timezone");
-const fs = require("fs-extra");
-const path = require("path");
-const projectConfig = require("../../../project.config");
-const text_1 = require("../../../lib/novel/text");
-const shortid = require("shortid");
-exports.IDKEY = 'webqxs';
-exports.PATH_NOVEL_MAIN = path.join(projectConfig.dist_novel_root, exports.IDKEY);
-function makeUrl(urlobj, bool) {
-    let cid = (!bool && urlobj.chapter_id) ? urlobj.chapter_id + '.html' : '';
-    return `http://www.webqxs.com/${urlobj.novel_pid}/${urlobj.novel_id}/${cid}`;
-}
-exports.makeUrl = makeUrl;
-/**
- * http://www.webqxs.com/0/20/2543.html
- * http://www.webqxs.com/0/20/
- *
- * @param {string} url
- * @returns {{url: string; novel_pid: null; novel_id: null; chapter_id: null}}
- */
-function parseUrl(url) {
-    let urlobj = {
-        url: url,
-        novel_pid: null,
-        novel_id: null,
-        chapter_id: null,
-    };
-    let r = /www\.webqxs\.com\/([\d]+)\/([\d]+)\/(?:([\d]+)\.html?)?/;
-    let m = r.exec(url.toString());
-    if (m) {
-        urlobj.novel_pid = m[1];
-        urlobj.novel_id = m[2];
-        urlobj.chapter_id = m[3];
-    }
-    return urlobj;
-}
-exports.parseUrl = parseUrl;
-async function get_volume_list(url) {
-    {
-        let data = parseUrl(url);
-        if (!data.novel_id || (!data.novel_id && data.novel_id !== 0)) {
-            throw new ReferenceError();
+const util_1 = require("../../util");
+const index_1 = require("../index");
+const base_1 = require("../demo/base");
+const jsdom_url_1 = require("jsdom-url");
+const jsdom_extra_1 = require("jsdom-extra");
+const index_2 = require("../index");
+const novel_text_1 = require("novel-text");
+let NovelSiteWebqxs = class NovelSiteWebqxs extends base_1.default {
+    makeUrl(urlobj, bool) {
+        let url;
+        if (util_1.isUndef(urlobj.novel_pid) || bool < 0) {
+            url = `http://www.webqxs.com/lightnovel/${urlobj.novel_id}.html`;
         }
-        url = makeUrl(data, true);
+        else {
+            let cid = (!bool && urlobj.chapter_id) ? urlobj.chapter_id + '.html' : '';
+            url = `http://www.webqxs.com/${urlobj.novel_pid}/${urlobj.novel_id}/${cid}`;
+        }
+        return new jsdom_url_1.URL(url);
     }
-    return await jsdom_1.default(url)
-        .then(function (dom) {
-        let _area = dom.$('.main .catalog .catalog1');
-        let novel_title = text_1.novelText.trim(dom.$('.introduce h1', _area).text());
-        let novel_author = text_1.novelText.trim(dom.$('.introduce .bq a[href*="authorarticle"]', _area).text());
-        let novel_date = text_1.novelText.trim(dom.$('.introduce .bq span:eq(0)', _area).text()
-            .replace(/更新：/, ''));
-        novel_date = moment(novel_date).local();
-        let novel_status = text_1.novelText.trim(dom.$('.introduce .bq span:has(a[href*="authorarticle"]) + span', _area).text()
-            .replace(/状态：/, ''));
-        let novel_desc = text_1.novelText.trim(dom.$('.introduce .jj', _area).text());
-        let novel_cover = dom.$('.pic img', _area).prop('src');
-        novel_cover = new jsdom_1.URL(novel_cover, dom.source_url).href;
-        let url_data = parseUrl(dom.source_url);
-        let volume_list = [];
-        let currentVolume;
-        let table = dom.$('.ml_content .ml_list ul').eq(0);
-        table.children()
-            .each(function (index) {
-            let tr = dom.$(this);
-            if (tr.is('div.volume-z')) {
-                currentVolume = volume_list[volume_list.length] = {
-                    volume_index: volume_list.length,
-                    volume_title: text_1.novelText.trim(tr.text()),
-                    chapter_list: [],
-                };
-            }
-            else if (tr.is('li')) {
-                tr.find('a')
-                    .each(function (index) {
-                    let a = dom.$(this);
-                    let href = a.prop('href');
-                    let data = parseUrl(href);
-                    if (!data.novel_id || !data.chapter_id) {
-                        href.match(/(\d+)\.htm/);
-                        let chapter_id = RegExp.$1;
-                        data = Object.assign({}, url_data, {
-                            chapter_id,
-                        });
-                        href = data.url = makeUrl(data);
-                    }
-                    currentVolume
-                        .chapter_list
-                        .push({
-                        chapter_index: currentVolume.length,
-                        chapter_title: text_1.novelText.trim(a.text()),
-                        chapter_id: data.chapter_id,
-                        chapter_url: href,
-                        chapter_url_data: data,
-                    });
-                });
-            }
-        });
-        return {
-            url: dom.source_url,
-            url_data,
-            novel_title,
-            novel_author,
-            novel_status,
-            novel_cover,
-            novel_desc,
-            volume_list,
-            novel_date,
-            checkdate: moment().local(),
-            imgs: [],
+    parseUrl(url, options) {
+        let urlobj = {
+            url: url,
+            novel_pid: null,
+            novel_id: null,
+            chapter_id: null,
         };
-    });
-}
-exports.get_volume_list = get_volume_list;
-async function download(url) {
-    {
-        let data = parseUrl(url);
-        if (!data.novel_id || (!data.novel_id && data.novel_id !== 0)) {
+        urlobj.url = new jsdom_url_1.URL(url);
+        url = urlobj.url.href;
+        let r = /www\.webqxs\.com\/([\d]+)\/([\d]+)\/(?:([\d]+)\.html?)?/;
+        let m = r.exec(url);
+        if (m) {
+            urlobj.novel_pid = m[1];
+            urlobj.novel_id = m[2];
+            urlobj.chapter_id = m[3];
+            return urlobj;
+        }
+        r = /www\.webqxs\.com\/lightnovel\/(\d+).html/;
+        if (m = r.exec(url)) {
+            urlobj.novel_id = m[1];
+            return urlobj;
+        }
+        return urlobj;
+    }
+    createMainUrl(url) {
+        let data = this.parseUrl(url);
+        if (!data || util_1.isUndef(data.novel_pid) || !data.novel_id) {
+            console.log(data);
             throw new ReferenceError();
         }
-        url = makeUrl(data, true);
+        let ret = this.makeUrl(data, true);
+        return ret;
     }
-    let novel = await get_volume_list(url);
-    let idx = 0;
-    let path_novel = path.join(exports.PATH_NOVEL_MAIN, `${func_1.trimFilename(novel.novel_title)}_(${novel.url_data.novel_id})`);
-    return Promise
-        .mapSeries(novel.volume_list, function (volume, vid) {
-        vid = vid.toString().padStart(4, '0') + '0';
-        let dirname = path.join(path_novel, `${vid} ${func_1.trimFilename(volume.volume_title)}`);
-        return Promise
-            .mapSeries(volume.chapter_list, async function (chapter) {
-            chapter.chapter_index = (idx++);
-            let ext = '.txt';
-            let cid = chapter.chapter_index.toString().padStart(4, '0') + '0';
-            let file = path.join(dirname, `${cid}_${func_1.trimFilename(chapter.chapter_title)}\.${chapter.chapter_id}${ext}`);
-            let dom = await jsdom_1.default(chapter.chapter_url);
-            dom.$('#contentdp, #contentdp').remove();
-            let content = dom.$('#articlecontent');
-            let _img = content.find('img');
-            let text;
-            let _c = {};
-            if (_img.length) {
-                novel.imgs = novel.imgs || [];
-                chapter.imgs = chapter.imgs || [];
-                _img.each(function (index, elem) {
-                    let _this = dom.$(this);
-                    if (_this.prop('src')) {
-                        let id = shortid();
-                        _c[id] = _this.prop('src');
-                        chapter.imgs.push(_c[id]);
-                        novel.imgs.push(_c[id]);
-                        dom.$(`<span>{{@${id}@}}</span>`).insertAfter(this);
-                        dom.$(this).remove();
-                    }
-                });
+    _parseChapter(ret, optionsRuntime, cache) {
+        if (!ret) {
+            return '';
+        }
+        try {
+            let html = util_1.minifyHTML(ret.dom.$('#articlecontent').html());
+            html = html.replace(/^(&nbsp;){4}/gm, '');
+            ret.dom.$('#articlecontent').html(html);
+        }
+        catch (e) { }
+        return ret.dom.$('#articlecontent').text();
+    }
+    async get_volume_list(inputUrl, optionsRuntime = {}) {
+        const self = this;
+        let url = await this.createMainUrl(inputUrl);
+        return await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+            .then(async function (dom) {
+            const $ = dom.$;
+            let url_data = self.parseUrl(dom.url.href);
+            let novel_title = dom.$('.story-head .story-title').text();
+            let data_meta = await self._get_meta(url, optionsRuntime);
+            let _cache_dates = [];
+            let volume_list = [];
+            let currentVolume;
+            let table = $('.ml_content .ml_list ul').eq(0);
+            table.children()
+                .each(function (index) {
+                let tr = dom.$(this);
+                if (tr.is('div.volume-z')) {
+                    currentVolume = volume_list[volume_list.length] = {
+                        volume_index: volume_list.length,
+                        volume_title: novel_text_1.default.trim(tr.text()),
+                        chapter_list: [],
+                    };
+                }
+                else if (tr.is('li')) {
+                    tr.find('a')
+                        .each(function (index) {
+                        let a = dom.$(this);
+                        let href = a.prop('href');
+                        let data = self.parseUrl(href);
+                        if (!data.chapter_id) {
+                            throw new Error();
+                        }
+                        else {
+                            href = self.makeUrl(data);
+                            data.url = href;
+                        }
+                        let chapter_title = a.text().trim();
+                        currentVolume
+                            .chapter_list
+                            .push({
+                            chapter_index: currentVolume.chapter_list.length,
+                            chapter_title,
+                            chapter_id: data.chapter_id,
+                            chapter_url: href,
+                            chapter_url_data: data,
+                        });
+                    });
+                }
+            });
+            let novel_date;
+            if (_cache_dates.length) {
+                _cache_dates.sort();
+                novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             }
-            text = text_1.novelText.trim(content.text())
-                .replace(/[ \xA0]/g, ' ')
-                .replace(/^[  \xA0\t]{4,}/gm, '　　')
-                .replace(/^[  \xA0\t]+/gm, '　')
-                .replace(/^(　+)[  \xA0\t]+/gm, '$1');
-            text = text_1.novelText.trim(text)
-                .replace(/(@\}\})\n*(\{\{@)/g, '$1\n$2');
-            for (let id in _c) {
-                text = text
-                    .replace(`{{@${id}@}}`, `<img src="${_c[id]}"/>`);
-            }
-            if (0 && _img.length) {
-                console.log(777777, file);
-                console.log(text);
-                process.exit();
-            }
-            await fs.outputFile(file, text);
-            return file;
+            return Object.assign({}, data_meta, { url: dom.url, url_data,
+                novel_title,
+                volume_list,
+                novel_date, checkdate: index_2.moment().local(), imgs: [] });
+        })
+            .tap(function (novel) {
+            console.log(novel);
         });
-    })
-        .tap(ls => {
-        let file = path.join(path_novel, `${func_1.trimFilename(novel.novel_title)}.${novel.url_data.novel_id}.json`);
-        //console.log(ls);
-        return fs.outputJSON(file, novel, {
-            spaces: "\t",
+    }
+    async _get_meta(inputUrl, optionsRuntime) {
+        let url = this.makeUrl(this.parseUrl(inputUrl), -1);
+        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+            .then(function (dom) {
+            const $ = dom.$;
+            let novel_author = $('.z-author .f-text-overflow')
+                .text()
+                .trim();
+            $('.u-bookDetail-synopsis .u-synopsis-text > strong:eq(0)').remove();
+            let novel_desc = $('.u-bookDetail-synopsis .u-synopsis-text')
+                .text()
+                .trim();
+            return {
+                url,
+                novel_author,
+                novel_desc,
+            };
         });
-    });
-}
-exports.download = download;
-exports.default = download;
-//download('http://www.webqxs.com/0/20/');
+    }
+};
+NovelSiteWebqxs.IDKEY = 'webqxs';
+NovelSiteWebqxs = __decorate([
+    index_1.staticImplements()
+], NovelSiteWebqxs);
+exports.NovelSiteWebqxs = NovelSiteWebqxs;
+exports.default = NovelSiteWebqxs;

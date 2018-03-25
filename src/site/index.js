@@ -153,7 +153,7 @@ class NovelSite {
     _fetchChapter(url, optionsRuntime) {
         throw new SyntaxError(`Function not implemented`);
     }
-    _parseChapter(dom, optionsRuntime) {
+    _parseChapter(dom, optionsRuntime, cache) {
         throw new SyntaxError(`Function not implemented`);
     }
     _checkExists(optionsRuntime, file) {

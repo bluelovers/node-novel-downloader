@@ -18,7 +18,7 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     constructor(options: IDownloadOptions, ...argv: any[]);
     session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
     download(url: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
-    protected _parseChapter<T>(ret: any, optionsRuntime: T & IOptionsRuntime): string;
+    protected _parseChapter<T>(ret: any, optionsRuntime: T & IOptionsRuntime, cache: any): string;
     protected _createChapterUrl<T = IOptionsRuntime & IDownloadOptions>({novel, volume, chapter}: {
         novel: NovelSite.INovel;
         volume: NovelSite.IVolume;

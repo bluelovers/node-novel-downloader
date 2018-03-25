@@ -2,6 +2,10 @@
  * Created by user on 2018/3/18/018.
  */
 
+import { minifyHTML } from 'jsdom-extra/lib/html';
+
+export { minifyHTML }
+
 export function isUndef(v, opts: any = null, strict?: boolean): boolean
 {
 	let bool = typeof v == 'undefined' || v === null;

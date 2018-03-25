@@ -18,7 +18,12 @@ export declare class NovelSiteDemo extends _NovelSite {
     constructor(options: IDownloadOptions, ...argv: any[]);
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
     download(inputUrl: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<_NovelSite.INovel>;
-    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime): string;
+    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
+        file: string;
+        novel: _NovelSite.INovel;
+        volume: _NovelSite.IVolume;
+        chapter: _NovelSite.IChapter;
+    }): string;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<IFetchChapter>;
     protected _saveReadme(optionsRuntime: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
         file: string;

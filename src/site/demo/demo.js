@@ -11,7 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../index");
 const base_1 = require("./base");
-let NovelSiteKakuyomu = class NovelSiteKakuyomu extends base_1.default {
+let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
     makeUrl(urlobj, options) {
         throw new SyntaxError(`Function not implemented`);
     }
@@ -28,8 +28,9 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends base_1.default {
         throw new SyntaxError(`Function not implemented`);
     }
 };
-NovelSiteKakuyomu.IDKEY = '';
-NovelSiteKakuyomu = __decorate([
+NovelSiteDemo.IDKEY = '';
+NovelSiteDemo = __decorate([
     index_1.staticImplements()
-], NovelSiteKakuyomu);
-exports.NovelSiteKakuyomu = NovelSiteKakuyomu;
+], NovelSiteDemo);
+exports.NovelSiteDemo = NovelSiteDemo;
+exports.default = NovelSiteDemo;
