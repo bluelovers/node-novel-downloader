@@ -1,23 +1,17 @@
-/// <reference types="bluebird" />
+/**
+ * Created by user on 2018/3/17/017.
+ */
+import NovelSiteDemo, { IDownloadOptions, INovel } from '../demo/index';
+import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';
-import { PromiseBluebird } from '../index';
-import { IOptionsRuntime } from '../index';
-export declare type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & {};
-export interface INovel extends NovelSite.INovel {
-}
-export declare class NovelSiteKakuyomu extends NovelSite {
-    static IDKEY: string;
+export declare class NovelSiteKakuyomu extends NovelSiteDemo {
+    static readonly IDKEY: string;
     /**
      * https://kakuyomu.jp/works/4852201425154898215/episodes/4852201425154936315
      */
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
-    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>): this;
-    download(url: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<INovel>;
-    protected _saveReadme(optionsRuntime: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
-        file: string;
-        md: string;
-    }>;
+    protected _parseChapter(dom: IJSDOM): string;
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }
 export default NovelSiteKakuyomu;

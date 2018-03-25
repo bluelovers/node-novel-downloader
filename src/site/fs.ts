@@ -57,6 +57,8 @@ export function getFilePath(self: NovelSite, {
 	dirname,
 	ext = '.txt',
 
+	idx,
+
 	volume,
 	vid,
 }: {
@@ -64,6 +66,8 @@ export function getFilePath(self: NovelSite, {
 	cid: number,
 	dirname: string,
 	ext?: string,
+
+	idx: number,
 
 	volume?: NovelSite.IVolume,
 	vid?: number,
@@ -77,23 +81,27 @@ export function getFilePath(self: NovelSite, {
 
 	if (!optionsRuntime.noFirePrefix)
 	{
-		let idx: number;
+		let idxx: number;
 
-		if (optionsRuntime.filePrefixMode || isUndef(chapter.chapter_index))
+		if (optionsRuntime.filePrefixMode > 0 || isUndef(chapter.chapter_index))
 		{
-			idx = cid;
+			idxx = cid;
 
 			if (optionsRuntime.startIndex)
 			{
-				idx += optionsRuntime.startIndex;
+				idxx += optionsRuntime.startIndex;
 			}
+		}
+		else if (!optionsRuntime.filePrefixMode)
+		{
+			idxx = idx;
 		}
 		else
 		{
-			idx = chapter.chapter_index;
+			idxx = chapter.chapter_index;
 		}
 
-		prefix = padStart(idx);
+		prefix = padStart(idxx);
 		prefix += '_';
 	}
 

@@ -6,22 +6,24 @@ import bluebirdDecorator from '../decorator/bluebird';
 import * as PromiseBluebird from 'bluebird';
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM };
+import { LazyCookieJar } from 'jsdom-extra';
 import * as moment from 'moment-timezone';
 export { moment };
 export { bluebirdDecorator, PromiseBluebird };
 export declare const SYMBOL_CACHE: unique symbol;
 export declare class NovelSite implements NovelSite.INovelSite {
+    static readonly IDKEY: string;
     PATH_NOVEL_MAIN: string;
     optionsInit?: NovelSite.IOptions;
     constructor(options: NovelSite.IOptions, ...argv: any[]);
     static create(options: NovelSite.IOptions, ...argv: any[]): NovelSite;
     static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
-    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): this;
+    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime, url?: URL): this;
     download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & NovelSite.IDownloadOptions>): Promise<NovelSite.INovel>;
     makeUrl(urlobj: NovelSite.IParseUrl, options?: any): URL;
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
-    getStatic<T>(): typeof NovelSite;
+    getStatic<T = typeof NovelSite>(): T;
     readonly IDKEY: string;
     getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions];
     protected _fixOptionsRuntime<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): T & NovelSite.IOptionsRuntime;
@@ -35,6 +37,14 @@ export declare class NovelSite implements NovelSite.INovelSite {
     }>;
     createMainUrl(url: string): URL;
     createMainUrl(url: URL): URL;
+    protected _createChapterUrl<T = IOptionsRuntime>({novel, volume, chapter}: {
+        novel: NovelSite.INovel;
+        volume: NovelSite.IVolume;
+        chapter: NovelSite.IChapter;
+    }, optionsRuntime?: T & IOptionsRuntime): URL;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): void;
+    protected _parseChapter(dom: any): void;
+    protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean;
 }
 export declare type IOptionsRuntime = NovelSite.IOptionsRuntime;
 export declare module NovelSite {
@@ -50,6 +60,7 @@ export declare module NovelSite {
         startIndex?: number;
         allowEmptyVolumeTitle?: boolean;
         filePrefixMode?: number;
+        retryDelay?: number;
     }
     interface IParseUrl {
         url?: URL | string;
@@ -97,8 +108,11 @@ export declare module NovelSite {
          */
         disableDownload?: boolean;
         disableCheckExists?: boolean;
-        optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM;
+        optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
+            cookieJar?: Partial<LazyCookieJar>;
+        };
         startIndex?: number;
+        retryDelay?: number;
     }
     interface INovelSite {
         download(url: string | URL, options?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;

@@ -69,7 +69,26 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 //		'http://ncode.syosetu.com/n6337cb/',
 
-		'http://ncode.syosetu.com/n5361em',
+		//'http://ncode.syosetu.com/n5361em',
+
+		//'http://ncode.syosetu.com/n3219ck/',
+
+		//'http://ncode.syosetu.com/n4696dd/',
+
+		//'https://ncode.syosetu.com/n1406cr/',
+
+		//'http://ncode.syosetu.com/n9442cw/',
+		//'https://ncode.syosetu.com/n7971ec/',
+
+		//'https://ncode.syosetu.com/n1110eb/',
+		//'http://novel18.syosetu.com/n2794ec/',
+
+		//'http://ncode.syosetu.com/n1980bm/',
+		//'http://ncode.syosetu.com/n7940cn/',
+
+		//'http://ncode.syosetu.com/n0612dm/',
+
+		'n5991bu',
 
 	].forEach(async function (value, index, array)
 	{
@@ -80,7 +99,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 			//noFirePrefix: true,
 			noFilePadend: true,
 
-			//filePrefixMode: 1,
+			filePrefixMode: 1,
 
 			startIndex: 1,
 		}).then(function (novel)

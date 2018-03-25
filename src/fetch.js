@@ -18,6 +18,7 @@ function retryRequest(url, options = {}) {
     }
     function fn() {
         tries++;
+        // @ts-ignore
         return libRequest(url.toString(), options)
             .catch(function (err) {
             if (retry-- > 0) {
@@ -46,6 +47,7 @@ function manyRequest(url_arr, options = {}) {
         if (url.href) {
             url = url.href;
         }
+        // @ts-ignore
         return libRequest(url.toString(), options);
     })
         .tapCatch(function (err) {

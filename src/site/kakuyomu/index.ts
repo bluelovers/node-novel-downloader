@@ -2,35 +2,23 @@
  * Created by user on 2018/3/17/017.
  */
 
-import { retryRequest } from '../../fetch';
+import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/index';
 
 import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
-// @ts-ignore
-import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
+
 import { URL } from 'jsdom-url';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
-import { createOptionsJSDOM } from '../../jsdom';
-import { IOptionsRuntime } from '../index';
-
-export type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & {
-
-}
-
-export interface INovel extends NovelSite.INovel
-{
-
-}
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteKakuyomu>>()
-export class NovelSiteKakuyomu extends NovelSite
+export class NovelSiteKakuyomu extends NovelSiteDemo
 {
-	static IDKEY = 'kakuyomu';
+	public static readonly IDKEY = 'kakuyomu';
 
 	/**
 	 * https://kakuyomu.jp/works/4852201425154898215/episodes/4852201425154936315
@@ -93,187 +81,14 @@ export class NovelSiteKakuyomu extends NovelSite
 		return urlobj;
 	}
 
-	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>)
+	protected _parseChapter(dom: IJSDOM): string
 	{
-		super.session(optionsRuntime);
+		if (!dom)
+		{
+			return '';
+		}
 
-		return this;
-	}
-
-	download(url: string | URL, downloadOptions: IDownloadOptions = {})
-	{
-		const self = this;
-
-		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime & IDownloadOptions>(downloadOptions);
-
-		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
-
-		return PromiseBluebird
-			.bind(self)
-			.then(async function ()
-			{
-				url = this.createMainUrl(url as any);
-
-				optionsRuntime[SYMBOL_CACHE].url = url;
-
-				self.session(optionsRuntime);
-
-				let novel = await self.get_volume_list<NovelSite.IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
-
-				let idx = downloadOptions.startIndex || 0;
-
-				let path_novel = path.join(self.PATH_NOVEL_MAIN,
-					`${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
-				);
-
-				optionsRuntime[SYMBOL_CACHE].novel = novel;
-				optionsRuntime[SYMBOL_CACHE].path_novel = path_novel;
-
-				let ret = await PromiseBluebird
-					.mapSeries(novel.volume_list, function (volume, vid)
-					{
-						let dirname: string;
-
-						{
-							let _vid = '';
-
-							if (!optionsRuntime.noDirPrefix)
-							{
-								_vid = vid.toString().padStart(4, '0') + '0';
-								_vid += '_';
-							}
-
-							dirname = path.join(path_novel,
-								`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
-							);
-						}
-
-						return PromiseBluebird
-							.mapSeries(volume.chapter_list, async function (chapter)
-							{
-								chapter.chapter_index = (idx++);
-
-								let ext = '.txt';
-
-								let file: string;
-
-								{
-									let prefix = '';
-
-									if (!optionsRuntime.noFirePrefix)
-									{
-										prefix = chapter.chapter_index.toString()
-											.padStart(4, '0') + '0'
-										;
-										prefix += '_';
-									}
-
-									let pad = '';
-
-									if (!optionsRuntime.noFilePadend)
-									{
-										pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
-									}
-
-									file = path.join(dirname,
-										`${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`
-									);
-								}
-
-								if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
-								{
-									let txt = await fs.readFile(file);
-
-									if (txt.toString())
-									{
-										//console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
-
-										return file;
-									}
-								}
-								else
-								{
-									//console.log(`${chapter.chapter_title} ${pad}`);
-								}
-
-								let fn;
-
-								if (optionsRuntime.disableDownload)
-								{
-									fn = async function ()
-									{
-										return '';
-									};
-								}
-								else
-								{
-									let url = self.makeUrl({
-										chapter_id: chapter.chapter_id,
-										novel_id: novel.url_data.novel_id,
-									});
-
-									//console.log(url);
-
-									fn = function ()
-									{
-										return fromURL(url, optionsRuntime.optionsJSDOM)
-											.then(async function (dom)
-											{
-												return dom.$('#contentMain .widget-episodeBody').text();
-											})
-											;
-									};
-								}
-
-								//console.log(url);
-
-								await PromiseBluebird.resolve().then(function ()
-								{
-									return fn()
-										.then(async function (text)
-										{
-											await fs.outputFile(file, text);
-
-											return text;
-										})
-										;
-								});
-
-								return file;
-							})
-							;
-					})
-					.tap(ls =>
-					{
-						let file = path.join(path_novel,
-							`${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`
-							)
-						;
-
-						//console.log(ls);
-
-						return fs.outputJSON(file, novel, {
-							spaces: "\t",
-						});
-					})
-				;
-
-				await self._saveReadme(optionsRuntime);
-
-				return novel;
-			})
-		;
-	}
-
-	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
-	{
-		return super._saveReadme(optionsRuntime, options, {
-			options: {
-				textlayout: {
-					allow_lf2: true,
-				}
-			},
-		}, ...opts);
+		return dom.$('#contentMain .widget-episodeBody').text();
 	}
 
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,

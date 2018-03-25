@@ -9,6 +9,7 @@ import * as PromiseBluebird from 'bluebird';
 import { URL } from 'jsdom-url';
 import * as path from "path";
 import rootPath from "../../_root";
+import { retryRequest } from '../fetch';
 
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM, INovelOptionsJSDOM } from '../jsdom';
 
@@ -32,16 +33,22 @@ export const SYMBOL_CACHE = Symbol.for('cache');
 
 export class NovelSite implements NovelSite.INovelSite
 {
+	public static readonly IDKEY: string = null;
+
 	public PATH_NOVEL_MAIN: string;
 	public optionsInit?: NovelSite.IOptions;
 
 	constructor(options: NovelSite.IOptions, ...argv)
 	{
+		if (!this.IDKEY)
+		{
+			throw new ReferenceError(`IDKEY is null`);
+		}
+
 		this.optionsInit = options;
 		this.optionsInit.cwd = this.optionsInit.cwd || process.cwd();
 
 		[this.PATH_NOVEL_MAIN, this.optionsInit] = this.getOutputDir(this.optionsInit);
-
 	}
 
 	static create(options: NovelSite.IOptions, ...argv)
@@ -54,11 +61,14 @@ export class NovelSite implements NovelSite.INovelSite
 		return false;
 	}
 
-	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime)
+	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime, url?: URL)
 	{
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
-		let url = optionsRuntime[SYMBOL_CACHE].url;
+		if (url)
+		{
+			optionsRuntime[SYMBOL_CACHE].url = url;
+		}
 
 		return this;
 	}
@@ -85,7 +95,7 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	getStatic<T>(): typeof NovelSite
+	getStatic<T = typeof NovelSite>(): T
 	{
 		// @ts-ignore
 		return this.__proto__.constructor;
@@ -93,7 +103,6 @@ export class NovelSite implements NovelSite.INovelSite
 
 	get IDKEY(): string
 	{
-		// @ts-ignore
 		let key = this.getStatic().IDKEY;
 
 		if (typeof key != 'string' || !key)
@@ -150,6 +159,9 @@ export class NovelSite implements NovelSite.INovelSite
 			path_novel?: string,
 			novel?: NovelSite.INovel,
 		};
+
+		// @ts-ignore
+		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
 		return optionsRuntime;
 	}
@@ -232,6 +244,44 @@ export class NovelSite implements NovelSite.INovelSite
 
 		return this.makeUrl(data, true);
 	}
+
+	protected _createChapterUrl<T = IOptionsRuntime>({
+		novel,
+		volume,
+		chapter,
+	}: {
+		novel: NovelSite.INovel,
+		volume: NovelSite.IVolume,
+		chapter: NovelSite.IChapter,
+	}, optionsRuntime?: T & IOptionsRuntime): URL
+	{
+		return new URL(chapter.chapter_url);
+	}
+
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime)
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
+	protected _parseChapter(dom)
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
+	protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean
+	{
+		if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
+		{
+			let txt = fs.readFileSync(file);
+
+			if (txt.toString().replace(/^\s+|\s+$/g, ''))
+			{
+				return true;
+			}
+		}
+
+		return false
+	}
 }
 
 export type IOptionsRuntime = NovelSite.IOptionsRuntime;
@@ -258,6 +308,7 @@ export module NovelSite
 		allowEmptyVolumeTitle?: boolean,
 
 		filePrefixMode?: number,
+		retryDelay?: number,
 	}
 
 	export interface IParseUrl
@@ -331,9 +382,13 @@ export module NovelSite
 
 		disableCheckExists?: boolean,
 
-		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM,
+		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
+			cookieJar?: Partial<LazyCookieJar>,
+		},
 
 		startIndex?: number,
+
+		retryDelay?: number,
 	}
 
 	export interface INovelSite

@@ -9,14 +9,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_iconv_1 = require("fs-iconv");
-const path = require("path");
+const index_1 = require("../demo/index");
 const jsdom_extra_1 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
-const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
-const jsdom_1 = require("../../jsdom");
 let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
     /**
      * https://kakuyomu.jp/works/4852201425154898215/episodes/4852201425154936315
@@ -59,113 +56,11 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
         }
         return urlobj;
     }
-    session(optionsRuntime) {
-        super.session(optionsRuntime);
-        return this;
-    }
-    download(url, downloadOptions = {}) {
-        const self = this;
-        const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
-        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
-        return index_2.PromiseBluebird
-            .bind(self)
-            .then(async function () {
-            url = this.createMainUrl(url);
-            optionsRuntime[index_1.SYMBOL_CACHE].url = url;
-            self.session(optionsRuntime);
-            let novel = await self.get_volume_list(url, optionsRuntime);
-            let idx = downloadOptions.startIndex || 0;
-            let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
-            optionsRuntime[index_1.SYMBOL_CACHE].novel = novel;
-            optionsRuntime[index_1.SYMBOL_CACHE].path_novel = path_novel;
-            let ret = await index_2.PromiseBluebird
-                .mapSeries(novel.volume_list, function (volume, vid) {
-                let dirname;
-                {
-                    let _vid = '';
-                    if (!optionsRuntime.noDirPrefix) {
-                        _vid = vid.toString().padStart(4, '0') + '0';
-                        _vid += '_';
-                    }
-                    dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
-                }
-                return index_2.PromiseBluebird
-                    .mapSeries(volume.chapter_list, async function (chapter) {
-                    chapter.chapter_index = (idx++);
-                    let ext = '.txt';
-                    let file;
-                    {
-                        let prefix = '';
-                        if (!optionsRuntime.noFirePrefix) {
-                            prefix = chapter.chapter_index.toString()
-                                .padStart(4, '0') + '0';
-                            prefix += '_';
-                        }
-                        let pad = '';
-                        if (!optionsRuntime.noFilePadend) {
-                            pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');
-                        }
-                        file = path.join(dirname, `${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`);
-                    }
-                    if (!optionsRuntime.disableCheckExists && fs_iconv_1.default.existsSync(file)) {
-                        let txt = await fs_iconv_1.default.readFile(file);
-                        if (txt.toString()) {
-                            //console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
-                            return file;
-                        }
-                    }
-                    else {
-                        //console.log(`${chapter.chapter_title} ${pad}`);
-                    }
-                    let fn;
-                    if (optionsRuntime.disableDownload) {
-                        fn = async function () {
-                            return '';
-                        };
-                    }
-                    else {
-                        let url = self.makeUrl({
-                            chapter_id: chapter.chapter_id,
-                            novel_id: novel.url_data.novel_id,
-                        });
-                        //console.log(url);
-                        fn = function () {
-                            return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
-                                .then(async function (dom) {
-                                return dom.$('#contentMain .widget-episodeBody').text();
-                            });
-                        };
-                    }
-                    //console.log(url);
-                    await index_2.PromiseBluebird.resolve().then(function () {
-                        return fn()
-                            .then(async function (text) {
-                            await fs_iconv_1.default.outputFile(file, text);
-                            return text;
-                        });
-                    });
-                    return file;
-                });
-            })
-                .tap(ls => {
-                let file = path.join(path_novel, `${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`);
-                //console.log(ls);
-                return fs_iconv_1.default.outputJSON(file, novel, {
-                    spaces: "\t",
-                });
-            });
-            await self._saveReadme(optionsRuntime);
-            return novel;
-        });
-    }
-    _saveReadme(optionsRuntime, options = {}, ...opts) {
-        return super._saveReadme(optionsRuntime, options, {
-            options: {
-                textlayout: {
-                    allow_lf2: true,
-                }
-            },
-        }, ...opts);
+    _parseChapter(dom) {
+        if (!dom) {
+            return '';
+        }
+        return dom.$('#contentMain .widget-episodeBody').text();
     }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
@@ -292,7 +187,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
 };
 NovelSiteKakuyomu.IDKEY = 'kakuyomu';
 NovelSiteKakuyomu = __decorate([
-    index_1.staticImplements()
+    index_2.staticImplements()
 ], NovelSiteKakuyomu);
 exports.NovelSiteKakuyomu = NovelSiteKakuyomu;
 exports.default = NovelSiteKakuyomu;

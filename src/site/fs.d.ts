@@ -5,11 +5,12 @@ export declare function getVolumePath(self: NovelSite, {volume, vid, path_novel}
     vid: number;
     path_novel: string;
 }, optionsRuntime: IOptionsRuntime): string;
-export declare function getFilePath(self: NovelSite, {chapter, cid, dirname, ext, volume, vid}: {
+export declare function getFilePath(self: NovelSite, {chapter, cid, dirname, ext, idx, volume, vid}: {
     chapter: NovelSite.IChapter;
     cid: number;
     dirname: string;
     ext?: string;
+    idx: number;
     volume?: NovelSite.IVolume;
     vid?: number;
 }, optionsRuntime?: IOptionsRuntime): string;

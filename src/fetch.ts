@@ -39,6 +39,7 @@ export function retryRequest(url, options: IOptions = {})
 	{
 		tries++;
 
+		// @ts-ignore
 		return libRequest(url.toString(), options)
 			.catch(function (err)
 			{
@@ -82,6 +83,7 @@ export function manyRequest(url_arr: any[], options: IOptions = {})
 				url = url.href;
 			}
 
+			// @ts-ignore
 			return libRequest(url.toString(), options);
 		})
 		.tapCatch(function (err)

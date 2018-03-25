@@ -8,6 +8,7 @@ exports.bluebirdDecorator = bluebird_1.default;
 //import bluebirdDecorator from 'bluebird-decorator';
 const PromiseBluebird = require("bluebird");
 exports.PromiseBluebird = PromiseBluebird;
+const jsdom_url_1 = require("jsdom-url");
 const path = require("path");
 const _root_1 = require("../../_root");
 const jsdom_1 = require("../jsdom");
@@ -23,6 +24,9 @@ moment.fn.toJSON = function () { return this.format(); };
 exports.SYMBOL_CACHE = Symbol.for('cache');
 class NovelSite {
     constructor(options, ...argv) {
+        if (!this.IDKEY) {
+            throw new ReferenceError(`IDKEY is null`);
+        }
         this.optionsInit = options;
         this.optionsInit.cwd = this.optionsInit.cwd || process.cwd();
         [this.PATH_NOVEL_MAIN, this.optionsInit] = this.getOutputDir(this.optionsInit);
@@ -33,9 +37,11 @@ class NovelSite {
     static check(url, options) {
         return false;
     }
-    session(optionsRuntime) {
+    session(optionsRuntime, url) {
         optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
-        let url = optionsRuntime[exports.SYMBOL_CACHE].url;
+        if (url) {
+            optionsRuntime[exports.SYMBOL_CACHE].url = url;
+        }
         return this;
     }
     download(url, options) {
@@ -55,7 +61,6 @@ class NovelSite {
         return this.__proto__.constructor;
     }
     get IDKEY() {
-        // @ts-ignore
         let key = this.getStatic().IDKEY;
         if (typeof key != 'string' || !key) {
             throw new SyntaxError(`IDKEY not implemented`);
@@ -87,6 +92,8 @@ class NovelSite {
     }
     _fixOptionsRuntime(optionsRuntime) {
         optionsRuntime[exports.SYMBOL_CACHE] = (optionsRuntime[exports.SYMBOL_CACHE] || {});
+        // @ts-ignore
+        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
         return optionsRuntime;
     }
     trimFilenameChapter(name) {
@@ -140,7 +147,26 @@ class NovelSite {
         }
         return this.makeUrl(data, true);
     }
+    _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
+        return new jsdom_url_1.URL(chapter.chapter_url);
+    }
+    _fetchChapter(url, optionsRuntime) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    _parseChapter(dom) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    _checkExists(optionsRuntime, file) {
+        if (!optionsRuntime.disableCheckExists && fs_iconv_1.default.existsSync(file)) {
+            let txt = fs_iconv_1.default.readFileSync(file);
+            if (txt.toString().replace(/^\s+|\s+$/g, '')) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+NovelSite.IDKEY = null;
 exports.NovelSite = NovelSite;
 function staticImplements() {
     return (constructor) => { };

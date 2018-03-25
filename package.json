@@ -37,7 +37,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "fs-iconv": "^1.3.5",
-    "jsdom-extra": "^1.2.5",
+    "jsdom-extra": "^1.2.7",
     "moment-timezone": "^0.5.14",
     "node-novel-info": "^2.3.4",
     "novel-text": "^1.0.11",

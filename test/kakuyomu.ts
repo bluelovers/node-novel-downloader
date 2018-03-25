@@ -16,16 +16,16 @@ import NovelSite from '../src/site/kakuyomu';
 	console.log(Site);
 
 	[
-		//'https://kakuyomu.jp/works/4852201425154898215',
+		'https://kakuyomu.jp/works/4852201425154898215',
 
-		'https://kakuyomu.jp/works/1177354054880238351',
+		//'https://kakuyomu.jp/works/1177354054880238351',
 
 	].forEach(async function (value, index, array)
 	{
 		await Site.download(value, {
-			disableDownload: true,
+			//disableDownload: true,
 
-			//noFirePrefix: true,
+			noFirePrefix: true,
 			noFilePadend: true,
 
 			startIndex: 0,

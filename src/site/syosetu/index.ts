@@ -12,12 +12,10 @@ import { getFilePath, getVolumePath } from '../fs';
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE, IOptionsRuntime } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
-import { createOptionsJSDOM } from '../../jsdom';
 
-export interface INovel extends NovelSite.INovel
-{
+export type INovel = NovelSite.INovel & {
 	novel_syosetu_id: string,
-}
+};
 
 export type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & {
 	/**
@@ -29,20 +27,22 @@ export type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions &
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteSyosetu>>()
 export class NovelSiteSyosetu extends NovelSite
 {
-	static IDKEY = 'syosetu';
+	public static readonly IDKEY = 'syosetu';
 
 	constructor(options: IDownloadOptions, ...argv)
 	{
 		super(options, ...argv);
+
+		this.optionsInit.retryDelay = this.optionsInit.retryDelay || 25000;
 	}
 
-	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>)
+	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
 	{
-		super.session(optionsRuntime);
+		super.session(optionsRuntime, url);
 
-		let url = optionsRuntime[SYMBOL_CACHE].url;
+		//let url = optionsRuntime[SYMBOL_CACHE].url;
 
-		(optionsRuntime.optionsJSDOM.cookieJar as LazyCookieJar)
+		optionsRuntime.optionsJSDOM.cookieJar
 			.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
 		;
 
@@ -55,8 +55,6 @@ export class NovelSiteSyosetu extends NovelSite
 
 		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime & IDownloadOptions>(downloadOptions);
 
-		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
-
 		console.log(optionsRuntime);
 
 		return PromiseBluebird
@@ -65,9 +63,9 @@ export class NovelSiteSyosetu extends NovelSite
 			{
 				url = this.createMainUrl(url as any);
 
-				optionsRuntime[SYMBOL_CACHE].url = url;
+				//optionsRuntime[SYMBOL_CACHE].url = url;
 
-				self.session(optionsRuntime);
+				self.session(optionsRuntime, url as URL);
 
 				let novel = await self.get_volume_list<NovelSite.IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
@@ -93,29 +91,22 @@ export class NovelSiteSyosetu extends NovelSite
 						return PromiseBluebird
 							.mapSeries(volume.chapter_list, async function (chapter, cid)
 							{
-								chapter.chapter_index = (idx++);
+								//chapter.chapter_index = (idx++);
+								idx++;
 
 								let file = getFilePath(self, {
 									chapter, cid,
 									ext: '.txt',
+
+									idx,
+
 									dirname,
 									volume, vid,
 								}, optionsRuntime);
 
-								if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
+								if (self._checkExists(optionsRuntime, file))
 								{
-									let txt = await fs.readFile(file);
-
-									if (txt.toString())
-									{
-										//console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
-
-										return file;
-									}
-								}
-								else
-								{
-									//console.log(`${chapter.chapter_title} ${pad}`);
+									return file;
 								}
 
 								let fn;
@@ -139,10 +130,11 @@ export class NovelSiteSyosetu extends NovelSite
 								}
 								else
 								{
-									let url = self.makeUrl({
-										chapter_id: chapter.chapter_id,
-										novel_id: novel.url_data.novel_id,
-									});
+									let url = self._createChapterUrl({
+										novel,
+										volume,
+										chapter,
+									}, optionsRuntime);
 
 									//console.log(url);
 
@@ -213,6 +205,33 @@ export class NovelSiteSyosetu extends NovelSite
 
 			})
 			;
+	}
+
+	protected _createChapterUrl<T = IOptionsRuntime & IDownloadOptions>({
+		novel,
+		volume,
+		chapter,
+	}: {
+		novel: NovelSite.INovel,
+		volume: NovelSite.IVolume,
+		chapter: NovelSite.IChapter,
+	}, optionsRuntime?: T & IDownloadOptions): URL
+	{
+		if (optionsRuntime.disableTxtdownload)
+		{
+			let url = this.makeUrl({
+				chapter_id: chapter.chapter_id,
+				novel_id: novel.url_data.novel_id,
+			});
+
+			return url;
+		}
+
+		return super._createChapterUrl({
+			novel,
+			volume,
+			chapter,
+		}, optionsRuntime);
 	}
 
 	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)

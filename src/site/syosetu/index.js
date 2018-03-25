@@ -15,14 +15,14 @@ const fs_1 = require("../fs");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
-const jsdom_1 = require("../../jsdom");
 let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
+        this.optionsInit.retryDelay = this.optionsInit.retryDelay || 25000;
     }
-    session(optionsRuntime) {
-        super.session(optionsRuntime);
-        let url = optionsRuntime[index_1.SYMBOL_CACHE].url;
+    session(optionsRuntime, url) {
+        super.session(optionsRuntime, url);
+        //let url = optionsRuntime[SYMBOL_CACHE].url;
         optionsRuntime.optionsJSDOM.cookieJar
             .setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
         return this;
@@ -30,14 +30,13 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
     download(url, downloadOptions = {}) {
         const self = this;
         const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
-        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
         console.log(optionsRuntime);
         return index_2.PromiseBluebird
             .bind(self)
             .then(async function () {
             url = this.createMainUrl(url);
-            optionsRuntime[index_1.SYMBOL_CACHE].url = url;
-            self.session(optionsRuntime);
+            //optionsRuntime[SYMBOL_CACHE].url = url;
+            self.session(optionsRuntime, url);
             let novel = await self.get_volume_list(url, optionsRuntime);
             //console.log(novel);
             let idx = downloadOptions.startIndex || 0;
@@ -52,22 +51,17 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 }, optionsRuntime);
                 return index_2.PromiseBluebird
                     .mapSeries(volume.chapter_list, async function (chapter, cid) {
-                    chapter.chapter_index = (idx++);
+                    //chapter.chapter_index = (idx++);
+                    idx++;
                     let file = fs_1.getFilePath(self, {
                         chapter, cid,
                         ext: '.txt',
+                        idx,
                         dirname,
                         volume, vid,
                     }, optionsRuntime);
-                    if (!optionsRuntime.disableCheckExists && fs_iconv_1.default.existsSync(file)) {
-                        let txt = await fs_iconv_1.default.readFile(file);
-                        if (txt.toString()) {
-                            //console.log(`skip\n${volume.volume_title}\n${chapter.chapter_title}`);
-                            return file;
-                        }
-                    }
-                    else {
-                        //console.log(`${chapter.chapter_title} ${pad}`);
+                    if (self._checkExists(optionsRuntime, file)) {
+                        return file;
                     }
                     let fn;
                     if (optionsRuntime.disableDownload) {
@@ -84,10 +78,11 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                         };
                     }
                     else {
-                        let url = self.makeUrl({
-                            chapter_id: chapter.chapter_id,
-                            novel_id: novel.url_data.novel_id,
-                        });
+                        let url = self._createChapterUrl({
+                            novel,
+                            volume,
+                            chapter,
+                        }, optionsRuntime);
                         //console.log(url);
                         fn = function () {
                             return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
@@ -131,6 +126,20 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 });
             }
         });
+    }
+    _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
+        if (optionsRuntime.disableTxtdownload) {
+            let url = this.makeUrl({
+                chapter_id: chapter.chapter_id,
+                novel_id: novel.url_data.novel_id,
+            });
+            return url;
+        }
+        return super._createChapterUrl({
+            novel,
+            volume,
+            chapter,
+        }, optionsRuntime);
     }
     _saveReadme(optionsRuntime, options = {}, ...opts) {
         options[this.IDKEY] = {

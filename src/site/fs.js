@@ -27,23 +27,26 @@ function getVolumePath(self, { volume, vid, path_novel, }, optionsRuntime) {
     return dirname;
 }
 exports.getVolumePath = getVolumePath;
-function getFilePath(self, { chapter, cid, dirname, ext = '.txt', volume, vid, }, optionsRuntime = {}) {
+function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, vid, }, optionsRuntime = {}) {
     let file;
     let prefix = '';
     let pad = '';
     file = self.trimFilenameChapter(chapter.chapter_title);
     if (!optionsRuntime.noFirePrefix) {
-        let idx;
-        if (optionsRuntime.filePrefixMode || util_1.isUndef(chapter.chapter_index)) {
-            idx = cid;
+        let idxx;
+        if (optionsRuntime.filePrefixMode > 0 || util_1.isUndef(chapter.chapter_index)) {
+            idxx = cid;
             if (optionsRuntime.startIndex) {
-                idx += optionsRuntime.startIndex;
+                idxx += optionsRuntime.startIndex;
             }
         }
-        else {
-            idx = chapter.chapter_index;
+        else if (!optionsRuntime.filePrefixMode) {
+            idxx = idx;
         }
-        prefix = padStart(idx);
+        else {
+            idxx = chapter.chapter_index;
+        }
+        prefix = padStart(idxx);
         prefix += '_';
     }
     if (!optionsRuntime.noFilePadend && chapter.chapter_date) {
