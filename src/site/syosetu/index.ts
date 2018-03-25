@@ -9,23 +9,28 @@ import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
 import { getFilePath, getVolumePath } from '../fs';
 
-import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE, IOptionsRuntime } from '../index';
+import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-export type INovel = NovelSite.INovel & {
+import * as NovelSiteDemo from '../demo/index';
+
+export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
 };
 
-export type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & {
+export type IOptionsPlus = {
 	/**
 	 * 不使用小說家提供的 txt 下載連結
 	 */
 	disableTxtdownload?: boolean,
 }
 
+export type IDownloadOptions = NovelSiteDemo.IDownloadOptions & IOptionsPlus
+export type IOptionsRuntime = NovelSiteDemo.IOptionsRuntime & IDownloadOptions & IOptionsPlus
+
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteSyosetu>>()
-export class NovelSiteSyosetu extends NovelSite
+export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 {
 	public static readonly IDKEY = 'syosetu';
 
@@ -49,11 +54,12 @@ export class NovelSiteSyosetu extends NovelSite
 		return this;
 	}
 
+	/*
 	download(url: string | URL, downloadOptions: IDownloadOptions = {})
 	{
 		const self = this;
 
-		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<NovelSite.IOptionsRuntime & IDownloadOptions>(downloadOptions);
+		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<IOptionsRuntime>(downloadOptions);
 
 		console.log(optionsRuntime);
 
@@ -67,7 +73,7 @@ export class NovelSiteSyosetu extends NovelSite
 
 				self.session(optionsRuntime, url as URL);
 
-				let novel = await self.get_volume_list<NovelSite.IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
+				let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
 				//console.log(novel);
 
@@ -206,6 +212,34 @@ export class NovelSiteSyosetu extends NovelSite
 			})
 			;
 	}
+	*/
+
+	download(url: string | URL, downloadOptions: IDownloadOptions = {})
+	{
+		return super.download(url, downloadOptions);
+	}
+
+	protected _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime): string
+	{
+		if (!ret)
+		{
+			return '';
+		}
+
+		if (!optionsRuntime.disableTxtdownload)
+		{
+			return ret.body;
+		}
+
+		return [
+			ret.dom.$('#novel_p').text(),
+			ret.dom.$('#novel_honbun').text(),
+			ret.dom.$('#novel_a').text(),
+		].filter(function (v)
+		{
+			return v;
+		}).join('\n\n==================\n\n');
+	}
 
 	protected _createChapterUrl<T = IOptionsRuntime & IDownloadOptions>({
 		novel,
@@ -215,7 +249,7 @@ export class NovelSiteSyosetu extends NovelSite
 		novel: NovelSite.INovel,
 		volume: NovelSite.IVolume,
 		chapter: NovelSite.IChapter,
-	}, optionsRuntime?: T & IDownloadOptions): URL
+	}, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		if (optionsRuntime.disableTxtdownload)
 		{

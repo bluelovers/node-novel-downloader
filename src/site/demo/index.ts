@@ -2,24 +2,38 @@ import { retryRequest } from '../../fetch';
 import fs, {} from 'fs-iconv';
 import * as path from 'path';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
-import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM } from 'jsdom-extra';
+import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM, packJSDOM } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
 import { getFilePath } from '../fs';
 
-import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
+import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
+
+import * as parseContentType from 'content-type-parser';
 
 export type IOptionsPlus = {}
 
-export type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & IOptionsPlus
-export type IOptionsRuntime = NovelSite.IOptionsRuntime & IOptionsPlus
+export type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus
+export type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus
 
-export type INovel = NovelSite.INovel;
+export type INovel = _NovelSite.INovel;
 
-@staticImplements<NovelSite.INovelSiteStatic<NovelSiteDemo>>()
-export class NovelSiteDemo extends NovelSite
+import { ResponseRequest } from 'request';
+export type IFetchChapter = {
+	body?: any;
+	dom?: IJSDOM;
+	res?: ResponseRequest;
+};
+
+@staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()
+export class NovelSiteDemo extends _NovelSite
 {
 	public static readonly IDKEY: string = null;
+
+	constructor(options: IDownloadOptions, ...argv)
+	{
+		super(options, ...argv);
+	}
 
 	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
 	{
@@ -102,9 +116,9 @@ export class NovelSiteDemo extends NovelSite
 								}, optionsRuntime);
 
 								await self._fetchChapter(url, optionsRuntime)
-									.then(function (dom)
+									.then(function (ret)
 									{
-										return self._parseChapter(dom);
+										return self._parseChapter(ret, optionsRuntime);
 									})
 									.then(async function (text: string)
 									{
@@ -138,9 +152,9 @@ export class NovelSiteDemo extends NovelSite
 			;
 	}
 
-	protected _parseChapter(dom: IJSDOM): string
+	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime): string
 	{
-		if (!dom)
+		if (!ret)
 		{
 			return '';
 		}
@@ -148,35 +162,49 @@ export class NovelSiteDemo extends NovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<IJSDOM>
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime)
 	{
-		return PromiseBluebird.resolve().then(function ()
+		return PromiseBluebird.resolve().then(async function ()
 		{
-			let fn;
+			let ret = {
+
+			} as IFetchChapter;
 
 			if (optionsRuntime.disableDownload)
 			{
-				fn = null;
+				return null;
 			}
 			else if (optionsRuntime.retryDelay > 0)
 			{
-				fn = retryRequest(url, {
+				await retryRequest(url, {
 					delay: optionsRuntime.retryDelay,
-					jar: optionsRuntime.optionsJSDOM.cookieJar,
+					jar: optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest(),
 					resolveWithFullResponse: true,
 				})
 					.then(function (res)
 					{
-						return requestToJSDOM(res, url, optionsRuntime.optionsJSDOM)
+						const contentTypeParsed = parseContentType(res.headers["content-type"]);
+
+						if (contentTypeParsed.isHTML() || contentTypeParsed.isXML())
+						{
+							ret.dom = requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
+							ret.dom = packJSDOM(ret.dom);
+						}
+
+						ret.res = res;
+						ret.body = res.body;
 					})
 				;
 			}
 			else
 			{
-				fn = fromURL(url, optionsRuntime.optionsJSDOM);
+				ret.dom = await fromURL(url, optionsRuntime.optionsJSDOM);
+
+				ret.res = ret.dom._options.Response;
+				ret.body = ret.dom._options.body;
 			}
 
-			return fn;
+			return ret;
 		});
 	}
 
@@ -192,5 +220,7 @@ export class NovelSiteDemo extends NovelSite
 	}
 
 }
+
+export const NovelSite = NovelSiteDemo as typeof NovelSiteDemo;
 
 export default NovelSiteDemo;

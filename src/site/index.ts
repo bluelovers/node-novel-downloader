@@ -263,7 +263,7 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	protected _parseChapter(dom)
+	protected _parseChapter<T>(dom, optionsRuntime: T & IOptionsRuntime)
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}

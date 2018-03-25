@@ -16,6 +16,7 @@ function retryRequest(url, options = {}) {
     if (url.href) {
         url = url.href;
     }
+    //console.log(url, options);
     function fn() {
         tries++;
         // @ts-ignore

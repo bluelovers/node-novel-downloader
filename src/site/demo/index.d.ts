@@ -1,20 +1,29 @@
+/// <reference types="request" />
 /// <reference types="bluebird" />
 import { IJSDOM } from 'jsdom-extra';
-import NovelSite from '../index';
+import _NovelSite from '../index';
 import { PromiseBluebird } from '../index';
 export declare type IOptionsPlus = {};
-export declare type IDownloadOptions = NovelSite.IDownloadOptions & NovelSite.IOptions & IOptionsPlus;
-export declare type IOptionsRuntime = NovelSite.IOptionsRuntime & IOptionsPlus;
-export declare type INovel = NovelSite.INovel;
-export declare class NovelSiteDemo extends NovelSite {
+export declare type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus;
+export declare type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus;
+export declare type INovel = _NovelSite.INovel;
+import { ResponseRequest } from 'request';
+export declare type IFetchChapter = {
+    body?: any;
+    dom?: IJSDOM;
+    res?: ResponseRequest;
+};
+export declare class NovelSiteDemo extends _NovelSite {
     static readonly IDKEY: string;
+    constructor(options: IDownloadOptions, ...argv: any[]);
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
-    download(inputUrl: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
-    protected _parseChapter(dom: IJSDOM): string;
-    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<IJSDOM>;
+    download(inputUrl: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<_NovelSite.INovel>;
+    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime): string;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<IFetchChapter>;
     protected _saveReadme(optionsRuntime: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
         file: string;
         md: string;
     }>;
 }
+export declare const NovelSite: typeof NovelSiteDemo;
 export default NovelSiteDemo;

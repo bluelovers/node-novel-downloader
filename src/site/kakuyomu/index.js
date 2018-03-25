@@ -56,11 +56,11 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends index_1.default {
         }
         return urlobj;
     }
-    _parseChapter(dom) {
-        if (!dom) {
+    _parseChapter(ret, optionsRuntime) {
+        if (!ret) {
             return '';
         }
-        return dom.$('#contentMain .widget-episodeBody').text();
+        return ret.dom.$('#contentMain .widget-episodeBody').text();
     }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;

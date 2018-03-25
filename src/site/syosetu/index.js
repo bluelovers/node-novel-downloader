@@ -6,16 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fetch_1 = require("../../fetch");
-const fs_iconv_1 = require("fs-iconv");
-const path = require("path");
 const jsdom_extra_1 = require("jsdom-extra");
 const jsdom_url_1 = require("jsdom-url");
-const fs_1 = require("../fs");
 const index_1 = require("../index");
 const index_2 = require("../index");
-const index_3 = require("../index");
-let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
+const NovelSiteDemo = require("../demo/index");
+let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     constructor(options, ...argv) {
         super(options, ...argv);
         this.optionsInit.retryDelay = this.optionsInit.retryDelay || 25000;
@@ -27,105 +23,182 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
             .setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
         return this;
     }
-    download(url, downloadOptions = {}) {
+    /*
+    download(url: string | URL, downloadOptions: IDownloadOptions = {})
+    {
         const self = this;
-        const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir(downloadOptions);
+
+        const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<IOptionsRuntime>(downloadOptions);
+
         console.log(optionsRuntime);
-        return index_2.PromiseBluebird
+
+        return PromiseBluebird
             .bind(self)
-            .then(async function () {
-            url = this.createMainUrl(url);
-            //optionsRuntime[SYMBOL_CACHE].url = url;
-            self.session(optionsRuntime, url);
-            let novel = await self.get_volume_list(url, optionsRuntime);
-            //console.log(novel);
-            let idx = downloadOptions.startIndex || 0;
-            let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
-            optionsRuntime[index_1.SYMBOL_CACHE].novel = novel;
-            optionsRuntime[index_1.SYMBOL_CACHE].path_novel = path_novel;
-            let ret = await index_2.PromiseBluebird
-                .mapSeries(novel.volume_list, function (volume, vid) {
-                let dirname = fs_1.getVolumePath(self, {
-                    path_novel,
-                    volume, vid
-                }, optionsRuntime);
-                return index_2.PromiseBluebird
-                    .mapSeries(volume.chapter_list, async function (chapter, cid) {
-                    //chapter.chapter_index = (idx++);
-                    idx++;
-                    let file = fs_1.getFilePath(self, {
-                        chapter, cid,
-                        ext: '.txt',
-                        idx,
-                        dirname,
-                        volume, vid,
-                    }, optionsRuntime);
-                    if (self._checkExists(optionsRuntime, file)) {
-                        return file;
-                    }
-                    let fn;
-                    if (optionsRuntime.disableDownload) {
-                        fn = async function () {
-                            return '';
-                        };
-                    }
-                    else if (!optionsRuntime.disableTxtdownload) {
-                        fn = function () {
-                            return fetch_1.retryRequest(chapter.chapter_url, {
-                                delay: 25000,
-                                jar: optionsRuntime.optionsJSDOM.cookieJar,
-                            });
-                        };
-                    }
-                    else {
-                        let url = self._createChapterUrl({
-                            novel,
-                            volume,
-                            chapter,
+            .then(async function ()
+            {
+                url = this.createMainUrl(url as any);
+
+                //optionsRuntime[SYMBOL_CACHE].url = url;
+
+                self.session(optionsRuntime, url as URL);
+
+                let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
+
+                //console.log(novel);
+
+                let idx = downloadOptions.startIndex || 0;
+
+                let path_novel = path.join(self.PATH_NOVEL_MAIN,
+                    `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
+                );
+
+                optionsRuntime[SYMBOL_CACHE].novel = novel;
+                optionsRuntime[SYMBOL_CACHE].path_novel = path_novel;
+
+                let ret = await PromiseBluebird
+                    .mapSeries(novel.volume_list, function (volume, vid)
+                    {
+                        let dirname = getVolumePath(self, {
+                            path_novel,
+                            volume, vid
                         }, optionsRuntime);
-                        //console.log(url);
-                        fn = function () {
-                            return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
-                                .then(async function (dom) {
-                                return [
-                                    dom.$('#novel_p').text(),
-                                    dom.$('#novel_honbun').text(),
-                                    dom.$('#novel_a').text(),
-                                ].filter(function (v) {
-                                    return v;
-                                }).join('\n\n==================\n\n');
-                            });
-                        };
-                    }
-                    //console.log(url);
-                    await index_2.PromiseBluebird.resolve().then(function () {
-                        return fn()
-                            .then(async function (text) {
-                            await fs_iconv_1.default.outputFile(file, text);
-                            return text;
+
+                        return PromiseBluebird
+                            .mapSeries(volume.chapter_list, async function (chapter, cid)
+                            {
+                                //chapter.chapter_index = (idx++);
+                                idx++;
+
+                                let file = getFilePath(self, {
+                                    chapter, cid,
+                                    ext: '.txt',
+
+                                    idx,
+
+                                    dirname,
+                                    volume, vid,
+                                }, optionsRuntime);
+
+                                if (self._checkExists(optionsRuntime, file))
+                                {
+                                    return file;
+                                }
+
+                                let fn;
+
+                                if (optionsRuntime.disableDownload)
+                                {
+                                    fn = async function ()
+                                    {
+                                        return '';
+                                    };
+                                }
+                                else if (!optionsRuntime.disableTxtdownload)
+                                {
+                                    fn = function ()
+                                    {
+                                        return retryRequest(chapter.chapter_url, {
+                                            delay: 25000,
+                                            jar: optionsRuntime.optionsJSDOM.cookieJar,
+                                        });
+                                    }
+                                }
+                                else
+                                {
+                                    let url = self._createChapterUrl({
+                                        novel,
+                                        volume,
+                                        chapter,
+                                    }, optionsRuntime);
+
+                                    //console.log(url);
+
+                                    fn = function ()
+                                    {
+                                        return fromURL(url, optionsRuntime.optionsJSDOM)
+                                            .then(async function (dom)
+                                            {
+                                                return [
+                                                    dom.$('#novel_p').text(),
+                                                    dom.$('#novel_honbun').text(),
+                                                    dom.$('#novel_a').text(),
+                                                ].filter(function (v)
+                                                {
+                                                    return v;
+                                                }).join('\n\n==================\n\n');
+                                            })
+                                            ;
+                                    };
+                                }
+
+                                //console.log(url);
+
+                                await PromiseBluebird.resolve().then(function ()
+                                {
+                                    return fn()
+                                        .then(async function (text)
+                                        {
+                                            await fs.outputFile(file, text);
+
+                                            return text;
+                                        })
+                                        ;
+                                });
+
+                                return file;
+                            })
+                            ;
+                    })
+                    .tap(ls =>
+                    {
+                        let file = path.join(path_novel,
+                            `${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`
+                            )
+                        ;
+
+                        //console.log(ls);
+
+                        return fs.outputJSON(file, novel, {
+                            spaces: "\t",
                         });
-                    });
-                    return file;
-                });
+                    })
+                ;
+
+                await self._saveReadme(optionsRuntime);
+
+                return novel;
             })
-                .tap(ls => {
-                let file = path.join(path_novel, `${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`);
-                //console.log(ls);
-                return fs_iconv_1.default.outputJSON(file, novel, {
-                    spaces: "\t",
-                });
-            });
-            await self._saveReadme(optionsRuntime);
-            return novel;
-        })
-            .finally(function () {
-            if (0) {
-                console.dir(optionsRuntime.optionsJSDOM.cookieJar, {
-                    depth: null,
-                    colors: true,
-                });
-            }
-        });
+            .finally(function ()
+            {
+                if (0)
+                {
+                    console.dir((optionsRuntime.optionsJSDOM as IFromUrlOptions).cookieJar, {
+                        depth: null,
+                        colors: true,
+                    });
+                }
+
+            })
+            ;
+    }
+    */
+    download(url, downloadOptions = {}) {
+        return super.download(url, downloadOptions);
+    }
+    _parseChapter(ret, optionsRuntime) {
+        if (!ret) {
+            return '';
+        }
+        if (!optionsRuntime.disableTxtdownload) {
+            return ret.body;
+        }
+        return [
+            ret.dom.$('#novel_p').text(),
+            ret.dom.$('#novel_honbun').text(),
+            ret.dom.$('#novel_a').text(),
+        ].filter(function (v) {
+            return v;
+        }).join('\n\n==================\n\n');
     }
     _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
         if (optionsRuntime.disableTxtdownload) {
@@ -284,7 +357,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                         dd = da.text().replace(/^\s+|\s+$/g, '');
                     }
                     if (dd) {
-                        chapter_date = index_3.moment(dd, 'YYYY/MM/DD HH:mm').local();
+                        chapter_date = index_2.moment(dd, 'YYYY/MM/DD HH:mm').local();
                         _cache_dates.push(chapter_date.unix());
                     }
                     let href = a.prop('href');
@@ -323,7 +396,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 }
             });
             _cache_dates.sort();
-            let novel_date = index_3.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
+            let novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             let a = await jsdom_extra_1.fromURL(`https://${url_data.novel_r18
                 ? 'narou18'
                 : 'narou'}.dip.jp/search.php?text=${url_data.novel_id}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
@@ -389,7 +462,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends index_1.default {
                 novel_publisher,
                 novel_series_title,
                 novel_syosetu_id,
-                volume_list, checkdate: index_3.moment().local(), imgs: [] });
+                volume_list, checkdate: index_2.moment().local(), imgs: [] });
         });
     }
 };

@@ -35,6 +35,8 @@ export function retryRequest(url, options: IOptions = {})
 		url = url.href;
 	}
 
+	//console.log(url, options);
+
 	function fn()
 	{
 		tries++;

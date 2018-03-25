@@ -13,7 +13,11 @@ const jsdom_extra_1 = require("jsdom-extra");
 const fs_1 = require("../fs");
 const index_1 = require("../index");
 const index_2 = require("../index");
+const parseContentType = require("content-type-parser");
 let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
+    constructor(options, ...argv) {
+        super(options, ...argv);
+    }
     session(optionsRuntime, url) {
         super.session(optionsRuntime, url);
         return this;
@@ -63,8 +67,8 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                         chapter,
                     }, optionsRuntime);
                     await self._fetchChapter(url, optionsRuntime)
-                        .then(function (dom) {
-                        return self._parseChapter(dom);
+                        .then(function (ret) {
+                        return self._parseChapter(ret, optionsRuntime);
                     })
                         .then(async function (text) {
                         await fs_iconv_1.default.outputFile(file, text);
@@ -83,32 +87,40 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             return novel;
         });
     }
-    _parseChapter(dom) {
-        if (!dom) {
+    _parseChapter(ret, optionsRuntime) {
+        if (!ret) {
             return '';
         }
         throw new SyntaxError(`Function not implemented`);
     }
     _fetchChapter(url, optionsRuntime) {
-        return index_2.PromiseBluebird.resolve().then(function () {
-            let fn;
+        return index_2.PromiseBluebird.resolve().then(async function () {
+            let ret = {};
             if (optionsRuntime.disableDownload) {
-                fn = null;
+                return null;
             }
             else if (optionsRuntime.retryDelay > 0) {
-                fn = fetch_1.retryRequest(url, {
+                await fetch_1.retryRequest(url, {
                     delay: optionsRuntime.retryDelay,
-                    jar: optionsRuntime.optionsJSDOM.cookieJar,
+                    jar: optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest(),
                     resolveWithFullResponse: true,
                 })
                     .then(function (res) {
-                    return jsdom_extra_1.requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
+                    const contentTypeParsed = parseContentType(res.headers["content-type"]);
+                    if (contentTypeParsed.isHTML() || contentTypeParsed.isXML()) {
+                        ret.dom = jsdom_extra_1.requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
+                        ret.dom = jsdom_extra_1.packJSDOM(ret.dom);
+                    }
+                    ret.res = res;
+                    ret.body = res.body;
                 });
             }
             else {
-                fn = jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM);
+                ret.dom = await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM);
+                ret.res = ret.dom._options.Response;
+                ret.body = ret.dom._options.body;
             }
-            return fn;
+            return ret;
         });
     }
     _saveReadme(optionsRuntime, options = {}, ...opts) {
@@ -126,4 +138,5 @@ NovelSiteDemo = __decorate([
     index_1.staticImplements()
 ], NovelSiteDemo);
 exports.NovelSiteDemo = NovelSiteDemo;
+exports.NovelSite = NovelSiteDemo;
 exports.default = NovelSiteDemo;

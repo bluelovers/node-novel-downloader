@@ -43,7 +43,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
         chapter: NovelSite.IChapter;
     }, optionsRuntime?: T & IOptionsRuntime): URL;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): void;
-    protected _parseChapter(dom: any): void;
+    protected _parseChapter<T>(dom: any, optionsRuntime: T & IOptionsRuntime): void;
     protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean;
 }
 export declare type IOptionsRuntime = NovelSite.IOptionsRuntime;

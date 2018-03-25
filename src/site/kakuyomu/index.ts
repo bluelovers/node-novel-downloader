@@ -81,14 +81,14 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 		return urlobj;
 	}
 
-	protected _parseChapter(dom: IJSDOM): string
+	protected _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime): string
 	{
-		if (!dom)
+		if (!ret)
 		{
 			return '';
 		}
 
-		return dom.$('#contentMain .widget-episodeBody').text();
+		return ret.dom.$('#contentMain .widget-episodeBody').text();
 	}
 
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,

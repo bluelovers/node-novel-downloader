@@ -102,6 +102,9 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 			filePrefixMode: 1,
 
 			startIndex: 1,
+
+			//disableCheckExists: true,
+
 		}).then(function (novel)
 		{
 			console.log(novel);
