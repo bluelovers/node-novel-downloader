@@ -15,6 +15,7 @@ import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM
 
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM }
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
+export { IMdconfMeta }
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 import fs, { trimFilename } from 'fs-iconv';
@@ -22,6 +23,8 @@ import fs, { trimFilename } from 'fs-iconv';
 //import * as moment from 'moment';
 import * as moment from 'moment-timezone';
 import { isUndef } from '../util';
+
+import * as EventEmitter from 'events';
 
 moment.fn.toJSON = function () { return this.format(); };
 
@@ -287,18 +290,19 @@ export class NovelSite implements NovelSite.INovelSite
 
 		return false
 	}
+
+	protected emit(event: EventEmitter, eventName: string, ...argv)
+	{
+		let bool = event.emit(eventName, this, ...argv);
+		return [event, bool];
+	}
 }
 
 export type IOptionsRuntime = NovelSite.IOptionsRuntime;
 
 export module NovelSite
 {
-	export type IOptionsRuntime = IOptions & IDownloadOptions & {};
-
-	export interface IOptions
-	{
-		outputDir?: string,
-		cwd?: string,
+	export type IOptionsPlus = {
 
 		disableOutputDirPrefix?: boolean,
 
@@ -308,13 +312,38 @@ export module NovelSite
 		noFirePrefix?: boolean,
 		noFilePadend?: boolean,
 
+		retryDelay?: number,
 		startIndex?: number,
+
+		filePrefixMode?: number,
 
 		allowEmptyVolumeTitle?: boolean,
 
-		filePrefixMode?: number,
-		retryDelay?: number,
+		event?: EventEmitter,
 	}
+
+	export type IOptions = {
+
+		outputDir?: string,
+		cwd?: string,
+
+	} & IOptionsPlus;
+
+	export type IDownloadOptions = {
+
+		/**
+		 * 只產生目錄結構 不下載內容
+		 */
+		disableDownload?: boolean,
+		disableCheckExists?: boolean,
+
+		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
+			cookieJar?: Partial<LazyCookieJar>,
+		},
+
+	} & IOptionsPlus;
+
+	export type IOptionsRuntime = IOptions & IDownloadOptions & IOptionsPlus;
 
 	export interface IParseUrl
 	{
@@ -331,7 +360,7 @@ export module NovelSite
 
 	export interface IChapter
 	{
-		chapter_index?: number,
+		chapter_index?: number | string,
 		chapter_title: string,
 		chapter_id?
 		chapter_url?
@@ -376,24 +405,6 @@ export module NovelSite
 	export interface INovelSiteStatic<T> extends Type<T & NovelSite.INovelSite>
 	{
 		IDKEY: string,
-	}
-
-	export interface IDownloadOptions
-	{
-		/**
-		 * 只產生目錄結構 不下載內容
-		 */
-		disableDownload?: boolean,
-
-		disableCheckExists?: boolean,
-
-		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
-			cookieJar?: Partial<LazyCookieJar>,
-		},
-
-		startIndex?: number,
-
-		retryDelay?: number,
 	}
 
 	export interface INovelSite

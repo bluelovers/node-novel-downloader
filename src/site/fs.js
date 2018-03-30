@@ -34,7 +34,21 @@ function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, v
     file = self.trimFilenameChapter(chapter.chapter_title);
     if (!optionsRuntime.noFirePrefix) {
         let idxx;
-        if (optionsRuntime.filePrefixMode > 0 || util_1.isUndef(chapter.chapter_index)) {
+        if (optionsRuntime.filePrefixMode > 1) {
+            if (util_1.isUndef(chapter.chapter_index, '', true)) {
+                idxx = '';
+            }
+            else if (optionsRuntime.filePrefixMode > 2) {
+                idxx = idx;
+            }
+            else {
+                idxx = chapter.chapter_index;
+                if (optionsRuntime.startIndex) {
+                    idxx += optionsRuntime.startIndex;
+                }
+            }
+        }
+        else if (optionsRuntime.filePrefixMode > 0 || util_1.isUndef(chapter.chapter_index)) {
             idxx = cid;
             if (optionsRuntime.startIndex) {
                 idxx += optionsRuntime.startIndex;
@@ -46,8 +60,10 @@ function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, v
         else {
             idxx = chapter.chapter_index;
         }
-        prefix = padStart(idxx);
-        prefix += '_';
+        if (idxx !== '') {
+            prefix = padStart(idxx);
+            prefix += '_';
+        }
     }
     if (!optionsRuntime.noFilePadend && chapter.chapter_date) {
         pad = '.' + chapter.chapter_date.format('YYYYMMDDHHmm');

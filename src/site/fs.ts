@@ -81,9 +81,29 @@ export function getFilePath(self: NovelSite, {
 
 	if (!optionsRuntime.noFirePrefix)
 	{
-		let idxx: number;
+		let idxx: number | string;
 
-		if (optionsRuntime.filePrefixMode > 0 || isUndef(chapter.chapter_index))
+		if (optionsRuntime.filePrefixMode > 1)
+		{
+			if (isUndef(chapter.chapter_index, '', true))
+			{
+				idxx = '';
+			}
+			else if (optionsRuntime.filePrefixMode > 2)
+			{
+				idxx = idx;
+			}
+			else
+			{
+				idxx = chapter.chapter_index as number;
+
+				if (optionsRuntime.startIndex)
+				{
+					idxx += optionsRuntime.startIndex;
+				}
+			}
+		}
+		else if (optionsRuntime.filePrefixMode > 0 || isUndef(chapter.chapter_index))
 		{
 			idxx = cid;
 
@@ -101,8 +121,11 @@ export function getFilePath(self: NovelSite, {
 			idxx = chapter.chapter_index;
 		}
 
-		prefix = padStart(idxx);
-		prefix += '_';
+		if (idxx !== '')
+		{
+			prefix = padStart(idxx);
+			prefix += '_';
+		}
 	}
 
 	if (!optionsRuntime.noFilePadend && chapter.chapter_date)

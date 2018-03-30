@@ -47,10 +47,43 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     }
                     dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
                 }
+                if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode == 2) {
+                    let i;
+                    let bool = volume.chapter_list.every(function (chapter, j) {
+                        let m = chapter.chapter_title
+                            .replace(/^\D+/, '')
+                            .replace(/^(\d+).+$/, '$1');
+                        if (/^\d+$/.test(m)) {
+                            let m2 = parseInt(m);
+                            if (j == 0) {
+                                i = m2;
+                                return true;
+                            }
+                            else if (m2 === ++i) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                    //console.log(bool);
+                    if (bool) {
+                        volume.chapter_list.forEach(function (chapter) {
+                            chapter.chapter_index = '';
+                        });
+                    }
+                }
+                if (optionsRuntime.event) {
+                    self.emit(optionsRuntime.event, 'volume', volume, {
+                        optionsRuntime,
+                        dirname,
+                        vid,
+                        novel,
+                        url,
+                    });
+                }
                 return index_2.PromiseBluebird
                     .mapSeries(volume.chapter_list, async function (chapter, cid) {
                     //chapter.chapter_index = (idx++);
-                    idx++;
                     let file = fs_1.getFilePath(self, {
                         chapter, cid,
                         ext: '.txt',
@@ -58,6 +91,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                         dirname,
                         volume, vid,
                     }, optionsRuntime);
+                    idx++;
                     if (self._checkExists(optionsRuntime, file)) {
                         return file;
                     }

@@ -165,6 +165,10 @@ class NovelSite {
         }
         return false;
     }
+    emit(event, eventName, ...argv) {
+        let bool = event.emit(eventName, this, ...argv);
+        return [event, bool];
+    }
 }
 NovelSite.IDKEY = null;
 exports.NovelSite = NovelSite;

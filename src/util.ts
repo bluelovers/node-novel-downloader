@@ -2,6 +2,7 @@
  * Created by user on 2018/3/18/018.
  */
 
+import novelText from 'novel-text';
 import { minifyHTML } from 'jsdom-extra/lib/html';
 
 export { minifyHTML }
@@ -26,6 +27,13 @@ export function isUndef(v, opts: any = null, strict?: boolean): boolean
 	}
 
 	return bool;
+}
+
+export function trim(str: string)
+{
+	return novelText.trim(str, {
+		trim: '　',
+	});
 }
 
 import * as self from './util';

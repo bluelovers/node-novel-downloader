@@ -3,6 +3,7 @@
  * Created by user on 2018/3/18/018.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+const novel_text_1 = require("novel-text");
 const html_1 = require("jsdom-extra/lib/html");
 exports.minifyHTML = html_1.minifyHTML;
 function isUndef(v, opts = null, strict) {
@@ -19,5 +20,11 @@ function isUndef(v, opts = null, strict) {
     return bool;
 }
 exports.isUndef = isUndef;
+function trim(str) {
+    return novel_text_1.default.trim(str, {
+        trim: '　',
+    });
+}
+exports.trim = trim;
 const self = require("./util");
 exports.default = self;

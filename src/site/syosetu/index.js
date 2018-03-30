@@ -256,7 +256,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         }
         let r;
         let m;
-        r = /^(n[\w]{6})$/;
+        r = /^(n[\w]{5,6})$/;
         if (m = r.exec(url)) {
             urlobj.novel_id = m[1];
             return urlobj;

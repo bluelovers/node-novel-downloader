@@ -1,4 +1,5 @@
 /// <reference types="bluebird" />
+/// <reference types="node" />
 /**
  * Created by user on 2018/2/10/010.
  */
@@ -6,8 +7,11 @@ import bluebirdDecorator from '../decorator/bluebird';
 import * as PromiseBluebird from 'bluebird';
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM };
+import { IMdconfMeta } from 'node-novel-info';
+export { IMdconfMeta };
 import { LazyCookieJar } from 'jsdom-extra';
 import * as moment from 'moment-timezone';
+import * as EventEmitter from 'events';
 export { moment };
 export { bluebirdDecorator, PromiseBluebird };
 export declare const SYMBOL_CACHE: unique symbol;
@@ -50,23 +54,37 @@ export declare class NovelSite implements NovelSite.INovelSite {
         chapter: NovelSite.IChapter;
     }): void;
     protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean;
+    protected emit(event: EventEmitter, eventName: string, ...argv: any[]): (boolean | EventEmitter)[];
 }
 export declare type IOptionsRuntime = NovelSite.IOptionsRuntime;
 export declare module NovelSite {
-    type IOptionsRuntime = IOptions & IDownloadOptions & {};
-    interface IOptions {
-        outputDir?: string;
-        cwd?: string;
+    type IOptionsPlus = {
         disableOutputDirPrefix?: boolean;
         noDirPrefix?: boolean;
         noDirPadend?: boolean;
         noFirePrefix?: boolean;
         noFilePadend?: boolean;
-        startIndex?: number;
-        allowEmptyVolumeTitle?: boolean;
-        filePrefixMode?: number;
         retryDelay?: number;
-    }
+        startIndex?: number;
+        filePrefixMode?: number;
+        allowEmptyVolumeTitle?: boolean;
+        event?: EventEmitter;
+    };
+    type IOptions = {
+        outputDir?: string;
+        cwd?: string;
+    } & IOptionsPlus;
+    type IDownloadOptions = {
+        /**
+         * 只產生目錄結構 不下載內容
+         */
+        disableDownload?: boolean;
+        disableCheckExists?: boolean;
+        optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
+            cookieJar?: Partial<LazyCookieJar>;
+        };
+    } & IOptionsPlus;
+    type IOptionsRuntime = IOptions & IDownloadOptions & IOptionsPlus;
     interface IParseUrl {
         url?: URL | string;
         novel_pid?: any;
@@ -76,7 +94,7 @@ export declare module NovelSite {
         [key: string]: any;
     }
     interface IChapter {
-        chapter_index?: number;
+        chapter_index?: number | string;
         chapter_title: string;
         chapter_id?: any;
         chapter_url?: any;
@@ -106,18 +124,6 @@ export declare module NovelSite {
     }
     interface INovelSiteStatic<T> extends Type<T & NovelSite.INovelSite> {
         IDKEY: string;
-    }
-    interface IDownloadOptions {
-        /**
-         * 只產生目錄結構 不下載內容
-         */
-        disableDownload?: boolean;
-        disableCheckExists?: boolean;
-        optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
-            cookieJar?: Partial<LazyCookieJar>;
-        };
-        startIndex?: number;
-        retryDelay?: number;
     }
     interface INovelSite {
         download(url: string | URL, options?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;

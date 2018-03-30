@@ -88,7 +88,15 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'http://ncode.syosetu.com/n0612dm/',
 
-		'n5991bu',
+		//'n5991bu',
+
+		//'http://ncode.syosetu.com/n2627t/',
+
+		//'http://ncode.syosetu.com/n0089bk/',
+
+		//'http://ncode.syosetu.com/n4434cx/',
+
+		'https://ncode.syosetu.com/n0822cl/',
 
 	].forEach(async function (value, index, array)
 	{
@@ -99,7 +107,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 			//noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 1,
+			filePrefixMode: 3,
 
 			startIndex: 1,
 

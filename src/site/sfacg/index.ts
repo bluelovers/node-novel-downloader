@@ -2,8 +2,8 @@
  * Created by user on 2018/3/25/025.
  */
 
-import { isUndef, minifyHTML } from '../../util';
-import _NovelSite, { staticImplements, SYMBOL_CACHE } from '../index';
+import { isUndef, minifyHTML, trim } from '../../util';
+import _NovelSite, { staticImplements, SYMBOL_CACHE, IMdconfMeta } from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import * as NovelSiteDemo from '../demo/base';
@@ -14,24 +14,24 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
 
-@staticImplements<_NovelSite.INovelSiteStatic<NovelSiteWebqxs>>()
-export class NovelSiteWebqxs extends NovelSiteBase
+@staticImplements<_NovelSite.INovelSiteStatic<NovelSiteSfacg>>()
+export class NovelSiteSfacg extends NovelSiteBase
 {
-	public static readonly IDKEY = 'webqxs';
+	public static readonly IDKEY = 'sfacg';
 
 	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
 	{
 		let url: string;
 
-		if (isUndef(urlobj.novel_pid) || bool < 0)
+		if (bool < 0)
 		{
-			url = `http://www.webqxs.com/lightnovel/${urlobj.novel_id}.html`;
+			url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/`;
 		}
 		else
 		{
-			let cid = (!bool && urlobj.chapter_id) ? urlobj.chapter_id + '.html' : '';
+			let cid = (!bool && urlobj.chapter_id) ? [urlobj.novel_pid, urlobj.chapter_id].join('/') : 'MainIndex';
 
-			url = `http://www.webqxs.com/${urlobj.novel_pid}/${urlobj.novel_id}/${cid}`;
+			url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/${cid}/`;
 		}
 
 		return new URL(url);
@@ -50,19 +50,19 @@ export class NovelSiteWebqxs extends NovelSiteBase
 		urlobj.url = new URL(url);
 		url = urlobj.url.href;
 
-		let r = /www\.webqxs\.com\/([\d]+)\/([\d]+)\/(?:([\d]+)\.html?)?/;
+		let r = /book\.sfacg\.com\/Novel\/(\d+)\/(?:(\d+)\/(\d+))/;
 
 		let m = r.exec(url);
 		if (m)
 		{
-			urlobj.novel_pid = m[1];
-			urlobj.novel_id = m[2];
+			urlobj.novel_pid = m[2];
+			urlobj.novel_id = m[1];
 			urlobj.chapter_id = m[3];
 
 			return urlobj;
 		}
 
-		r = /www\.webqxs\.com\/lightnovel\/(\d+).html/;
+		r = /book\.sfacg\.com\/Novel\/(\d+)\/(?:MainIndex)?/;
 		if (m = r.exec(url))
 		{
 			urlobj.novel_id = m[1];
@@ -77,7 +77,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 	{
 		let data = this.parseUrl(url);
 
-		if (!data || isUndef(data.novel_pid) || !data.novel_id)
+		if (!data || !data.novel_id)
 		{
 			console.log(data);
 
@@ -98,20 +98,36 @@ export class NovelSiteWebqxs extends NovelSiteBase
 
 		try
 		{
-			let html = minifyHTML(ret.dom.$('#articlecontent').html());
+			let html = minifyHTML(ret.dom.$('#ChapterBody').html());
 
-			html = html.replace(/^(&nbsp;){4}/gm, '');
+			//html = html.replace(/^(&nbsp;){4}/gm, '');
 
-			ret.dom.$('#articlecontent').html(html);
+			ret.dom.$('#ChapterBody').html(html);
 		}
 		catch (e)
 		{
 
 		}
 
-		//console.log(ret.dom.serialize());
+		ret.dom.$('#ChapterBody p').text(function (i, old)
+		{
+			return old + "\n";
+		});
 
-		return ret.dom.$('#articlecontent').text();
+		ret.dom.$('#ChapterBody img[src]').each(function ()
+		{
+			let src = ret.dom.$(this).prop('src').trim();
+
+			if (src)
+			{
+				cache.chapter.imgs = cache.chapter.imgs || [];
+
+				cache.chapter.imgs.push(src);
+				cache.novel.imgs.push(src);
+			}
+		});
+
+		return ret.dom.$('#ChapterBody').text();
 	}
 
 	async get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL,
@@ -127,7 +143,6 @@ export class NovelSiteWebqxs extends NovelSiteBase
 				const $ = dom.$;
 
 				let url_data = self.parseUrl(dom.url.href);
-				let novel_title = dom.$('.story-head .story-title').text();
 
 				let data_meta = await self._get_meta(url, optionsRuntime);
 
@@ -136,23 +151,23 @@ export class NovelSiteWebqxs extends NovelSiteBase
 
 				let currentVolume: _NovelSite.IVolume;
 
-				let table = $('.ml_content .ml_list ul').eq(0);
-				table.children()
+				let table = $('.s-list .story-catalog > div');
+				table
 					.each(function (index)
 					{
 						let tr = dom.$(this);
 
-						if (tr.is('div.volume-z'))
+						if (tr.is('.catalog-hd'))
 						{
 							currentVolume = volume_list[volume_list.length] = {
 								volume_index: volume_list.length,
-								volume_title: novelText.trim(tr.text()),
+								volume_title: novelText.trim(tr.find('.catalog-title').text()),
 								chapter_list: [],
 							};
 						}
-						else if (tr.is('li'))
+						else if (tr.is('.catalog-list'))
 						{
-							tr.find('a')
+							tr.find('ul > li > a')
 								.each(function (index)
 								{
 									let a = dom.$(this);
@@ -161,7 +176,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 
 									let data = self.parseUrl(href);
 
-									if (!data.chapter_id)
+									if (!data.chapter_id || !data.novel_pid)
 									{
 										throw new Error()
 									}
@@ -172,7 +187,12 @@ export class NovelSiteWebqxs extends NovelSiteBase
 										data.url = href;
 									}
 
-									let chapter_title = a.text().trim();
+									a
+										.find('.icn')
+										.remove()
+									;
+
+									let chapter_title = trim(a.text());
 
 									currentVolume
 										.chapter_list
@@ -205,11 +225,9 @@ export class NovelSiteWebqxs extends NovelSiteBase
 					url: dom.url,
 					url_data,
 
-					novel_title,
-
 					volume_list,
 
-					novel_date,
+					//novel_date,
 
 					checkdate: moment().local(),
 
@@ -231,28 +249,82 @@ export class NovelSiteWebqxs extends NovelSiteBase
 			.then(function (dom)
 			{
 				const $ = dom.$;
+				let data: IMdconfMeta = {};
+				data.novel = {};
 
-				let novel_author = $('.z-author .f-text-overflow')
+				let novel_author = $('.author-info .author-name span')
 					.text()
 					.trim()
 				;
 
-				$('.u-bookDetail-synopsis .u-synopsis-text > strong:eq(0)').remove();
-
-				let novel_desc = $('.u-bookDetail-synopsis .u-synopsis-text')
+				let novel_desc = $('.summary-content .introduce')
 					.text()
 					.trim()
 				;
+
+				data.novel.status = $('.count-detail .text:eq(1)')
+					.text()
+					.replace(/^.+\[(.+)\].*$/g, '$1')
+				;
+				data.novel.tags = [];
+
+				{
+					let t = $('.count-detail .text:eq(0)')
+						.text()
+						.replace(/^.+：/g, '')
+						.trim()
+					;
+
+					if (t)
+					{
+						data.novel.tags.push(t);
+					}
+				}
+
+				$('.main-part .tag-list .tag .text')
+					.each(function ()
+					{
+						let t = trim($(this)
+							.text()
+							.replace(/\(\d+\)/g, ''))
+						;
+
+						if (t)
+						{
+							data.novel.tags.push(t);
+						}
+					})
+				;
+
+				let novel_date = moment($('.count-detail .text:eq(-1)')
+					.text()
+					.replace(/更新：/, '')
+					.trim()).local()
+				;
+
+				let novel_title = trim($('.summary-content .title .text').text());
+
+				$('.d-summary .summary-pic img[src]').each(function ()
+				{
+					data.novel.cover = $(this).prop('src');
+				});
 
 				return {
 					url,
 
+					...data,
+
+					novel_title,
+
 					novel_author,
 					novel_desc,
+
+					novel_date,
+
 				};
 			})
 		;
 	}
 }
 
-export default NovelSiteWebqxs;
+export default NovelSiteSfacg;
