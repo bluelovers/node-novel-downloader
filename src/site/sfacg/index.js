@@ -22,6 +22,9 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
         if (bool < 0) {
             url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/`;
         }
+        else if (urlobj.chapter_vip && urlobj.chapter_id) {
+            url = `http://book.sfacg.com/vip/c/${urlobj.chapter_id}/`;
+        }
         else {
             let cid = (!bool && urlobj.chapter_id) ? [urlobj.novel_pid, urlobj.chapter_id].join('/') : 'MainIndex';
             url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/${cid}/`;
@@ -50,6 +53,12 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
             urlobj.novel_id = m[1];
             return urlobj;
         }
+        r = /book\.sfacg\.com\/vip\/c\/(\d+)/;
+        if (m = r.exec(url)) {
+            urlobj.chapter_id = m[1];
+            urlobj.chapter_vip = true;
+            return urlobj;
+        }
         return urlobj;
     }
     createMainUrl(url) {
@@ -68,13 +77,20 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
         try {
             let html = util_1.minifyHTML(ret.dom.$('#ChapterBody').html());
             //html = html.replace(/^(&nbsp;){4}/gm, '');
+            html = html.replace(/^\s+|\s+$/g, '');
             ret.dom.$('#ChapterBody').html(html);
         }
         catch (e) {
         }
-        ret.dom.$('#ChapterBody p').text(function (i, old) {
+        ret.dom.$('#ChapterBody').html(function (i, old) {
+            return old.replace(/(<\/p>)[ \t]*(<p>)/g, '$1\n$2');
+        });
+        /*
+        ret.dom.$('#ChapterBody p').text(function (i, old)
+        {
             return old + "\n";
         });
+        */
         ret.dom.$('#ChapterBody img[src]').each(function () {
             let src = ret.dom.$(this).prop('src').trim();
             if (src) {
@@ -83,7 +99,11 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                 cache.novel.imgs.push(src);
             }
         });
-        return ret.dom.$('#ChapterBody').text();
+        let text = ret.dom.$('#ChapterBody').text();
+        if (cache.chapter.chapter_vip) {
+            text = `VIP章节\n\n==========================\n\n${text}`;
+        }
+        return text;
     }
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
@@ -96,6 +116,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
             let _cache_dates = [];
             let volume_list = [];
             let currentVolume;
+            let novel_vip = 0;
             let table = $('.s-list .story-catalog > div');
             table
                 .each(function (index) {
@@ -113,17 +134,30 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                         let a = dom.$(this);
                         let href = a.prop('href');
                         let data = self.parseUrl(href);
-                        if (!data.chapter_id || !data.novel_pid) {
+                        if (!data.chapter_id || !data.chapter_vip && !data.novel_pid) {
+                            //console.log(href, data);
                             throw new Error();
                         }
                         else {
                             href = self.makeUrl(data);
                             data.url = href;
                         }
+                        let chapter_vip = a.find('.icn_vip').length;
+                        if (chapter_vip) {
+                            novel_vip++;
+                        }
                         a
-                            .find('.icn')
+                            .find('.icn, .icn_vip')
                             .remove();
                         let chapter_title = util_1.trim(a.text());
+                        if (chapter_title === '') {
+                            return;
+                        }
+                        if (!chapter_title) {
+                            console.log(href);
+                            console.log(a);
+                            throw new Error();
+                        }
                         currentVolume
                             .chapter_list
                             .push({
@@ -132,6 +166,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                             chapter_id: data.chapter_id,
                             chapter_url: href,
                             chapter_url_data: data,
+                            chapter_vip,
                         });
                     });
                 }
@@ -141,7 +176,12 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                 _cache_dates.sort();
                 novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             }
-            return Object.assign({}, data_meta, { url: dom.url, url_data,
+            if (novel_vip) {
+                data_meta.novel = data_meta.novel || {};
+                data_meta.novel.tags = data_meta.novel.tags || [];
+                data_meta.novel.tags.push('VIP');
+            }
+            return Object.assign({ url: dom.url, url_data }, data_meta, { novel_vip,
                 volume_list, 
                 //novel_date,
                 checkdate: index_2.moment().local(), imgs: [] });
@@ -151,6 +191,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
         });
     }
     async _get_meta(inputUrl, optionsRuntime) {
+        const self = this;
         let url = this.makeUrl(this.parseUrl(inputUrl), -1);
         return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
             .then(function (dom) {
@@ -185,15 +226,22 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                     data.novel.tags.push(t);
                 }
             });
-            let novel_date = index_2.moment($('.count-detail .text:eq(-1)')
-                .text()
-                .replace(/更新：/, '')
-                .trim()).local();
+            let novel_date;
+            {
+                let d = $('.count-detail .text:last')
+                    .text()
+                    .replace(/更新：/, '')
+                    .trim();
+                //console.log(d);
+                novel_date = index_2.moment(d, 'YYYY/MM/DD HH:mm:ss').local();
+            }
             let novel_title = util_1.trim($('.summary-content .title .text').text());
             $('.d-summary .summary-pic img[src]').each(function () {
                 data.novel.cover = $(this).prop('src');
             });
-            return Object.assign({ url }, data, { novel_title,
+            let url_data = self.parseUrl(url);
+            return Object.assign({ url,
+                url_data }, data, { novel_title,
                 novel_author,
                 novel_desc,
                 novel_date });

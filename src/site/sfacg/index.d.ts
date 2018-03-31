@@ -41,6 +41,7 @@ export declare class NovelSiteSfacg extends NovelSiteBase {
         };
         link?: string[];
         url: URL;
+        url_data: _NovelSite.IParseUrl;
     }>;
 }
 export default NovelSiteSfacg;
