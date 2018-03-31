@@ -12,6 +12,7 @@ export declare type IFetchChapter = {
     body?: any;
     dom?: IJSDOM;
     res?: ResponseRequest;
+    json?;
 };
 export declare class NovelSiteDemo extends _NovelSite {
     static readonly IDKEY: string;

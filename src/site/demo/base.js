@@ -11,6 +11,7 @@ const fs_iconv_1 = require("fs-iconv");
 const path = require("path");
 const jsdom_extra_1 = require("jsdom-extra");
 const fs_1 = require("../fs");
+const jsdom_1 = require("../../jsdom");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const parseContentType = require("content-type-parser");
@@ -135,26 +136,35 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     _fetchChapter(url, optionsRuntime) {
         return index_2.PromiseBluebird.resolve().then(async function () {
             let ret = {};
+            let opts = jsdom_1.getOptions(optionsRuntime);
             if (optionsRuntime.disableDownload) {
                 return null;
             }
-            else if (optionsRuntime.retryDelay > 0) {
-                await fetch_1.retryRequest(url, {
-                    delay: optionsRuntime.retryDelay,
-                    jar: optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest(),
-                    resolveWithFullResponse: true,
-                })
+            else if (true) {
+                if (optionsRuntime.retryDelay > 0) {
+                    // @ts-ignore
+                    opts.requestOptions.delay = optionsRuntime.retryDelay;
+                }
+                else {
+                    // @ts-ignore
+                    opts.requestOptions.retry = 1;
+                }
+                await fetch_1.retryRequest(url, opts.requestOptions)
                     .then(function (res) {
                     const contentTypeParsed = parseContentType(res.headers["content-type"]);
                     if (contentTypeParsed.isHTML() || contentTypeParsed.isXML()) {
                         ret.dom = jsdom_extra_1.requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
                         ret.dom = jsdom_extra_1.packJSDOM(ret.dom);
                     }
+                    else if (contentTypeParsed.subtype == 'json') {
+                        ret.json = JSON.parse(res.body.toString());
+                    }
                     ret.res = res;
                     ret.body = res.body;
                 });
             }
             else {
+                // @ts-ignore
                 ret.dom = await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM);
                 ret.res = ret.dom._options.Response;
                 ret.body = ret.dom._options.body;

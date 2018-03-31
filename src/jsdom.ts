@@ -2,12 +2,16 @@
  * Created by user on 2018/3/18/018.
  */
 
-import { IFromUrlOptions, VirtualConsole, IOptionsJSDOM, IFromFileOptions } from 'jsdom-extra';
+import _jsdom, { IFromUrlOptions, VirtualConsole, IOptionsJSDOM, IFromFileOptions } from 'jsdom-extra';
+
 import NovelSite from './site/index';
 export { IFromUrlOptions, VirtualConsole, IOptionsJSDOM, IFromFileOptions }
 
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 export { LazyCookie, LazyCookieJar }
+
+import { packOptions as _packOptions, IOptions, IOptionsCreateQuery } from 'jsdom-extra';
+import { normalizeFromURLOptions, normalizeRequestOptions, IRequestOptions } from 'jsdom-extra/lib/from-url';
 
 export type INovelOptionsJSDOM = IFromUrlOptions & IOptionsJSDOM;
 
@@ -24,6 +28,20 @@ export function createOptionsJSDOM<T = INovelOptionsJSDOM>(options: Partial<T & 
 	options.cookieJar = options.cookieJar || new LazyCookieJar();
 
 	return options;
+}
+
+export function getOptions(options)
+{
+	let opts = _packOptions(options);
+
+	let fromURLOptions = normalizeFromURLOptions(opts);
+	let requestOptions = normalizeRequestOptions(fromURLOptions);
+
+	return {
+		options: opts,
+		fromURLOptions,
+		requestOptions,
+	}
 }
 
 import * as self from './jsdom';

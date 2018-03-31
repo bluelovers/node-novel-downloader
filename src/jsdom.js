@@ -8,6 +8,8 @@ exports.VirtualConsole = jsdom_extra_1.VirtualConsole;
 const jsdom_extra_2 = require("jsdom-extra");
 exports.LazyCookie = jsdom_extra_2.LazyCookie;
 exports.LazyCookieJar = jsdom_extra_2.LazyCookieJar;
+const jsdom_extra_3 = require("jsdom-extra");
+const from_url_1 = require("jsdom-extra/lib/from-url");
 exports.defaultJSDOMOptions = {
     //virtualConsole: new VirtualConsole,
     //runScripts: 'dangerously',
@@ -20,5 +22,16 @@ function createOptionsJSDOM(options = {}, ...opts) {
     return options;
 }
 exports.createOptionsJSDOM = createOptionsJSDOM;
+function getOptions(options) {
+    let opts = jsdom_extra_3.packOptions(options);
+    let fromURLOptions = from_url_1.normalizeFromURLOptions(opts);
+    let requestOptions = from_url_1.normalizeRequestOptions(fromURLOptions);
+    return {
+        options: opts,
+        fromURLOptions,
+        requestOptions,
+    };
+}
+exports.getOptions = getOptions;
 const self = require("./jsdom");
 exports.default = self;

@@ -2,7 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
-import NovelSite from '../src/site/sfacg';
+import NovelSite from '../src/site/iqing';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 
@@ -16,8 +16,8 @@ import NovelSite from '../src/site/sfacg';
 	console.log(Site);
 
 	[
-		//'http://book.sfacg.com/Novel/120483/MainIndex/',
-		'http://book.sfacg.com/Novel/44068/',
+
+		'https://www.iqing.com/book/61842/',
 
 	].forEach(async function (value, index, array)
 	{

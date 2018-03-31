@@ -6,6 +6,8 @@ import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM, packJSDOM } from 'jsd
 import { URL } from 'jsdom-url';
 import { getFilePath } from '../fs';
 
+import { getOptions } from '../../jsdom';
+
 import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
 
@@ -23,6 +25,7 @@ export type IFetchChapter = {
 	body?: any;
 	dom?: IJSDOM;
 	res?: ResponseRequest;
+	json?,
 };
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()
@@ -233,17 +236,26 @@ export class NovelSiteDemo extends _NovelSite
 
 			} as IFetchChapter;
 
+			let opts = getOptions(optionsRuntime);
+
 			if (optionsRuntime.disableDownload)
 			{
 				return null;
 			}
-			else if (optionsRuntime.retryDelay > 0)
+			else if (true)
 			{
-				await retryRequest(url, {
-					delay: optionsRuntime.retryDelay,
-					jar: optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest(),
-					resolveWithFullResponse: true,
-				})
+				if (optionsRuntime.retryDelay > 0)
+				{
+					// @ts-ignore
+					opts.requestOptions.delay = optionsRuntime.retryDelay;
+				}
+				else
+				{
+					// @ts-ignore
+					opts.requestOptions.retry = 1;
+				}
+
+				await retryRequest(url, opts.requestOptions)
 					.then(function (res)
 					{
 						const contentTypeParsed = parseContentType(res.headers["content-type"]);
@@ -253,6 +265,10 @@ export class NovelSiteDemo extends _NovelSite
 							ret.dom = requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
 							ret.dom = packJSDOM(ret.dom);
 						}
+						else if (contentTypeParsed.subtype == 'json')
+						{
+							ret.json = JSON.parse(res.body.toString());
+						}
 
 						ret.res = res;
 						ret.body = res.body;
@@ -261,6 +277,7 @@ export class NovelSiteDemo extends _NovelSite
 			}
 			else
 			{
+				// @ts-ignore
 				ret.dom = await fromURL(url, optionsRuntime.optionsJSDOM);
 
 				ret.res = ret.dom._options.Response;
