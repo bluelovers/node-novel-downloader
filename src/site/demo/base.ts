@@ -145,17 +145,17 @@ export class NovelSiteDemo extends _NovelSite
 							{
 								//chapter.chapter_index = (idx++);
 
+								const current_idx = idx++;
+
 								let file = getFilePath(self, {
 									chapter, cid,
 									ext: '.txt',
 
-									idx,
+									idx: current_idx,
 
 									dirname,
 									volume, vid,
 								}, optionsRuntime);
-
-								idx++;
 
 								if (self._checkExists(optionsRuntime, file))
 								{

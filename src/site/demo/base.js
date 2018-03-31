@@ -84,14 +84,14 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 return index_2.PromiseBluebird
                     .mapSeries(volume.chapter_list, async function (chapter, cid) {
                     //chapter.chapter_index = (idx++);
+                    const current_idx = idx++;
                     let file = fs_1.getFilePath(self, {
                         chapter, cid,
                         ext: '.txt',
-                        idx,
+                        idx: current_idx,
                         dirname,
                         volume, vid,
                     }, optionsRuntime);
-                    idx++;
                     if (self._checkExists(optionsRuntime, file)) {
                         return file;
                     }

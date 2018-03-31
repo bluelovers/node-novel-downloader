@@ -155,6 +155,22 @@ export class NovelSiteSfacg extends NovelSiteBase
 			text = `VIP章节\n\n==========================\n\n${text}`;
 		}
 
+		try
+		{
+			let chapter_date;
+			let d = ret.dom.$('#"article .article-desc .text:eq(1)')
+				.text()
+				.replace(/^.+：/g, '')
+				.trim()
+			;
+
+			chapter_date = moment(d, 'YYYY/MM/DD HH:mm:ss').local();
+
+			cache.chapter.chapter_date = chapter_date;
+		}
+		catch (e)
+		{}
+
 		return text;
 	}
 
