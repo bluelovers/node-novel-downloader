@@ -76,9 +76,12 @@ let NovelSiteWenku8 = class NovelSiteWenku8 extends base_1.default {
         if (!ret) {
             return '';
         }
-        ret.dom.$('#content').find('#contentdp').remove();
-        ret.dom.$('#content').find('#contentdp').remove();
-        ret.dom.$('#content').find('#contentdp').remove();
+        {
+            let c = ret.dom.$('#content');
+            c.find('#contentdp').remove();
+            c.find('#contentdp').remove();
+            c.find('#contentdp').remove();
+        }
         try {
             let html = util_1.minifyHTML(ret.dom.$('#content').html());
             html = html.replace(/^(&nbsp;){4}/gm, '');

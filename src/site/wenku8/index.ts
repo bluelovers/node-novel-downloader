@@ -112,9 +112,13 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			return '';
 		}
 
-		ret.dom.$('#content').find('#contentdp').remove();
-		ret.dom.$('#content').find('#contentdp').remove();
-		ret.dom.$('#content').find('#contentdp').remove();
+		{
+			let c = ret.dom.$('#content');
+
+			c.find('#contentdp').remove();
+			c.find('#contentdp').remove();
+			c.find('#contentdp').remove();
+		}
 
 		try
 		{
