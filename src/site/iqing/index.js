@@ -85,6 +85,9 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                 throw new Error();
             }
             cache.chapter.chapter_date = index_2.moment(ret.json.updated_time).local();
+            if (cache.chapter.chapter_vip) {
+                text = `付費章节\n\n==========================\n\n${text}`;
+            }
             return text;
         }
         console.log(ret);
@@ -130,8 +133,9 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                         data.url = href;
                     }
                     let chapter_vip;
+                    chapter_vip = tr.find('.lock').length;
                     if (chapter_vip) {
-                        //novel_vip++;
+                        novel_vip++;
                     }
                     let chapter_title = util_1.trim(a.text());
                     if (!chapter_title) {
@@ -161,8 +165,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                 data_meta.novel.tags = data_meta.novel.tags || [];
                 data_meta.novel.tags.push('VIP');
             }
-            return Object.assign({ url: dom.url, url_data }, data_meta, { 
-                //novel_vip,
+            return Object.assign({ url: dom.url, url_data }, data_meta, { novel_vip,
                 volume_list, 
                 //novel_date,
                 checkdate: index_2.moment().local(), imgs: [] });

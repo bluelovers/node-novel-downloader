@@ -132,6 +132,11 @@ export class NovelSiteIqing extends NovelSiteBase
 
 			cache.chapter.chapter_date = moment(ret.json.updated_time).local();
 
+			if (cache.chapter.chapter_vip)
+			{
+				text = `付費章节\n\n==========================\n\n${text}`;
+			}
+
 			return text;
 		}
 
@@ -205,9 +210,11 @@ export class NovelSiteIqing extends NovelSiteBase
 
 							let chapter_vip;
 
+							chapter_vip = tr.find('.lock').length;
+
 							if (chapter_vip)
 							{
-								//novel_vip++;
+								novel_vip++;
 							}
 
 							let chapter_title = trim(a.text());
@@ -259,7 +266,7 @@ export class NovelSiteIqing extends NovelSiteBase
 
 					...data_meta,
 
-					//novel_vip,
+					novel_vip,
 
 					volume_list,
 

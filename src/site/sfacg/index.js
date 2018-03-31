@@ -37,6 +37,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
             novel_pid: null,
             novel_id: null,
             chapter_id: null,
+            chapter_vip: null,
         };
         urlobj.url = new jsdom_url_1.URL(url);
         url = urlobj.url.href;
@@ -101,7 +102,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
         });
         let text = ret.dom.$('#ChapterBody').text();
         if (cache.chapter.chapter_vip) {
-            text = `VIP章节\n\n==========================\n\n${text}`;
+            text = `付費章节\n\n==========================\n\n${text}`;
         }
         try {
             let chapter_date;

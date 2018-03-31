@@ -49,6 +49,8 @@ export class NovelSiteSfacg extends NovelSiteBase
 			novel_pid: null,
 			novel_id: null,
 			chapter_id: null,
+
+			chapter_vip: null,
 		};
 
 		urlobj.url = new URL(url);
@@ -152,7 +154,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 
 		if (cache.chapter.chapter_vip)
 		{
-			text = `VIP章节\n\n==========================\n\n${text}`;
+			text = `付費章节\n\n==========================\n\n${text}`;
 		}
 
 		try
