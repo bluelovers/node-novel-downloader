@@ -62,6 +62,9 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends base_1.default {
         }
         return ret.dom.$('#contentMain .widget-episodeBody').text();
     }
+    /**
+     * @todo 需要改良支援三級目錄
+     */
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
         url = await this.createMainUrl(url);

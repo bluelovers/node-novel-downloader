@@ -91,6 +91,9 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 		return ret.dom.$('#contentMain .widget-episodeBody').text();
 	}
 
+	/**
+	 * @todo 需要改良支援三級目錄
+	 */
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>

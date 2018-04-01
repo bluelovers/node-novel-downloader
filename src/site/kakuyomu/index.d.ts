@@ -11,6 +11,9 @@ export declare class NovelSiteKakuyomu extends NovelSiteDemo {
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
     protected _parseChapter<T>(ret: any, optionsRuntime: any, cache: any): string;
+    /**
+     * @todo 需要改良支援三級目錄
+     */
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }
 export default NovelSiteKakuyomu;
