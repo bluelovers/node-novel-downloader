@@ -395,12 +395,17 @@ export class NovelSiteSfacg extends NovelSiteBase
 
 				let novel_title = trim($('.summary-content .title .text').text());
 
-				$('.d-summary .summary-pic img[src]').each(function ()
-				{
-					data.novel.cover = $(this).prop('src');
-				});
-
 				let url_data = self.parseUrl(url);
+
+				$(`.d-summary .summary-pic img[src], #hasTicket .left-part a[href*="${url_data.novel_id}"] img[src]`).each(function ()
+				{
+					let src = $(this).prop('src');
+
+					if (src)
+					{
+						data.novel.cover = src;
+					}
+				});
 
 				return {
 					url,

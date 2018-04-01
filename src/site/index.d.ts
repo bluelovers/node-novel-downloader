@@ -69,6 +69,9 @@ export declare module NovelSite {
         filePrefixMode?: number;
         allowEmptyVolumeTitle?: boolean;
         event?: EventEmitter;
+        sessionData?: {
+            [key: string]: any;
+        };
     };
     type IOptions = {
         outputDir?: string;

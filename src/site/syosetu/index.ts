@@ -43,12 +43,15 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
 	{
+		optionsRuntime.sessionData = optionsRuntime.sessionData || {};
+		optionsRuntime.sessionData.over18 = 'yes';
+
 		super.session(optionsRuntime, url);
 
 		//let url = optionsRuntime[SYMBOL_CACHE].url;
 
 		optionsRuntime.optionsJSDOM.cookieJar
-			.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
+			//.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
 		;
 
 		return this;

@@ -12,6 +12,9 @@ import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from 
 import { PromiseBluebird } from '../index';
 
 import * as parseContentType from 'content-type-parser';
+import novelText from 'novel-text';
+
+import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 export type IOptionsPlus = {}
 
@@ -41,6 +44,49 @@ export class NovelSiteDemo extends _NovelSite
 	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
 	{
 		super.session(optionsRuntime, url);
+
+		if (optionsRuntime.sessionData && Object.keys(optionsRuntime.sessionData).length)
+		{
+			Object.entries(optionsRuntime.sessionData)
+				.forEach(function (data)
+				{
+					let c: LazyCookie.Properties;
+					let typec = typeof data[1];
+
+					if (data[1] && typec == 'object')
+					{
+						c = data[1];
+					}
+					else if (typec === null || typec != 'object')
+					{
+						let [key, value] = data;
+
+						c = {
+							key,
+							value,
+						};
+					}
+					else
+					{
+						c = data[1];
+					}
+
+					if (c)
+					{
+						if (typeof c == 'object' && !c.path)
+						{
+							c.path = '/';
+						}
+
+						optionsRuntime.optionsJSDOM.cookieJar
+							.setCookieSync(c, url.href)
+						;
+					}
+				})
+			;
+
+			console.log(optionsRuntime.optionsJSDOM.cookieJar);
+		}
 
 		return this;
 	}
@@ -180,6 +226,15 @@ export class NovelSiteDemo extends _NovelSite
 											volume,
 											chapter,
 										});
+									})
+									.then(function (text)
+									{
+										if (typeof text == 'string')
+										{
+											return novelText.toStr(text);
+										}
+
+										return text;
 									})
 									.then(async function (text: string)
 									{

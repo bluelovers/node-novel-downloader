@@ -17,10 +17,11 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         this.optionsInit.retryDelay = this.optionsInit.retryDelay || 25000;
     }
     session(optionsRuntime, url) {
+        optionsRuntime.sessionData = optionsRuntime.sessionData || {};
+        optionsRuntime.sessionData.over18 = 'yes';
         super.session(optionsRuntime, url);
         //let url = optionsRuntime[SYMBOL_CACHE].url;
-        optionsRuntime.optionsJSDOM.cookieJar
-            .setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href);
+        optionsRuntime.optionsJSDOM.cookieJar;
         return this;
     }
     /*

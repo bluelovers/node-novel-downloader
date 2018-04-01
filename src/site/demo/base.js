@@ -15,12 +15,41 @@ const jsdom_1 = require("../../jsdom");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const parseContentType = require("content-type-parser");
+const novel_text_1 = require("novel-text");
 let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
     }
     session(optionsRuntime, url) {
         super.session(optionsRuntime, url);
+        if (optionsRuntime.sessionData && Object.keys(optionsRuntime.sessionData).length) {
+            Object.entries(optionsRuntime.sessionData)
+                .forEach(function (data) {
+                let c;
+                let typec = typeof data[1];
+                if (data[1] && typec == 'object') {
+                    c = data[1];
+                }
+                else if (typec === null || typec != 'object') {
+                    let [key, value] = data;
+                    c = {
+                        key,
+                        value,
+                    };
+                }
+                else {
+                    c = data[1];
+                }
+                if (c) {
+                    if (typeof c == 'object' && !c.path) {
+                        c.path = '/';
+                    }
+                    optionsRuntime.optionsJSDOM.cookieJar
+                        .setCookieSync(c, url.href);
+                }
+            });
+            console.log(optionsRuntime.optionsJSDOM.cookieJar);
+        }
         return this;
     }
     download(inputUrl, downloadOptions = {}) {
@@ -109,6 +138,12 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                             volume,
                             chapter,
                         });
+                    })
+                        .then(function (text) {
+                        if (typeof text == 'string') {
+                            return novel_text_1.default.toStr(text);
+                        }
+                        return text;
                     })
                         .then(async function (text) {
                         await fs_iconv_1.default.outputFile(file, text);

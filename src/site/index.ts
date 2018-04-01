@@ -320,6 +320,10 @@ export module NovelSite
 		allowEmptyVolumeTitle?: boolean,
 
 		event?: EventEmitter,
+
+		sessionData?: {
+			[key: string]: any,
+		},
 	}
 
 	export type IOptions = {

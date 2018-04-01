@@ -17,7 +17,9 @@ import NovelSite from '../src/site/iqing';
 
 	[
 
-		'https://www.iqing.com/book/61842/',
+		//'https://www.iqing.com/book/61842/',
+
+		'https://www.iqing.com/book/58869/',
 
 	].forEach(async function (value, index, array)
 	{

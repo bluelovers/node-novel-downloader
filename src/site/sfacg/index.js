@@ -247,10 +247,13 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                 novel_date = index_2.moment(d, 'YYYY/MM/DD HH:mm:ss').local();
             }
             let novel_title = util_1.trim($('.summary-content .title .text').text());
-            $('.d-summary .summary-pic img[src]').each(function () {
-                data.novel.cover = $(this).prop('src');
-            });
             let url_data = self.parseUrl(url);
+            $(`.d-summary .summary-pic img[src], #hasTicket .left-part a[href*="${url_data.novel_id}"] img[src]`).each(function () {
+                let src = $(this).prop('src');
+                if (src) {
+                    data.novel.cover = src;
+                }
+            });
             return Object.assign({ url,
                 url_data }, data, { novel_title,
                 novel_author,
