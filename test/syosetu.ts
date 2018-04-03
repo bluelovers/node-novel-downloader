@@ -2,6 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
+import * as Promise from 'bluebird';
 import NovelSiteSyosetu from '../src/site/syosetu';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
@@ -15,7 +16,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 	console.log(Site);
 
-	[
+	Promise.mapSeries([
 		//
 		//'https://ncode.syosetu.com/n1110eb/',
 		//'http://ncode.syosetu.com/n4805cx/',
@@ -81,7 +82,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 		//'https://ncode.syosetu.com/n7971ec/',
 
 		//'https://ncode.syosetu.com/n1110eb/',
-		'http://novel18.syosetu.com/n2794ec/',
+//		'http://novel18.syosetu.com/n2794ec/',
 
 		//'http://ncode.syosetu.com/n1980bm/',
 		//'http://ncode.syosetu.com/n7940cn/',
@@ -98,7 +99,9 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'https://ncode.syosetu.com/n0822cl/',
 
-	].forEach(async function (value, index, array)
+		'https://ncode.syosetu.com/n1132dk/',
+
+	],async function (value, index, array)
 	{
 		await Site.download(value, {
 			disableTxtdownload: true,

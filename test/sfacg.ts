@@ -2,6 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
+import * as Promise from 'bluebird';
 import NovelSite from '../src/site/sfacg';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
@@ -15,11 +16,11 @@ import NovelSite from '../src/site/sfacg';
 
 	console.log(Site);
 
-	[
+	Promise.mapSeries([
 		//'http://book.sfacg.com/Novel/120483/MainIndex/',
 		'http://book.sfacg.com/Novel/44068/',
 
-	].forEach(async function (value, index, array)
+	], async function (value, index, array)
 	{
 		await Site.download(value, {
 			//disableDownload: true,

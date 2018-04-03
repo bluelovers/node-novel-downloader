@@ -2,6 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
+import * as Promise from 'bluebird';
 import NovelSite from '../src/site/iqing';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
@@ -15,13 +16,16 @@ import NovelSite from '../src/site/iqing';
 
 	console.log(Site);
 
-	[
+	Promise.mapSeries([
 
 		//'https://www.iqing.com/book/61842/',
 
-		'https://www.iqing.com/book/58869/',
+		//'https://www.iqing.com/book/58869/',
 
-	].forEach(async function (value, index, array)
+		'https://www.iqing.com/book/22190',
+		'https://www.iqing.com/book/60735',
+
+	], async function (value, index, array)
 	{
 		await Site.download(value, {
 			//disableDownload: true,
@@ -29,7 +33,7 @@ import NovelSite from '../src/site/iqing';
 			//noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 3,
+			filePrefixMode: 2,
 
 			//disableCheckExists: true,
 
