@@ -107,7 +107,9 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                 spaces: "\t",
             });
             let options = {};
-            options[self.IDKEY] = {};
+            options[self.IDKEY] = {
+            //txtdownload_id: novel.novel_syosetu_id,
+            };
             let md = node_novel_info_1.default.stringify({
                 novel: {
                     tags: [
@@ -332,6 +334,9 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                 .replace(/^\s*(?:<p>)?/i, '')
                 .replace(/\s*<(?:\/?p|br\/?)>\s*$/i, '')
                 .replace(/\r\n|\r(?!\n)/g, "\n")
+                //.replace(/<\/p><p>\n/ig, "\n")
+                //.replace(/<p><\/p>/ig, "\n")
+                //.replace(/(<\/p>|<p>)\n/ig, "\n")
                 .replace(/[\t\uFEFF\xA0　]+(\n|$)/ig, "$1")
                 .replace(/(\n)[\t]+/ig, "$1")
                 .replace(/\s+$/ig, "")

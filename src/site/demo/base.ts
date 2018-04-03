@@ -21,7 +21,7 @@ export type IOptionsPlus = {}
 export type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus
 export type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus
 
-export type INovel = _NovelSite.INovel;
+export import INovel = _NovelSite.INovel;
 
 import { ResponseRequest } from 'request';
 export type IFetchChapter = {

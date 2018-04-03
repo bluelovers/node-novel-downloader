@@ -206,6 +206,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
             {
                 let d = $('.update-time [itemprop="datePublished"]')
                     .attr('content')
+                    //.replace(/更新：/, '')
                     .trim();
                 //console.log(d);
                 novel_date = index_2.moment(d).local();

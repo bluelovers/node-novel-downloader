@@ -290,7 +290,10 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                 $('#modal .yes #yes18').click();
                 dom._options.requestOptions.jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/', url);
                 //console.log(dom.serialize());
-                return jsdom_extra_1.fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {}));
+                return jsdom_extra_1.fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {
+                //cookieJar: dom._options.requestOptions.jar._jar,
+                //requestOptions: dom._options.requestOptions,
+                }));
             }
             //console.log(dom._options.requestOptions.jar);
             return dom;

@@ -29,11 +29,18 @@ export function isUndef(v, opts: any = null, strict?: boolean): boolean
 	return bool;
 }
 
-export function trim(str: string)
+export function trim(str: string, bool?: boolean)
 {
-	return novelText.trim(str, {
+	let t = novelText.trim(str, {
 		trim: '　',
 	});
+
+	if (bool)
+	{
+		t = t.replace(/^[　\s]+|[　\s]+$/g, '');
+	}
+
+	return t;
 }
 
 import * as self from './util';

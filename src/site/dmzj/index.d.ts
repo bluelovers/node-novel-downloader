@@ -1,3 +1,6 @@
+/**
+ * Created by user on 2017/12/6/006.
+ */
 /// <reference types="bluebird" />
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';

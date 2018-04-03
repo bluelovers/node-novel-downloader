@@ -1,5 +1,3 @@
-/// <reference types="request-promise" />
-/// <reference types="bluebird" />
 /**
  * Created by user on 2018/2/9/009.
  */

@@ -20,10 +20,14 @@ function isUndef(v, opts = null, strict) {
     return bool;
 }
 exports.isUndef = isUndef;
-function trim(str) {
-    return novel_text_1.default.trim(str, {
+function trim(str, bool) {
+    let t = novel_text_1.default.trim(str, {
         trim: '　',
     });
+    if (bool) {
+        t = t.replace(/^[　\s]+|[　\s]+$/g, '');
+    }
+    return t;
 }
 exports.trim = trim;
 const self = require("./util");

@@ -298,7 +298,7 @@ export class NovelSite implements NovelSite.INovelSite
 	}
 }
 
-export type IOptionsRuntime = NovelSite.IOptionsRuntime;
+export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 
 export module NovelSite
 {

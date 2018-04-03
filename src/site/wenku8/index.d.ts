@@ -1,3 +1,6 @@
+/**
+ * Created by user on 2018/3/25/025.
+ */
 import _NovelSite from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
@@ -13,9 +16,9 @@ export declare class NovelSiteWenku8 extends NovelSiteBase {
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;
     }): Promise<{
-        novel_title: string;
+        novel_title: any;
         novel_cover: any;
-        novel_author: string;
+        novel_author: any;
         novel_desc: string;
         novel_date: any;
         novel_status: any;

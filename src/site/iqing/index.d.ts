@@ -1,3 +1,6 @@
+/**
+ * Created by user on 2018/3/25/025.
+ */
 import _NovelSite from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
@@ -14,8 +17,8 @@ export declare class NovelSiteIqing extends NovelSiteBase {
         dom: IJSDOM;
     }): Promise<{
         novel_title: string;
-        novel_author: string;
-        novel_desc: string;
+        novel_author: any;
+        novel_desc: any;
         novel_date: any;
         novel?: {
             title?: string;

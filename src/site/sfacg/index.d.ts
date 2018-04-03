@@ -1,3 +1,6 @@
+/**
+ * Created by user on 2018/3/25/025.
+ */
 import _NovelSite from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
@@ -11,8 +14,8 @@ export declare class NovelSiteSfacg extends NovelSiteBase {
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any): Promise<{
         novel_title: string;
-        novel_author: string;
-        novel_desc: string;
+        novel_author: any;
+        novel_desc: any;
         novel_date: any;
         novel?: {
             title?: string;

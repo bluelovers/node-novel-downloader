@@ -1,4 +1,3 @@
-/// <reference types="request" />
 /// <reference types="bluebird" />
 import { IJSDOM } from 'jsdom-extra';
 import _NovelSite from '../index';
@@ -6,13 +5,13 @@ import { PromiseBluebird } from '../index';
 export declare type IOptionsPlus = {};
 export declare type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus;
 export declare type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus;
-export declare type INovel = _NovelSite.INovel;
+export import INovel = _NovelSite.INovel;
 import { ResponseRequest } from 'request';
 export declare type IFetchChapter = {
     body?: any;
     dom?: IJSDOM;
     res?: ResponseRequest;
-    json?;
+    json?: any;
 };
 export declare class NovelSiteDemo extends _NovelSite {
     static readonly IDKEY: string;
