@@ -7,6 +7,7 @@ import { URL } from 'jsdom-url';
 import { getFilePath } from '../fs';
 
 import { getOptions } from '../../jsdom';
+import { normalize_val } from 'node-novel-globby/lib/helper';
 
 import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
@@ -137,16 +138,19 @@ export class NovelSiteDemo extends _NovelSite
 							);
 						}
 
-						if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode == 2)
+						if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2)
 						{
 							let i: number;
 
 							let bool = volume.chapter_list.every(function (chapter, j)
 							{
-								let m = chapter.chapter_title
+								let m = normalize_val(chapter.chapter_title)
 									.replace(/^\D+/, '')
-									.replace(/^(\d+).+$/, '$1')
+									//.replace(/^(\d+).+$/, '$1')
+									.replace(/^(\d+)\D.*$/, '$1')
 								;
+
+								//console.log(m, chapter.chapter_title);
 
 								if (/^\d+$/.test(m))
 								{

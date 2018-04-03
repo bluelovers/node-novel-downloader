@@ -12,6 +12,7 @@ const path = require("path");
 const jsdom_extra_1 = require("jsdom-extra");
 const fs_1 = require("../fs");
 const jsdom_1 = require("../../jsdom");
+const helper_1 = require("node-novel-globby/lib/helper");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const parseContentType = require("content-type-parser");
@@ -77,12 +78,14 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     }
                     dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
                 }
-                if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode == 2) {
+                if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2) {
                     let i;
                     let bool = volume.chapter_list.every(function (chapter, j) {
-                        let m = chapter.chapter_title
+                        let m = helper_1.normalize_val(chapter.chapter_title)
                             .replace(/^\D+/, '')
-                            .replace(/^(\d+).+$/, '$1');
+                            //.replace(/^(\d+).+$/, '$1')
+                            .replace(/^(\d+)\D.*$/, '$1');
+                        //console.log(m, chapter.chapter_title);
                         if (/^\d+$/.test(m)) {
                             let m2 = parseInt(m);
                             if (j == 0) {
