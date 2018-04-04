@@ -2,7 +2,9 @@
  * Created by user on 2018/3/17/017.
  */
 
-import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/base';
+import { trim } from '../../util';
+import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/tree';
+import { IRowVolume, TreeNode } from '../../tree/index';
 
 import fs, { trimFilename } from 'fs-iconv';
 import * as path from 'path';
@@ -94,7 +96,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 	/**
 	 * @todo 需要改良支援三級目錄
 	 */
-	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
+	async get_volume_list<T extends IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>
 	{
@@ -149,11 +151,14 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 
 				let volume_list = [] as NovelSite.IVolume[];
 
-				let currentVolume: NovelSite.IVolume;
+				const novelTree = optionsRuntime.novelTree;
+				let currentVolume: TreeNode<IRowVolume>;
 
 				let table = dom.$('#table-of-contents').find('.widget-toc-chapter, .widget-toc-episode');
 
 				let _cache_dates = [];
+
+				let total_idx = 0;
 
 				table
 					.each(function (index)
@@ -162,26 +167,117 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 
 						if (tr.is('.widget-toc-chapter'))
 						{
+							/*
 							currentVolume = volume_list[volume_list.length] = {
 								volume_index: volume_list.length,
 								volume_title: tr.text().replace(/^\s+|\s+$/g, ''),
 								chapter_list: [],
 							};
+							*/
+
+							let volume_level: number = null;
+
+							let m = tr.attr('class').match(/\bwidget-toc-level(\d+)\b/);
+							if (m)
+							{
+								volume_level = parseInt(m[1]);
+								//console.log(m);
+							}
+							else
+							{
+								volume_level = 1;
+								throw Error
+							}
+
+							let volume_title = trim(tr.text(), true);
+
+							let nowVolume: TreeNode<IRowVolume>;
+
+							if (currentVolume)
+							{
+								let lastLevel = currentVolume.get<number>('level') as number;
+								let parentVolume: TreeNode<IRowVolume>;
+
+								if (volume_level > 1)
+								{
+									if (lastLevel == volume_level)
+									{
+										parentVolume = currentVolume.parent;
+									}
+									else if (lastLevel = (volume_level + 1))
+									{
+										parentVolume = currentVolume;
+									}
+									else
+									{
+										throw Error
+									}
+
+									if (volume_title == '')
+									{
+										let n = tr.nextUntil('.widget-toc-chapter')
+											.eq(-1)
+											.next('.widget-toc-chapter')
+										;
+
+										//console.log(n, n.attr('class'));
+
+										if (!n.length || n.hasClass(`widget-toc-level${volume_level - 1}`))
+										{
+											nowVolume = parentVolume;
+										}
+									}
+
+									if (!nowVolume)
+									{
+										nowVolume = novelTree.addVolume({
+											volume_title,
+											volume_level,
+											volume_index: parentVolume.size(),
+											total_idx: total_idx++,
+										}, parentVolume);
+									}
+								}
+							}
+
+							if (!nowVolume)
+							{
+								nowVolume = novelTree.addVolume({
+									volume_title,
+									volume_level,
+									volume_index: novelTree.root().size(),
+									total_idx: total_idx++,
+								});
+							}
+
+							currentVolume = nowVolume;
 						}
-						else
+						else if (1)
 						{
 							if (!currentVolume)
 							{
+								/*
 								currentVolume = volume_list[volume_list.length] = {
 									volume_index: volume_list.length,
 									volume_title: 'null',
 									chapter_list: [],
 								};
+								*/
+
+								let volume_title = 'null';
+								let volume_level = null;
+
+								currentVolume = novelTree.addVolume({
+									volume_title,
+									volume_level,
+									volume_index: novelTree.root().size(),
+									total_idx: total_idx++,
+								});
 							}
 
 							let a = tr.find('a:eq(0)');
 
-							let chapter_title = a.find('.widget-toc-episode-titleLabel').text();
+							let chapter_title = trim(a.find('.widget-toc-episode-titleLabel').text(), true);
 
 							let chapter_date;
 							let dd;
@@ -223,6 +319,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 								data.url = href;
 							}
 
+							/*
 							currentVolume
 								.chapter_list
 								.push({
@@ -234,6 +331,19 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 									chapter_date,
 								})
 							;
+							*/
+
+							let chapter = {
+								chapter_title,
+								chapter_id: data.chapter_id,
+								chapter_url: href,
+								chapter_url_data: data,
+								chapter_date,
+								chapter_index: currentVolume.size(),
+								total_idx: total_idx++,
+							};
+
+							novelTree.addChapter(chapter, currentVolume)
 						}
 					})
 				;
@@ -282,14 +392,15 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 					novel_date,
 					novel_publisher,
 
-					volume_list,
+					//volume_list,
+					novelTree,
 
 					checkdate: moment().local(),
 
 					imgs: [] as string[],
 				} as INovel;
 			})
-		;
+			;
 	}
 
 }

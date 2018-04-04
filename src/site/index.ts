@@ -299,6 +299,8 @@ export class NovelSite implements NovelSite.INovelSite
 }
 
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
+export import IVolume = NovelSite.IVolume;
+export import IChapter = NovelSite.IChapter;
 
 export module NovelSite
 {

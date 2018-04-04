@@ -9,20 +9,26 @@ import * as shortid from 'shortid';
 
 export type ITreeID = string | number;
 
+export type TreeNode<T = IRowRoot | IRowVolume | IRowChapter> = Node<T>;
+
 export interface ITree
 {
 	level?: number,
 	type?: string,
+
+	total_idx: number,
+
+	name?: string;
 }
 
-export type IRowVolume<T = {}> = ITree & {
+export type IRowVolume<T = {}> = T & ITree & {
 	type?: 'volume',
 
 	volume_index?: string | number,
 	volume_title: string,
-} & T;
+};
 
-export type IRowChapter<T = {}> = ITree & {
+export type IRowChapter<T = {}> = T & ITree & {
 	type?: 'chapter',
 
 	chapter_index?: string | number,
@@ -32,7 +38,7 @@ export type IRowChapter<T = {}> = ITree & {
 	chapter_url?: URL,
 	chapter_url_data?,
 	chapter_date?,
-} & T;
+};
 
 export type IRowRoot<T = {}> = ITree & {
 	type?: 'root',
@@ -47,7 +53,10 @@ export class NovelTree
 	cache: {
 		lastVolume?: Node<IRowVolume>,
 		lastChapter?: Node<IRowChapter>,
-	} = {};
+		depth?: number,
+	} = {
+		depth: 0,
+	};
 
 	constructor(initData: Partial<IRowRoot> = {})
 	{
@@ -106,17 +115,53 @@ export class NovelTree
 		return node;
 	}
 
+
+	static isVolume(node: Node): node is Node<IRowVolume>
+	static isVolume(node: IRowVolume): node is IRowVolume
+	static isVolume(node)
+	{
+		if (node instanceof Node)
+		{
+			return (node.get('type') == 'volume') ? node : null;
+		}
+
+		return (node.type == 'volume') ? node : null;
+	}
+
+	static isChapter(node: Node): node is Node<IRowChapter>
+	static isChapter(node: IRowChapter): node is IRowChapter
+	static isChapter(node)
+	{
+		if (node instanceof Node)
+		{
+			return (node.get('type') == 'chapter') ? node : null;
+		}
+
+		return (node.type == 'chapter') ? node : null;
+	}
+
 	protected _fixRow<U extends Node<IRowVolume | IRowChapter>>(node: U)
 	{
-		node.set('level', node.parent.get<number>('level') + 1);
+		let level = node.parent.get<number>('level') + 1;
+
+		this.cache.depth = Math.max(this.cache.depth, level);
+
+		node.set('level', level);
+		let name: string;
 
 		switch (node.get('type'))
 		{
 			case 'chapter':
-				node.set('chapter_title', trim(node.get<string>('chapter_title'), true));
+				name = trim(node.get<string>('chapter_title'), true);
+
+				node.set('chapter_title', name);
+				node.set('name', name);
 				break;
 			case 'volume':
-				node.set('volume_title', trim(node.get<string>('volume_title'), true));
+				name = trim(node.get<string>('volume_title'), true);
+
+				node.set('volume_title', name);
+				node.set('name', name);
 				break;
 		}
 
@@ -138,9 +183,14 @@ export class NovelTree
 		return root;
 	}
 
-	static treeToList(novelTree: NovelTree)
+	toJSON()
 	{
-		let list = TreeToList(novelTree.tree);
+		return this.tree.root().toJSON();
+	}
+
+	static treeToList(novelTree: NovelTree, linkNode?: boolean)
+	{
+		let list = TreeToList<{}, IRowRoot | IRowVolume | IRowChapter>(novelTree.tree, linkNode);
 		return list;
 	}
 }

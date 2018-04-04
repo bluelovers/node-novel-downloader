@@ -56,6 +56,8 @@ export declare class NovelSite implements NovelSite.INovelSite {
     protected emit(event: EventEmitter, eventName: string, ...argv: any[]): (boolean | EventEmitter)[];
 }
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
+export import IVolume = NovelSite.IVolume;
+export import IChapter = NovelSite.IChapter;
 export declare module NovelSite {
     type IOptionsPlus = {
         disableOutputDirPrefix?: boolean;

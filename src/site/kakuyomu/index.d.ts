@@ -1,7 +1,7 @@
 /**
  * Created by user on 2018/3/17/017.
  */
-import NovelSiteDemo, { IDownloadOptions, INovel } from '../demo/base';
+import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/tree';
 import NovelSite from '../index';
 export declare class NovelSiteKakuyomu extends NovelSiteDemo {
     static readonly IDKEY: string;
@@ -14,6 +14,6 @@ export declare class NovelSiteKakuyomu extends NovelSiteDemo {
     /**
      * @todo 需要改良支援三級目錄
      */
-    get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
+    get_volume_list<T extends IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }
 export default NovelSiteKakuyomu;

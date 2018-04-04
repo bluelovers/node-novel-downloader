@@ -63,98 +63,15 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             url = await this.createMainUrl(url);
             self.session(optionsRuntime, url);
             let novel = await self.get_volume_list(url, optionsRuntime);
-            let idx = downloadOptions.startIndex || 0;
+            let idx = optionsRuntime.startIndex || 0;
             let path_novel = path.join(self.PATH_NOVEL_MAIN, `${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`);
             optionsRuntime[index_1.SYMBOL_CACHE].novel = novel;
             optionsRuntime[index_1.SYMBOL_CACHE].path_novel = path_novel;
-            let ret = await index_2.PromiseBluebird
-                .mapSeries(novel.volume_list, function (volume, vid) {
-                let dirname;
-                {
-                    let _vid = '';
-                    if (!optionsRuntime.noDirPrefix) {
-                        _vid = vid.toString().padStart(4, '0') + '0';
-                        _vid += '_';
-                    }
-                    dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
-                }
-                if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2) {
-                    let i;
-                    let bool = volume.chapter_list.every(function (chapter, j) {
-                        let m = helper_1.normalize_val(chapter.chapter_title)
-                            .replace(/^\D+/, '')
-                            //.replace(/^(\d+).+$/, '$1')
-                            .replace(/^(\d+)\D.*$/, '$1');
-                        //console.log(m, chapter.chapter_title);
-                        if (/^\d+$/.test(m)) {
-                            let m2 = parseInt(m);
-                            if (j == 0) {
-                                i = m2;
-                                return true;
-                            }
-                            else if (m2 === ++i) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    });
-                    //console.log(bool);
-                    if (bool) {
-                        volume.chapter_list.forEach(function (chapter) {
-                            chapter.chapter_index = '';
-                        });
-                    }
-                }
-                if (optionsRuntime.event) {
-                    self.emit(optionsRuntime.event, 'volume', volume, {
-                        optionsRuntime,
-                        dirname,
-                        vid,
-                        novel,
-                        url,
-                    });
-                }
-                return index_2.PromiseBluebird
-                    .mapSeries(volume.chapter_list, async function (chapter, cid) {
-                    //chapter.chapter_index = (idx++);
-                    const current_idx = idx++;
-                    let file = fs_1.getFilePath(self, {
-                        chapter, cid,
-                        ext: '.txt',
-                        idx: current_idx,
-                        dirname,
-                        volume, vid,
-                    }, optionsRuntime);
-                    if (self._checkExists(optionsRuntime, file)) {
-                        return file;
-                    }
-                    let url = self._createChapterUrl({
-                        novel,
-                        volume,
-                        chapter,
-                    }, optionsRuntime);
-                    await self._fetchChapter(url, optionsRuntime)
-                        .then(function (ret) {
-                        return self._parseChapter(ret, optionsRuntime, {
-                            file,
-                            novel,
-                            volume,
-                            chapter,
-                        });
-                    })
-                        .then(function (text) {
-                        if (typeof text == 'string') {
-                            return novel_text_1.default.toStr(text);
-                        }
-                        return text;
-                    })
-                        .then(async function (text) {
-                        await fs_iconv_1.default.outputFile(file, text);
-                        return text;
-                    });
-                    return file;
-                });
-            })
+            await index_2.PromiseBluebird
+                .resolve(self.processNovel(novel, optionsRuntime, {
+                url,
+                path_novel,
+            }))
                 .tap(ls => {
                 let file = path.join(path_novel, `${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`);
                 return fs_iconv_1.default.outputJSON(file, novel, {
@@ -163,6 +80,114 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             });
             await self._saveReadme(optionsRuntime);
             return novel;
+        });
+    }
+    async _processNovel(novel, optionsRuntime, _cache_, ...argv) {
+        const self = this;
+        let idx = optionsRuntime.startIndex || 0;
+        let { url, path_novel } = _cache_;
+        return index_2.PromiseBluebird
+            .mapSeries(novel.volume_list, function (volume, vid) {
+            let dirname;
+            {
+                let _vid = '';
+                if (!optionsRuntime.noDirPrefix) {
+                    _vid = vid.toString().padStart(4, '0') + '0';
+                    _vid += '_';
+                }
+                dirname = path.join(path_novel, `${_vid}${self.trimFilenameVolume(volume.volume_title)}`);
+            }
+            if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2) {
+                let i;
+                let bool = volume.chapter_list.every(function (chapter, j) {
+                    let m = helper_1.normalize_val(chapter.chapter_title)
+                        .replace(/^\D+/, '')
+                        //.replace(/^(\d+).+$/, '$1')
+                        .replace(/^(\d+)\D.*$/, '$1');
+                    //console.log(m, chapter.chapter_title);
+                    if (/^\d+$/.test(m)) {
+                        let m2 = parseInt(m);
+                        if (j == 0) {
+                            i = m2;
+                            return true;
+                        }
+                        else if (m2 === ++i) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+                //console.log(bool);
+                if (bool) {
+                    volume.chapter_list.forEach(function (chapter) {
+                        chapter.chapter_index = '';
+                    });
+                }
+            }
+            if (optionsRuntime.event) {
+                self.emit(optionsRuntime.event, 'volume', volume, {
+                    optionsRuntime,
+                    dirname,
+                    vid,
+                    novel,
+                    url,
+                });
+            }
+            return index_2.PromiseBluebird
+                .mapSeries(volume.chapter_list, async function (chapter, cid) {
+                //chapter.chapter_index = (idx++);
+                const current_idx = idx++;
+                let file = fs_1.getFilePath(self, {
+                    chapter, cid,
+                    ext: '.txt',
+                    idx: current_idx,
+                    dirname,
+                    volume, vid,
+                }, optionsRuntime);
+                if (self._checkExists(optionsRuntime, file)) {
+                    return file;
+                }
+                let url = self._createChapterUrl({
+                    novel,
+                    volume,
+                    chapter,
+                }, optionsRuntime);
+                await self._fetchChapter(url, optionsRuntime)
+                    .then(function (ret) {
+                    return self._parseChapter(ret, optionsRuntime, {
+                        file,
+                        novel,
+                        volume,
+                        chapter,
+                    });
+                })
+                    .then(function (text) {
+                    if (typeof text == 'string') {
+                        return novel_text_1.default.toStr(text);
+                    }
+                    return text;
+                })
+                    .then(async function (text) {
+                    await fs_iconv_1.default.outputFile(file, text);
+                    return text;
+                });
+                return file;
+            });
+        })
+            .then(function (ret) {
+            return ret;
+        });
+    }
+    processNovel(novel, optionsRuntime, _cache_, ...argv) {
+        return index_2.PromiseBluebird
+            .resolve(this._processNovel(novel, optionsRuntime, _cache_, ...argv))
+            .then(function (ret) {
+            return {
+                novel,
+                optionsRuntime,
+                _cache_,
+                ret,
+            };
         });
     }
     _parseChapter(ret, optionsRuntime, cache) {

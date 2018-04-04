@@ -7,7 +7,9 @@ const js_tree_list2_1 = require("js-tree-list2");
 const util_1 = require("../util");
 class NovelTree {
     constructor(initData = {}) {
-        this.cache = {};
+        this.cache = {
+            depth: 0,
+        };
         initData.type = 'root';
         initData.level = 0;
         this.tree = new js_tree_list2_1.Tree(initData);
@@ -41,14 +43,33 @@ class NovelTree {
         this.cache.lastChapter = node;
         return node;
     }
+    static isVolume(node) {
+        if (node instanceof js_tree_list2_1.Node) {
+            return (node.get('type') == 'volume') ? node : null;
+        }
+        return (node.type == 'volume') ? node : null;
+    }
+    static isChapter(node) {
+        if (node instanceof js_tree_list2_1.Node) {
+            return (node.get('type') == 'chapter') ? node : null;
+        }
+        return (node.type == 'chapter') ? node : null;
+    }
     _fixRow(node) {
-        node.set('level', node.parent.get('level') + 1);
+        let level = node.parent.get('level') + 1;
+        this.cache.depth = Math.max(this.cache.depth, level);
+        node.set('level', level);
+        let name;
         switch (node.get('type')) {
             case 'chapter':
-                node.set('chapter_title', util_1.trim(node.get('chapter_title'), true));
+                name = util_1.trim(node.get('chapter_title'), true);
+                node.set('chapter_title', name);
+                node.set('name', name);
                 break;
             case 'volume':
-                node.set('volume_title', util_1.trim(node.get('volume_title'), true));
+                name = util_1.trim(node.get('volume_title'), true);
+                node.set('volume_title', name);
+                node.set('name', name);
                 break;
         }
         return node;
@@ -62,8 +83,11 @@ class NovelTree {
         }
         return root;
     }
-    static treeToList(novelTree) {
-        let list = js_tree_list2_1.TreeToList(novelTree.tree);
+    toJSON() {
+        return this.tree.root().toJSON();
+    }
+    static treeToList(novelTree, linkNode) {
+        let list = js_tree_list2_1.TreeToList(novelTree.tree, linkNode);
         return list;
     }
 }
