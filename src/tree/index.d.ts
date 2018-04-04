@@ -2,6 +2,7 @@
  * Created by user on 2018/4/2/002.
  */
 import { Tree, Node } from 'js-tree-list2';
+import { IChapter, IVolume } from '../site/index';
 export declare type ITreeID = string | number;
 export declare type TreeNode<T = IRowRoot | IRowVolume | IRowChapter> = Node<T>;
 export interface ITree {
@@ -11,14 +12,14 @@ export interface ITree {
     idx?: number;
     name?: string;
 }
-export declare type IRowVolume<T = {}> = T & ITree & {
+export declare type IRowVolume<T = {}> = T & IVolume & ITree & {
     type?: 'volume';
     volume_index?: string | number;
     volume_title: string;
     dirname?: string;
     volume_level?: string | number;
 };
-export declare type IRowChapter<T = {}> = T & ITree & {
+export declare type IRowChapter<T = {}> = T & IChapter & ITree & {
     type?: 'chapter';
     chapter_index?: string | number;
     chapter_title: string;

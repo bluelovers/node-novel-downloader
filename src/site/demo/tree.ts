@@ -97,7 +97,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 				}
 
 				if (hasChild && (
-						(currentLevel == 0 && !optionsRuntime.noDirPrefix)
+						0 && (currentLevel == 0 && !optionsRuntime.noDirPrefix)
 						|| (currentLevel > 0 && !optionsRuntime.noFirePrefix)
 					) && optionsRuntime.filePrefixMode >= 2)
 				{

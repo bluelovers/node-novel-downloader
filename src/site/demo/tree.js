@@ -63,7 +63,7 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
                     pnode.set('name', 'null');
                 }
             }
-            if (hasChild && ((currentLevel == 0 && !optionsRuntime.noDirPrefix)
+            if (hasChild && (0 && (currentLevel == 0 && !optionsRuntime.noDirPrefix)
                 || (currentLevel > 0 && !optionsRuntime.noFirePrefix)) && optionsRuntime.filePrefixMode >= 2) {
                 //console.log(777);
                 let bool;

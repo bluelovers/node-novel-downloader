@@ -4,6 +4,7 @@
 
 import { Tree, ListToTree, Node, TreeToList } from 'js-tree-list2';
 import { URL } from 'jsdom-url';
+import { IChapter, IVolume } from '../site/index';
 import { isUndef, minifyHTML, trim } from '../util';
 import * as shortid from 'shortid';
 
@@ -22,7 +23,7 @@ export interface ITree
 	name?: string;
 }
 
-export type IRowVolume<T = {}> = T & ITree & {
+export type IRowVolume<T = {}> = T & IVolume & ITree & {
 	type?: 'volume',
 
 	volume_index?: string | number,
@@ -32,7 +33,7 @@ export type IRowVolume<T = {}> = T & ITree & {
 	volume_level?: string | number,
 };
 
-export type IRowChapter<T = {}> = T & ITree & {
+export type IRowChapter<T = {}> = T & IChapter & ITree & {
 	type?: 'chapter',
 
 	chapter_index?: string | number,
