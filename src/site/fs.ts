@@ -5,7 +5,7 @@
 import fs, { trimFilename } from 'fs-iconv';
 import { isUndef } from '../util';
 import NovelSite, { IOptionsRuntime } from './index';
-import * as path from 'path';
+import * as path from 'upath2';
 
 export function padStart(id, pad = '0', len = 4): string
 {

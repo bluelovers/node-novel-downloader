@@ -14,10 +14,13 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./base"));
 const base_1 = require("./base");
+const fs_1 = require("../fs");
 const index_1 = require("../index");
 const path = require("upath2");
 const helper_1 = require("node-novel-globby/lib/helper");
 const sort_1 = require("node-novel-globby/lib/sort");
+const fs_iconv_1 = require("fs-iconv");
+const novel_text_1 = require("novel-text");
 const utils_1 = require("js-tree-list2/src/utils");
 const index_2 = require("../../tree/index");
 exports.NovelTree = index_2.NovelTree;
@@ -30,7 +33,7 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
     async _processNovelListName(novel, optionsRuntime, ...argv) {
         const self = this;
         let treeList = index_2.NovelTree.treeToList(novel.novelTree, true);
-        console.log(novel.novelTree.cache.depth);
+        //console.log(novel.novelTree.cache.depth);
         if (novel.novelTree.cache.depth > 2) {
             let bool = false;
             if (optionsRuntime.noDirPrefix && optionsRuntime.noFirePrefix) {
@@ -51,7 +54,18 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
             let pnode = listRow[utils_1.SYMBOL_NODE];
             const ntype = pnode.get('type');
             const hasChild = pnode.size();
-            if (hasChild && !optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2) {
+            const currentLevel = pnode.get('level');
+            //console.log(currentLevel);
+            //console.log(ntype);
+            if (ntype != 'root') {
+                let name = pnode.get('name');
+                if (name === null) {
+                    pnode.set('name', 'null');
+                }
+            }
+            if (hasChild && ((currentLevel == 0 && !optionsRuntime.noDirPrefix)
+                || (currentLevel > 0 && !optionsRuntime.noFirePrefix)) && optionsRuntime.filePrefixMode >= 2) {
+                //console.log(777);
                 let bool;
                 let i = 0;
                 let last_val;
@@ -70,7 +84,7 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
                     if (i !== 0) {
                         let k = sort_1.defaultSortCallback(last_val, name_val);
                         if (typeof k != 'number' || k > -1) {
-                            console.log(k);
+                            //console.log(k);
                             bool = true;
                             break;
                         }
@@ -78,10 +92,7 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
                     i++;
                     last_val = name_val;
                 }
-                if (bool) {
-                    console.log(bool, ks);
-                }
-                else {
+                if (!bool) {
                     for (let node of pnode.children) {
                         if (index_2.NovelTree.isVolume(node)) {
                             node.value().volume_index = '';
@@ -91,32 +102,60 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
                         }
                     }
                 }
+                else {
+                }
+            }
+            if (hasChild) {
+                pnode.children.forEach(function (node, idx) {
+                    node.set('idx', idx);
+                });
             }
             if (hasChild) {
                 let dirname;
-                console.log(ntype);
                 if (ntype == 'root') {
                     dirname = '';
                     pnode.set('dirname', dirname);
                 }
                 else {
+                    let name = pnode.get('name');
+                    let volume = pnode.value();
+                    let vid = volume.idx;
+                    let fake_chapter = {
+                        chapter_index: volume.volume_index,
+                        chapter_title: volume.volume_title,
+                    };
+                    /*
+                    name = getVolumePath(self, {
+                        volume,
+                        vid,
+                        path_novel: '',
+                    }, optionsRuntime);
+                    */
+                    name = fs_1.getFilePath(self, {
+                        chapter: fake_chapter, cid: vid,
+                        ext: '',
+                        idx: volume.total_idx + optionsRuntime.startIndex,
+                        dirname: '~temp',
+                        volume, vid,
+                    }, optionsRuntime);
+                    name = path.relative('~temp', name);
                     let ps = pnode.parent.get('dirname');
-                    dirname = path.join(pnode.parent.get('dirname'), pnode.get('name'));
+                    dirname = path.join(ps, name);
                     pnode.set('dirname', dirname);
                 }
-                console.log(dirname);
+                //console.log(dirname);
             }
         });
-        process.exit();
+        //process.exit();
         return treeList;
     }
     async _processNovel(novel, optionsRuntime, _cache_, ...argv) {
         const self = this;
-        let idx = optionsRuntime.startIndex || 0;
         let { url, path_novel } = _cache_;
-        let treeList = self._processNovelListName(novel, optionsRuntime, _cache_, ...argv);
+        let treeList = await self._processNovelListName(novel, optionsRuntime, _cache_, ...argv);
+        //console.log(optionsRuntime);
         return index_1.PromiseBluebird
-            .mapSeries(treeList, function (listRow) {
+            .mapSeries(treeList.slice(1), async function (listRow) {
             let nodeChapter = listRow[utils_1.SYMBOL_NODE];
             let ntype = nodeChapter.get('type');
             if (ntype != 'chapter') {
@@ -131,22 +170,47 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
             let nodeVolume = nodeChapter.parent;
             let volume = nodeVolume.value();
             let chapter = nodeChapter.value();
-            let dirname;
-            {
-                let ps = nodeChapter.parents();
-                ps.pop();
-                dirname = ps.reduceRight(function (a, node) {
-                    let name = node.value().name;
-                    if (!name) {
-                        throw Error();
-                    }
-                    a.push(name);
-                    return a;
-                }, []).join('/');
-                if (!dirname) {
-                    throw Error();
-                }
+            let dirname = volume.dirname;
+            let cid = chapter.idx;
+            let vid = volume.idx;
+            const current_idx = chapter.total_idx + optionsRuntime.startIndex;
+            let file = fs_1.getFilePath(self, {
+                chapter, cid,
+                ext: '.txt',
+                idx: current_idx,
+                dirname,
+                volume, vid,
+            }, optionsRuntime);
+            chapter.path = file;
+            file = path.join(path_novel, file);
+            if (self._checkExists(optionsRuntime, file)) {
+                return file;
             }
+            let url = self._createChapterUrl({
+                novel,
+                volume,
+                chapter,
+            }, optionsRuntime);
+            await self._fetchChapter(url, optionsRuntime)
+                .then(function (ret) {
+                return self._parseChapter(ret, optionsRuntime, {
+                    file,
+                    novel,
+                    volume,
+                    chapter,
+                });
+            })
+                .then(function (text) {
+                if (typeof text == 'string') {
+                    return novel_text_1.default.toStr(text);
+                }
+                return text;
+            })
+                .then(async function (text) {
+                await fs_iconv_1.default.outputFile(file, text);
+                return text;
+            });
+            return file;
         })
             .then(function (ret) {
             return ret;

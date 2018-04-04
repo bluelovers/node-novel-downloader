@@ -16,7 +16,8 @@ export interface ITree
 	level?: number,
 	type?: string,
 
-	total_idx: number,
+	total_idx?: number,
+	idx?: number,
 
 	name?: string;
 }
@@ -26,6 +27,9 @@ export type IRowVolume<T = {}> = T & ITree & {
 
 	volume_index?: string | number,
 	volume_title: string,
+
+	dirname?: string;
+	volume_level?: string | number,
 };
 
 export type IRowChapter<T = {}> = T & ITree & {
@@ -38,6 +42,8 @@ export type IRowChapter<T = {}> = T & ITree & {
 	chapter_url?: URL,
 	chapter_url_data?,
 	chapter_date?,
+
+	path?: string;
 };
 
 export type IRowRoot<T = {}> = ITree & {

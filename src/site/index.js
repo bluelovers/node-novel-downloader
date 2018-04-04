@@ -9,7 +9,7 @@ exports.bluebirdDecorator = bluebird_1.default;
 const PromiseBluebird = require("bluebird");
 exports.PromiseBluebird = PromiseBluebird;
 const jsdom_url_1 = require("jsdom-url");
-const path = require("path");
+const path = require("upath2");
 const _root_1 = require("../../_root");
 const jsdom_1 = require("../jsdom");
 exports.defaultJSDOMOptions = jsdom_1.defaultJSDOMOptions;
@@ -92,6 +92,7 @@ class NovelSite {
     }
     _fixOptionsRuntime(optionsRuntime) {
         optionsRuntime[exports.SYMBOL_CACHE] = (optionsRuntime[exports.SYMBOL_CACHE] || {});
+        optionsRuntime.startIndex = optionsRuntime.startIndex || 0;
         // @ts-ignore
         optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
         return optionsRuntime;

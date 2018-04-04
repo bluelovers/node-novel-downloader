@@ -5,7 +5,7 @@
 export * from './base';
 import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, INovel as _INovel } from './base';
 
-import { getFilePath } from '../fs';
+import { getFilePath, getVolumePath } from '../fs';
 import _NovelSite, { IChapter, PromiseBluebird, staticImplements, SYMBOL_CACHE } from '../index';
 import * as path from 'upath2';
 
@@ -47,7 +47,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 		const self = this;
 		let treeList = NovelTree.treeToList(novel.novelTree, true);
 
-		console.log(novel.novelTree.cache.depth);
+		//console.log(novel.novelTree.cache.depth);
 
 		if (novel.novelTree.cache.depth > 2)
 		{
@@ -82,8 +82,27 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 				const hasChild = pnode.size();
 
-				if (hasChild && !optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2)
+				const currentLevel = pnode.get<number>('level');
+
+				//console.log(currentLevel);
+				//console.log(ntype);
+
+				if (ntype != 'root')
 				{
+					let name = pnode.get<string>('name');
+					if (name === null)
+					{
+						pnode.set('name', 'null');
+					}
+				}
+
+				if (hasChild && (
+						(currentLevel == 0 && !optionsRuntime.noDirPrefix)
+						|| (currentLevel > 0 && !optionsRuntime.noFirePrefix)
+					) && optionsRuntime.filePrefixMode >= 2)
+				{
+					//console.log(777);
+
 					let bool: boolean;
 					let i: number = 0;
 					let last_val: string;
@@ -114,7 +133,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 							if (typeof k != 'number' || k > -1)
 							{
-								console.log(k);
+								//console.log(k);
 
 								bool = true;
 								break;
@@ -125,11 +144,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 						last_val = name_val;
 					}
 
-					if (bool)
-					{
-						console.log(bool, ks);
-					}
-					else
+					if (!bool)
 					{
 						for (let node of pnode.children)
 						{
@@ -143,13 +158,23 @@ export class NovelSiteDemo extends _NovelSiteBase
 							}
 						}
 					}
+					else
+					{
+
+					}
+				}
+
+				if (hasChild)
+				{
+					pnode.children.forEach(function (node, idx)
+					{
+						node.set('idx', idx);
+					});
 				}
 
 				if (hasChild)
 				{
 					let dirname: string;
-
-					console.log(ntype);
 
 					if (ntype == 'root')
 					{
@@ -158,17 +183,45 @@ export class NovelSiteDemo extends _NovelSiteBase
 					}
 					else
 					{
+						let name = pnode.get('name');
+						let volume = pnode.value() as IRowVolume;
+						let vid = volume.idx;
+
+						let fake_chapter: IRowChapter = {
+							chapter_index: volume.volume_index,
+							chapter_title: volume.volume_title,
+						};
+
+						/*
+						name = getVolumePath(self, {
+							volume,
+							vid,
+							path_novel: '',
+						}, optionsRuntime);
+						*/
+						name = getFilePath(self, {
+							chapter: fake_chapter, cid: vid,
+							ext: '',
+
+							idx: volume.total_idx + optionsRuntime.startIndex,
+
+							dirname: '~temp',
+							volume, vid,
+						}, optionsRuntime);
+
+						name = path.relative('~temp', name);
+
 						let ps = pnode.parent.get('dirname');
-						dirname = path.join(pnode.parent.get('dirname'), pnode.get('name'));
+						dirname = path.join(ps, name);
 						pnode.set('dirname', dirname);
 					}
 
-					console.log(dirname);
+					//console.log(dirname);
 				}
 			})
 		;
 
-		process.exit();
+		//process.exit();
 
 		return treeList;
 	}
@@ -179,14 +232,15 @@ export class NovelSiteDemo extends _NovelSiteBase
 	}, ...argv)
 	{
 		const self = this;
-		let idx = optionsRuntime.startIndex || 0;
 
 		let { url, path_novel } = _cache_;
 
-		let treeList = self._processNovelListName(novel, optionsRuntime, _cache_, ...argv);
+		let treeList = await self._processNovelListName(novel, optionsRuntime, _cache_, ...argv);
+
+		//console.log(optionsRuntime);
 
 		return PromiseBluebird
-			.mapSeries(treeList, function (listRow)
+			.mapSeries(treeList.slice(1), async function (listRow)
 			{
 				let nodeChapter = listRow[SYMBOL_NODE] as TreeNode<IRowChapter>;
 				let ntype = nodeChapter.get('type');
@@ -210,31 +264,66 @@ export class NovelSiteDemo extends _NovelSiteBase
 				let volume = nodeVolume.value() as IRowVolume;
 				let chapter = nodeChapter.value() as IRowChapter;
 
-				let dirname: string;
+				let dirname = volume.dirname;
 
+				let cid = chapter.idx;
+				let vid = volume.idx;
+
+				const current_idx = chapter.total_idx + optionsRuntime.startIndex;
+
+				let file = getFilePath(self, {
+					chapter, cid,
+					ext: '.txt',
+
+					idx: current_idx,
+
+					dirname,
+					volume, vid,
+				}, optionsRuntime);
+
+				chapter.path = file;
+
+				file = path.join(path_novel, file);
+
+				if (self._checkExists(optionsRuntime, file))
 				{
-					let ps = nodeChapter.parents() as any as TreeNode<IRowVolume>[];
-					ps.pop();
+					return file;
+				}
 
-					dirname = ps.reduceRight(function (a, node)
+				let url = self._createChapterUrl({
+					novel,
+					volume,
+					chapter,
+				}, optionsRuntime);
+
+				await self._fetchChapter(url, optionsRuntime)
+					.then(function (ret)
 					{
-						let name = node.value().name as string;
-
-						if (!name)
+						return self._parseChapter(ret, optionsRuntime, {
+							file,
+							novel,
+							volume,
+							chapter,
+						});
+					})
+					.then(function (text)
+					{
+						if (typeof text == 'string')
 						{
-							throw Error()
+							return novelText.toStr(text);
 						}
 
-						a.push(name);
-
-						return a;
-					}, []).join('/');
-
-					if (!dirname)
+						return text;
+					})
+					.then(async function (text: string)
 					{
-						throw Error()
-					}
-				}
+						await fs.outputFile(file, text);
+
+						return text;
+					})
+				;
+
+				return file;
 			})
 			.then(function (ret)
 			{

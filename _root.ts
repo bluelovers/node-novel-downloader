@@ -13,5 +13,8 @@ export const disablePaths = [
 	path.join(rootModule, '.git'),
 ];
 
+export const testPath = path.join(rootModule, 'test');
+export const tempPath = path.join(testPath, 'temp');
+
 import * as self from './_root';
 export default self;

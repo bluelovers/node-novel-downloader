@@ -29,9 +29,9 @@ import NovelSite from '../src/site/kakuyomu';
 			//noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 3,
+			filePrefixMode: 2,
 
-			startIndex: 1,
+			//startIndex: 1,
 		}).then(function (novel)
 		{
 			console.log(novel);

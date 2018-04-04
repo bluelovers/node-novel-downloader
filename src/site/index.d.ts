@@ -109,7 +109,7 @@ export declare module NovelSite {
     interface IVolume {
         volume_index?: any;
         volume_title: string;
-        chapter_list: IChapter[];
+        chapter_list?: IChapter[];
         [key: string]: any;
     }
     interface INovel {

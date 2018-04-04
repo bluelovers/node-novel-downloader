@@ -4,7 +4,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("../util");
-const path = require("path");
+const path = require("upath2");
 function padStart(id, pad = '0', len = 4) {
     return id.toString().padStart(len, '0') + pad;
 }

@@ -7,7 +7,7 @@ import bluebirdDecorator from '../decorator/bluebird';
 
 import * as PromiseBluebird from 'bluebird';
 import { URL } from 'jsdom-url';
-import * as path from "path";
+import * as path from "upath2";
 import rootPath from "../../_root";
 import { retryRequest } from '../fetch';
 
@@ -162,6 +162,8 @@ export class NovelSite implements NovelSite.INovelSite
 			path_novel?: string,
 			novel?: NovelSite.INovel,
 		};
+
+		optionsRuntime.startIndex = optionsRuntime.startIndex || 0;
 
 		// @ts-ignore
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
@@ -380,7 +382,7 @@ export module NovelSite
 	{
 		volume_index?
 		volume_title: string,
-		chapter_list: IChapter[],
+		chapter_list?: IChapter[],
 
 		[key: string]: any,
 	}

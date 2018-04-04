@@ -11,5 +11,7 @@ exports.disablePaths = [
     path.join(exports.rootModule, '.idea'),
     path.join(exports.rootModule, '.git'),
 ];
+exports.testPath = path.join(exports.rootModule, 'test');
+exports.tempPath = path.join(exports.testPath, 'temp');
 const self = require("./_root");
 exports.default = self;

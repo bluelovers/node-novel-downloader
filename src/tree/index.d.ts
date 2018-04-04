@@ -7,13 +7,16 @@ export declare type TreeNode<T = IRowRoot | IRowVolume | IRowChapter> = Node<T>;
 export interface ITree {
     level?: number;
     type?: string;
-    total_idx: number;
+    total_idx?: number;
+    idx?: number;
     name?: string;
 }
 export declare type IRowVolume<T = {}> = T & ITree & {
     type?: 'volume';
     volume_index?: string | number;
     volume_title: string;
+    dirname?: string;
+    volume_level?: string | number;
 };
 export declare type IRowChapter<T = {}> = T & ITree & {
     type?: 'chapter';
@@ -23,6 +26,7 @@ export declare type IRowChapter<T = {}> = T & ITree & {
     chapter_url?: URL;
     chapter_url_data?: any;
     chapter_date?: any;
+    path?: string;
 };
 export declare type IRowRoot<T = {}> = ITree & {
     type?: 'root';
