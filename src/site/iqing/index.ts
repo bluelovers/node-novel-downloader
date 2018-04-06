@@ -14,10 +14,39 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
 
+export type ISessionData = {
+
+	// require
+	sessionid: string,
+	steins_csrf_token: string,
+	online?: 1 | '1',
+
+	// no need
+	id?: number | string,
+	avatar?: string,
+	username?: string,
+
+}
+
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteIqing>>()
 export class NovelSiteIqing extends NovelSiteBase
 {
 	public static readonly IDKEY = 'iqing';
+
+	checkSessionData<T = ISessionData>(data: T & ISessionData, optionsRuntime: IOptionsRuntime = {}): T
+	{
+		if (data)
+		{
+			if (data.sessionid && data.steins_csrf_token)
+			{
+				data.online = 1;
+
+				return data;
+			}
+		}
+
+		return data;
+	}
 
 	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
 	{

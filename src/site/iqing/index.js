@@ -16,6 +16,15 @@ const jsdom_url_1 = require("jsdom-url");
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
 let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
+    checkSessionData(data, optionsRuntime = {}) {
+        if (data) {
+            if (data.sessionid && data.steins_csrf_token) {
+                data.online = 1;
+                return data;
+            }
+        }
+        return data;
+    }
     makeUrl(urlobj, bool) {
         let url;
         if (bool || !urlobj.chapter_id) {

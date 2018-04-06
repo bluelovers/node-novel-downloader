@@ -13,9 +13,21 @@ export declare type IFetchChapter = {
     res?: ResponseRequest;
     json?: any;
 };
+export declare type ISessionData = {
+    [key: string]: any;
+};
 export declare class NovelSiteDemo extends _NovelSite {
     static readonly IDKEY: string;
     constructor(options: IDownloadOptions, ...argv: any[]);
+    /**
+     * @todo 讓此方法有意義
+     *
+     * 用來說明目前站點的所需 session cookies
+     *
+     * @param {T} data
+     * @returns {T}
+     */
+    checkSessionData<T = ISessionData>(data: T, optionsRuntime?: IOptionsRuntime): T;
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
     download(inputUrl: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<_NovelSite.INovel>;
     protected _processNovel<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {

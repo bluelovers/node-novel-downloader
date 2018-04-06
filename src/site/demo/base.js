@@ -21,6 +21,17 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
     }
+    /**
+     * @todo 讓此方法有意義
+     *
+     * 用來說明目前站點的所需 session cookies
+     *
+     * @param {T} data
+     * @returns {T}
+     */
+    checkSessionData(data, optionsRuntime = {}) {
+        return data;
+    }
     session(optionsRuntime, url) {
         super.session(optionsRuntime, url);
         if (optionsRuntime.sessionData && Object.keys(optionsRuntime.sessionData).length) {

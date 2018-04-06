@@ -33,6 +33,10 @@ export type IFetchChapter = {
 	json?,
 };
 
+export type ISessionData = {
+	[key: string]: any,
+}
+
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()
 export class NovelSiteDemo extends _NovelSite
 {
@@ -41,6 +45,19 @@ export class NovelSiteDemo extends _NovelSite
 	constructor(options: IDownloadOptions, ...argv)
 	{
 		super(options, ...argv);
+	}
+
+	/**
+	 * @todo 讓此方法有意義
+	 *
+	 * 用來說明目前站點的所需 session cookies
+	 *
+	 * @param {T} data
+	 * @returns {T}
+	 */
+	checkSessionData<T = ISessionData>(data: T, optionsRuntime: IOptionsRuntime = {})
+	{
+		return data;
 	}
 
 	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)

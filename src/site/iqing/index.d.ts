@@ -6,8 +6,17 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
+export declare type ISessionData = {
+    sessionid: string;
+    steins_csrf_token: string;
+    online?: 1 | '1';
+    id?: number | string;
+    avatar?: string;
+    username?: string;
+};
 export declare class NovelSiteIqing extends NovelSiteBase {
     static readonly IDKEY: string;
+    checkSessionData<T = ISessionData>(data: T & ISessionData, optionsRuntime?: IOptionsRuntime): T;
     makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
     createMainUrl(url: any): URL;
