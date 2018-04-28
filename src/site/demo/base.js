@@ -255,6 +255,9 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             },
         }, ...opts);
     }
+    _get_meta(inputUrl, optionsRuntime, cache) {
+        throw new SyntaxError();
+    }
 };
 NovelSiteDemo.IDKEY = null;
 NovelSiteDemo = __decorate([

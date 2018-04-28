@@ -1,3 +1,4 @@
+/// <reference types="request" />
 /// <reference types="bluebird" />
 import { IJSDOM } from 'jsdom-extra';
 import _NovelSite from '../index';
@@ -11,7 +12,7 @@ export declare type IFetchChapter = {
     body?: any;
     dom?: IJSDOM;
     res?: ResponseRequest;
-    json?: any;
+    json?;
 };
 export declare type ISessionData = {
     [key: string]: any;
@@ -57,6 +58,9 @@ export declare class NovelSiteDemo extends _NovelSite {
         file: string;
         md: string;
     }>;
+    protected _get_meta(inputUrl: any, optionsRuntime: any, cache?: {
+        dom?: IJSDOM;
+    }): void;
 }
 export declare const NovelSite: typeof NovelSiteDemo;
 export default NovelSiteDemo;

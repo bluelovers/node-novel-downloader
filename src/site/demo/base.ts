@@ -415,6 +415,13 @@ export class NovelSiteDemo extends _NovelSite
 		}, ...opts);
 	}
 
+	protected _get_meta(inputUrl, optionsRuntime, cache?: {
+		dom?: IJSDOM,
+	})
+	{
+		throw new SyntaxError();
+	}
+
 }
 
 export const NovelSite = NovelSiteDemo as typeof NovelSiteDemo;
