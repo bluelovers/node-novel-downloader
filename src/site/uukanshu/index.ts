@@ -2,7 +2,8 @@
  * Created by user on 2018/3/25/025.
  */
 
-import { isUndef, minifyHTML, trim } from '../../util';
+import { stripContent } from '../../strip';
+import { array_unique, isUndef, minifyHTML, trim } from '../../util';
 import _NovelSite, { staticImplements, SYMBOL_CACHE, IMdconfMeta } from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
@@ -14,6 +15,8 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
 import * as path from "path";
+import * as StrUtil from 'str-util';
+import { zhRegExp } from 'regexp-cjk';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteUukanshu>>()
 export class NovelSiteUukanshu extends NovelSiteBase
@@ -26,7 +29,7 @@ export class NovelSiteUukanshu extends NovelSiteBase
 
 		let cid = (!bool && urlobj.chapter_id) ? `${urlobj.chapter_id}.html` : '';
 
-		url = `https://www.uukanshu.com/b/${urlobj.novel_id}/${cid}/`;
+		url = `https://www.uukanshu.com/b/${urlobj.novel_id}/${cid}`;
 
 		return new URL(url);
 	}
@@ -85,6 +88,18 @@ export class NovelSiteUukanshu extends NovelSiteBase
 		return ret;
 	}
 
+	_stripContent(text: string)
+	{
+		text = stripContent(text);
+
+		//process.exit();
+
+		return text
+			.replace(/^　　/gm, '')
+			.replace(/^[ \uFEFF\xA0]+/gm, '')
+		;
+	}
+
 	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache): string
 	{
 		if (!ret)
@@ -110,7 +125,17 @@ export class NovelSiteUukanshu extends NovelSiteBase
 
 		}
 
+		ret.dom.$(body_selector).html(function (i, old)
+		{
+			return old
+				.replace(/(<br\/?>)/ig, '$1\n')
+				.replace(/(<p>)/ig, '\n$1')
+				;
+		});
+
 		let text = ret.dom.$(body_selector).text();
+
+		text = this._stripContent(text);
 
 		return text;
 	}
@@ -236,7 +261,7 @@ export class NovelSiteUukanshu extends NovelSiteBase
 			{
 				console.dir(novel, {
 					colors: true,
-					depth: 3,
+					//depth: 3,
 				});
 			})
 			;
@@ -260,10 +285,17 @@ export class NovelSiteUukanshu extends NovelSiteBase
 
 				let novel_author = trim($('.jieshao_content h2 a').text());
 
+				$('.jieshao_content h3:eq(0)').html(function (i, old)
+				{
+					return old.replace(/(<br\/?>)/ig, '$1\n');
+				});
+
 				let novel_desc = $('.jieshao_content h3:eq(0)')
 					.text()
 					.trim()
 				;
+
+				novel_desc = self._stripContent(novel_desc);
 
 				let novel_title = trim(
 					$('.jieshao-img .bookImg img').attr('alt')

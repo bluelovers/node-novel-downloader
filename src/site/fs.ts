@@ -89,7 +89,7 @@ export function getFilePath(self: NovelSite, {
 			{
 				idxx = '';
 			}
-			else if (optionsRuntime.filePrefixMode > 2)
+			else if (optionsRuntime.filePrefixMode == 3 || optionsRuntime.filePrefixMode > 4)
 			{
 				idxx = idx;
 			}

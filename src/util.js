@@ -30,5 +30,11 @@ function trim(str, bool) {
     return t;
 }
 exports.trim = trim;
+function array_unique(array) {
+    return array.filter(function (el, index, arr) {
+        return index == arr.indexOf(el);
+    });
+}
+exports.array_unique = array_unique;
 const self = require("./util");
 exports.default = self;

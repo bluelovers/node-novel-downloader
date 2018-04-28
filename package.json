@@ -46,8 +46,10 @@
     "node-novel-globby": "^1.7.9",
     "node-novel-info": "^2.3.4",
     "novel-text": "^1.0.11",
+    "regexp-cjk": "^1.2.13",
     "request": "^2.85.0",
     "shortid": "^2.2.8",
+    "str-util": "^2.3.13",
     "symbol-tree2": "^3.2.2"
   },
   "devDependencies": {

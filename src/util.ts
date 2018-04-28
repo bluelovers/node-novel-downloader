@@ -43,6 +43,14 @@ export function trim(str: string, bool?: boolean)
 	return t;
 }
 
+export function array_unique<T>(array: T[]): T[]
+{
+	return array.filter(function (el, index, arr)
+	{
+		return index == arr.indexOf(el);
+	});
+}
+
 import * as self from './util';
 export default self;
 

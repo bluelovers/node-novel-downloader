@@ -1,6 +1,3 @@
-/**
- * Created by user on 2018/2/10/010.
- */
 import * as PromiseBluebird from 'bluebird';
 export { PromiseBluebird };
 export declare const bluebirdDecorator: MethodDecorator;

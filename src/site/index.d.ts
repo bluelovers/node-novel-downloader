@@ -1,7 +1,8 @@
+/// <reference types="bluebird" />
+/// <reference types="node" />
 /**
  * Created by user on 2018/2/10/010.
  */
-/// <reference types="node" />
 import bluebirdDecorator from '../decorator/bluebird';
 import * as PromiseBluebird from 'bluebird';
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
@@ -40,7 +41,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     }>;
     createMainUrl(url: string): URL;
     createMainUrl(url: URL): URL;
-    protected _createChapterUrl<T = IOptionsRuntime>({ novel, volume, chapter, }: {
+    protected _createChapterUrl<T = IOptionsRuntime>({novel, volume, chapter}: {
         novel: NovelSite.INovel;
         volume: NovelSite.IVolume;
         chapter: NovelSite.IChapter;

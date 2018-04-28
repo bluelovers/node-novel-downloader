@@ -9,6 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const strip_1 = require("../../strip");
 const util_1 = require("../../util");
 const index_1 = require("../index");
 const base_1 = require("../demo/base");
@@ -21,7 +22,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
     makeUrl(urlobj, bool) {
         let url;
         let cid = (!bool && urlobj.chapter_id) ? `${urlobj.chapter_id}.html` : '';
-        url = `https://www.uukanshu.com/b/${urlobj.novel_id}/${cid}/`;
+        url = `https://www.uukanshu.com/b/${urlobj.novel_id}/${cid}`;
         return new jsdom_url_1.URL(url);
     }
     parseUrl(url, options) {
@@ -57,6 +58,13 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
         let ret = this.makeUrl(data, true);
         return ret;
     }
+    _stripContent(text) {
+        text = strip_1.stripContent(text);
+        //process.exit();
+        return text
+            .replace(/^　　/gm, '')
+            .replace(/^[ \uFEFF\xA0]+/gm, '');
+    }
     _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
             return '';
@@ -71,7 +79,13 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
         }
         catch (e) {
         }
+        ret.dom.$(body_selector).html(function (i, old) {
+            return old
+                .replace(/(<br\/?>)/ig, '$1\n')
+                .replace(/(<p>)/ig, '\n$1');
+        });
         let text = ret.dom.$(body_selector).text();
+        text = this._stripContent(text);
         return text;
     }
     async get_volume_list(inputUrl, optionsRuntime = {}) {
@@ -146,7 +160,6 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
             .tap(function (novel) {
             console.dir(novel, {
                 colors: true,
-                depth: 3,
             });
         });
     }
@@ -160,9 +173,13 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
             let data = {};
             data.novel = {};
             let novel_author = util_1.trim($('.jieshao_content h2 a').text());
+            $('.jieshao_content h3:eq(0)').html(function (i, old) {
+                return old.replace(/(<br\/?>)/ig, '$1\n');
+            });
             let novel_desc = $('.jieshao_content h3:eq(0)')
                 .text()
                 .trim();
+            novel_desc = self._stripContent(novel_desc);
             let novel_title = util_1.trim($('.jieshao-img .bookImg img').attr('alt')
                 || $('.jieshao_content h1 a').text().replace(/最新章节/g, ''));
             let url_data = self.parseUrl(url);

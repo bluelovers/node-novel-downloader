@@ -38,7 +38,7 @@ function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, v
             if (util_1.isUndef(chapter.chapter_index, '', true)) {
                 idxx = '';
             }
-            else if (optionsRuntime.filePrefixMode > 2) {
+            else if (optionsRuntime.filePrefixMode == 3 || optionsRuntime.filePrefixMode > 4) {
                 idxx = idx;
             }
             else {

@@ -111,7 +111,8 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2) {
                 let i;
                 let bool = volume.chapter_list.every(function (chapter, j) {
-                    let m = helper_1.normalize_val(chapter.chapter_title)
+                    let m = (optionsRuntime.filePrefixMode > 3 ?
+                        chapter.chapter_title : helper_1.normalize_val(chapter.chapter_title))
                         .replace(/^\D+/, '')
                         //.replace(/^(\d+).+$/, '$1')
                         .replace(/^(\d+)\D.*$/, '$1');

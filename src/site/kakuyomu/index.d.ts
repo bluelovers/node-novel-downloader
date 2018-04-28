@@ -1,6 +1,3 @@
-/**
- * Created by user on 2018/3/17/017.
- */
 import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/tree';
 import NovelSite from '../index';
 export declare class NovelSiteKakuyomu extends NovelSiteDemo {

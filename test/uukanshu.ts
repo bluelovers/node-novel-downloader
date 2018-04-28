@@ -14,7 +14,9 @@ import NovelSite from '../src/site/uukanshu';
 		outputDir: './temp',
 	});
 
-	console.log(Site);
+	console.dir(Site, {
+		colors: true,
+	});
 
 	Promise.mapSeries([
 
@@ -28,7 +30,7 @@ import NovelSite from '../src/site/uukanshu';
 			//noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 3,
+			//filePrefixMode: 5,
 
 			//disableCheckExists: true,
 
@@ -36,9 +38,13 @@ import NovelSite from '../src/site/uukanshu';
 
 		}).then(function (novel)
 		{
-			console.log(novel);
+			console.dir(novel, {
+				colors: true,
+			});
 
-			console.log(novel.novel_title);
+			console.dir(novel.novel_title, {
+				colors: true,
+			});
 		})
 		;
 	});

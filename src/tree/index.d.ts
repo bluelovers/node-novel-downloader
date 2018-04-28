@@ -25,8 +25,8 @@ export declare type IRowChapter<T = {}> = T & IChapter & ITree & {
     chapter_title: string;
     chapter_id?: string | number;
     chapter_url?: URL;
-    chapter_url_data?: any;
-    chapter_date?: any;
+    chapter_url_data?;
+    chapter_date?;
     path?: string;
 };
 export declare type IRowRoot<T = {}> = ITree & {

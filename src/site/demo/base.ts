@@ -197,7 +197,9 @@ export class NovelSiteDemo extends _NovelSite
 
 					let bool = volume.chapter_list.every(function (chapter, j)
 					{
-						let m = normalize_val(chapter.chapter_title)
+						let m = (optionsRuntime.filePrefixMode > 3 ?
+							chapter.chapter_title : normalize_val(chapter.chapter_title)
+							)
 							.replace(/^\D+/, '')
 							//.replace(/^(\d+).+$/, '$1')
 							.replace(/^(\d+)\D.*$/, '$1')

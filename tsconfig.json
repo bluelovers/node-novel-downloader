@@ -6,10 +6,6 @@
     "moduleResolution": "node",
     "allowJs": false,
 
-    //"sourceMap": true,
-    //"inlineSourceMap": true,
-    //"inlineSources": true,
-
     "declaration": true,
     "experimentalDecorators": true,
 
@@ -21,13 +17,6 @@
 
     "locale": "zh-TW",
     "pretty": true,
-
-    //"removeComments": true,
-
-//    "baseUrl": ".",
-//    "sourceRoot": ".",
-//    "rootDir": ".",
-//    "outDir": ".",
 
     "traceResolution": true,
     "newLine": "lf"
