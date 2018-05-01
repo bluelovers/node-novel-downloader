@@ -18,7 +18,7 @@ import { URL } from 'jsdom-url';
 
 import { SYMBOL_NODE } from 'js-tree-list2/src/utils';
 
-import { IRowChapter, IRowVolume, NovelTree, TreeNode, ITree } from '../../tree/index';
+import { IRowChapter, IRowVolume, NovelTree, TreeNode, ITree, ITreeToList } from '../../tree/index';
 
 export { NovelTree }
 

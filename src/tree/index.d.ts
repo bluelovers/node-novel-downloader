@@ -1,9 +1,10 @@
 /**
  * Created by user on 2018/4/2/002.
  */
-import { Tree, Node } from 'js-tree-list2';
+import { Tree, Node, ITreeToList } from 'js-tree-list2';
 import { IChapter, IVolume } from '../site/index';
 export declare type ITreeID = string | number;
+export { ITreeToList };
 export declare type TreeNode<T = IRowRoot | IRowVolume | IRowChapter> = Node<T>;
 export interface ITree {
     level?: number;
@@ -50,10 +51,7 @@ export declare class NovelTree {
     static isChapter(node: IRowChapter): node is IRowChapter;
     protected _fixRow<U extends Node<IRowVolume | IRowChapter>>(node: U): U;
     protected _getRoot<U extends Node<IRowRoot | IRowVolume | IRowChapter>>(root: U): U;
-    toJSON(): Node<IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>> & {
-        parent: string | number;
-        children: any[];
-    };
+    toJSON(): any;
     static treeToList(novelTree: NovelTree, linkNode?: boolean): {
         id?: string | number;
         parent?: string | number;

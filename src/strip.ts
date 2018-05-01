@@ -6,9 +6,11 @@ import * as StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { array_unique } from './util';
 
-export function stripContent(text: string)
+let inited: RegExp[];
+
+export function stripInit()
 {
-	[
+	return [
 		` *(?:uu看书.? *)*(?:https:\\\/*)*www.uukanshu.?c?om? *`,
 		`(?:\\&?n?b?s?p?;?)*[ &~／\\/（;《＝＋+=(\\-\\[]*猪.{0,5}?猪.{0,5}?岛.{0,5}?小.{0,5}?说.{0,5}?www(?:.(?:huhu|huzu|zuhu|huuo|zhu(?:zud)?|zhzhuam|zhu.{0,5}zhu)?(.?c?om?)?)?[ &~／\\/;＝＋+={}]*(?:.?\\&?n?b?s?p?;?)*~?[ &~／\\/;＝＋+={}\\-()]*\\.?`,
 
@@ -32,7 +34,11 @@ export function stripContent(text: string)
 
 		`\\[zhu\\]\\[\\].\\[\\]`,
 
-	].forEach(function (v)
+		`(?:<a>)?UU看书欢迎广大书友光临阅读，最新、最快、最火的连载作品尽在UU看书！(?:<\\/a>)?;?(?:(?:<a>)?UU看书。(?:<\\/a>)?;?)?`,
+
+		`(?:<a>)?UU看书。(?:<\\/a>)?;?`,
+
+	].reduce(function (a, v)
 	{
 		let s = char_autoFH(v);
 
@@ -48,8 +54,21 @@ export function stripContent(text: string)
 
 		let r = new zhRegExp(s, 'igm');
 
-		//console.log(r);
+		a.push(r);
 
+		return a;
+	}, [] as RegExp[]);
+}
+
+export function stripContent(text: string)
+{
+	if (!inited || !inited.length)
+	{
+		inited = stripInit();
+	}
+
+	inited.forEach(function (r)
+	{
 		text = text.replace(r, '');
 	});
 
@@ -83,4 +102,3 @@ function char_autoFH(text: string)
 
 import * as self from './strip';
 export default self;
-

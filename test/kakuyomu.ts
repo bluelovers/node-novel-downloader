@@ -29,7 +29,7 @@ import NovelSite from '../src/site/kakuyomu';
 			//noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 2,
+			filePrefixMode: 1,
 
 			//startIndex: 1,
 		}).then(function (novel)

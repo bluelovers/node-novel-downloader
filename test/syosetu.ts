@@ -4,6 +4,7 @@
 
 import * as Promise from 'bluebird';
 import NovelSiteSyosetu from '../src/site/syosetu';
+import ProjectConfig from '../_root';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 
@@ -11,7 +12,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 {
 
 	const Site = new NovelSiteSyosetu({
-		outputDir: './temp',
+		outputDir: ProjectConfig.tempPath,
 	});
 
 	console.log(Site);
@@ -23,7 +24,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'http://ncode.syosetu.com/n1745ct/',
 
-		//'https://ncode.syosetu.com/n3512ds/',
+//		'https://ncode.syosetu.com/n3512ds/',
 
 		//'https://novel18.syosetu.com/n1413cw/',
 
@@ -45,7 +46,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'n6006cw',
 
-		//'n2027de',
+//		'n2027de',
 
 		//'n9055cl',
 
@@ -85,7 +86,7 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 //		'http://novel18.syosetu.com/n2794ec/',
 
 		//'http://ncode.syosetu.com/n1980bm/',
-		//'http://ncode.syosetu.com/n7940cn/',
+//		'http://ncode.syosetu.com/n7940cn/',
 
 		//'http://ncode.syosetu.com/n0612dm/',
 
@@ -99,7 +100,16 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 
 		//'https://ncode.syosetu.com/n0822cl/',
 
-		'https://ncode.syosetu.com/n1132dk/',
+//		'https://ncode.syosetu.com/n1132dk/',
+
+//		'n4399ci',
+//		'n4805cx',
+
+//		'http://ncode.syosetu.com/n1898i/',
+
+//		'http://ncode.syosetu.com/n3701cp',
+
+		'https://novel18.syosetu.com/n0153ce/',
 
 	],async function (value, index, array)
 	{
@@ -107,10 +117,10 @@ import NovelSiteSyosetu from '../src/site/syosetu';
 			disableTxtdownload: true,
 			disableDownload: true,
 
-			//noFirePrefix: true,
+//			noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 3,
+			filePrefixMode: 4,
 
 			startIndex: 1,
 
