@@ -1,4 +1,3 @@
-/// <reference types="request" />
 /// <reference types="bluebird" />
 import { IJSDOM } from 'jsdom-extra';
 import _NovelSite from '../index';
@@ -12,7 +11,7 @@ export declare type IFetchChapter = {
     body?: any;
     dom?: IJSDOM;
     res?: ResponseRequest;
-    json?;
+    json?: any;
 };
 export declare type ISessionData = {
     [key: string]: any;
@@ -52,7 +51,7 @@ export declare class NovelSiteDemo extends _NovelSite {
         novel: _NovelSite.INovel;
         volume: _NovelSite.IVolume;
         chapter: _NovelSite.IChapter;
-    }): string;
+    }): string | Promise<string>;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<IFetchChapter>;
     protected _saveReadme(optionsRuntime: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
         file: string;

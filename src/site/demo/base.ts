@@ -338,7 +338,7 @@ export class NovelSiteDemo extends _NovelSite
 		novel: _NovelSite.INovel,
 		volume: _NovelSite.IVolume,
 		chapter: _NovelSite.IChapter,
-	}): string
+	}): string | Promise<string>
 	{
 		if (!ret)
 		{

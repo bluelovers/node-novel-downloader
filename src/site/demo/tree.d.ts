@@ -3,7 +3,7 @@
  */
 export * from './base';
 import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, INovel as _INovel } from './base';
-import { IRowChapter, IRowVolume, NovelTree, ITree } from '../../tree/index';
+import { IRowChapter, IRowVolume, NovelTree } from '../../tree/index';
 export { NovelTree };
 export declare type IOptionsRuntime = _IOptionsRuntime & {
     novelTree?: NovelTree;
@@ -17,9 +17,7 @@ export declare class NovelSiteDemo extends _NovelSiteBase {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
-        content: (ITree & {
-            type?: "root";
-        }) | IRowVolume<{}> | IRowChapter<{}>;
+        content: import("../../tree/index").IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
     }[]>;
     _processNovel<T>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;

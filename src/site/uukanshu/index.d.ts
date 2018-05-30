@@ -1,3 +1,6 @@
+/**
+ * Created by user on 2018/3/25/025.
+ */
 import _NovelSite from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
