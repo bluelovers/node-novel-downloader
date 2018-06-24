@@ -58,7 +58,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
-export declare module NovelSite {
+export declare namespace NovelSite {
     type IOptionsPlus = {
         disableOutputDirPrefix?: boolean;
         noDirPrefix?: boolean;
@@ -70,9 +70,16 @@ export declare module NovelSite {
         filePrefixMode?: number;
         allowEmptyVolumeTitle?: boolean;
         event?: EventEmitter;
+        /**
+         * 用來登入站點的 cookies session
+         */
         sessionData?: {
             [key: string]: any;
         };
+        /**
+         * 只抓取小說的 META 資料
+         */
+        fetchMetaDataOnly?: boolean;
     };
     type IOptions = {
         outputDir?: string;

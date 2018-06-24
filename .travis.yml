@@ -1,0 +1,33 @@
+language: node_js
+node_js:
+    - "10"
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  on:
+    branch: master
+  local-dir: docs
+
+
+cache:
+#  yarn: true
+#  directories:
+#    - "node_modules"
+
+before_install:
+  #- npm install -g typedoc typedoc-themes-color typedoc-plugin-nojekyll
+#  - npm install -g typescript
+
+install:
+  - npm install
+  - npm install -g typescript@next
+  - npm install --no-save typedoc typedoc-themes-color typedoc-plugin-nojekyll fs-extra
+
+before_script:
+
+script:
+#  npm run travis
+  typedoc --options typedoc.config.js

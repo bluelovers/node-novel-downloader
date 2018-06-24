@@ -191,8 +191,11 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
         });
     }
     processNovel(novel, optionsRuntime, _cache_, ...argv) {
+        // @ts-ignore
+        let pr;
+        pr = optionsRuntime.fetchMetaDataOnly ? [] : this._processNovel(novel, optionsRuntime, _cache_, ...argv);
         return index_2.PromiseBluebird
-            .resolve(this._processNovel(novel, optionsRuntime, _cache_, ...argv))
+            .resolve(pr)
             .then(function (ret) {
             return {
                 novel,

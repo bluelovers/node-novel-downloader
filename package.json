@@ -1,9 +1,12 @@
 {
   "name": "novel-downloader",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "main": "index.js",
+  "types": "novel-downloader.d.ts",
   "scripts": {
+    "build:dts-bundle": "node ./test/dts-bundle.js",
+    "build:typedoc": "typedoc --options ./typedoc.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

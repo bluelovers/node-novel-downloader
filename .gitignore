@@ -22,3 +22,4 @@ test/**/*.d.ts
 test/*.js
 test/*.d.ts
 texst/temp
+/docs/

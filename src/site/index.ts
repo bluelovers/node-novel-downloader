@@ -242,7 +242,7 @@ export class NovelSite implements NovelSite.INovelSite
 
 		if (!data || !data.novel_id)
 		{
-			console.log(data);
+			//console.log(data);
 
 			throw new ReferenceError();
 		}
@@ -260,6 +260,7 @@ export class NovelSite implements NovelSite.INovelSite
 		chapter: NovelSite.IChapter,
 	}, optionsRuntime?: T & IOptionsRuntime): URL
 	{
+		// @ts-ignore
 		return new URL(chapter.chapter_url);
 	}
 
@@ -304,7 +305,7 @@ export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
 
-export module NovelSite
+export namespace NovelSite
 {
 	export type IOptionsPlus = {
 
@@ -325,9 +326,17 @@ export module NovelSite
 
 		event?: EventEmitter,
 
+		/**
+		 * 用來登入站點的 cookies session
+		 */
 		sessionData?: {
 			[key: string]: any,
 		},
+
+		/**
+		 * 只抓取小說的 META 資料
+		 */
+		fetchMetaDataOnly?: boolean,
 	}
 
 	export type IOptions = {

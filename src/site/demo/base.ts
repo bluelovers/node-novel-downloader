@@ -319,9 +319,14 @@ export class NovelSiteDemo extends _NovelSite
 		path_novel: string,
 	}, ...argv)
 	{
+		// @ts-ignore
+		let pr: any;
+
+		pr = optionsRuntime.fetchMetaDataOnly ? [] : this._processNovel<T>(novel, optionsRuntime, _cache_, ...argv);
+
 		return PromiseBluebird
-			.resolve(this._processNovel<T>(novel, optionsRuntime, _cache_, ...argv))
-			.then(function (ret)
+			.resolve(pr)
+			.then(function (ret: T)
 			{
 				return {
 					novel,

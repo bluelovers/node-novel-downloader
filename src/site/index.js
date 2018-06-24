@@ -143,12 +143,13 @@ class NovelSite {
     createMainUrl(url) {
         let data = this.parseUrl(url);
         if (!data || !data.novel_id) {
-            console.log(data);
+            //console.log(data);
             throw new ReferenceError();
         }
         return this.makeUrl(data, true);
     }
     _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
+        // @ts-ignore
         return new jsdom_url_1.URL(chapter.chapter_url);
     }
     _fetchChapter(url, optionsRuntime) {
