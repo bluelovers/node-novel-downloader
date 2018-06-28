@@ -20,3 +20,23 @@ package-lock.json
 test
 docs
 /typedoc.config.js
+### npm template
+.idea
+
+~ci.list.txt
+~ci.log.txt
+~ci.errors.txt
+
+*.stackdump
+*.bak
+*.old
+
+tsconfig.json
+#package-lock.json
+
+test
+
+.github
+.gitkeep
+
+/.*

@@ -23,3 +23,15 @@ test/*.js
 test/*.d.ts
 texst/temp
 /docs/
+### git2 template
+
+
+
+
+test/temp*
+
+tests/**/*.js
+tests/**/*.d.ts
+tests/*.js
+tests/*.d.ts
+tests/temp*
