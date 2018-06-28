@@ -46,6 +46,7 @@ export declare class NovelSiteDemo extends _NovelSite {
         };
         ret: T;
     }>;
+    protected _stripContent(text: string): string;
     protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
         file: string;
         novel: _NovelSite.INovel;

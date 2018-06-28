@@ -338,6 +338,11 @@ export class NovelSiteDemo extends _NovelSite
 		;
 	}
 
+	protected _stripContent(text: string)
+	{
+		return text;
+	}
+
 	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
 		file: string,
 		novel: _NovelSite.INovel,

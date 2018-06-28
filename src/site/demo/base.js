@@ -205,6 +205,9 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             };
         });
     }
+    _stripContent(text) {
+        return text;
+    }
     _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
             return '';
