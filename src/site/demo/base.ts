@@ -31,6 +31,9 @@ export type IFetchChapter = {
 	dom?: IJSDOM;
 	res?: ResponseRequest;
 	json?,
+
+	url?: URL,
+	contentTypeParsed?: ReturnType<parseContentType>,
 };
 
 export type ISessionData = {
@@ -387,6 +390,11 @@ export class NovelSiteDemo extends _NovelSite
 					.then(function (res)
 					{
 						const contentTypeParsed = parseContentType(res.headers["content-type"]);
+
+						ret.contentTypeParsed = contentTypeParsed;
+
+						// @ts-ignore
+						ret.url = url;
 
 						if (contentTypeParsed.isHTML() || contentTypeParsed.isXML())
 						{

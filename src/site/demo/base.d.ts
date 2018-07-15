@@ -2,6 +2,7 @@
 import { IJSDOM } from 'jsdom-extra';
 import _NovelSite from '../index';
 import { PromiseBluebird } from '../index';
+import * as parseContentType from 'content-type-parser';
 export declare type IOptionsPlus = {};
 export declare type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus;
 export declare type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus;
@@ -12,6 +13,8 @@ export declare type IFetchChapter = {
     dom?: IJSDOM;
     res?: ResponseRequest;
     json?: any;
+    url?: URL;
+    contentTypeParsed?: ReturnType<parseContentType>;
 };
 export declare type ISessionData = {
     [key: string]: any;

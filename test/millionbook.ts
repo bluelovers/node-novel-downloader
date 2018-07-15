@@ -3,7 +3,7 @@
  */
 
 import * as Promise from 'bluebird';
-import NovelSite from '../src/site/wenku8';
+import NovelSite from '../src/site/millionbook';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 
@@ -14,13 +14,15 @@ import NovelSite from '../src/site/wenku8';
 		outputDir: './temp',
 	});
 
-	console.log(Site);
+	console.dir(Site, {
+		colors: true,
+	});
 
 	Promise.mapSeries([
 
-		'http://www.wenku8.com/novel/2/2283/index.htm',
+		'http://www.millionbook.net/wx/h/huangyi/djs/index.html',
 
-	],async function (value, index, array)
+	], async function (value, index, array)
 	{
 		await Site.download(value, {
 			//disableDownload: true,
@@ -30,17 +32,22 @@ import NovelSite from '../src/site/wenku8';
 
 			filePrefixMode: 4,
 
-			//disableCheckExists: true,
+			disableCheckExists: true,
 
 			startIndex: 1,
 
 		}).then(function (novel)
 		{
-			console.log(novel);
+			console.dir(novel, {
+				colors: true,
+			});
 
-			console.log(novel.novel_title);
+			console.dir(novel.novel_title, {
+				colors: true,
+			});
 		})
 		;
 	});
 
 })();
+

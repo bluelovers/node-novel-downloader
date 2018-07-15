@@ -233,6 +233,9 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 await fetch_1.retryRequest(url, opts.requestOptions)
                     .then(function (res) {
                     const contentTypeParsed = parseContentType(res.headers["content-type"]);
+                    ret.contentTypeParsed = contentTypeParsed;
+                    // @ts-ignore
+                    ret.url = url;
                     if (contentTypeParsed.isHTML() || contentTypeParsed.isXML()) {
                         ret.dom = jsdom_extra_1.requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
                         ret.dom = jsdom_extra_1.packJSDOM(ret.dom);

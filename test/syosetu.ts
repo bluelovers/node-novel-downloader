@@ -126,6 +126,8 @@ import ProjectConfig from '../_root';
 
 			//disableCheckExists: true,
 
+			//fetchMetaDataOnly: true,
+
 		}).then(function (novel)
 		{
 			console.log(novel);
