@@ -21,7 +21,10 @@ const jsdom_extra_1 = require("jsdom-extra");
 let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     makeUrl(urlobj, bool) {
         let url;
-        if (!bool && urlobj.volume_id && urlobj.chapter_id) {
+        if (bool === 2 && urlobj.novel_id) {
+            url = `http://q.dmzj.com/${urlobj.novel_id}/index.shtml`;
+        }
+        else if (!bool && urlobj.volume_id && urlobj.chapter_id) {
             url = `http://v2.api.dmzj.com/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
         }
         else if (bool === true && urlobj.novel_id) {
@@ -62,6 +65,13 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             urlobj.chapter_id = m[3];
             return urlobj;
         }
+        // 手機版網址
+        r = /(?:q\.dmzj\.com\/|^\/)(?:(\d+)\/(?:(\d+)\/(?:(\d+)[\._])?)?)/;
+        if (m = r.exec(url)) {
+            urlobj.novel_id = m[1];
+            urlobj.volume_id = m[2];
+            urlobj.chapter_id = m[3];
+        }
         return urlobj;
     }
     session(optionsRuntime, url) {
@@ -93,11 +103,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             novel_id: optionsRuntime[index_1.SYMBOL_CACHE].novel.novel_id,
         };
         return super._saveReadme(optionsRuntime, options, {
-            options: {
-                textlayout: {
-                    allow_lf2: true,
-                }
-            },
+        //
         }, ...opts);
     }
     _parseChapter(ret, optionsRuntime, cache) {
@@ -178,7 +184,8 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
                 _cache_dates.sort();
                 novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             }
-            return Object.assign({ url: dom.url, url_data }, data_meta, { volume_list, 
+            return Object.assign({ url,
+                url_data }, data_meta, { volume_list, 
                 //novel_date,
                 checkdate: index_2.moment().local(), imgs: [] });
         })
@@ -190,8 +197,8 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     }
     async _get_meta(inputUrl, optionsRuntime, cache) {
         const self = this;
-        let url = this.makeUrl(this.parseUrl(inputUrl), -1);
-        let url_data = this.parseUrl(url);
+        let url = self.makeUrl(self.parseUrl(inputUrl), -1);
+        let url_data = self.parseUrl(url);
         return fetch_1.retryRequest(url, optionsRuntime.requestOptions)
             //return fromURL(url, optionsRuntime.optionsJSDOM)
             //return Promise.resolve(cache.dom)
@@ -207,7 +214,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
                 data.novel.tags.push(...s.split('\/'));
             });
             data.novel.tags.push(domJson.zone);
-            data.novel.tags.push(domJson.status);
+            //data.novel.tags.push(domJson.status);
             data.novel.status = domJson.status;
             let novel_cover = domJson.cover;
             let novel_desc = domJson.introduction;
@@ -215,9 +222,8 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             let novel_date = index_2.moment.unix(domJson.last_update_time).local();
             //console.log(domJson);
             let dmzj_api_json = domJson;
-            let novel_url = `http://q.dmzj.com/${novel_id}/index.shtml`;
-            return Object.assign({ url,
-                url_data }, data, { novel_url,
+            let novel_url = self.makeUrl(url_data, 2);
+            return Object.assign({ url: novel_url, url_data: self.parseUrl(novel_url), url_api: url, url_data_api: url_data }, data, { novel_url,
                 novel_id,
                 novel_title,
                 novel_cover,

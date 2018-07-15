@@ -29,7 +29,11 @@ export class NovelSiteTpl extends NovelSiteBase
 	{
 		let url: string;
 
-		if (!bool && urlobj.volume_id && urlobj.chapter_id)
+		if (bool === 2 && urlobj.novel_id)
+		{
+			url = `http://q.dmzj.com/${urlobj.novel_id}/index.shtml`;
+		}
+		else if (!bool && urlobj.volume_id && urlobj.chapter_id)
 		{
 			url = `http://v2.api.dmzj.com/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
 		}
@@ -90,6 +94,15 @@ export class NovelSiteTpl extends NovelSiteBase
 			return urlobj;
 		}
 
+		// 手機版網址
+		r = /(?:q\.dmzj\.com\/|^\/)(?:(\d+)\/(?:(\d+)\/(?:(\d+)[\._])?)?)/;
+		if (m = r.exec(url as string))
+		{
+			urlobj.novel_id = m[1];
+			urlobj.volume_id = m[2];
+			urlobj.chapter_id = m[3];
+		}
+
 		return urlobj;
 	}
 
@@ -145,11 +158,7 @@ export class NovelSiteTpl extends NovelSiteBase
 		};
 
 		return super._saveReadme(optionsRuntime, options, {
-			options: {
-				textlayout: {
-					allow_lf2: true,
-				}
-			},
+			//
 		}, ...opts);
 	}
 
@@ -287,7 +296,7 @@ export class NovelSiteTpl extends NovelSiteBase
 
 				return {
 
-					url: dom.url,
+					url,
 					url_data,
 
 					...data_meta,
@@ -317,8 +326,8 @@ export class NovelSiteTpl extends NovelSiteBase
 	{
 		const self = this;
 
-		let url = this.makeUrl(this.parseUrl(inputUrl), -1);
-		let url_data = this.parseUrl(url);
+		let url = self.makeUrl(self.parseUrl(inputUrl), -1);
+		let url_data = self.parseUrl(url);
 
 		return retryRequest(url, optionsRuntime.requestOptions)
 		//return fromURL(url, optionsRuntime.optionsJSDOM)
@@ -341,7 +350,7 @@ export class NovelSiteTpl extends NovelSiteBase
 				});
 
 				data.novel.tags.push(domJson.zone);
-				data.novel.tags.push(domJson.status);
+				//data.novel.tags.push(domJson.status);
 
 				data.novel.status = domJson.status;
 
@@ -356,11 +365,14 @@ export class NovelSiteTpl extends NovelSiteBase
 
 				let dmzj_api_json = domJson;
 
-				let novel_url = `http://q.dmzj.com/${novel_id}/index.shtml`;
+				let novel_url = self.makeUrl(url_data, 2);
 
 				return {
-					url,
-					url_data,
+					url: novel_url,
+					url_data: self.parseUrl(novel_url),
+
+					url_api: url,
+					url_data_api: url_data,
 
 					...data,
 
