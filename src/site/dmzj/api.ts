@@ -323,40 +323,48 @@ export class NovelSiteTpl extends NovelSiteBase
 		return retryRequest(url, optionsRuntime.requestOptions)
 		//return fromURL(url, optionsRuntime.optionsJSDOM)
 		//return Promise.resolve(cache.dom)
-			.then(function (dom)
+			.then(function (domJson)
 			{
-				dom = JSON.parse(dom as string);
+				domJson = JSON.parse(domJson as string);
 
 				let data: IMdconfMeta = {};
 				data.novel = {};
 				data.novel.tags = [];
 
-				let novel_title = dom.name;
-				let novel_author = dom.authors;
+				let novel_title = domJson.name;
+				let novel_author = domJson.authors;
 
-				dom.types = dom.types || [];
-				dom.types.forEach(function (s)
+				domJson.types = domJson.types || [];
+				domJson.types.forEach(function (s)
 				{
 					data.novel.tags.push(...s.split('\/'))
 				});
 
-				data.novel.tags.push(dom.zone);
-				data.novel.tags.push(dom.status);
+				data.novel.tags.push(domJson.zone);
+				data.novel.tags.push(domJson.status);
 
-				data.novel.status = dom.status;
+				data.novel.status = domJson.status;
 
-				let novel_cover = dom.cover;
-				let novel_desc = dom.introduction;
+				let novel_cover = domJson.cover;
+				let novel_desc = domJson.introduction;
 
-				let novel_id = dom.id;
+				let novel_id = domJson.id;
 
-				console.log(dom);
+				let novel_date = moment.unix(domJson.last_update_time).local();
+
+				//console.log(domJson);
+
+				let dmzj_api_json = domJson;
+
+				let novel_url = `http://q.dmzj.com/${novel_id}/index.shtml`;
 
 				return {
 					url,
 					url_data,
 
 					...data,
+
+					novel_url,
 
 					novel_id,
 
@@ -366,6 +374,10 @@ export class NovelSiteTpl extends NovelSiteBase
 
 					novel_author,
 					novel_desc,
+
+					novel_date,
+
+					dmzj_api_json,
 
 				};
 			})
