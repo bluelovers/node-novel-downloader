@@ -96,7 +96,11 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         //process.exit();
         return text
             //.replace(/^　　/gm, '')
-            .replace(/^[\uFEFF\xA0]+/gm, '');
+            .replace(/^[\uFEFF\xA0]+/gm, '')
+            // 修正每行開頭多出空白的問題
+            .replace(/^ +/gm, '')
+            .replace(/ +$/gm, '')
+            .replace(/\s+$/, '');
     }
     _saveReadme(optionsRuntime, options = {}, ...opts) {
         options[this.IDKEY] = {
@@ -128,6 +132,14 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         else {
             ret.dom = jsdom_extra_1.createJSDOM(ret.body.toString());
             text = ret.dom.$(body_selector).text();
+        }
+        if (ret.dom && ret.dom.$ && ret.dom.$('img').length) {
+            let $ = ret.dom.$;
+            cache.chapter.imgs = cache.chapter.imgs || [];
+            ret.dom.$('img[src]').each(function () {
+                cache.chapter.imgs.push($(this).prop('src'));
+                cache.novel.imgs.push($(this).prop('src'));
+            });
         }
         text = this._stripContent(text);
         return text;

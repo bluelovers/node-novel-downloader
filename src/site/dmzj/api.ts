@@ -148,6 +148,10 @@ export class NovelSiteTpl extends NovelSiteBase
 		return text
 			//.replace(/^　　/gm, '')
 			.replace(/^[\uFEFF\xA0]+/gm, '')
+			// 修正每行開頭多出空白的問題
+			.replace(/^ +/gm, '')
+			.replace(/ +$/gm, '')
+			.replace(/\s+$/, '')
 		;
 	}
 
@@ -196,6 +200,19 @@ export class NovelSiteTpl extends NovelSiteBase
 			ret.dom = createJSDOM(ret.body.toString());
 
 			text = ret.dom.$(body_selector).text();
+		}
+
+		if (ret.dom && ret.dom.$ && ret.dom.$('img').length)
+		{
+			let $ = ret.dom.$;
+
+			cache.chapter.imgs = cache.chapter.imgs || [];
+
+			ret.dom.$('img[src]').each(function ()
+			{
+				cache.chapter.imgs.push($(this).prop('src'));
+				cache.novel.imgs.push($(this).prop('src'));
+			});
 		}
 
 		text = this._stripContent(text);
