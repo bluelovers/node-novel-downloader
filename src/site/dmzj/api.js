@@ -88,6 +88,18 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             //.replace(/^　　/gm, '')
             .replace(/^[\uFEFF\xA0]+/gm, '');
     }
+    _saveReadme(optionsRuntime, options = {}, ...opts) {
+        options[this.IDKEY] = {
+            novel_id: optionsRuntime[index_1.SYMBOL_CACHE].novel.novel_id,
+        };
+        return super._saveReadme(optionsRuntime, options, {
+            options: {
+                textlayout: {
+                    allow_lf2: true,
+                }
+            },
+        }, ...opts);
+    }
     _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
             return '';

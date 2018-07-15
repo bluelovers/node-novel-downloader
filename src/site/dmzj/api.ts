@@ -138,6 +138,21 @@ export class NovelSiteTpl extends NovelSiteBase
 		;
 	}
 
+	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
+	{
+		options[this.IDKEY] = {
+			novel_id: optionsRuntime[SYMBOL_CACHE].novel.novel_id,
+		};
+
+		return super._saveReadme(optionsRuntime, options, {
+			options: {
+				textlayout: {
+					allow_lf2: true,
+				}
+			},
+		}, ...opts);
+	}
+
 	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache): string
 	{
 		if (!ret)
