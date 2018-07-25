@@ -230,9 +230,11 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     makeUrl(urlobj, bool) {
         let subdomain = urlobj.novel_r18 ? 'novel18' : 'ncode';
         if (urlobj.novel_pid && urlobj.chapter_id) {
+            // @ts-ignore
             return new jsdom_url_1.URL(`https://${subdomain}.syosetu.com/txtdownload/dlstart/ncode/${urlobj.novel_pid}/?no=${urlobj.chapter_id}&hankaku=0&code=utf-8&kaigyo=crlf`);
         }
         let pad = (!bool && urlobj.chapter_id) ? urlobj.chapter_id : '';
+        // @ts-ignore
         return new jsdom_url_1.URL(`http://${subdomain}.syosetu.com/${urlobj.novel_id}/${pad}`);
     }
     parseUrl(url) {
@@ -245,7 +247,9 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         };
         //url = url.toString();
         try {
+            // @ts-ignore
             urlobj.url = new jsdom_url_1.URL(url);
+            // @ts-ignore
             url = urlobj.url.href;
         }
         catch (e) {

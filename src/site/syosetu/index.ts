@@ -292,11 +292,13 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		if (urlobj.novel_pid && urlobj.chapter_id)
 		{
+			// @ts-ignore
 			return new URL(`https://${subdomain}.syosetu.com/txtdownload/dlstart/ncode/${urlobj.novel_pid}/?no=${urlobj.chapter_id}&hankaku=0&code=utf-8&kaigyo=crlf`);
 		}
 
 		let pad = (!bool && urlobj.chapter_id) ? urlobj.chapter_id : '';
 
+		// @ts-ignore
 		return new URL(`http://${subdomain}.syosetu.com/${urlobj.novel_id}/${pad}`);
 	}
 
@@ -316,7 +318,9 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		try
 		{
+			// @ts-ignore
 			urlobj.url = new URL(url);
+			// @ts-ignore
 			url = urlobj.url.href;
 		}
 		catch (e)

@@ -43,13 +43,23 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             chapter_id: null,
             volume_id: null,
         };
-        // @ts-ignore
-        urlobj.url = new jsdom_url_1.URL(url);
-        // @ts-ignore
-        url = urlobj.url.href;
+        try {
+            // @ts-ignore
+            urlobj.url = new jsdom_url_1.URL(url);
+            // @ts-ignore
+            url = urlobj.url.href;
+        }
+        catch (e) {
+            console.warn(e.toString() + ` "${url}"`);
+        }
         let r = /api\.dmzj\.com\/novel\/(\d+).json/;
         let m = r.exec(url);
         if (m) {
+            urlobj.novel_id = m[1];
+            return urlobj;
+        }
+        r = /^(\d+)$/;
+        if (m = r.exec(url)) {
             urlobj.novel_id = m[1];
             return urlobj;
         }
@@ -77,6 +87,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     session(optionsRuntime, url) {
         super.session(optionsRuntime, url);
         optionsRuntime.optionsJSDOM.requestOptions = optionsRuntime.optionsJSDOM.requestOptions || {};
+        // @ts-ignore
         optionsRuntime.optionsJSDOM.requestOptions.contentType = 'json';
         //let url = optionsRuntime[SYMBOL_CACHE].url;
         optionsRuntime.optionsJSDOM.cookieJar;
@@ -144,6 +155,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         text = this._stripContent(text);
         return text;
     }
+    // @ts-ignore
     _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
         // @ts-ignore
         return new jsdom_url_1.URL(chapter.chapter_url);
@@ -151,6 +163,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl);
+        // @ts-ignore
         return await fetch_1.retryRequest(url, optionsRuntime.requestOptions)
             .then(async function (dom) {
             const $ = dom.$;

@@ -61,15 +61,30 @@ export class NovelSiteTpl extends NovelSiteBase
 			volume_id: null,
 		};
 
-		// @ts-ignore
-		urlobj.url = new URL(url);
-		// @ts-ignore
-		url = urlobj.url.href;
+		try
+		{
+			// @ts-ignore
+			urlobj.url = new URL(url);
+			// @ts-ignore
+			url = urlobj.url.href;
+		}
+		catch (e)
+		{
+			console.warn(e.toString() + ` "${url}"`);
+		}
 
 		let r = /api\.dmzj\.com\/novel\/(\d+).json/;
 
 		let m = r.exec(url as string);
 		if (m)
+		{
+			urlobj.novel_id = m[1];
+
+			return urlobj;
+		}
+
+		r = /^(\d+)$/;
+		if (m = r.exec(url as string))
 		{
 			urlobj.novel_id = m[1];
 
@@ -106,12 +121,13 @@ export class NovelSiteTpl extends NovelSiteBase
 		return urlobj;
 	}
 
-	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
+	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
 	{
 		super.session(optionsRuntime, url);
 
 		optionsRuntime.optionsJSDOM.requestOptions = optionsRuntime.optionsJSDOM.requestOptions || {};
 
+		// @ts-ignore
 		optionsRuntime.optionsJSDOM.requestOptions.contentType = 'json';
 
 		//let url = optionsRuntime[SYMBOL_CACHE].url;
@@ -220,6 +236,7 @@ export class NovelSiteTpl extends NovelSiteBase
 		return text;
 	}
 
+	// @ts-ignore
 	_createChapterUrl<T = IOptionsRuntime>({
 		novel,
 		volume,
@@ -237,6 +254,7 @@ export class NovelSiteTpl extends NovelSiteBase
 		const self = this;
 		let url = await this.createMainUrl(inputUrl);
 
+		// @ts-ignore
 		return await retryRequest(url, optionsRuntime.requestOptions)
 			.then(async function (dom)
 			{
