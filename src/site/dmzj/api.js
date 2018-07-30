@@ -17,7 +17,9 @@ const jsdom_url_1 = require("jsdom-url");
 const index_2 = require("../index");
 const novel_text_1 = require("novel-text");
 const path = require("path");
+const regexp_cjk_1 = require("regexp-cjk");
 const jsdom_extra_1 = require("jsdom-extra");
+const escapeStringRegexp = require("escape-string-regexp");
 let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     makeUrl(urlobj, bool) {
         let url;
@@ -153,6 +155,10 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             });
         }
         text = this._stripContent(text);
+        let sp = '[  　]*';
+        let r = new regexp_cjk_1.zhRegExp(`^[  　\\s]*${escapeStringRegexp(cache.volume.volume_title)}${sp}${escapeStringRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
+        text = text
+            .replace(r, '');
         return text;
     }
     // @ts-ignore

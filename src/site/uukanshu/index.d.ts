@@ -23,6 +23,9 @@ export declare class NovelSiteUukanshu extends NovelSiteBase {
         novel?: {
             title?: string;
             title_short?: string;
+            title_zh?: string;
+            title_en?: string;
+            title_jp?: string;
             author?: string;
             cover?: string;
             preface?: string;

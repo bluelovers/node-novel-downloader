@@ -14,7 +14,7 @@ export declare function getOptions(options: any): {
     options: Partial<IOptionsJSDOM>;
     fromURLOptions: Partial<IOptionsCreateQuery & IOptions & {
         minifyHTML?: boolean;
-    } & IFromUrlOptions>;
+    } & import("jsdom-extra/lib/browser/resource-loader").IOptionsWithWindowOptionsWithResourceLoader & IFromUrlOptions>;
     requestOptions: Partial<IRequestOptions>;
 };
 import * as self from './jsdom';

@@ -20,6 +20,8 @@ import * as StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { requestToJSDOM, packJSDOM, createJSDOM } from 'jsdom-extra';
 
+import escapeStringRegexp = require('escape-string-regexp');
+
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteTpl>>()
 export class NovelSiteTpl extends NovelSiteBase
 {
@@ -232,6 +234,14 @@ export class NovelSiteTpl extends NovelSiteBase
 		}
 
 		text = this._stripContent(text);
+
+		let sp = '[  　]*';
+
+		let r = new zhRegExp(`^[  　\\s]*${escapeStringRegexp(cache.volume.volume_title)}${sp}${escapeStringRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
+
+		text = text
+			.replace(r, '')
+		;
 
 		return text;
 	}
