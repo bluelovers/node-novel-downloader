@@ -14,6 +14,7 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
 import * as NovelSiteDemo from '../demo/base';
+import novelText from 'novel-text';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -408,7 +409,12 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			.then(async function (dom: IJSDOM)
 			{
 				let novel_title = dom.$('.novel_title').text();
-				let novel_author = dom.$('.novel_writername a').text();
+				let novel_author = novelText.trim(dom
+					.$('.novel_writername a, .novel_writername')
+					.eq(-1)
+					.text())
+					.replace(/^.*作者：/, '')
+				;
 
 				let novel_desc = dom.$('#novel_ex').text();
 

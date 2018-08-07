@@ -11,6 +11,7 @@ const jsdom_url_1 = require("jsdom-url");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const NovelSiteDemo = require("../demo/base");
+const novel_text_1 = require("novel-text");
 let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     constructor(options, ...argv) {
         super(options, ...argv);
@@ -304,7 +305,11 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         })
             .then(async function (dom) {
             let novel_title = dom.$('.novel_title').text();
-            let novel_author = dom.$('.novel_writername a').text();
+            let novel_author = novel_text_1.default.trim(dom
+                .$('.novel_writername a, .novel_writername')
+                .eq(-1)
+                .text())
+                .replace(/^.*作者：/, '');
             let novel_desc = dom.$('#novel_ex').text();
             let novel_publisher = self.IDKEY;
             let url_data = self.parseUrl(dom.url.href);
