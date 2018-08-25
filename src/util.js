@@ -36,5 +36,9 @@ function array_unique(array) {
     });
 }
 exports.array_unique = array_unique;
+function escapeRegexp(str) {
+    return str.replace(/[|\\{}()\[\]^$+*?.\/]/g, '\\$&');
+}
+exports.escapeRegexp = escapeRegexp;
 const self = require("./util");
 exports.default = self;

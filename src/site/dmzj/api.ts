@@ -4,7 +4,7 @@
 
 import { retryRequest } from '../../fetch';
 import { stripContent } from '../../strip';
-import { array_unique, isUndef, minifyHTML, trim } from '../../util';
+import { array_unique, escapeRegexp, isUndef, minifyHTML, trim } from '../../util';
 import _NovelSite, { staticImplements, SYMBOL_CACHE, IMdconfMeta } from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
@@ -20,7 +20,7 @@ import * as StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { requestToJSDOM, packJSDOM, createJSDOM } from 'jsdom-extra';
 
-import escapeStringRegexp = require('escape-string-regexp');
+//import escapeStringRegexp = require('escape-string-regexp');
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteTpl>>()
 export class NovelSiteTpl extends NovelSiteBase
@@ -237,7 +237,7 @@ export class NovelSiteTpl extends NovelSiteBase
 
 		let sp = '[  　]*';
 
-		let r = new zhRegExp(`^[  　\\s]*${escapeStringRegexp(cache.volume.volume_title)}${sp}${escapeStringRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
+		let r = new zhRegExp(`^[  　\\s]*${escapeRegexp(cache.volume.volume_title)}${sp}${escapeRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
 
 		text = text
 			.replace(r, '')

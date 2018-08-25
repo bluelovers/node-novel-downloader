@@ -11,6 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch_1 = require("../../fetch");
 const strip_1 = require("../../strip");
+const util_1 = require("../../util");
 const index_1 = require("../index");
 const base_1 = require("../demo/base");
 const jsdom_url_1 = require("jsdom-url");
@@ -19,7 +20,7 @@ const novel_text_1 = require("novel-text");
 const path = require("path");
 const regexp_cjk_1 = require("regexp-cjk");
 const jsdom_extra_1 = require("jsdom-extra");
-const escapeStringRegexp = require("escape-string-regexp");
+//import escapeStringRegexp = require('escape-string-regexp');
 let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     makeUrl(urlobj, bool) {
         let url;
@@ -156,7 +157,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         }
         text = this._stripContent(text);
         let sp = '[  　]*';
-        let r = new regexp_cjk_1.zhRegExp(`^[  　\\s]*${escapeStringRegexp(cache.volume.volume_title)}${sp}${escapeStringRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
+        let r = new regexp_cjk_1.zhRegExp(`^[  　\\s]*${util_1.escapeRegexp(cache.volume.volume_title)}${sp}${util_1.escapeRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
         text = text
             .replace(r, '');
         return text;

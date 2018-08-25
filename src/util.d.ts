@@ -6,5 +6,6 @@ export { minifyHTML };
 export declare function isUndef(v: any, opts?: any, strict?: boolean): boolean;
 export declare function trim(str: string, bool?: boolean): string;
 export declare function array_unique<T>(array: T[]): T[];
+export declare function escapeRegexp(str: string): string;
 import * as self from './util';
 export default self;

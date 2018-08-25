@@ -51,6 +51,11 @@ export function array_unique<T>(array: T[]): T[]
 	});
 }
 
+export function escapeRegexp(str: string)
+{
+	return str.replace(/[|\\{}()\[\]^$+*?.\/]/g, '\\$&');
+}
+
 import * as self from './util';
 export default self;
 
