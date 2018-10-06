@@ -1,0 +1,68 @@
+{
+  "name": "novel-downloader",
+  "version": "1.1.13",
+  "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
+  "keywords": [
+    "acg",
+    "cookie",
+    "dmzj",
+    "download",
+    "fetch",
+    "node-novel",
+    "node-text",
+    "novel",
+    "r15",
+    "r18",
+    "session",
+    "syosetu",
+    "text",
+    "txt",
+    "wenku8"
+  ],
+  "homepage": "https://github.com/bluelovers/node-novel-downloader#readme",
+  "bugs": {
+    "url": "https://github.com/bluelovers/node-novel-downloader/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/node-novel-downloader.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "types": "novel-downloader.d.ts",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:dts-bundle": "node ./test/dts-bundle.js",
+    "build:typedoc": "typedoc --options ./typedoc.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bluebird": "^3",
+    "content-type-parser": "^1.0.2",
+    "escape-string-regexp": "^1.0.5",
+    "fs-iconv": "^1",
+    "js-tree-list2": "^1.1.18",
+    "jsdom-extra": "^1.2.11",
+    "moment-timezone": "^0.5.21",
+    "node-novel-globby": "^2.0.2",
+    "node-novel-info": "^2",
+    "novel-text": "^1.1.16",
+    "regexp-cjk": "^2.0.11",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "shortid": "^2.2.13",
+    "str-util": "^2.3.16",
+    "symbol-tree2": "^3.2.3"
+  },
+  "devDependencies": {
+    "@types/request-promise": "^4",
+    "bluebird-decorator": "^1"
+  }
+}
