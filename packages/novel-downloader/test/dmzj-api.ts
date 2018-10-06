@@ -3,7 +3,7 @@
  */
 
 import * as Promise from 'bluebird';
-import NovelSiteClass from './site/dmzj/api';
+import NovelSiteClass from '../src/site/dmzj/api';
 import ProjectConfig from '../_root';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');

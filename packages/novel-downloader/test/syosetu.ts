@@ -3,7 +3,7 @@
  */
 
 import * as Promise from 'bluebird';
-import NovelSiteSyosetu from './site/syosetu/index';
+import NovelSiteSyosetu from '../src/site/syosetu/index';
 import ProjectConfig from '../_root';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
@@ -144,7 +144,7 @@ import ProjectConfig from '../_root';
 		//'https://ncode.syosetu.com/n2123do/',
 
 //		'https://ncode.syosetu.com/n3462bz',
-//		'https://ncode.syosetu.com/n0611em/',
+		'https://ncode.syosetu.com/n0611em/',
 
 		//'http://ncode.syosetu.com/n6829bd/',
 
@@ -225,7 +225,7 @@ import ProjectConfig from '../_root';
 
 		//'https://ncode.syosetu.com/n8515dc/',
 
-		'https://ncode.syosetu.com/n3668ef/',
+//		'https://ncode.syosetu.com/n3668ef/',
 
 	],async function (value, index, array)
 	{
@@ -236,9 +236,11 @@ import ProjectConfig from '../_root';
 //			noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 4,
+			filePrefixMode: 3,
+			//filePrefixMode: 4,
 
-			startIndex: 1,
+			startIndex: 0,
+			//startIndex: 1,
 
 			//disableCheckExists: true,
 

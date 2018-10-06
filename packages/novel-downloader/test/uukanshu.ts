@@ -3,7 +3,7 @@
  */
 
 import * as Promise from 'bluebird';
-import NovelSite from './site/uukanshu/index';
+import NovelSite from '../src/site/uukanshu/index';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 

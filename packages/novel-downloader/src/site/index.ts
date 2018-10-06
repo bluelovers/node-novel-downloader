@@ -191,6 +191,11 @@ export class NovelSite implements NovelSite.INovelSite
 		return trimFilename(name);
 	}
 
+	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): any
+	{
+		return void(0);
+	}
+
 	protected _saveReadme(optionsRuntime?: IOptionsRuntime, options = {}, ...opts)
 	{
 		const self = this;

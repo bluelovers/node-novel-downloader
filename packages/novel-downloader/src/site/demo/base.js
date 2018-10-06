@@ -256,6 +256,24 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             return ret;
         });
     }
+    _exportDownloadOptions(optionsRuntime) {
+        let opts = {};
+        if (optionsRuntime) {
+            let bool;
+            for (let k of [
+                'noFirePrefix',
+                'noFilePadend',
+                'filePrefixMode',
+                'startIndex',
+            ]) {
+                if ((k in optionsRuntime) && typeof optionsRuntime[k] !== 'undefined') {
+                    bool = true;
+                    opts[k] = optionsRuntime[k];
+                }
+            }
+        }
+        return opts;
+    }
     _saveReadme(optionsRuntime, options = {}, ...opts) {
         if (this.IDKEY) {
             options[this.IDKEY] = options[this.IDKEY] || {};
@@ -265,11 +283,13 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             catch (e) {
             }
         }
+        let downloadOptions = this._exportDownloadOptions(optionsRuntime);
         return super._saveReadme(optionsRuntime, options, {
             options: {
                 textlayout: {
                     allow_lf2: true,
-                }
+                },
+                downloadOptions: downloadOptions || {},
             },
         }, ...opts);
     }

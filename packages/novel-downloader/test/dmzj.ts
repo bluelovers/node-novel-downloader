@@ -2,7 +2,7 @@
  * Created by user on 2017/9/10/010.
  */
 
-import NovelSite from './site/dmzj/index';
+import NovelSite from '../src/site/dmzj/index';
 import * as Promise from 'bluebird';
 
 (async () =>

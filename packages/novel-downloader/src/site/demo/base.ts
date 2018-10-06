@@ -424,6 +424,32 @@ export class NovelSiteDemo extends _NovelSite
 		});
 	}
 
+	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): any
+	{
+		let opts = {};
+
+		if (optionsRuntime)
+		{
+			let bool: boolean;
+
+			for (let k of [
+				'noFirePrefix',
+				'noFilePadend',
+				'filePrefixMode',
+				'startIndex',
+			])
+			{
+				if ((k in optionsRuntime) && typeof optionsRuntime[k] !== 'undefined')
+				{
+					bool = true;
+					opts[k] = optionsRuntime[k];
+				}
+			}
+		}
+
+		return opts;
+	}
+
 	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
 	{
 		if (this.IDKEY)
@@ -439,11 +465,14 @@ export class NovelSiteDemo extends _NovelSite
 			}
 		}
 
+		let downloadOptions = this._exportDownloadOptions(optionsRuntime);
+
 		return super._saveReadme(optionsRuntime, options, {
 			options: {
 				textlayout: {
 					allow_lf2: true,
-				}
+				},
+				downloadOptions: downloadOptions || {},
 			},
 		}, ...opts);
 	}

@@ -109,6 +109,9 @@ class NovelSite {
     trimFilename(name) {
         return fs_iconv_1.trimFilename(name);
     }
+    _exportDownloadOptions(optionsRuntime) {
+        return void (0);
+    }
     _saveReadme(optionsRuntime, options = {}, ...opts) {
         const self = this;
         if (util_1.isUndef(optionsRuntime)
