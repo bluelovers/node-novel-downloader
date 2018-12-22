@@ -28,7 +28,7 @@ import ProjectConfig from '../_root';
 
 		//'1279',
 
-		//'2440',
+//		'2440',
 
 		//'http://q.dmzj.com/2476/index.shtml',
 
@@ -41,7 +41,17 @@ import ProjectConfig from '../_root';
 //		'http://q.dmzj.com/2541/index.shtml',
 //		'http://q.dmzj.com/2332/index.shtml',
 
-		'http://q.dmzj.com/2211/index.shtml',
+//		'http://q.dmzj.com/2211/index.shtml',
+
+		//'http://q.dmzj.com/2563/index.shtml',
+
+//		'http://q.dmzj.com/2534/index.shtml',
+
+//		'http://q.dmzj.com/2012/index.shtml',
+
+		'http://q.dmzj.com/1837/index.shtml',
+		'http://q.dmzj.com/1838/index.shtml',
+
 
 	],async function (value, index, array)
 	{

@@ -44,6 +44,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
 	{
+		// @ts-ignore
 		optionsRuntime.sessionData = optionsRuntime.sessionData || {};
 		optionsRuntime.sessionData.over18 = 'yes';
 
@@ -455,13 +456,14 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 					let m;
 					let dt = dom.$('#novel_footer .undernavi a[href*="txtdownload"]').prop('href');
-					if (m = dt.match(/ncode\/(\d+)/))
+
+					if (dt && (m = dt.match(/ncode\/(\d+)/)))
 					{
 						novel_syosetu_id = m[1];
 					}
-					else
+					else if (!optionsRuntime.disableTxtdownload)
 					{
-						throw new Error()
+						throw new Error(`官方 txt 下載功能遭禁用，或請使用 cookies 登入，或將 disableTxtdownload 設為 true`)
 					}
 				}
 
@@ -518,7 +520,17 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 							if (!data.chapter_id)
 							{
-								/*
+
+								if (tr.find('.bookmarker_now').length)
+								{
+									/**
+									 * fix https://ncode.syosetu.com/n7637dj/
+									 */
+									return;
+								}
+
+								console.log(tr.prop("outerHTML"));
+								console.log(a.prop("outerHTML"));
 								console.log(a);
 								console.log(data);
 								console.log(href);
@@ -526,7 +538,6 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 								console.log(new URL(href, dom.url));
 
 								console.log(dom._options);
-								*/
 
 								throw new Error()
 							}

@@ -6,10 +6,16 @@
     "moduleResolution": "node",
     "allowJs": false,
 
+    "sourceMap": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+
     "declaration": true,
     "experimentalDecorators": true,
 
     "allowSyntheticDefaultImports": true,
+
+    "removeComments": false,
 
     "strict": false,
 
@@ -23,6 +29,7 @@
   },
 
   "exclude": [
-    "../../node_modules"
+    "../../node_modules",
+    "node_modules"
   ]
 }

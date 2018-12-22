@@ -30,7 +30,9 @@ import NovelSite from '../src/site/wenku8/index';
 
 		//'http://www.wenku8.com/novel/2/2242/index.htm',
 
-		'http://www.wenku8.com/novel/1/1592/index.htm',
+//		'http://www.wenku8.com/novel/1/1592/index.htm',
+
+		'https://www.wenku8.net/novel/2/2115/index.htm',
 
 
 	],async function (value, index, array)

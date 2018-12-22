@@ -50,7 +50,7 @@ import ProjectConfig from '../_root';
 
 		//'n9055cl',
 
-		//'n1354dw',
+//		'n1354dw',
 
 		//'n5705ch',
 		//'http://novel18.syosetu.com/n9119ci/',
@@ -140,11 +140,11 @@ import ProjectConfig from '../_root';
 
 		//'http://ncode.syosetu.com/n7467er/',
 
-		//'http://ncode.syosetu.com/n6683ej/',
+//		'http://ncode.syosetu.com/n6683ej/',
 		//'https://ncode.syosetu.com/n2123do/',
 
 //		'https://ncode.syosetu.com/n3462bz',
-		'https://ncode.syosetu.com/n0611em/',
+//		'https://ncode.syosetu.com/n0611em/',
 
 		//'http://ncode.syosetu.com/n6829bd/',
 
@@ -170,7 +170,7 @@ import ProjectConfig from '../_root';
 
 		//'http://ncode.syosetu.com/n4227bh/',
 
-		//'https://ncode.syosetu.com/n6049cc/',
+//		'https://ncode.syosetu.com/n6049cc/',
 
 		//'https://ncode.syosetu.com/n0607dl/',
 
@@ -227,6 +227,40 @@ import ProjectConfig from '../_root';
 
 //		'https://ncode.syosetu.com/n3668ef/',
 
+//		'https://ncode.syosetu.com/n2671do/',
+
+//		'https://ncode.syosetu.com/n7975cr/',
+
+//		'https://ncode.syosetu.com/n9107ee/',
+
+//		'http://novel18.syosetu.com/n7623br/',
+
+//		'https://ncode.syosetu.com/n3191eh/',
+
+		//'https://ncode.syosetu.com/n4045ed/',
+
+//		'http://ncode.syosetu.com/n2031cu/',
+
+//		'https://ncode.syosetu.com/n9057cv/',
+
+//		'https://novel18.syosetu.com/n4497bb/',
+
+//		'https://ncode.syosetu.com/n2056dn/',
+
+//		'https://ncode.syosetu.com/n5691dd/',
+
+//		'n4344dy',
+
+//		'n7637dj',
+
+//		'https://ncode.syosetu.com/n7707dt/',
+
+//		'http://ncode.syosetu.com/n1853cj/',
+
+		'https://ncode.syosetu.com/n7551bn/',
+		'https://ncode.syosetu.com/n5240bc/',
+
+
 	],async function (value, index, array)
 	{
 		await Site.download(value, {
@@ -236,11 +270,12 @@ import ProjectConfig from '../_root';
 //			noFirePrefix: true,
 			noFilePadend: true,
 
-			filePrefixMode: 3,
-			//filePrefixMode: 4,
+//			filePrefixMode: 3,
+//			filePrefixMode: 4,
+			filePrefixMode: 1,
 
-			startIndex: 0,
-			//startIndex: 1,
+//			startIndex: 0,
+			startIndex: 1,
 
 			//disableCheckExists: true,
 
