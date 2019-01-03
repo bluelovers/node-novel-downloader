@@ -4,6 +4,17 @@
 
 如要使用完整功能請至 [novel-downloader](https://www.npmjs.com/package/novel-downloader)
 
+# 前言
+
+Ｑ：小說家本身已經有 txt 下載功能為什麼還需要這個？  
+Ａ：這各腳本可以只下載上次沒下載或者作者編修後的新版本，
+而不會去下載已經下載過的內容，
+相對上對於小說家網站比較不會造成負擔
+
+- 下載後的內容可以直接用來生成 epub txt
+- 對於翻譯君也可以做為預先生成章節目錄結構的工具
+- 某些人就是用不了小說家內建的下載功能
+
 # 使用範例
 
 使用之前請確認是否已經安裝 [node.js](https://nodejs.org/zh-cn/)
@@ -42,7 +53,7 @@ npx novel-downloader-cli --disableDownload "http://ncode.syosetu.com/n0611em"
 
 ## 列出所有支援的網站模組
 
-> 以下是 siteID 列表
+> 會列出 siteID 列表
 
 ```bash
 npx novel-downloader-cli list
