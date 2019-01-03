@@ -14,6 +14,7 @@
 - 下載後的內容可以直接用來生成 epub txt
 - 對於翻譯君也可以做為預先生成章節目錄結構的工具
 - 某些人就是用不了小說家內建的下載功能
+- 具有登入後下載功能(需要使用完整版本 [novel-downloader](https://www.npmjs.com/package/novel-downloader))
 
 # 使用範例
 

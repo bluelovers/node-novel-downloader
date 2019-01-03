@@ -1,7 +1,25 @@
 {
   "name": "novel-downloader-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "novel-downloader 的 CLI 版本",
+  "keywords": [
+    "acg",
+    "cli",
+    "cookie",
+    "dmzj",
+    "download",
+    "fetch",
+    "node-novel",
+    "node-text",
+    "novel",
+    "r15",
+    "r18",
+    "session",
+    "syosetu",
+    "text",
+    "txt",
+    "wenku8"
+  ],
   "homepage": "https://github.com/bluelovers/node-novel-downloader#readme",
   "bugs": {
     "url": "https://github.com/bluelovers/node-novel-downloader/issues"
@@ -36,7 +54,7 @@
     "moment": "^2.23.0",
     "node-alias": "^1.0.4",
     "node-novel-info": "^2.3.15",
-    "novel-downloader": "^1.1.14",
+    "novel-downloader": "^1.2.0",
     "update-notifier": "^2.5.0",
     "yargs": "^12.0.5"
   },
