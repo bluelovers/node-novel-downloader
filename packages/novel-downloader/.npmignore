@@ -5,7 +5,7 @@
 /package-lock.json
 ### npm template
 ../../.idea
-
+.idea
 ~ci.list.txt
 ~ci.log.txt
 ~ci.errors.txt
@@ -31,3 +31,4 @@ docs
 /packages/
 /lerna.json
 /packages/novel-downloader/yarn.lock
+/script/

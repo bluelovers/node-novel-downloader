@@ -3,5 +3,9 @@
  */
 
 export * from "./src/all"
-import sites from "./src/all"
-export default sites
+import Bluebird = require("bluebird");
+import NovelSite from "./src/site"
+
+import requireNovelSiteClass from "./src/all"
+export { NovelSite }
+export default requireNovelSiteClass
