@@ -29,6 +29,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 	{
 		let pad = (!bool && urlobj.chapter_id) ? '/episodes/' + urlobj.chapter_id : '';
 
+		// @ts-ignore
 		return new URL(`https://kakuyomu.jp/works/${urlobj.novel_id}${pad}`);
 	}
 
@@ -47,7 +48,9 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 
 		try
 		{
+			// @ts-ignore
 			urlobj.url = new URL(url);
+			// @ts-ignore
 			url = urlobj.url.href;
 		}
 		catch (e)
