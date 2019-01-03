@@ -32,3 +32,4 @@ docs
 /lerna.json
 /packages/novel-downloader/yarn.lock
 /bin/*.d.ts
+*.tgz
