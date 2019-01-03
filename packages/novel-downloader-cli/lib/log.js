@@ -1,0 +1,12 @@
+"use strict";
+/**
+ * Created by user on 2019/1/3/003.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const debug_color2_1 = require("debug-color2");
+exports.console = debug_color2_1.console;
+debug_color2_1.console.inspectOptions = debug_color2_1.console.inspectOptions || {};
+debug_color2_1.console.inspectOptions.colors = true;
+debug_color2_1.console.enabledColor = true;
+exports.default = debug_color2_1.console;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibG9nLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibG9nLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQTs7R0FFRzs7QUFFSCwrQ0FBdUM7QUFPOUIsa0JBUEEsc0JBQU8sQ0FPQTtBQUxoQixzQkFBTyxDQUFDLGNBQWMsR0FBRyxzQkFBTyxDQUFDLGNBQWMsSUFBSSxFQUFFLENBQUM7QUFDdEQsc0JBQU8sQ0FBQyxjQUFjLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQztBQUVyQyxzQkFBTyxDQUFDLFlBQVksR0FBRyxJQUFJLENBQUM7QUFHNUIsa0JBQWUsc0JBQU8sQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogQ3JlYXRlZCBieSB1c2VyIG9uIDIwMTkvMS8zLzAwMy5cbiAqL1xuXG5pbXBvcnQgeyBjb25zb2xlIH0gZnJvbSAnZGVidWctY29sb3IyJztcblxuY29uc29sZS5pbnNwZWN0T3B0aW9ucyA9IGNvbnNvbGUuaW5zcGVjdE9wdGlvbnMgfHwge307XG5jb25zb2xlLmluc3BlY3RPcHRpb25zLmNvbG9ycyA9IHRydWU7XG5cbmNvbnNvbGUuZW5hYmxlZENvbG9yID0gdHJ1ZTtcblxuZXhwb3J0IHsgY29uc29sZSB9XG5leHBvcnQgZGVmYXVsdCBjb25zb2xlO1xuIl19
