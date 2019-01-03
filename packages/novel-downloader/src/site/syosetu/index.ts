@@ -1,3 +1,4 @@
+import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { retryRequest } from '../../fetch';
 
 import fs, { trimFilename } from 'fs-iconv';
@@ -626,8 +627,13 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 						data.novel = {};
 
-						data.novel.status = search_left.find('.novel_type').text();
+						data.novel.status = search_left.find('.novel_type').text().trim();
 						data.novel.tags = [];
+
+						if (data.novel.status === '完結済')
+						{
+							data.novel.novel_status |= EnumNovelStatus.AUTHOR_DONE;
+						}
 
 						search_right.find('.keyword a')
 							.each(function (index, elem)

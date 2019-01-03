@@ -49,8 +49,12 @@ import ProjectConfig from '../_root';
 
 //		'http://q.dmzj.com/2012/index.shtml',
 
-		'http://q.dmzj.com/1837/index.shtml',
-		'http://q.dmzj.com/1838/index.shtml',
+//		'http://q.dmzj.com/1837/index.shtml',
+//		'http://q.dmzj.com/1838/index.shtml',
+
+//		'http://q.dmzj.com/2560/index.shtml',
+
+		'http://q.dmzj.com/2590/index.shtml',
 
 
 	],async function (value, index, array)

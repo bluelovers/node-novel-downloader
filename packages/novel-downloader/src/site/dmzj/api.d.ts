@@ -40,6 +40,9 @@ export declare class NovelSiteTpl extends NovelSiteBase {
             title_source?: string;
             title_short?: string;
             title_output?: string;
+            title_other?: string;
+            title_zh1?: string;
+            title_zh2?: string;
             title_zh?: string;
             title_cn?: string;
             title_tw?: string;
@@ -62,10 +65,10 @@ export declare class NovelSiteTpl extends NovelSiteBase {
             source?: string;
             sources?: string[];
             publisher?: string;
+            novel_status?: import("node-novel-info/lib/const").EnumNovelStatus;
         };
         contribute?: string[];
-        options?: {
-            [key: string]: any;
+        options?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
             dmzj?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
             kakuyomu?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
             wenku8?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
@@ -73,13 +76,12 @@ export declare class NovelSiteTpl extends NovelSiteBase {
             syosetu?: import("node-novel-info").IMdconfMetaOptionsNovelSite & {
                 txtdownload_id: string | number;
             };
-            novel?: {
-                [key: string]: any;
+            novel?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
                 pattern?: string;
             };
-            textlayout?: {
-                [key: string]: any;
+            textlayout?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
                 allow_lf2?: boolean;
+                allow_lf3?: boolean;
             };
         };
         link?: string[];

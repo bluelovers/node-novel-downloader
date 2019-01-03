@@ -260,7 +260,13 @@ import ProjectConfig from '../_root';
 //		'https://ncode.syosetu.com/n7551bn/',
 //		'https://ncode.syosetu.com/n5240bc/',
 
-		'http://ncode.syosetu.com/n4202cb/',
+//		'http://ncode.syosetu.com/n4202cb/',
+
+//		'http://ncode.syosetu.com/n9551cp/',
+
+//		'http://ncode.syosetu.com/n1611bg/',
+
+		'http://ncode.syosetu.com/n5361em/',
 
 
 	],async function (value, index, array)
