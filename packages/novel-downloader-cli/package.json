@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "novel-downloader 的 CLI 版本",
   "keywords": [
     "acg",

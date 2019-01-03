@@ -36,6 +36,8 @@ npx novel-downloader-cli help
 
 ## 下載小說
 
+如果指定了 siteID 則某些網站可以輸入簡短一點的ID
+
 > 以 http://ncode.syosetu.com/n0611em 為例
 
 預設情況下會將下載內容放置於輸入指令時的所在目錄
@@ -44,6 +46,14 @@ npx novel-downloader-cli help
 npx novel-downloader-cli "http://ncode.syosetu.com/n0611em"
 npx novel-downloader-cli --outputDir ./save "http://ncode.syosetu.com/n0611em"
 npx novel-downloader-cli --siteID NovelSiteSyosetu --outputDir ./save "http://ncode.syosetu.com/n0611em"
+npx novel-downloader-cli --siteID NovelSiteSyosetu --outputDir ./save "n0611em"
+```
+
+> 以 [誰都能做到的暗中協助魔王討伐](https://kakuyomu.jp/works/1177354054880238351) 為例
+
+```bash
+npx novel-downloader-cli --siteID NovelSiteKakuyomu --outputDir ./save "https://kakuyomu.jp/works/1177354054880238351"
+npx novel-downloader-cli --siteID NovelSiteKakuyomu --outputDir ./save "1177354054880238351"
 ```
 
 ## 不下載內容僅生成目錄結構
