@@ -73,10 +73,6 @@ else
 		siteOptions,
 	});
 
-	yargs.showHelp();
-
-	process.exit();
-
 	download(url, downloadOptions, cli.siteID, siteOptions)
 		.tap(function (novel)
 		{

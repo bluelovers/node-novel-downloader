@@ -142,17 +142,22 @@ export class NovelSite implements NovelSite.INovelSite
 				throw: false,
 			});
 
-			if (conf && conf.options && conf.options.downloadOptions)
+			if (conf && conf.options)
 			{
-				Object.entries(conf.options.downloadOptions)
-					.forEach(function ([k, v])
-					{
-						if (optionsRuntime[k] == null)
+				if (conf.options.downloadOptions || conf.options.downloadoptions)
+				{
+					//console.log('載入已存在的設定', conf.options.downloadOptions);
+
+					Object.entries(conf.options.downloadOptions || conf.options.downloadoptions)
+						.forEach(function ([k, v])
 						{
-							optionsRuntime[k] = v;
-						}
-					})
-				;
+							if (optionsRuntime[k] == null)
+							{
+								optionsRuntime[k] = v;
+							}
+						})
+					;
+				}
 			}
 		}
 	}
