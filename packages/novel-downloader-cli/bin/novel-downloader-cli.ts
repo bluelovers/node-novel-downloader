@@ -33,6 +33,18 @@ let cli = yargs
 		desc: `不下載小說內容僅生成檔案結構`,
 		type: "boolean",
 	})
+	.option('noFirePrefix', {
+		type: "boolean",
+	})
+	.option('noFilePadend', {
+		type: "boolean",
+	})
+	.option('filePrefixMode', {
+		type: "number",
+	})
+	.option('startIndex', {
+		type: "number",
+	})
 	.command('list', '顯示出目前的模組名稱', function (args)
 	{
 		console.log(Object.keys(EnumNovelSiteList).filter(v => /^[a-z]/i.test(v)));
@@ -50,6 +62,11 @@ interface ICliArgv
 	outputDir?: string,
 	disableTxtdownload?: boolean,
 	disableDownload?: boolean,
+
+	noFirePrefix?: boolean,
+	noFilePadend?: boolean,
+	filePrefixMode?: number,
+	startIndex?: number,
 }
 
 let url: string = cli._[0];
@@ -108,6 +125,10 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	// @ts-ignore
 	downloadOptions.disableTxtdownload = cli.disableTxtdownload;
 	downloadOptions.disableDownload = cli.disableDownload;
+	downloadOptions.noFilePadend = cli.noFilePadend;
+	downloadOptions.noFirePrefix = cli.noFirePrefix;
+	downloadOptions.filePrefixMode = cli.filePrefixMode;
+	downloadOptions.startIndex = cli.startIndex;
 
 	siteOptions.outputDir = cli.outputDir;
 
