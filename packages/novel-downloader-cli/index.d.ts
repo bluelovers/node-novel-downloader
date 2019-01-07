@@ -11,3 +11,15 @@ export declare function download<O extends NovelSite.IDownloadOptions, O2 extend
 }, siteID?: EnumNovelSiteList, options?: O2 & {
     [k: string]: any;
 }): Bluebird<NovelSite.INovel>;
+export declare function handleOptions<O extends NovelSite.IDownloadOptions, O2 extends NovelSite.IOptions>(downloadOptions: O & {
+    [k: string]: any;
+}, siteID: EnumNovelSiteList, options: O2 & {
+    [k: string]: any;
+}): {
+    downloadOptions: O & {
+        [k: string]: any;
+    };
+    options: O2 & {
+        [k: string]: any;
+    };
+};

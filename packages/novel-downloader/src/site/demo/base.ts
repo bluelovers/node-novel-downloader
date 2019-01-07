@@ -116,10 +116,9 @@ export class NovelSiteDemo extends _NovelSite
 	download(inputUrl: string | URL, downloadOptions: IDownloadOptions = {})
 	{
 		const self = this;
+		let url = inputUrl as URL;
 
 		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<IOptionsRuntime & IDownloadOptions>(downloadOptions);
-
-		let url = inputUrl as URL;
 
 		return PromiseBluebird
 			.bind(self)
@@ -131,11 +130,11 @@ export class NovelSiteDemo extends _NovelSite
 
 				let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
-				let idx = optionsRuntime.startIndex || 0;
+				let path_novel = self.getPathNovel(PATH_NOVEL_MAIN, novel);
 
-				let path_novel = path.join(self.PATH_NOVEL_MAIN,
-					`${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
-				);
+				self._loadExistsConf(url, optionsRuntime, novel, path_novel);
+
+				let idx = optionsRuntime.startIndex || 0;
 
 				optionsRuntime[SYMBOL_CACHE].novel = novel;
 				optionsRuntime[SYMBOL_CACHE].path_novel = path_novel;

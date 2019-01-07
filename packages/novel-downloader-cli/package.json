@@ -49,6 +49,7 @@
     "debug-color2": "^1.0.6",
     "diff": "^3.5.0",
     "dotenv": "^6.2.0",
+    "fast-glob": "^2.2.4",
     "fs-extra": "^7.0.1",
     "hash-sum": "^1.0.2",
     "moment": "^2.23.0",

@@ -25,6 +25,7 @@ import * as moment from 'moment-timezone';
 import { isUndef } from '../util';
 
 import * as EventEmitter from 'events';
+import { IDownloadOptions } from './demo/base';
 
 moment.fn.toJSON = function () { return this.format(); };
 
@@ -114,6 +115,46 @@ export class NovelSite implements NovelSite.INovelSite
 		}
 
 		return key;
+	}
+
+	getPathNovel<N extends NovelSite.INovel>(PATH_NOVEL_MAIN: string, novel: N)
+	{
+		return path.join(PATH_NOVEL_MAIN,
+			`${this.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
+		);
+	}
+
+	/**
+	 * 如果已經下載過 則試圖從 README.md 內讀取缺漏的下載設定
+	 *
+	 * @private
+	 */
+	_loadExistsConf<T, N extends NovelSite.INovel>(inputUrl, optionsRuntime: T, novel: N, path_novel: string)
+	{
+		let file = path.resolve(path_novel, 'README.md');
+
+		if (fs.pathExistsSync(file))
+		{
+			let md = fs.readFileSync(file).toString();
+
+			let conf = novelInfo.parse(md, {
+				lowCheckLevel: true,
+				throw: false,
+			});
+
+			if (conf && conf.options && conf.options.downloadOptions)
+			{
+				Object.entries(conf.options.downloadOptions)
+					.forEach(function ([k, v])
+					{
+						if (optionsRuntime[k] == null)
+						{
+							optionsRuntime[k] = v;
+						}
+					})
+				;
+			}
+		}
 	}
 
 	getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions]

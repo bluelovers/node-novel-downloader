@@ -42,18 +42,24 @@ npx novel-downloader-cli help
 
 預設情況下會將下載內容放置於輸入指令時的所在目錄
 
+`NovelSiteSyosetu` 與 `syosetu` 都代表使用小說家網站
+
 ```bash
 npx novel-downloader-cli "http://ncode.syosetu.com/n0611em"
 npx novel-downloader-cli --outputDir ./save "http://ncode.syosetu.com/n0611em"
 npx novel-downloader-cli --siteID NovelSiteSyosetu --outputDir ./save "http://ncode.syosetu.com/n0611em"
 npx novel-downloader-cli --siteID NovelSiteSyosetu --outputDir ./save "n0611em"
+npx novel-downloader-cli --siteID syosetu --outputDir ./save "n0611em"
 ```
 
 > 以 [誰都能做到的暗中協助魔王討伐](https://kakuyomu.jp/works/1177354054880238351) 為例
 
+`NovelSiteKakuyomu` 與 `kakuyomu` 都代表使用カクヨム網站
+
 ```bash
 npx novel-downloader-cli --siteID NovelSiteKakuyomu --outputDir ./save "https://kakuyomu.jp/works/1177354054880238351"
 npx novel-downloader-cli --siteID NovelSiteKakuyomu --outputDir ./save "1177354054880238351"
+npx novel-downloader-cli --siteID kakuyomu --outputDir ./save "1177354054880238351"
 ```
 
 ## 不下載內容僅生成目錄結構

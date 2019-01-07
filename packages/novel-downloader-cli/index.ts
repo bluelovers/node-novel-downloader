@@ -6,6 +6,10 @@ import { searchSiteID } from 'novel-downloader/src/lazy';
 import { console } from './lib/log';
 import Bluebird = require("bluebird");
 import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downloader"
+import path = require("path");
+import FastGlob = require("fast-glob");
+import { parse } from 'node-novel-info';
+import fs = require("fs-extra");
 
 export function createSite<T extends NovelSite, O extends NovelSite.IOptions>(siteID?: EnumNovelSiteList,
 	options?: O & {
@@ -34,7 +38,24 @@ export function download<O extends NovelSite.IDownloadOptions, O2 extends NovelS
 		siteID = searchSiteID(url) || EnumNovelSiteList.NovelSiteSyosetu;
 	}
 
+	({ downloadOptions, options } = handleOptions(downloadOptions, siteID, options));
+
 	const Site = createSite(siteID, options || {});
 
 	return Site.download(url, downloadOptions)
+}
+
+export function handleOptions<O extends NovelSite.IDownloadOptions, O2 extends NovelSite.IOptions>(downloadOptions: O & {
+		[k: string]: any
+	},
+	siteID: EnumNovelSiteList,
+	options: O2 & {
+		[k: string]: any
+	},
+)
+{
+	return {
+		downloadOptions,
+		options,
+	}
 }

@@ -46,6 +46,7 @@
   "dependencies": {
     "bluebird": "^3",
     "content-type-parser": "^1.0.2",
+    "env-bool": "^1.0.3",
     "escape-string-regexp": "^1.0.5",
     "fs-iconv": "^1",
     "js-tree-list2": "^1.1.18",
@@ -58,7 +59,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "shortid": "^2.2.14",
-    "str-util": "^2.3.16",
+    "str-util": "^2.3.17",
     "symbol-tree2": "^3.2.3"
   },
   "devDependencies": {

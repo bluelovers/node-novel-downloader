@@ -28,6 +28,13 @@ export declare class NovelSite implements NovelSite.INovelSite {
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
     getStatic<T = typeof NovelSite>(): T;
     readonly IDKEY: string;
+    getPathNovel<N extends NovelSite.INovel>(PATH_NOVEL_MAIN: string, novel: N): string;
+    /**
+     * 如果已經下載過 則試圖從 README.md 內讀取缺漏的下載設定
+     *
+     * @private
+     */
+    _loadExistsConf<T, N extends NovelSite.INovel>(inputUrl: any, optionsRuntime: T, novel: N, path_novel: string): void;
     getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions];
     protected _fixOptionsRuntime<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): T & NovelSite.IOptionsRuntime;
     trimFilenameChapter(name: any): string;
