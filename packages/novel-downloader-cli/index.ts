@@ -2,6 +2,7 @@
  * Created by user on 2018/10/6/006.
  */
 
+import { searchSiteID } from 'novel-downloader/src/lazy';
 import { console } from './lib/log';
 import Bluebird = require("bluebird");
 import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downloader"
@@ -30,7 +31,7 @@ export function download<O extends NovelSite.IDownloadOptions, O2 extends NovelS
 {
 	if (!siteID)
 	{
-		siteID = EnumNovelSiteList.NovelSiteSyosetu;
+		siteID = searchSiteID(url) || EnumNovelSiteList.NovelSiteSyosetu;
 	}
 
 	const Site = createSite(siteID, options || {});
