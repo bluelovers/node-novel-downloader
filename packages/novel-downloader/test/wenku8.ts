@@ -32,7 +32,20 @@ import NovelSite from '../src/site/wenku8/index';
 
 //		'http://www.wenku8.com/novel/1/1592/index.htm',
 
-		'https://www.wenku8.net/novel/2/2115/index.htm',
+//		'https://www.wenku8.net/novel/2/2115/index.htm',
+
+//		'https://www.wenku8.net/book/2519.htm',
+
+//		'https://www.wenku8.net/novel/2/2284/index.htm',
+
+		'https://www.wenku8.net/novel/2/2518/index.htm',
+		'https://www.wenku8.net/novel/2/2080/index.htm',
+		'https://www.wenku8.net/book/855.htm',
+		'https://www.wenku8.net/book/2390.htm',
+		'https://www.wenku8.net/book/2506.htm',
+		'https://www.wenku8.net/book/2449.htm',
+
+		'https://www.wenku8.net/book/2467.htm',
 
 
 	],async function (value, index, array)

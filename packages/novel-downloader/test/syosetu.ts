@@ -266,8 +266,37 @@ import ProjectConfig from '../_root';
 
 //		'http://ncode.syosetu.com/n1611bg/',
 
-		'http://ncode.syosetu.com/n5361em/',
+//		'http://ncode.syosetu.com/n5361em/',
 
+//		'https://ncode.syosetu.com/n3670fe/',
+
+//		'http://ncode.syosetu.com/n1828cs/',
+
+//		'https://ncode.syosetu.com/n0170db/',
+
+//		'https://ncode.syosetu.com/n8567do/',
+
+//		'http://novel18.syosetu.com/n4233bh/',
+
+//		'https://novel18.syosetu.com/n3271bm/',
+
+		//'https://novel18.syosetu.com/n9598df/',
+
+		//'http://ncode.syosetu.com/n9543bw/',
+
+		//'https://ncode.syosetu.com/n9863da/',
+
+//		'n7216dr',
+
+//		'https://ncode.syosetu.com/n0406dr/ ',
+
+//		'https://ncode.syosetu.com/n2682dy',
+
+//		'https://ncode.syosetu.com/n3527ei/',
+
+//		'https://ncode.syosetu.com/n3490ee/',
+
+		'https://ncode.syosetu.com/n8611bv/',
 
 	],async function (value, index, array)
 	{

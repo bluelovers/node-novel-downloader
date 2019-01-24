@@ -5,7 +5,7 @@
 import fs, { trimFilename } from 'fs-iconv';
 import * as request from 'request-promise';
 import { URL } from 'jsdom-extra';
-import * as Promise from 'bluebird';
+import Promise = require("bluebird");
 
 import * as path from 'path';
 
@@ -64,6 +64,7 @@ export function download_image(img: string | URL, options: {
 		})
 	;
 
+	// @ts-ignore
 	return Promise.resolve(ret);
 }
 

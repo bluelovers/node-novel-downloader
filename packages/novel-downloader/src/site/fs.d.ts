@@ -17,5 +17,5 @@ export declare function getFilePath(self: NovelSite, { chapter, cid, dirname, ex
     volume?: NovelSite.IVolume;
     vid?: number;
 }, optionsRuntime?: IOptionsRuntime): string;
-import * as self from './fs';
-export default self;
+declare const _default: typeof import("./fs");
+export default _default;

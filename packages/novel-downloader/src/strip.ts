@@ -100,5 +100,4 @@ function char_autoFH(text: string)
 		;
 }
 
-import * as self from './strip';
-export default self;
+export default exports as typeof import('./strip');

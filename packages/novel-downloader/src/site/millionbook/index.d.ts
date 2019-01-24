@@ -35,7 +35,8 @@ export declare class NovelSiteClass extends NovelSiteBase {
             author?: string;
             authors?: string[];
             cover?: string;
-            illust?: string[];
+            illust?: string;
+            illusts?: string[];
             preface?: string;
             tags?: string[];
             date?: string;
@@ -49,7 +50,8 @@ export declare class NovelSiteClass extends NovelSiteBase {
             source?: string;
             sources?: string[];
             publisher?: string;
-            novel_status?: import("node-novel-info/lib/const").EnumNovelStatus;
+            publishers?: string[];
+            novel_status?: number;
         };
         contribute?: string[];
         options?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
@@ -66,6 +68,12 @@ export declare class NovelSiteClass extends NovelSiteBase {
             textlayout?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
                 allow_lf2?: boolean;
                 allow_lf3?: boolean;
+            };
+            downloadOptions?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
+                noFirePrefix?: boolean;
+                noFilePadend?: boolean;
+                filePrefixMode?: number;
+                startIndex?: number;
             };
         };
         link?: string[];

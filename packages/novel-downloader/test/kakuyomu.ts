@@ -17,7 +17,7 @@ import NovelSite from '../src/site/kakuyomu/index';
 	console.log(Site);
 
 	Promise.mapSeries([
-		'https://kakuyomu.jp/works/4852201425154898215',
+//		'https://kakuyomu.jp/works/4852201425154898215',
 
 //		'https://kakuyomu.jp/works/1177354054880238351',
 
@@ -25,7 +25,9 @@ import NovelSite from '../src/site/kakuyomu/index';
 
 //		'https://kakuyomu.jp/works/1177354054882154317',
 
-		'https://kakuyomu.jp/works/1177354054881165840',
+//		'https://kakuyomu.jp/works/1177354054881165840',
+
+		'1177354054882385011',
 
 	], async function (value, index, array)
 	{

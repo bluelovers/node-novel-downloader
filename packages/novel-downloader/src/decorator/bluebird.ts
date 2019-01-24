@@ -3,8 +3,8 @@
  */
 
 import { DecoratorUtils } from "decorator-utils";
-import * as Bluebird from "bluebird";
-import * as PromiseBluebird from 'bluebird';
+import Bluebird = require("bluebird");
+import PromiseBluebird = require("bluebird");
 
 export { PromiseBluebird }
 

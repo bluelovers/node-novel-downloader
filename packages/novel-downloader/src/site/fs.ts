@@ -150,7 +150,4 @@ export function getFilePath(self: NovelSite, {
 	return file;
 }
 
-import * as self from './fs';
-
-export default self;
-
+export default exports as typeof import('./fs');

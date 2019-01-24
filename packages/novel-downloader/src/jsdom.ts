@@ -44,5 +44,4 @@ export function getOptions(options)
 	}
 }
 
-import * as self from './jsdom';
-export default self;
+export default exports as typeof import('./jsdom');

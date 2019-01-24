@@ -95,7 +95,5 @@ export function manyRequest(url_arr: any[], options: IOptions = {})
 		;
 }
 
-import * as self from './fetch';
+export default exports as typeof import('./fetch');
 
-export default self;
-//export default exports;
