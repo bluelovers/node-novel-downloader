@@ -261,6 +261,8 @@ export class NovelSite implements NovelSite.INovelSite
 
 		let md = novelInfo.stringify({
 			novel: {
+				illust: '',
+				title_zh1: '',
 				tags: [
 					self.IDKEY,
 				],

@@ -277,7 +277,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
 	{
 		options[this.IDKEY] = {
-			txtdownload_id: optionsRuntime[SYMBOL_CACHE].novel.novel_syosetu_id,
+			txtdownload_id: optionsRuntime[SYMBOL_CACHE].novel.novel_syosetu_id || '',
 		};
 
 		return super._saveReadme(optionsRuntime, options, {
