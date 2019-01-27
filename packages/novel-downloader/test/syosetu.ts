@@ -298,7 +298,9 @@ import ProjectConfig from '../_root';
 
 //		'https://ncode.syosetu.com/n8611bv/',
 
-		'https://ncode.syosetu.com/n2523fc/',
+//		'https://ncode.syosetu.com/n2523fc/',
+
+		'http://ncode.syosetu.com/n7437dj',
 
 	],async function (value, index, array)
 	{

@@ -135,19 +135,32 @@ export function getFilePath(self: NovelSite, {
 
 	if (!file)
 	{
-		throw new RangeError(`chapter_title is empty`);
+		throw _createError(`chapter_title is empty ${chapter.chapter_title}`);
 	}
 
 	if (!dirname)
 	{
-		throw new RangeError(`dirname is empty`);
+		throw _createError(`dirname is empty ${dirname}`);
 	}
 
-	file = path.join(dirname,
-		`${prefix}${self.trimFilenameChapter(chapter.chapter_title)}${pad}${ext}`
+	let fullfile = path.join(dirname,
+		`${prefix}${file}${pad}${ext}`
 	);
 
-	return file;
+	return fullfile;
+}
+
+function _createError<T>(msg: string, _data?: T): RangeError & {
+	_data: T,
+}
+{
+	let e = new RangeError(msg);
+
+	// @ts-ignore
+	e._data = _data;
+
+	// @ts-ignore
+	return e;
 }
 
 export default exports as typeof import('./fs');

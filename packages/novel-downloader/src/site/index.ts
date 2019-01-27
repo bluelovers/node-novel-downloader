@@ -5,9 +5,10 @@
 import bluebirdDecorator from '../decorator/bluebird';
 //import bluebirdDecorator from 'bluebird-decorator';
 
-import * as PromiseBluebird from 'bluebird';
+import PromiseBluebird = require('bluebird');
 import { URL } from 'jsdom-url';
-import * as path from "upath2";
+import path = require('upath2');
+
 import rootPath from "../../_root";
 import { retryRequest } from '../fetch';
 
@@ -20,11 +21,13 @@ import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 import fs, { trimFilename } from 'fs-iconv';
 
+import StrUtil = require('str-util');
+
 //import * as moment from 'moment';
-import * as moment from 'moment-timezone';
+import moment = require('moment-timezone');
 import { isUndef } from '../util';
 
-import * as EventEmitter from 'events';
+import EventEmitter = require('events');
 import { IDownloadOptions } from './demo/base';
 
 moment.fn.toJSON = function () { return this.format(); };
@@ -234,6 +237,10 @@ export class NovelSite implements NovelSite.INovelSite
 
 	trimFilename(name): string
 	{
+		name = name
+			.replace(/[\*\?]+/g, (v) => StrUtil.toFullWidth(v))
+		;
+
 		return trimFilename(name);
 	}
 

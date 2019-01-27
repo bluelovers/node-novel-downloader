@@ -3,14 +3,14 @@
  */
 /// <reference types="node" />
 import bluebirdDecorator from '../decorator/bluebird';
-import * as PromiseBluebird from 'bluebird';
+import PromiseBluebird = require('bluebird');
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM };
 import { IMdconfMeta } from 'node-novel-info';
 export { IMdconfMeta };
 import { LazyCookieJar } from 'jsdom-extra';
-import * as moment from 'moment-timezone';
-import * as EventEmitter from 'events';
+import moment = require('moment-timezone');
+import EventEmitter = require('events');
 export { moment };
 export { bluebirdDecorator, PromiseBluebird };
 export declare const SYMBOL_CACHE: unique symbol;
