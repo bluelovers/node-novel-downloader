@@ -1,7 +1,8 @@
 /// <reference types="bluebird" />
+import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
-import * as NovelSiteDemo from '../demo/base';
+import NovelSiteDemo = require('../demo/base');
 export declare type INovel = NovelSiteDemo.INovel & {
     novel_syosetu_id: string;
 };
@@ -30,6 +31,8 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     }>;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<any>;
+    _novel18<T = NovelSite.IOptionsRuntime>(url: any, dom: IJSDOM, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<IJSDOM>;
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }
 export default NovelSiteSyosetu;

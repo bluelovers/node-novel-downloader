@@ -235,7 +235,7 @@ import ProjectConfig from '../_root';
 
 //		'http://novel18.syosetu.com/n7623br/',
 
-//		'https://ncode.syosetu.com/n3191eh/',
+		'https://ncode.syosetu.com/n3191eh/',
 
 		//'https://ncode.syosetu.com/n4045ed/',
 
@@ -300,7 +300,21 @@ import ProjectConfig from '../_root';
 
 //		'https://ncode.syosetu.com/n2523fc/',
 
-		'http://ncode.syosetu.com/n7437dj',
+//		'http://ncode.syosetu.com/n7437dj',
+
+		//'https://ncode.syosetu.com/n1976ey/',
+
+//		'https://ncode.syosetu.com/n3059ch/',
+//
+//		'https://ncode.syosetu.com/n6774eh/',
+
+//		'http://ncode.syosetu.com/n5490cq/',
+
+//		'https://ncode.syosetu.com/n4764du/',
+
+//		'http://ncode.syosetu.com/n8802bq/',
+
+		'http://novel18.syosetu.com/n7557y',
 
 	],async function (value, index, array)
 	{

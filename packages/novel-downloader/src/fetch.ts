@@ -2,8 +2,9 @@
  * Created by user on 2018/2/9/009.
  */
 
-import * as request from 'request-promise';
-import * as Promise from 'bluebird';
+import request = require('request-promise');
+import Promise = require('bluebird');
+import { console } from './util/log';
 
 //import fetch from 'lets-fetch';
 //fetch.retry((tries) => tries <= 3);
@@ -34,8 +35,6 @@ export function retryRequest(url, options: IOptions = {})
 	{
 		url = url.href;
 	}
-
-	//console.log(url, options);
 
 	function fn()
 	{

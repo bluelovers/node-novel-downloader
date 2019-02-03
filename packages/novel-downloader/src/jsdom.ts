@@ -32,7 +32,7 @@ export function createOptionsJSDOM<T = INovelOptionsJSDOM>(options: Partial<T & 
 
 export function getOptions(options)
 {
-	let opts = _packOptions(options);
+	let opts = _packOptions(options.optionsJSDOM || options);
 
 	let fromURLOptions = normalizeFromURLOptions(opts);
 	let requestOptions = normalizeRequestOptions(fromURLOptions);

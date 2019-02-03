@@ -16,7 +16,9 @@
     "sort-package-json": "oao run-script \"sort-package-json2\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@bluelovers/tsconfig": "^1.0.1"
+  },
   "devDependencies": {
     "@types/benchmark": "^1",
     "@types/chai": "^4",

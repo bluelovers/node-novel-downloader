@@ -26,6 +26,8 @@ export import INovel = _NovelSite.INovel;
 
 import { ResponseRequest } from 'request';
 
+import { console } from '../../util/log';
+
 export type IFetchChapter = {
 	body?: any;
 	dom?: IJSDOM;
@@ -63,7 +65,7 @@ export class NovelSiteDemo extends _NovelSite
 		return data;
 	}
 
-	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
+	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL, domain?: string)
 	{
 		super.session(optionsRuntime, url);
 
@@ -95,19 +97,51 @@ export class NovelSiteDemo extends _NovelSite
 
 					if (c)
 					{
-						if (typeof c == 'object' && !c.path)
+
+						if (typeof c == 'object')
 						{
-							c.path = '/';
+							if (!c.path)
+							{
+								c.path = '/';
+							}
+
+							if (c.hostOnly == null)
+							{
+								c.hostOnly = false;
+							}
 						}
 
 						optionsRuntime.optionsJSDOM.cookieJar
 							.setCookieSync(c, url.href)
 						;
+
+						if (typeof c == 'object' && !c.domain)
+						{
+							if (domain)
+							{
+								c.domain = domain;
+							}
+							else if (url && url.host)
+							{
+								c.domain = url.host;
+							}
+
+							try
+							{
+								optionsRuntime.optionsJSDOM.cookieJar
+									.setCookieSync(c, url.href)
+								;
+							}
+							catch (e)
+							{
+
+							}
+						}
 					}
 				})
 			;
 
-			console.log(optionsRuntime.optionsJSDOM.cookieJar);
+			console.dir(optionsRuntime.optionsJSDOM.cookieJar);
 		}
 
 		return this;

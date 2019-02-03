@@ -1,8 +1,8 @@
 /**
  * Created by user on 2018/2/9/009.
  */
-import * as request from 'request-promise';
-import * as Promise from 'bluebird';
+import request = require('request-promise');
+import Promise = require('bluebird');
 export interface IOptions extends request.RequestPromiseOptions {
     retry?: number;
     delay?: number;

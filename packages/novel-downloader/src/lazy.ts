@@ -14,8 +14,17 @@ export function getEnumNovelSiteList(): EnumNovelSiteList[]
 
 export function searchSiteID(url: string | URL | NovelSite.IParseUrl)
 {
-	let uo = new URL(url);
-	let href = uo.href;
+	let href: string;
+	try
+	{
+		let uo = new URL(url);
+		href = uo.href;
+	}
+	catch (e)
+	{
+		// @ts-ignore
+		href = url;
+	}
 
 	let ls = getEnumNovelSiteList();
 

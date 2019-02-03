@@ -14,8 +14,10 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-import * as NovelSiteDemo from '../demo/base';
+import NovelSiteDemo = require('../demo/base');
 import novelText from 'novel-text';
+
+import { console } from '../../util/log';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -49,176 +51,36 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		optionsRuntime.sessionData = optionsRuntime.sessionData || {};
 		optionsRuntime.sessionData.over18 = 'yes';
 
+		/*
+		optionsRuntime.sessionData.sasieno = 0;
+		optionsRuntime.sessionData.lineheight = 0;
+		optionsRuntime.sessionData.fontsize = 0;
+		optionsRuntime.sessionData.novellayout = 0;
+		optionsRuntime.sessionData.fix_menu_bar = 0;
+		*/
+
 		super.session(optionsRuntime, url);
 
 		//let url = optionsRuntime[SYMBOL_CACHE].url;
 
 		optionsRuntime.optionsJSDOM.cookieJar
-			//.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/', url.href)
+			//.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url.href)
 		;
+
+//		optionsRuntime.optionsJSDOM.runScripts = 'dangerously';
+//		optionsRuntime.optionsJSDOM.virtualConsole = false;
+
+		//optionsRuntime.optionsJSDOM.requestOptions = optionsRuntime.optionsJSDOM.requestOptions || {};
+
+//		if (!optionsRuntime.optionsJSDOM.requestOptions.jar)
+//		{
+			//optionsRuntime.optionsJSDOM.requestOptions.jar = optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest();
+//		}
+
+		//optionsRuntime.optionsJSDOM.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36';
 
 		return this;
 	}
-
-	/*
-	download(url: string | URL, downloadOptions: IDownloadOptions = {})
-	{
-		const self = this;
-
-		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<IOptionsRuntime>(downloadOptions);
-
-		console.log(optionsRuntime);
-
-		return PromiseBluebird
-			.bind(self)
-			.then(async function ()
-			{
-				url = this.createMainUrl(url as any);
-
-				//optionsRuntime[SYMBOL_CACHE].url = url;
-
-				self.session(optionsRuntime, url as URL);
-
-				let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
-
-				//console.log(novel);
-
-				let idx = downloadOptions.startIndex || 0;
-
-				let path_novel = path.join(self.PATH_NOVEL_MAIN,
-					`${self.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
-				);
-
-				optionsRuntime[SYMBOL_CACHE].novel = novel;
-				optionsRuntime[SYMBOL_CACHE].path_novel = path_novel;
-
-				let ret = await PromiseBluebird
-					.mapSeries(novel.volume_list, function (volume, vid)
-					{
-						let dirname = getVolumePath(self, {
-							path_novel,
-							volume, vid
-						}, optionsRuntime);
-
-						return PromiseBluebird
-							.mapSeries(volume.chapter_list, async function (chapter, cid)
-							{
-								//chapter.chapter_index = (idx++);
-								idx++;
-
-								let file = getFilePath(self, {
-									chapter, cid,
-									ext: '.txt',
-
-									idx,
-
-									dirname,
-									volume, vid,
-								}, optionsRuntime);
-
-								if (self._checkExists(optionsRuntime, file))
-								{
-									return file;
-								}
-
-								let fn;
-
-								if (optionsRuntime.disableDownload)
-								{
-									fn = async function ()
-									{
-										return '';
-									};
-								}
-								else if (!optionsRuntime.disableTxtdownload)
-								{
-									fn = function ()
-									{
-										return retryRequest(chapter.chapter_url, {
-											delay: 25000,
-											jar: optionsRuntime.optionsJSDOM.cookieJar,
-										});
-									}
-								}
-								else
-								{
-									let url = self._createChapterUrl({
-										novel,
-										volume,
-										chapter,
-									}, optionsRuntime);
-
-									//console.log(url);
-
-									fn = function ()
-									{
-										return fromURL(url, optionsRuntime.optionsJSDOM)
-											.then(async function (dom)
-											{
-												return [
-													dom.$('#novel_p').text(),
-													dom.$('#novel_honbun').text(),
-													dom.$('#novel_a').text(),
-												].filter(function (v)
-												{
-													return v;
-												}).join('\n\n==================\n\n');
-											})
-											;
-									};
-								}
-
-								//console.log(url);
-
-								await PromiseBluebird.resolve().then(function ()
-								{
-									return fn()
-										.then(async function (text)
-										{
-											await fs.outputFile(file, text);
-
-											return text;
-										})
-										;
-								});
-
-								return file;
-							})
-							;
-					})
-					.tap(ls =>
-					{
-						let file = path.join(path_novel,
-							`${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`
-							)
-						;
-
-						//console.log(ls);
-
-						return fs.outputJSON(file, novel, {
-							spaces: "\t",
-						});
-					})
-				;
-
-				await self._saveReadme(optionsRuntime);
-
-				return novel;
-			})
-			.finally(function ()
-			{
-				if (0)
-				{
-					console.dir((optionsRuntime.optionsJSDOM as IFromUrlOptions).cookieJar, {
-						depth: null,
-						colors: true,
-					});
-				}
-
-			})
-			;
-	}
-	*/
 
 	download(url: string | URL, downloadOptions: IDownloadOptions = {})
 	{
@@ -373,6 +235,93 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return urlobj;
 	}
 
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime)
+	{
+		let tryed: boolean;
+		const self = this;
+
+		let _fetchChapter = super._fetchChapter;
+
+		return super._fetchChapter(url, optionsRuntime)
+			.then(async function (ret)
+			{
+				const dom = ret.dom;
+
+				if (!tryed && dom && dom.$('#modal .yes #yes18').length)
+				{
+					const $ = dom.$;
+
+					//console.error(`無法成功讀取 R18 頁面`, url.href);
+
+					tryed = true;
+
+					try
+					{
+						$('#modal .yes #yes18').click();
+						$('#modal .yes #yes18')[0].click();
+					}
+					catch (e)
+					{
+
+					}
+
+					optionsRuntime.optionsJSDOM.cookieJar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+					optionsRuntime.optionsJSDOM.cookieJar.setCookieSync(`over18=yes; Domain=${dom.url.host}; Path=/; hostOnly=false`, dom.url);
+
+					//console.debug(optionsRuntime.optionsJSDOM.cookieJar.getAllCookies());
+
+					optionsRuntime.optionsJSDOM.referrer = dom.url;
+					optionsRuntime.optionsJSDOM.requestOptions = optionsRuntime.optionsJSDOM.requestOptions || {};
+					optionsRuntime.optionsJSDOM.requestOptions.form = dom.url;
+
+					return _fetchChapter.call(self, url, optionsRuntime)
+						.then(function (ret)
+						{
+							const dom = ret.dom;
+							const $ = dom.$;
+
+							if ($('#modal .yes #yes18').length)
+							{
+								console.error(`無法成功讀取 R18 頁面`, url.href);
+
+								//process.exit();
+							}
+
+							return ret;
+						})
+				}
+
+				return ret;
+			})
+	}
+
+	async _novel18<T = NovelSite.IOptionsRuntime>(url, dom: IJSDOM, optionsRuntime: Partial<T & IDownloadOptions> = {}): Promise<IJSDOM>
+	{
+		const $ = dom.$;
+
+		if (!$('#novel_contents').length || $('#modal .yes #yes18').length)
+		{
+			//console.log(dom.url, dom._options);
+
+			$('#modal .yes #yes18').click();
+
+			dom._options.requestOptions.jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+
+			//console.log(dom.serialize());
+
+			return fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {
+
+				//cookieJar: dom._options.requestOptions.jar._jar,
+				//requestOptions: dom._options.requestOptions,
+
+			} as IFromUrlOptions));
+		}
+
+		//console.log(dom._options.requestOptions.jar);
+
+		return dom;
+	}
+
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>
@@ -384,29 +333,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return await fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
-				const $ = dom.$;
-
-				if (!$('#novel_contents').length || $('#modal .yes #yes18').length)
-				{
-					//console.log(dom.url, dom._options);
-
-					$('#modal .yes #yes18').click();
-
-					dom._options.requestOptions.jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/', url);
-
-					//console.log(dom.serialize());
-
-					return fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {
-
-						//cookieJar: dom._options.requestOptions.jar._jar,
-						//requestOptions: dom._options.requestOptions,
-
-					} as IFromUrlOptions));
-				}
-
-				//console.log(dom._options.requestOptions.jar);
-
-				return dom;
+				return self._novel18<T>(url, dom, optionsRuntime);
 			})
 			.then(async function (dom: IJSDOM)
 			{
