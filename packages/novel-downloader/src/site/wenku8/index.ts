@@ -6,13 +6,14 @@ import { isUndef, minifyHTML, trim } from '../../util';
 import _NovelSite, { IMdconfMeta, staticImplements, SYMBOL_CACHE } from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
-import * as NovelSiteDemo from '../demo/base';
+import NovelSiteDemo from '../demo/base';
 import NovelSiteBase from '../demo/base';
 import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
+import { EnumNovelStatus } from 'node-novel-info/lib/const';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteWenku8>>()
 export class NovelSiteWenku8 extends NovelSiteBase
@@ -34,6 +35,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			url = `http://www.wenku8.com/modules/article/reader.php?aid=${urlobj.novel_id}${cid}`;
 		}
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
@@ -47,8 +49,10 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			chapter_id: null,
 		};
 
+		// @ts-ignore
 		urlobj.url = new URL(url);
-		url = urlobj.url.href;
+		// @ts-ignore
+		url = urlobj.url.href as string;
 
 		let r: RegExp;
 		let m: RegExpExecArray;
@@ -335,6 +339,20 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			})
 			;
 	}
+
+	protected _handleDataForStringify(...argv): IMdconfMeta
+	{
+		let mdconf = super._handleDataForStringify(...argv);
+
+		if (mdconf.novel)
+		{
+			mdconf.novel.novel_status = (mdconf.novel.novel_status | 0) | EnumNovelStatus.P_BOOK;
+
+		}
+
+		return mdconf;
+	}
+
 }
 
 export default NovelSiteWenku8;

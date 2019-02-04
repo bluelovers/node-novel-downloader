@@ -1,7 +1,7 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-import _NovelSite from '../index';
+import _NovelSite, { IMdconfMeta } from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
@@ -84,5 +84,6 @@ export declare class NovelSiteWenku8 extends NovelSiteBase {
         url: URL;
         url_data: _NovelSite.IParseUrl;
     }>;
+    protected _handleDataForStringify(...argv: any[]): IMdconfMeta;
 }
 export default NovelSiteWenku8;

@@ -15,13 +15,14 @@ import { retryRequest } from '../fetch';
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM, INovelOptionsJSDOM } from '../jsdom';
 
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM }
-import novelInfo, { IMdconfMeta } from 'node-novel-info';
+import novelInfo, { IMdconfMeta, _handleDataForStringify } from 'node-novel-info';
 export { IMdconfMeta }
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 import fs, { trimFilename } from 'fs-iconv';
 
 import StrUtil = require('str-util');
+import { EnumNovelStatus } from 'node-novel-info/lib/const';
 
 //import * as moment from 'moment';
 import moment = require('moment-timezone');
@@ -244,9 +245,39 @@ export class NovelSite implements NovelSite.INovelSite
 		return trimFilename(name);
 	}
 
-	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): any
+	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown
 	{
 		return void(0);
+	}
+
+	protected _handleDataForStringify(...argv): IMdconfMeta
+	{
+		// @ts-ignore
+		let mdconf: IMdconfMeta = _handleDataForStringify(...argv);
+
+		if (mdconf.novel)
+		{
+			if (mdconf.novel.tags && Array.isArray(mdconf.novel.tags))
+			{
+				let bool: boolean;
+
+				bool = [
+					'書籍化',
+					'书籍化',
+					'文庫化',
+					'文库化',
+				].some(v => {
+					return mdconf.novel.tags.includes(v)
+				});
+
+				if (bool)
+				{
+					mdconf.novel.novel_status = (mdconf.novel.novel_status | 0) | EnumNovelStatus.P_BOOK;
+				}
+			}
+		}
+
+		return mdconf;
 	}
 
 	protected _saveReadme(optionsRuntime?: IOptionsRuntime, options = {}, ...opts)
@@ -266,7 +297,7 @@ export class NovelSite implements NovelSite.INovelSite
 		const novel = optionsRuntime[SYMBOL_CACHE].novel;
 		const path_novel = optionsRuntime[SYMBOL_CACHE].path_novel;
 
-		let md = novelInfo.stringify({
+		let mdconfig = this._handleDataForStringify({
 			novel: {
 				illust: '',
 				title_zh1: '',
@@ -276,11 +307,14 @@ export class NovelSite implements NovelSite.INovelSite
 				series: {
 					name: novel.novel_series_title || novel.novel_title || '',
 				},
+				novel_status: 0,
 			},
 			options,
 
 			link: novel.link || [],
 		}, novel, ...opts);
+
+		let md = novelInfo.stringify(mdconfig);
 
 		let file = path.join(path_novel, `README.md`);
 		return fs.outputFile(file, md)
