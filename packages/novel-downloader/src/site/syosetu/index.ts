@@ -245,6 +245,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return super._fetchChapter(url, optionsRuntime)
 			.then(async function (ret)
 			{
+				if (ret == null) return ret;
+
 				const dom = ret.dom;
 
 				if (!tryed && dom && dom.$('#modal .yes #yes18').length)
