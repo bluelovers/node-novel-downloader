@@ -140,13 +140,14 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 	{
 		options[this.IDKEY] = {
 			txtdownload_id: optionsRuntime[SYMBOL_CACHE].novel.novel_syosetu_id || '',
+			series_id: optionsRuntime[SYMBOL_CACHE].novel.novel_syosetu_series_id || '',
 		};
 
 		return super._saveReadme(optionsRuntime, options, {
 			options: {
 				textlayout: {
 					allow_lf2: true,
-				}
+				},
 			},
 		}, ...opts);
 	}
@@ -361,18 +362,6 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 				let _cache_dates = [];
 
-				let novel_series_title;
-
-				{
-					let a = dom.$('#novel_contents .series_title').text()
-						.replace(/[\r\n\t]+|^\s+|\s+$/g, '')
-					;
-					if (a)
-					{
-						novel_series_title = a;
-					}
-				}
-
 				let novel_syosetu_id;
 
 				{
@@ -582,7 +571,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 							})
 						;
 
-						data.link = [];
+						data.link = data.link || [];
 
 						data.link.push(`[dip.jp](${dom.url}) - 小説家になろう　更新情報検索`);
 
@@ -599,6 +588,41 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					})
 				;
 
+				let novel_series_title: string;
+				let novel_syosetu_series_id: string;
+
+				{
+					let _a = dom.$('#novel_contents .series_title');
+
+					let t = _a.text()
+						.replace(/[\r\n\t]+|^\s+|\s+$/g, '')
+					;
+
+					if (t)
+					{
+						novel_series_title = t;
+
+						_a = _a.find('a');
+						let _t = _a.attr('href') || '';
+
+						if (/\/(\w{6,})\//i.exec(_t))
+						{
+							novel_syosetu_series_id = RegExp.$1;
+
+							// @ts-ignore
+							a.link = a.link || [];
+
+							let title = novel_series_title
+								.replace(/[\[\]\~\`]/g, '\\$0')
+								.replace(/["']/g, '')
+							;
+
+							// @ts-ignore
+							a.link.push(`[${title}](${_a.prop('href')})`);
+						}
+					}
+				}
+
 				return {
 
 					...a,
@@ -614,6 +638,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					novel_publisher,
 
 					novel_series_title,
+					novel_syosetu_series_id,
 
 					novel_syosetu_id,
 
