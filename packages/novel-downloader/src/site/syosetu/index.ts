@@ -551,6 +551,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 						if (data.novel.status === '完結済')
 						{
 							data.novel.novel_status |= EnumNovelStatus.AUTHOR_DONE;
+
+							data.novel.tags.push(data.novel.status);
 						}
 
 						search_right.find('.keyword a')
@@ -568,6 +570,23 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 								;
 
 								data.novel.tags = data.novel.tags.concat(k);
+							})
+						;
+
+						search_left
+							.find('[class*="new_genre"]')
+							.each(function (index, elem)
+							{
+								let k = dom.$(elem)
+									.text()
+									.trim()
+									.replace(/^\s+|\s+$/g, '')
+								;
+
+								if (k)
+								{
+									data.novel.tags.push(k);
+								}
 							})
 						;
 
