@@ -506,11 +506,19 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 						if (!h2.length)
 						{
-							//console.warn(`can not found keyword "${url_data.novel_id}", will try use title search`);
+							console.warn(`can not found keyword "${url_data.novel_id}", will try use title search`);
+
+							/**
+							 * https://narou18.nar.jp/search.php?text=%E3%83%A9%E3%83%B3%E3%82%AF%E5%86%92%E9%99%BA%E8%80%85%E3%81%AE%E3%82%B9%E3%83%AD%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%95&novel=all&genre=all&new_genre=all&length=0&down=0&up=100
+							 */
+							let title = novel_title
+								.replace(/[\wａ-ｚ]+/ig, ' ')
+								.trim()
+							;
 
 							return fromURL(`https://${url_data.novel_r18
 								? 'narou18'
-								: 'narou'}.dip.jp/search.php?text=${novel_title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
+								: 'narou'}.dip.jp/search.php?text=${title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
 								;
 						}
 
@@ -529,13 +537,23 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 							h2 = dom.$(`h2:has(> a[href*="${url_data.novel_id}"])`).eq(0);
 						}
 
-						let search_left = h2.siblings('.search_left').eq(0);
-						let search_right = h2.siblings('.search_right').eq(0);
+						let search_left = h2.nextAll('.search_left:eq(0)').eq(0);
+						let search_right = h2.nextAll('.search_right:eq(0)').eq(0);
+
+						if (!search_left.length)
+						{
+							search_left = h2.siblings('.search_left:eq(0)').eq(0);
+						}
+
+						if (!search_right.length)
+						{
+							search_right = h2.siblings('.search_right:eq(0)').eq(0);
+						}
 
 						if (!h2.length)
 						{
 							//console.log(111111111111111111111);
-							console.warn(`can not found keyword for ${url_data.novel_id}`);
+							console.warn(`can not found keyword for ${url_data.novel_id}`, dom.url);
 
 							return data;
 						}
@@ -574,7 +592,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 						;
 
 						search_left
-							.find('[class*="new_genre"]')
+							.find('[class*="new_genre"], .nocgenre')
 							.each(function (index, elem)
 							{
 								let k = dom.$(elem)
