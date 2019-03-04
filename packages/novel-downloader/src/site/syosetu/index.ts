@@ -325,6 +325,25 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return dom;
 	}
 
+	protected _getExtraInfoURL<T>(search: string, url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>)
+	{
+		let optionsJSDOM = {
+			...optionsRuntime.optionsJSDOM,
+			requestOptions: {
+				...optionsRuntime.optionsJSDOM.requestOptions
+			},
+		};
+
+		optionsJSDOM.requestOptions = optionsJSDOM.requestOptions || {};
+		optionsJSDOM.requestOptions.followRedirect = true;
+
+		let _domain = 1 ? 'nar.jp' : 'dip.jp';
+
+		return fromURL(`https://${url_data.novel_r18
+			? 'narou18'
+			: 'narou'}.${_domain}/search.php?text=${search}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsJSDOM)
+	}
+
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>
@@ -492,9 +511,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 				let novel_date = moment.unix(_cache_dates[_cache_dates.length - 1]).local();
 
-				let a = await fromURL(`https://${url_data.novel_r18
-					? 'narou18'
-					: 'narou'}.dip.jp/search.php?text=${url_data.novel_id}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
+				let a = await self._getExtraInfoURL(url_data.novel_id, url_data, optionsRuntime)
 					.then(function (dom)
 					{
 						let h2 = dom.$(`div:has(> h2.search:has(> a[href*="${url_data.novel_id}"]))`).eq(0);
@@ -516,10 +533,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 								.trim()
 							;
 
-							return fromURL(`https://${url_data.novel_r18
-								? 'narou18'
-								: 'narou'}.dip.jp/search.php?text=${title}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsRuntime.optionsJSDOM)
-								;
+							return self._getExtraInfoURL(title, url_data, optionsRuntime);
 						}
 
 						return dom;
@@ -610,7 +624,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 						data.link = data.link || [];
 
-						data.link.push(`[dip.jp](${dom.url}) - 小説家になろう　更新情報検索`);
+						data.link.push(`[${dom.url.hostname}](${dom.url}) - 小説家になろう　更新情報検索`);
 
 						//console.log(data);
 
