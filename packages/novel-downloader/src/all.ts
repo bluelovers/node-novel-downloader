@@ -13,6 +13,7 @@ export enum EnumNovelSiteList
 	NovelSiteIqing = './site/iqing',
 	NovelSiteKakuyomu = './site/kakuyomu',
 	NovelSiteMillionbook = './site/millionbook',
+	NovelSiteNovelba = './site/novelba',
 	NovelSiteSfacg = './site/sfacg',
 	NovelSiteSyosetu = './site/syosetu',
 	NovelSiteUukanshu = './site/uukanshu',
@@ -28,6 +29,7 @@ export enum EnumNovelSiteList
 	'iqing' = './site/iqing',
 	'kakuyomu' = './site/kakuyomu',
 	'millionbook' = './site/millionbook',
+	'novelba' = './site/novelba',
 	'sfacg' = './site/sfacg',
 	'syosetu' = './site/syosetu',
 	'uukanshu' = './site/uukanshu',
@@ -43,6 +45,7 @@ export enum EnumNovelSiteList
 	'./site/iqing' = './site/iqing',
 	'./site/kakuyomu' = './site/kakuyomu',
 	'./site/millionbook' = './site/millionbook',
+	'./site/novelba' = './site/novelba',
 	'./site/sfacg' = './site/sfacg',
 	'./site/syosetu' = './site/syosetu',
 	'./site/uukanshu' = './site/uukanshu',
@@ -62,6 +65,7 @@ export interface INovelSiteList
 	NovelSiteIqing: typeof import('./site/iqing').default
 	NovelSiteKakuyomu: typeof import('./site/kakuyomu').default
 	NovelSiteMillionbook: typeof import('./site/millionbook').default
+	NovelSiteNovelba: typeof import('./site/novelba').default
 	NovelSiteSfacg: typeof import('./site/sfacg').default
 	NovelSiteSyosetu: typeof import('./site/syosetu').default
 	NovelSiteUukanshu: typeof import('./site/uukanshu').default
@@ -79,6 +83,7 @@ export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteHetuboo
 export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteIqing | 'iqing'): INovelSiteList["NovelSiteIqing"]
 export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteKakuyomu | 'kakuyomu'): INovelSiteList["NovelSiteKakuyomu"]
 export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteMillionbook | 'millionbook'): INovelSiteList["NovelSiteMillionbook"]
+export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteNovelba | 'novelba'): INovelSiteList["NovelSiteNovelba"]
 export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteSfacg | 'sfacg'): INovelSiteList["NovelSiteSfacg"]
 export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteSyosetu | 'syosetu'): INovelSiteList["NovelSiteSyosetu"]
 export function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteUukanshu | 'uukanshu'): INovelSiteList["NovelSiteUukanshu"]

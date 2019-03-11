@@ -31,7 +31,7 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     }>;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
-    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<any>;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<NovelSiteDemo.IFetchChapter>;
     _novel18<T = NovelSite.IOptionsRuntime>(url: any, dom: IJSDOM, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<IJSDOM>;
     protected _getExtraInfoURL<T>(search: string, url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>): PromiseBluebird<any>;
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
