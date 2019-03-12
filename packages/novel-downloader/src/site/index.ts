@@ -301,6 +301,8 @@ export class NovelSite implements NovelSite.INovelSite
 			novel: {
 				illust: '',
 				title_zh1: '',
+				illusts: [],
+				publishers: [],
 				tags: [
 					self.IDKEY,
 				],
