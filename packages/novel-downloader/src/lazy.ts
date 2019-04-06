@@ -31,11 +31,20 @@ export function searchSiteID(url: string | URL | NovelSite.IParseUrl)
 	for (let siteID of ls)
 	{
 		let mod = requireNovelSiteClass(siteID);
-		let bool = mod.check(href);
+		let bool: boolean;
 
-		if (bool)
+		try
 		{
-			return siteID;
+			bool = mod.check(href);
+
+			if (bool)
+			{
+				return siteID;
+			}
+		}
+		catch (e)
+		{
+
 		}
 	}
 }

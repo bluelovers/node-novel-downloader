@@ -4,7 +4,7 @@
 import Bluebird = require("bluebird");
 import { EnumNovelSiteList, NovelSite } from "novel-downloader";
 export declare function createSite<T extends NovelSite, O extends NovelSite.IOptions>(siteID?: EnumNovelSiteList, options?: O & {
-    [k: string]: any;
+    [k: string]: unknown;
 }): T;
 export declare function download<O extends NovelSite.IDownloadOptions, O2 extends NovelSite.IOptions>(url: string, downloadOptions?: O & {
     [k: string]: any;

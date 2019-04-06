@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "novel-downloader 的 CLI 版本",
   "keywords": [
     "acg",
@@ -42,24 +42,24 @@
     "test": "ts-node ./bin/novel-downloader-cli \"http://ncode.syosetu.com/n0611em/\""
   },
   "dependencies": {
-    "@types/node": "^10.12.18",
     "array-hyper-unique": "^1.0.7",
-    "bluebird": "^3.5.3",
-    "cross-spawn-extra": "^1.0.4",
-    "debug-color2": "^1.0.6",
+    "bluebird": "^3.5.4",
+    "cross-spawn-extra": "^1.0.5",
+    "debug-color2": "^1.0.7",
     "diff": "^4.0.1",
-    "dotenv": "^6.2.0",
+    "dotenv": "^7.0.0",
     "fast-glob": "^2.2.6",
     "fs-extra": "^7.0.1",
     "hash-sum": "^1.0.2",
     "moment": "^2.24.0",
     "node-alias": "^1.0.4",
-    "node-novel-info": "^2.3.22",
-    "novel-downloader": "^1.2.8",
+    "node-novel-info": "^2.3.32",
+    "novel-downloader": "^1.2.16",
     "update-notifier": "^2.5.0",
-    "yargs": "^12.0.5"
+    "yargs": "^13.2.2"
   },
   "devDependencies": {
-    "@types/yargs": "^12.0.7"
+    "@types/node": "^11.13.0",
+    "@types/yargs": "^12.0.11"
   }
 }

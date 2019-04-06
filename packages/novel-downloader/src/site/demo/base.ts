@@ -164,7 +164,7 @@ export class NovelSiteDemo extends _NovelSite
 
 				let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
-				let path_novel = self.getPathNovel(PATH_NOVEL_MAIN, novel);
+				let path_novel = self.getPathNovel(PATH_NOVEL_MAIN, novel, optionsRuntime);
 
 				self._loadExistsConf(url, optionsRuntime, novel, path_novel);
 

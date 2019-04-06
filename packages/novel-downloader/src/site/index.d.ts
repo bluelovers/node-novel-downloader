@@ -28,7 +28,8 @@ export declare class NovelSite implements NovelSite.INovelSite {
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
     getStatic<T = typeof NovelSite>(): T;
     readonly IDKEY: string;
-    getPathNovel<N extends NovelSite.INovel>(PATH_NOVEL_MAIN: string, novel: N): string;
+    protected _pathNovelID<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(novel: N, optionsRuntime: T): any;
+    getPathNovel<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(PATH_NOVEL_MAIN: string, novel: N, optionsRuntime: T): string;
     /**
      * 如果已經下載過 則試圖從 README.md 內讀取缺漏的下載設定
      *
@@ -43,10 +44,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     trimFilename(name: any): string;
     protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown;
     protected _handleDataForStringify(...argv: any[]): IMdconfMeta;
-    protected _saveReadme(optionsRuntime?: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
-        file: string;
-        md: string;
-    }>;
+    protected _saveReadme(optionsRuntime?: IOptionsRuntime, options?: {}, ...opts: any[]): any;
     createMainUrl(url: string): URL;
     createMainUrl(url: URL): URL;
     protected _createChapterUrl<T = IOptionsRuntime>({ novel, volume, chapter, }: {
@@ -67,6 +65,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
+export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
 export declare namespace NovelSite {
     type IOptionsPlus = {
         disableOutputDirPrefix?: boolean;
@@ -94,6 +93,10 @@ export declare namespace NovelSite {
         outputDir?: string;
         cwd?: string;
     } & IOptionsPlus;
+    const enum EnumPathNovelStyle {
+        DEFAULT = 0,
+        NOVELID = 1
+    }
     type IDownloadOptions = {
         /**
          * 只產生目錄結構 不下載內容
@@ -103,6 +106,10 @@ export declare namespace NovelSite {
         optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
             cookieJar?: Partial<LazyCookieJar>;
         };
+        /**
+         * 設定小說資料夾樣式
+         */
+        pathNovelStyle?: EnumPathNovelStyle;
     } & IOptionsPlus;
     type IOptionsRuntime = IOptions & IDownloadOptions & IOptionsPlus;
     interface IParseUrl {

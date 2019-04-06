@@ -86,7 +86,7 @@ import ProjectConfig from '../_root';
 //		'http://novel18.syosetu.com/n2794ec/',
 
 		//'http://ncode.syosetu.com/n1980bm/',
-		//'http://ncode.syosetu.com/n7940cn/',
+//		'http://ncode.syosetu.com/n7940cn/',
 
 		//'http://ncode.syosetu.com/n0612dm/',
 
@@ -235,7 +235,7 @@ import ProjectConfig from '../_root';
 
 //		'http://novel18.syosetu.com/n7623br/',
 
-		'https://ncode.syosetu.com/n3191eh/',
+//		'https://ncode.syosetu.com/n3191eh/',
 
 		//'https://ncode.syosetu.com/n4045ed/',
 
@@ -314,7 +314,65 @@ import ProjectConfig from '../_root';
 
 //		'http://ncode.syosetu.com/n8802bq/',
 
-		'http://novel18.syosetu.com/n7557y',
+//		'http://novel18.syosetu.com/n7557y',
+
+//		'https://ncode.syosetu.com/n7796fc/',
+
+//		'https://ncode.syosetu.com/n4845ec/',
+//
+//		'https://ncode.syosetu.com/n4414ff/',
+//
+//		'https://ncode.syosetu.com/n7352fa/',
+
+//		'https://ncode.syosetu.com/n8611bv/',
+
+//		'https://ncode.syosetu.com/n1586by/',
+
+//		'https://novel18.syosetu.com/n3746ce/',
+
+//		'https://ncode.syosetu.com/n8517en/',
+
+//		'http://ncode.syosetu.com/n5361em/',
+
+//		'https://ncode.syosetu.com/n8216dt/',
+
+//		'https://ncode.syosetu.com/n2771dw',
+
+//		'https://novel18.syosetu.com/n7437du/',
+//
+//		'http://novel18.syosetu.com/n4381dp/',
+
+//		'n4719ff',
+
+//		'https://ncode.syosetu.com/n0442em/',
+
+//		'https://ncode.syosetu.com/n3139du/',
+
+//		'https://ncode.syosetu.com/n2052ez/',
+//
+//		'n4191cj',
+//
+//		'https://ncode.syosetu.com/n6308dg/',
+//
+//		'n0463dq',
+
+//		'n3956eq',
+
+//		'https://ncode.syosetu.com/n0388ee/',
+
+//		'https://ncode.syosetu.com/n4191cj/',
+
+//		'https://ncode.syosetu.com/n9188eg/',
+
+//		'https://ncode.syosetu.com/n2129ei/',
+
+//		'https://ncode.syosetu.com/n4006r/',
+
+//		'n7374dz',
+
+//		'https://ncode.syosetu.com/n1563fd/',
+
+		'https://ncode.syosetu.com/n9475bv/',
 
 	],async function (value, index, array)
 	{

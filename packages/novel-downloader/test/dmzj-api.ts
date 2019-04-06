@@ -41,7 +41,7 @@ import ProjectConfig from '../_root';
 //		'http://q.dmzj.com/2541/index.shtml',
 //		'http://q.dmzj.com/2332/index.shtml',
 
-//		'http://q.dmzj.com/2211/index.shtml',
+		'http://q.dmzj.com/2211/index.shtml',
 
 		//'http://q.dmzj.com/2563/index.shtml',
 
@@ -56,7 +56,11 @@ import ProjectConfig from '../_root';
 
 //		'http://q.dmzj.com/2590/index.shtml',
 
-		'http://q.dmzj.com/2559/index.shtml',
+//		'http://q.dmzj.com/2559/index.shtml',
+
+//		'http://q.dmzj.com/2136/index.shtml',
+
+//		'2541',
 
 
 	],async function (value, index, array)

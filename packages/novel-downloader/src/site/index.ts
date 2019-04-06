@@ -121,11 +121,31 @@ export class NovelSite implements NovelSite.INovelSite
 		return key;
 	}
 
-	getPathNovel<N extends NovelSite.INovel>(PATH_NOVEL_MAIN: string, novel: N)
+	protected _pathNovelID<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(novel: N, optionsRuntime: T)
 	{
-		return path.join(PATH_NOVEL_MAIN,
-			`${this.trimFilenameNovel(novel.novel_title)}_(${novel.url_data.novel_id})`
-		);
+		return novel.url_data.novel_id;
+	}
+
+	getPathNovel<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(PATH_NOVEL_MAIN: string, novel: N, optionsRuntime: T)
+	{
+		let name: string;
+
+		let novel_id = this._pathNovelID(novel, optionsRuntime);
+
+		if (optionsRuntime.pathNovelStyle)
+		{
+			if (optionsRuntime.pathNovelStyle == NovelSite.EnumPathNovelStyle.NOVELID)
+			{
+				name = novel_id;
+			}
+		}
+
+		if (name == null)
+		{
+			name = `${this.trimFilenameNovel(novel.novel_title)}_(${novel_id})`
+		}
+
+		return path.join(PATH_NOVEL_MAIN, name);
 	}
 
 	/**
@@ -302,7 +322,9 @@ export class NovelSite implements NovelSite.INovelSite
 				illust: '',
 				title_zh1: '',
 				illusts: [],
-				publishers: [],
+				publishers: [
+					self.IDKEY,
+				],
 				tags: [
 					self.IDKEY,
 				],
@@ -400,6 +422,7 @@ export class NovelSite implements NovelSite.INovelSite
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
+export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
 
 export namespace NovelSite
 {
@@ -442,6 +465,12 @@ export namespace NovelSite
 
 	} & IOptionsPlus;
 
+	export const enum EnumPathNovelStyle
+	{
+		DEFAULT = 0,
+		NOVELID = 1,
+	}
+
 	export type IDownloadOptions = {
 
 		/**
@@ -453,6 +482,11 @@ export namespace NovelSite
 		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
 			cookieJar?: Partial<LazyCookieJar>,
 		},
+
+		/**
+		 * 設定小說資料夾樣式
+		 */
+		pathNovelStyle?: EnumPathNovelStyle,
 
 	} & IOptionsPlus;
 

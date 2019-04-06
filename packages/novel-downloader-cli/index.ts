@@ -13,7 +13,7 @@ import fs = require("fs-extra");
 
 export function createSite<T extends NovelSite, O extends NovelSite.IOptions>(siteID?: EnumNovelSiteList,
 	options?: O & {
-		[k: string]: any
+		[k: string]: unknown
 	},
 ): T
 {

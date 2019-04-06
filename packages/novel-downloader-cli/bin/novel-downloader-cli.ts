@@ -8,6 +8,7 @@ import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downl
 import console from '../lib/log';
 import PACKAGE_JSON = require('../package.json');
 import updateNotifier = require('update-notifier');
+import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
 
 let cli = yargs
 	.option('outputDir', {
@@ -42,6 +43,10 @@ let cli = yargs
 	.option('filePrefixMode', {
 		type: "number",
 	})
+	.option('pathNovelStyle', {
+		desc: `小說目錄樣式 0 = 預設 , 1 = 小說 ID`,
+		type: "number",
+	})
 	.option('startIndex', {
 		type: "number",
 	})
@@ -67,6 +72,8 @@ interface ICliArgv
 	noFilePadend?: boolean,
 	filePrefixMode?: number,
 	startIndex?: number,
+
+	pathNovelStyle?: EnumPathNovelStyle,
 }
 
 let url: string = cli._[0];
@@ -129,6 +136,7 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	downloadOptions.noFirePrefix = cli.noFirePrefix;
 	downloadOptions.filePrefixMode = cli.filePrefixMode;
 	downloadOptions.startIndex = cli.startIndex;
+	downloadOptions.pathNovelStyle = cli.pathNovelStyle;
 
 	siteOptions.outputDir = cli.outputDir;
 

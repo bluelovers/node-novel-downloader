@@ -38,15 +38,20 @@ import NovelSite from '../src/site/wenku8/index';
 
 //		'https://www.wenku8.net/novel/2/2284/index.htm',
 
-		'https://www.wenku8.net/novel/2/2518/index.htm',
-		'https://www.wenku8.net/novel/2/2080/index.htm',
+//		'https://www.wenku8.net/novel/2/2518/index.htm',
+//		'https://www.wenku8.net/novel/2/2080/index.htm',
 		'https://www.wenku8.net/book/855.htm',
-		'https://www.wenku8.net/book/2390.htm',
-		'https://www.wenku8.net/book/2506.htm',
-		'https://www.wenku8.net/book/2449.htm',
+//		'https://www.wenku8.net/book/2390.htm',
+//		'https://www.wenku8.net/book/2506.htm',
+//		'https://www.wenku8.net/book/2449.htm',
 
-		'https://www.wenku8.net/book/2467.htm',
+//		'https://www.wenku8.net/book/2467.htm',
 
+//		'https://www.wenku8.net/novel/2/2451/index.htm',
+
+		'https://www.wenku8.net/book/1306.htm',
+
+		'https://www.wenku8.net/book/857.htm',
 
 	],async function (value, index, array)
 	{
