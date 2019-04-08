@@ -1,7 +1,8 @@
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { retryRequest } from '../../fetch';
 
-import fs, { trimFilename } from 'fs-iconv';
+import fs = require('fs-extra');
+import { trimFilename } from 'fs-iconv/util';
 import * as path from 'path';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';

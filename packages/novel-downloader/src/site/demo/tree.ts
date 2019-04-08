@@ -12,7 +12,8 @@ import * as path from 'upath2';
 import { normalize_val } from 'node-novel-globby/lib/helper';
 import { defaultSortCallback } from 'node-novel-globby/lib/sort';
 
-import fs, {} from 'fs-iconv';
+import fs = require('fs-extra');
+import { trimFilename } from 'fs-iconv/util';
 import novelText from 'novel-text';
 import { URL } from 'jsdom-url';
 

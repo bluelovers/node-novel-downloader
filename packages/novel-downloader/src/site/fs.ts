@@ -2,7 +2,8 @@
  * Created by user on 2018/3/18/018.
  */
 
-import fs, { trimFilename } from 'fs-iconv';
+import fs = require('fs-extra');
+import { trimFilename } from 'fs-iconv/util';
 import { isUndef } from '../util';
 import NovelSite, { IOptionsRuntime } from './index';
 import * as path from 'upath2';

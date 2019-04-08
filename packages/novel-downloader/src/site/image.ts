@@ -2,7 +2,8 @@
  * Created by user on 2018/1/17/017.
  */
 
-import fs, { trimFilename } from 'fs-iconv';
+import fs = require('fs-extra');
+import { trimFilename } from 'fs-iconv/util';
 import * as request from 'request-promise';
 import { URL } from 'jsdom-extra';
 import Promise = require("bluebird");

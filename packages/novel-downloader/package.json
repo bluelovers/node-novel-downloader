@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.2.16",
+  "version": "1.2.17",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -50,6 +50,7 @@
     "decorator-utils": "^2.0.0",
     "env-bool": "^1.0.3",
     "escape-string-regexp": "^1.0.5",
+    "fs-extra": "^7.0.1",
     "fs-iconv": "^2.0.3",
     "jquery": "^3.3.1",
     "js-tree-list2": "^1.1.18",
@@ -59,7 +60,7 @@
     "node-novel-globby": "^2.0.6",
     "node-novel-info": "^2.3.32",
     "novel-text": "^1.1.24",
-    "regexp-cjk": "^2.0.22",
+    "regexp-cjk": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "shortid": "^2.2.14",

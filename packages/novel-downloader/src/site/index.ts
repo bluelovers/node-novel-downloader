@@ -19,7 +19,8 @@ import novelInfo, { IMdconfMeta, _handleDataForStringify } from 'node-novel-info
 export { IMdconfMeta }
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
-import fs, { trimFilename } from 'fs-iconv';
+import fs = require('fs-extra');
+import { trimFilename } from 'fs-iconv/util';
 
 import StrUtil = require('str-util');
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
@@ -341,6 +342,7 @@ export class NovelSite implements NovelSite.INovelSite
 		let md = novelInfo.stringify(mdconfig);
 
 		let file = path.join(path_novel, `README.md`);
+
 		return fs.outputFile(file, md)
 			.then(function ()
 			{

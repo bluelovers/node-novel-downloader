@@ -1,6 +1,6 @@
 import { retryRequest } from '../../fetch';
-import fs, {} from 'fs-iconv';
-import * as path from 'path';
+import fs = require('fs-extra');
+import path = require('path');
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM, packJSDOM } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
@@ -12,7 +12,7 @@ import { normalize_val } from 'node-novel-globby/lib/helper';
 import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
 
-import * as parseContentType from 'content-type-parser';
+import parseContentType = require('content-type-parser');
 import novelText from 'novel-text';
 
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';

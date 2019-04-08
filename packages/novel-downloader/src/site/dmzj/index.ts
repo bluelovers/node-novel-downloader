@@ -2,7 +2,8 @@
  * Created by user on 2017/12/6/006.
  */
 
-import fs, { trimFilename } from 'fs-iconv';
+import fs = require('fs-extra');
+import { trimFilename } from 'fs-iconv/util';
 import * as path from 'path';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
@@ -44,6 +45,7 @@ export class NovelSiteDmzj extends NovelSite
 	{
 		let url = this._makeUrl(urlobj, bool);
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
@@ -70,6 +72,7 @@ export class NovelSiteDmzj extends NovelSite
 			urlobj.chapter_id = m[3];
 		}
 
+		// @ts-ignore
 		return urlobj;
 	}
 
