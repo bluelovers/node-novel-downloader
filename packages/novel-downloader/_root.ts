@@ -2,7 +2,7 @@
  * Created by user on 2018/2/13/013.
  */
 
-import * as path from "path";
+import path = require("path");
 
 export const rootModule = path.join(__dirname, '');
 
@@ -16,5 +16,4 @@ export const disablePaths = [
 export const testPath = path.join(rootModule, 'test');
 export const tempPath = path.join(testPath, 'temp');
 
-import * as self from './_root';
-export default self;
+export default exports as typeof import('./_root');;
