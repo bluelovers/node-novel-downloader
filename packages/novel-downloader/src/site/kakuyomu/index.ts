@@ -374,6 +374,23 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 						})
 					;
 
+					$('#workMeta-flags')
+						.find('#workMeta-attention li, #workGenre > a:eq(0)')
+						.each(function ()
+						{
+							let t = $(this).text().replace(/^\s+|\s+$/g, '');
+							if (t)
+							{
+								data_meta.novel.tags.push(t);
+
+								if (t == '性描写有り')
+								{
+									data_meta.novel.tags.push(`novel18`);
+								}
+							}
+						})
+					;
+
 					$('#table-of-contents .widget-toc-workStatus span:eq(0)')
 						.each(function ()
 						{
