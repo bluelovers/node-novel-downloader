@@ -1,4 +1,5 @@
 /// <reference types="bluebird" />
+import { IMdconfMeta } from 'node-novel-info';
 import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
@@ -34,6 +35,7 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<NovelSiteDemo.IFetchChapter>;
     _novel18<T = NovelSite.IOptionsRuntime>(url: any, dom: IJSDOM, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<IJSDOM>;
     protected _getExtraInfoURL<T>(search: string, url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>): PromiseBluebird<any>;
+    protected _getExtraInfoURL2<T, M extends Partial<INovel & IMdconfMeta>>(url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>, data_meta: M): PromiseBluebird<M>;
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }
 export default NovelSiteSyosetu;

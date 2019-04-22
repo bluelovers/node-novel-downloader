@@ -399,6 +399,11 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	getExtraInfo<T, M extends Partial<INovel & IMdconfMeta>, C extends unknown>(urlobj: NovelSite.IParseUrl, optionsRuntime: T & IOptionsRuntime, data_meta?: M, cache?: C): PromiseBluebird<M>
+	{
+		throw new SyntaxError(`Function not implemented`);
+	}
+
 	protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean
 	{
 		if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
@@ -425,6 +430,7 @@ export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
 export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
+import { INovel } from './syosetu';
 
 export namespace NovelSite
 {

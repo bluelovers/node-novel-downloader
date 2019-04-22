@@ -50,6 +50,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 	{
 		// @ts-ignore
 		optionsRuntime.sessionData = optionsRuntime.sessionData || {};
+		// @ts-ignore
 		optionsRuntime.sessionData.over18 = 'yes';
 
 		/*
@@ -65,7 +66,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		//let url = optionsRuntime[SYMBOL_CACHE].url;
 
 		optionsRuntime.optionsJSDOM.cookieJar
-			//.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url.href)
+		//.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url.href)
 		;
 
 //		optionsRuntime.optionsJSDOM.runScripts = 'dangerously';
@@ -75,7 +76,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 //		if (!optionsRuntime.optionsJSDOM.requestOptions.jar)
 //		{
-			//optionsRuntime.optionsJSDOM.requestOptions.jar = optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest();
+		//optionsRuntime.optionsJSDOM.requestOptions.jar = optionsRuntime.optionsJSDOM.cookieJar.wrapForRequest();
 //		}
 
 		//optionsRuntime.optionsJSDOM.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36';
@@ -299,7 +300,10 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			})
 	}
 
-	async _novel18<T = NovelSite.IOptionsRuntime>(url, dom: IJSDOM, optionsRuntime: Partial<T & IDownloadOptions> = {}): Promise<IJSDOM>
+	async _novel18<T = NovelSite.IOptionsRuntime>(url,
+		dom: IJSDOM,
+		optionsRuntime: Partial<T & IDownloadOptions> = {},
+	): Promise<IJSDOM>
 	{
 		const $ = dom.$;
 
@@ -326,12 +330,15 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return dom;
 	}
 
-	protected _getExtraInfoURL<T>(search: string, url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>)
+	protected _getExtraInfoURL<T>(search: string,
+		url_data: NovelSite.IParseUrl,
+		optionsRuntime: Partial<T & IDownloadOptions>,
+	)
 	{
 		let optionsJSDOM = {
 			...optionsRuntime.optionsJSDOM,
 			requestOptions: {
-				...optionsRuntime.optionsJSDOM.requestOptions
+				...optionsRuntime.optionsJSDOM.requestOptions,
 			},
 		};
 
@@ -345,8 +352,86 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			: 'narou'}.${_domain}/search.php?text=${search}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsJSDOM)
 	}
 
+	protected _getExtraInfoURL2<T, M extends Partial<INovel & IMdconfMeta>>(url_data: NovelSite.IParseUrl,
+		optionsRuntime: Partial<T & IDownloadOptions>,
+		data_meta: M,
+	): PromiseBluebird<M>
+	{
+		let subdomain = url_data.novel_r18 ? 'novel18' : 'ncode';
+
+		let info_url = `https://${subdomain}.syosetu.com/novelview/infotop/ncode/${url_data.novel_id}/`;
+
+		data_meta = data_meta || ({} as M);
+
+		return fromURL(info_url, optionsRuntime.optionsJSDOM)
+			.then(function (dom)
+			{
+				let $ = dom.$;
+
+				$('#noveltable1 tr')
+					.each(function ()
+					{
+						let _tr = $(this);
+
+						let _th_text = String($('th', _tr).text());
+
+						if (_th_text.indexOf('キーワード') != -1)
+						{
+							data_meta.novel = data_meta.novel || {};
+							data_meta.novel.tags = data_meta.novel.tags || [];
+
+							let _td_text = String($('td', _tr).text())
+								.replace(/\s+/g, ' ')
+								.trim()
+							;
+
+							_td_text
+								.split(/\s+/)
+								.forEach(function (tag)
+								{
+									if (tag)
+									{
+										data_meta.novel.tags.push(tag)
+									}
+								})
+							;
+						}
+						else if (_th_text.indexOf('ジャンル') != -1)
+						{
+							data_meta.novel = data_meta.novel || {};
+							data_meta.novel.tags = data_meta.novel.tags || [];
+
+							let _td_text = String($('td', _tr).text())
+								.replace(/\s+/g, ' ')
+								.trim()
+							;
+
+							if (_td_text)
+							{
+								data_meta.novel.tags.push(_td_text)
+							}
+						}
+					})
+				;
+
+				data_meta.link = data_meta.link || [];
+
+				data_meta.link.push(`[小説情報](${dom.url})`);
+
+				return data_meta;
+			})
+			.catch(e =>
+			{
+				console.error(e);
+				console.error(`can't download novel extra info 2`);
+
+				return data_meta;
+			})
+			;
+	}
+
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
-		optionsRuntime: Partial<T & IDownloadOptions> = {}
+		optionsRuntime: Partial<T & IDownloadOptions> = {},
 	): Promise<INovel>
 	{
 		const self = this;
@@ -639,6 +724,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 						return {};
 					})
 				;
+
+				a = await self._getExtraInfoURL2(url_data, optionsRuntime, a);
 
 				let novel_series_title: string;
 				let novel_syosetu_series_id: string;
