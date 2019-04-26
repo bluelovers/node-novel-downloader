@@ -2,7 +2,7 @@
  * Created by user on 2018/4/28/028.
  */
 
-import * as StrUtil from 'str-util';
+import StrUtil = require('str-util');
 import { zhRegExp } from 'regexp-cjk';
 import { array_unique } from './util';
 

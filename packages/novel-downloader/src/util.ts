@@ -3,6 +3,7 @@
  */
 
 import novelText from 'novel-text';
+// @ts-ignore
 import { minifyHTML } from 'jsdom-extra/lib/html';
 
 export { minifyHTML }

@@ -260,7 +260,7 @@ export class NovelSite implements NovelSite.INovelSite
 	trimFilename(name): string
 	{
 		name = name
-			.replace(/[\*\?]+/g, (v) => StrUtil.toFullWidth(v))
+			.replace(/[\*\?\\\/]+/g, (v) => StrUtil.toFullWidth(v))
 		;
 
 		return trimFilename(name);

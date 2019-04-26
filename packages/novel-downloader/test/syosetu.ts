@@ -394,7 +394,9 @@ import ProjectConfig from '../_root';
 
 //		'http://ncode.syosetu.com/n7352fa/',
 
-		'http://novel18.syosetu.com/n6061cm/',
+//		'http://novel18.syosetu.com/n6061cm/',
+
+		'https://ncode.syosetu.com/n6116dk/',
 
 	],async function (value, index, array)
 	{
