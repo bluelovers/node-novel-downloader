@@ -391,12 +391,14 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 								{
 									if (tag)
 									{
-										data_meta.novel.tags.push(tag)
+										let _t = tag.split('/').map(s => s.trim());
+
+										data_meta.novel.tags.push(..._t);
 									}
 								})
 							;
 						}
-						else if (_th_text.indexOf('ジャンル') != -1)
+						else if (_th_text.indexOf('ジャンル') != -1 || _th_text.indexOf('掲載サイト') != -1)
 						{
 							data_meta.novel = data_meta.novel || {};
 							data_meta.novel.tags = data_meta.novel.tags || [];
@@ -413,6 +415,26 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 						}
 					})
 				;
+
+				let age_limit = $('#age_limit');
+
+				if (age_limit.length)
+				{
+					let _t = age_limit.text().trim();
+
+					if (_t)
+					{
+						data_meta.novel = data_meta.novel || {};
+						data_meta.novel.tags = data_meta.novel.tags || [];
+
+						data_meta.novel.tags.push(_t);
+
+						if (_t.match(/r18/i))
+						{
+							data_meta.novel.tags.push(`novel18`);
+						}
+					}
+				}
 
 				data_meta.link = data_meta.link || [];
 
