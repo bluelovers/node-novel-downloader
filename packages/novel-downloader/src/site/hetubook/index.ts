@@ -32,6 +32,7 @@ export class NovelSiteHetubook extends NovelSiteBase
 
 		url = `http://www.hetubook.com/book/${urlobj.novel_id}/${cid}`;
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
@@ -47,11 +48,14 @@ export class NovelSiteHetubook extends NovelSiteBase
 			chapter_vip: null,
 		};
 
+		// @ts-ignore
 		urlobj.url = new URL(url);
+		// @ts-ignore
 		url = urlobj.url.href;
 
 		let r = /www\.hetubook\.com\/book\/(\d+)\/(?:(\d+)|index)\.html/;
 
+		// @ts-ignore
 		let m = r.exec(url);
 		if (m)
 		{

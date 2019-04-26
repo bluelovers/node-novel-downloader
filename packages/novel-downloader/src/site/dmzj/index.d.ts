@@ -9,7 +9,11 @@ export declare class NovelSiteDmzj extends NovelSite {
     _makeUrl(urlobj: NovelSite.IParseUrl, page?: any): string;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: number): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
-    download(url: string | URL, downloadOptions?: NovelSite.IDownloadOptions): PromiseBluebird<any>;
+    download(url: string | URL, downloadOptions?: NovelSite.IDownloadOptions): PromiseBluebird<{
+        url: URL;
+        data: any;
+        value: any[];
+    }>;
     _download_info(url: URL, optionsRuntime?: Partial<NovelSite.IOptionsRuntime>): Promise<{
         url: URL;
         data: any;

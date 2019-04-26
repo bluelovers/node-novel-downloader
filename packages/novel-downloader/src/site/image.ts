@@ -2,13 +2,13 @@
  * Created by user on 2018/1/17/017.
  */
 
-import fs = require('fs-extra');
+import fs = require('fs-iconv');
 import { trimFilename } from 'fs-iconv/util';
-import * as request from 'request-promise';
+import request = require('request-promise');
 import { URL } from 'jsdom-extra';
 import Promise = require("bluebird");
 
-import * as path from 'path';
+import path = require('path');
 
 export function download_image(img: string | URL, options: {
 	name?: string,

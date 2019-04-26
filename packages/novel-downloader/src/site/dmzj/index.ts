@@ -19,6 +19,7 @@ import * as shortid from 'shortid';
 import { manyRequest } from '../../fetch';
 import { createOptionsJSDOM } from '../../jsdom';
 
+// @ts-ignore
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteDmzj>>()
 export class NovelSiteDmzj extends NovelSite
 {
@@ -76,6 +77,7 @@ export class NovelSiteDmzj extends NovelSite
 		return urlobj;
 	}
 
+	// @ts-ignore
 	download(url: string | URL, downloadOptions: NovelSite.IDownloadOptions = {})
 	{
 		const self = this;
@@ -98,7 +100,7 @@ export class NovelSiteDmzj extends NovelSite
 			.bind(self)
 			.then(async function ()
 			{
-				let _data = await self._download_info(url, optionsRuntime);
+				let _data = await self._download_info(url as any, optionsRuntime);
 
 				path_main = path.join(self.PATH_NOVEL_MAIN,
 					trimFilename(`${_data.data.g_lnovel_name}_(${_data.data.g_lnovel_id})`),
@@ -113,16 +115,21 @@ export class NovelSiteDmzj extends NovelSite
 					.mapSeries(_a, function (a, index, len)
 					{
 						let pad_len = len.toString().length > 4 ? len.toString().length : 4;
+						// @ts-ignore
 						let volume_name = a.volume_name;
 
+						// @ts-ignore
 						console.log(a.url);
 
+						// @ts-ignore
 						return self._downloadChapter(a.url, optionsRuntime)
 							.then(async function (data)
 							{
 								let _file = path.join(path_main,
+									// @ts-ignore
 									trimFilename(`${a.index_volume.toString()
 										.padStart(pad_len, '0')} ${volume_name}_(${data.data.g_volume_id})`),
+									// @ts-ignore
 									trimFilename(`${a.index.toString()
 										.padStart(pad_len, '0')}_${data.data.chapter_name}.${data.data.g_chapter_id}`)
 								);
@@ -151,8 +158,10 @@ export class NovelSiteDmzj extends NovelSite
 					})
 				;
 
+				// @ts-ignore
 				_data.checkdate = moment().tz(moment.tz.guess());
 
+				// @ts-ignore
 				_data.files = _f;
 
 				return _data;
@@ -175,6 +184,7 @@ export class NovelSiteDmzj extends NovelSite
 							self.IDKEY,
 						],
 						series: {
+							// @ts-ignore
 							name: novel.novel_series_title || '',
 						},
 					},

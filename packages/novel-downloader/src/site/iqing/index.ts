@@ -61,6 +61,7 @@ export class NovelSiteIqing extends NovelSiteBase
 			url = `https://poi.iqing.com/content/${urlobj.chapter_id}/chapter/`;
 		}
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
@@ -74,11 +75,14 @@ export class NovelSiteIqing extends NovelSiteBase
 			chapter_id: null,
 		};
 
+		// @ts-ignore
 		urlobj.url = new URL(url);
+		// @ts-ignore
 		url = urlobj.url.href;
 
 		let r = /www\.iqing\.com\/read\/(\d+)/;
 
+		// @ts-ignore
 		let m = r.exec(url);
 		if (m)
 		{
@@ -88,6 +92,7 @@ export class NovelSiteIqing extends NovelSiteBase
 		}
 
 		r = /poi\.iqing\.com\/content\/(\d+)\/chapter/;
+		// @ts-ignore
 		if (m = r.exec(url))
 		{
 			urlobj.chapter_id = m[1];
@@ -96,6 +101,7 @@ export class NovelSiteIqing extends NovelSiteBase
 		}
 
 		r = /www\.iqing\.com\/book\/(\d+)/;
+		// @ts-ignore
 		if (m = r.exec(url))
 		{
 			urlobj.novel_id = m[1];

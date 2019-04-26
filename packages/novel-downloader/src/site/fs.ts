@@ -6,7 +6,7 @@ import fs = require('fs-extra');
 import { trimFilename } from 'fs-iconv/util';
 import { isUndef } from '../util';
 import NovelSite, { IOptionsRuntime } from './index';
-import * as path from 'upath2';
+import path = require('upath2');
 
 export function padStart(id, pad = '0', len = 4): string
 {
