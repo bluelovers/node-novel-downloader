@@ -5,6 +5,7 @@
 import request = require('request-promise');
 import Promise = require('bluebird');
 import { console } from './util/log';
+import { IRequestPromise } from './util/request/create';
 
 //import fetch from 'lets-fetch';
 //fetch.retry((tries) => tries <= 3);
@@ -16,7 +17,7 @@ export interface IOptions extends request.RequestPromiseOptions
 
 	jar?,
 
-	libRequest?: (url: string, options?: IOptions) => request.RequestPromise,
+	libRequest?: ((url: string, options?: IOptions) => request.RequestPromise) | IRequestPromise,
 }
 
 export function retryRequest(url, options: IOptions = {})

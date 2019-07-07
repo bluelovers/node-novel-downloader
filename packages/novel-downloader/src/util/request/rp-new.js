@@ -1,0 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Created by user on 2019/4/28.
+ */
+const create_1 = require("./create");
+exports.request = create_1.default();
+exports.default = exports.request;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicnAtbmV3LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsicnAtbmV3LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUE7O0dBRUc7QUFDSCxxQ0FBaUU7QUFFcEQsUUFBQSxPQUFPLEdBQUcsZ0JBQW9CLEVBQUUsQ0FBQztBQUU5QyxrQkFBZSxlQUFPLENBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIENyZWF0ZWQgYnkgdXNlciBvbiAyMDE5LzQvMjguXG4gKi9cbmltcG9ydCBjcmVhdGVSZXF1ZXN0UHJvbWlzZSwgeyBJUmVxdWVzdFByb21pc2UgfSBmcm9tICcuL2NyZWF0ZSc7XG5cbmV4cG9ydCBjb25zdCByZXF1ZXN0ID0gY3JlYXRlUmVxdWVzdFByb21pc2UoKTtcblxuZXhwb3J0IGRlZmF1bHQgcmVxdWVzdFxuIl19

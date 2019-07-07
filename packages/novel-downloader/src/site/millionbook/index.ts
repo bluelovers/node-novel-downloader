@@ -31,6 +31,7 @@ export class NovelSiteClass extends NovelSiteBase
 
 		url = `http://www.millionbook.net/${urlobj.novel_pid}/${urlobj.novel_id}/${cid}`;
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
@@ -46,11 +47,14 @@ export class NovelSiteClass extends NovelSiteBase
 			chapter_vip: null,
 		};
 
+		// @ts-ignore
 		urlobj.url = new URL(url);
+		// @ts-ignore
 		url = urlobj.url.href;
 
 		let r = /www\.millionbook\.net\/([\w\/]+)\/(\w+)\/(?:(\d+)|index)\.html?/;
 
+		// @ts-ignore
 		let m = r.exec(url);
 
 		if (m)

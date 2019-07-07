@@ -17,6 +17,8 @@ import novelText from 'novel-text';
 
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
+import { stringify as mdconf_stringify } from 'mdconf2';
+
 export type IOptionsPlus = {}
 
 export type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus
@@ -178,6 +180,68 @@ export class NovelSiteDemo extends _NovelSite
 						url,
 						path_novel,
 					}))
+					.tap(ls => {
+
+						if (novel.volume_list)
+						{
+							return PromiseBluebird
+								.resolve(novel.volume_list)
+								.each((volume, vid) => {
+
+									let dirname: string;
+
+									{
+										let _vid = '';
+
+										if (!optionsRuntime.noDirPrefix)
+										{
+											_vid = vid.toString().padStart(4, '0') + '0';
+											_vid += '_';
+										}
+
+										dirname = path.join(path_novel,
+											`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
+										);
+									}
+
+									let imgs: string[] = [];
+
+									return PromiseBluebird
+										.resolve(volume.chapter_list)
+										.each(chapter => {
+											if (chapter.imgs)
+											{
+												imgs.push(...chapter.imgs);
+											}
+										})
+										.tap(() => {
+											imgs = imgs.filter(v => v);
+
+											if (imgs.length)
+											{
+												let file = path.join(dirname, 'ATTACH.md');
+
+												let images = Object
+													.entries(imgs as string[])
+													.reduce((a, [k, v]) => {
+
+														a[k.toString().padStart(3, '0')] = v;
+														return a
+											}, {} as Record<string, string>);
+
+												let md = mdconf_stringify({
+													attach: {
+														images,
+													},
+												});
+
+												return fs.outputFile(file, md);
+											}
+										})
+								})
+							;
+						}
+					})
 					.tap(ls =>
 					{
 						let file = path.join(path_novel,

@@ -42,6 +42,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     trimFilenameVolume(name: any): string;
     trimFilenameNovel(name: any): string;
     trimFilename(name: any): string;
+    trimTag(tag: any): string;
     protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown;
     protected _handleDataForStringify(...argv: any[]): IMdconfMeta;
     protected _saveReadme(optionsRuntime?: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
@@ -132,6 +133,7 @@ export declare namespace NovelSite {
         chapter_url?: any;
         chapter_url_data?: any;
         chapter_date?: moment.Moment;
+        imgs?: string[];
         [key: string]: any;
     }
     interface IVolume {

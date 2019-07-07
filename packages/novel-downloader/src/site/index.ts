@@ -266,6 +266,11 @@ export class NovelSite implements NovelSite.INovelSite
 		return trimFilename(name);
 	}
 
+	trimTag(tag): string
+	{
+		return tag;
+	}
+
 	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown
 	{
 		return void(0);
@@ -521,6 +526,8 @@ export namespace NovelSite
 		chapter_url?
 		chapter_url_data?
 		chapter_date?: moment.Moment,
+
+		imgs?: string[],
 
 		[key: string]: any,
 	}

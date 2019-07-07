@@ -265,7 +265,7 @@ export class NovelSiteTpl extends NovelSiteBase
 		let url = await this.createMainUrl(inputUrl);
 
 		// @ts-ignore
-		return await retryRequest(url, optionsRuntime.requestOptions)
+		return retryRequest(url, optionsRuntime.requestOptions)
 			.then(async function (dom)
 			{
 				const $ = dom.$;
