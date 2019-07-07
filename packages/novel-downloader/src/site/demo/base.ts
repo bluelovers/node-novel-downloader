@@ -181,66 +181,10 @@ export class NovelSiteDemo extends _NovelSite
 						path_novel,
 					}))
 					.tap(ls => {
-
-						if (novel.volume_list)
-						{
-							return PromiseBluebird
-								.resolve(novel.volume_list)
-								.each((volume, vid) => {
-
-									let dirname: string;
-
-									{
-										let _vid = '';
-
-										if (!optionsRuntime.noDirPrefix)
-										{
-											_vid = vid.toString().padStart(4, '0') + '0';
-											_vid += '_';
-										}
-
-										dirname = path.join(path_novel,
-											`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
-										);
-									}
-
-									let imgs: string[] = [];
-
-									return PromiseBluebird
-										.resolve(volume.chapter_list)
-										.each(chapter => {
-											if (chapter.imgs)
-											{
-												imgs.push(...chapter.imgs);
-											}
-										})
-										.tap(() => {
-											imgs = imgs.filter(v => v);
-
-											if (imgs.length)
-											{
-												let file = path.join(dirname, 'ATTACH.md');
-
-												let images = Object
-													.entries(imgs as string[])
-													.reduce((a, [k, v]) => {
-
-														a[k.toString().padStart(3, '0')] = v;
-														return a
-											}, {} as Record<string, string>);
-
-												let md = mdconf_stringify({
-													attach: {
-														images,
-													},
-												});
-
-												return fs.outputFile(file, md);
-											}
-										})
-								})
-							;
-						}
+						return self._outputAttach(novel, optionsRuntime, {
+							url,
+							path_novel,
+						})
 					})
 					.tap(ls =>
 					{
@@ -260,6 +204,77 @@ export class NovelSiteDemo extends _NovelSite
 				return novel;
 			})
 			;
+	}
+
+	protected async _outputAttach<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
+		url: URL,
+		path_novel: string,
+	}, ...argv)
+	{
+		const self = this;
+		const { url, path_novel } = _cache_;
+
+		if (novel.volume_list)
+		{
+			return PromiseBluebird
+				.resolve(novel.volume_list)
+				.each((volume, vid) => {
+
+					let dirname: string;
+
+					{
+						let _vid = '';
+
+						if (!optionsRuntime.noDirPrefix)
+						{
+							_vid = vid.toString().padStart(4, '0') + '0';
+							_vid += '_';
+						}
+
+						dirname = path.join(path_novel,
+							`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
+						);
+					}
+
+					let imgs: string[] = [];
+
+					return PromiseBluebird
+						.resolve(volume.chapter_list)
+						.each(chapter => {
+							if (chapter.imgs)
+							{
+								imgs.push(...chapter.imgs);
+							}
+						})
+						.tap(() => {
+							imgs = imgs.filter(v => v);
+
+							if (imgs.length)
+							{
+								let file = path.join(dirname, 'ATTACH.md');
+
+								let images = Object
+									.entries(imgs as string[])
+									.reduce((a, [k, v]) => {
+
+										a[k.toString().padStart(3, '0')] = v;
+										return a
+									}, {} as Record<string, string>);
+
+								let md = mdconf_stringify({
+									attach: {
+										images,
+									},
+								});
+
+								return fs.outputFile(file, md);
+							}
+						})
+				})
+				;
+		}
+
+		return PromiseBluebird.resolve()
 	}
 
 	protected async _processNovel<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {

@@ -33,6 +33,10 @@ export declare class NovelSiteDemo extends _NovelSite {
     checkSessionData<T = ISessionData>(data: T, optionsRuntime?: IOptionsRuntime): T;
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL, domain?: string): this;
     download(inputUrl: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<_NovelSite.INovel>;
+    protected _outputAttach<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
+        url: URL;
+        path_novel: string;
+    }, ...argv: any[]): Promise<void | _NovelSite.IVolume[]>;
     protected _processNovel<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;
         path_novel: string;
