@@ -62,10 +62,30 @@ import ProjectConfig from '../_root';
 
 //		'2541',
 
+//		'1345',
+//		'1942',
+//		'2640',
+//		'2621',
+//		'2654',
+//		'2661',
+//		'2658',
+//		'2134',
+
+//		'2615',
+//		2621,
+//		2633,
+//		2051,
+//		2676,
+//		2297,
+//		2140,
+
+//		2568,
+
+		2611,
 
 	],async function (value, index, array)
 	{
-		await Site.download(value, {
+		await Site.download(value.toString(), {
 			//disableDownload: true,
 
 //			noFirePrefix: true,
