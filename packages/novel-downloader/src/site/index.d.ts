@@ -94,6 +94,7 @@ export declare namespace NovelSite {
          * 只抓取小說的 META 資料
          */
         fetchMetaDataOnly?: boolean;
+        debugLog?: boolean;
     };
     type IOptions = {
         outputDir?: string;

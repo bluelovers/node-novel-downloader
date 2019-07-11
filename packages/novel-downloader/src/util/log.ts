@@ -11,3 +11,14 @@ export const console = new Console(null, {
 });
 
 console.enabledColor = true;
+
+export const consoleDebug = new Console(null, {
+	inspectOptions: {
+		colors: true,
+	},
+	time: true,
+});
+
+consoleDebug.enabledColor = true;
+
+consoleDebug.enabled = false;

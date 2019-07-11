@@ -58,6 +58,11 @@ export class NovelSite implements NovelSite.INovelSite
 		this.optionsInit.cwd = this.optionsInit.cwd || process.cwd();
 
 		[this.PATH_NOVEL_MAIN, this.optionsInit] = this.getOutputDir(this.optionsInit);
+
+		if (this.optionsInit.debugLog)
+		{
+			consoleDebug.enabled = true;
+		}
 	}
 
 	static create(options: NovelSite.IOptions, ...argv)
@@ -436,6 +441,7 @@ export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
 export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
 import { INovel } from './syosetu';
+import { consoleDebug } from '../util/log';
 
 export namespace NovelSite
 {
@@ -469,6 +475,8 @@ export namespace NovelSite
 		 * 只抓取小說的 META 資料
 		 */
 		fetchMetaDataOnly?: boolean,
+
+		debugLog?: boolean,
 	}
 
 	export type IOptions = {

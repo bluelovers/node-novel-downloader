@@ -28,7 +28,7 @@ export import INovel = _NovelSite.INovel;
 
 import { ResponseRequest } from 'request';
 
-import { console } from '../../util/log';
+import { console, consoleDebug } from '../../util/log';
 
 export type IFetchChapter = {
 	body?: any;
@@ -477,6 +477,8 @@ export class NovelSiteDemo extends _NovelSite
 	{
 		return PromiseBluebird.resolve().then(async function ()
 		{
+			consoleDebug.debug(`fetchChapter`, url.toString());
+
 			let ret = {} as IFetchChapter;
 
 			let opts = getOptions(optionsRuntime);

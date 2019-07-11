@@ -24,7 +24,7 @@ import ProjectConfig from '../_root';
 
 		'http://ncode.syosetu.com/n1745ct/',
 
-//		'https://ncode.syosetu.com/n3512ds/',
+		'https://ncode.syosetu.com/n3512ds/',
 
 		//'https://novel18.syosetu.com/n1413cw/',
 
@@ -419,8 +419,6 @@ import ProjectConfig from '../_root';
 //		'n1695cq',
 //
 //		'http://ncode.syosetu.com/n0708cs/',
-//
-//		'https://ncode.syosetu.com/n3512ds/',
 //
 //		'https://ncode.syosetu.com/n2654ev/',
 //		'https://ncode.syosetu.com/n7857eu/',

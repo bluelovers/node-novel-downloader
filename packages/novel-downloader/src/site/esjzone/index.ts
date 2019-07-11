@@ -18,22 +18,31 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-@staticImplements<NovelSite.INovelSiteStatic<NovelSiteNovelba>>()
-export class NovelSiteNovelba extends NovelSiteDemo
+@staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
+export class NovelSiteESJZone extends NovelSiteDemo
 {
-	public static readonly IDKEY = 'novelba';
+	public static readonly IDKEY = 'esjzone';
 
 	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 	{
-		return /novelba\.com/i.test(new URL(url).hostname || '');
+		return /esjzone\.cc/i.test(new URL(url).hostname || '');
 	}
 
 	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
 	{
-		let pad = (!bool && urlobj.chapter_id) ? '/episodes/' + urlobj.chapter_id : '';
+		let pad: string;
+
+		if (!bool && urlobj.chapter_id)
+		{
+			pad = `forum/${urlobj.novel_id}/${urlobj.chapter_id}.html`
+		}
+		else
+		{
+			pad = `detail/${urlobj.novel_id}.html`
+		}
 
 		// @ts-ignore
-		return new URL(`https://novelba.com/works/${urlobj.novel_id}${pad}`);
+		return new URL(`https://www.esjzone.cc/${pad}`);
 	}
 
 	parseUrl(url: string | URL): NovelSite.IParseUrl
@@ -77,11 +86,19 @@ export class NovelSiteNovelba extends NovelSiteDemo
 			return urlobj;
 		}
 
-		r = /novelba\.com\/works\/(\d+)(?:\/(?:episodes\/(\d+)))?/g;
+		r = /esjzone\.cc\/forum\/(\d+)(?:\.html|\/(\d+).html)/g;
 		if (m = r.exec(url))
 		{
 			urlobj.novel_id = m[1];
 			urlobj.chapter_id = m[2];
+
+			return urlobj;
+		}
+
+		r = /esjzone\.cc\/detail\/(\d+)(?:\.html)?/g;
+		if (m = r.exec(url))
+		{
+			urlobj.novel_id = m[1];
 
 			return urlobj;
 		}
@@ -98,24 +115,51 @@ export class NovelSiteNovelba extends NovelSiteDemo
 
 		try
 		{
-			let html = minifyHTML(ret.dom.$('.episode_box').html());
+			let html = minifyHTML(ret.dom.$('.container .row:has(.forum-content)').html());
 
-			ret.dom.$('.episode_box').html(html);
+			ret.dom.$('.container .row:has(.forum-content)').html(html);
 		}
 		catch (e)
 		{
 
 		}
 
-		return ret.dom.$('.episode_section .episode_box .detail')
-			.html(function (index, old)
-			{
-				return old.replace(/(?<=\<br\>)\r?\n?/ig, '\n')
-			})
+		ret.dom.$('p[class]:has(> script), .adsbygoogle').remove();
+
+		_p_2_br('.forum-content > p', ret.dom.$);
+
+		let elem = ret.dom.$('.container .forum-content');
+
+		elem.html(function (i, old: string)
+		{
+			return old
+				.replace(/(\<br\>){3,4}/g, '$1')
+				.replace(/(?<=\<br\>)(?=[^\n])/g, '\n')
+		});
+
+		let title = trim(ret.dom.$('.container .row > div > h3').text());
+
+		let txt: string = elem
 			.text()
+			.replace(/^由於百度 2017 年以前的貼文都刪了|所以不清楚是由哪位大佬翻譯|若轉載的動作冒犯了您，先跟您說聲抱歉！|也麻煩留言告知，我們會將此文下架|由譯者授權轉載！|原文網址：[^\n]+$/uigm, '')
 			.replace(/^\s+|\s+$/g, '')
-			;
 		;
+
+		if (txt.indexOf(title + '\n') === 0)
+		{
+			txt = txt.slice(title.length + 1)
+				.replace(/^\n+/g, '')
+			;
+		}
+
+		let html = elem.html();
+
+//		throw console.dir({
+//			html,
+//			txt,
+//		});
+
+		return txt
 	}
 
 	async get_volume_list<T extends IOptionsRuntime>(url: string | URL,
@@ -131,30 +175,18 @@ export class NovelSiteNovelba extends NovelSiteDemo
 			{
 				const $ = dom.$;
 
-				$('.work_section .summary_box a.more').click();
-
 				try
 				{
-					let html = minifyHTML(dom.$('.summary_box .detail').html());
+					let html = minifyHTML(dom.$('.product-detail').html());
 
-					dom.$('.summary_box .detail').html(html);
+					dom.$('.product-detail').html(html);
 				}
 				catch (e)
 				{
 
 				}
 
-				let novel_title = dom.$('.work_section .info_list .title').text();
-				let novel_author = dom.$('.work_section .info_list .author a').text();
-
-				let novel_desc: string;
-
-				novel_desc = $('.work_section .summary_box .detail')
-					.text()
-					.replace(/^[ \xa0]+/gm, '')
-					.replace(/[ \t　\xa0]+$/gm, '')
-					.replace(/\s+$/g, '')
-				;
+				let novel_title = dom.$('.container .row > div > h3').text();
 
 				let novel_publisher = self.IDKEY;
 
@@ -165,11 +197,25 @@ export class NovelSiteNovelba extends NovelSiteDemo
 				const novelTree = optionsRuntime.novelTree;
 				let currentVolume: TreeNode<IRowVolume>;
 
-				let table = dom.$('.episode_box').find('.episode_list > li');
+				let table = dom.$('.product-detail .tabbable .tab-content.show-desc').find('a');
 
 				let _cache_dates = [];
 
 				let total_idx = 0;
+
+				{
+					let volume_title = 'null';
+					let volume_level = null;
+
+					currentVolume = novelTree.addVolume({
+						volume_title,
+						volume_level,
+						volume_index: novelTree.root().size(),
+						total_idx: total_idx++,
+					});
+				}
+
+				dom.$('p[class]:has(> script[src*=google]), div[class]:has(> script[src*=google]), .adsbygoogle').remove();
 
 				table
 					.each(function (index)
@@ -178,46 +224,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 
 						if (1)
 						{
-							if (!currentVolume)
-							{
-								/*
-								currentVolume = volume_list[volume_list.length] = {
-									volume_index: volume_list.length,
-									volume_title: 'null',
-									chapter_list: [],
-								};
-								*/
-
-								let volume_title = 'null';
-								let volume_level = null;
-
-								currentVolume = novelTree.addVolume({
-									volume_title,
-									volume_level,
-									volume_index: novelTree.root().size(),
-									total_idx: total_idx++,
-								});
-							}
-
-							let a = tr.find('a:eq(0)');
-
-							let chapter_date;
-							let dd;
-							let da = a.find('.update');
-
-							if (da.length)
-							{
-								dd = da.find('time').text();
-
-								da.remove();
-							}
-
-							if (dd)
-							{
-								chapter_date = moment(dd, ['YYYY/MM/DD']).local();
-								_cache_dates.push(chapter_date.unix());
-							}
-
+							let a = tr;
 							let chapter_title = trim(a.text(), true);
 
 							let href = a.prop('href');
@@ -226,7 +233,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 
 							if (!data.chapter_id)
 							{
-								throw new Error()
+								return;
 							}
 							else
 							{
@@ -240,7 +247,6 @@ export class NovelSiteNovelba extends NovelSiteDemo
 								chapter_id: data.chapter_id,
 								chapter_url: href,
 								chapter_url_data: data,
-								chapter_date,
 								chapter_index: currentVolume.size(),
 								total_idx: total_idx++,
 							};
@@ -250,27 +256,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 					})
 				;
 
-				_cache_dates.sort();
-
-				let novel_date = moment.unix(_cache_dates[_cache_dates.length - 1]).local();
-
 				let data_meta: IMdconfMeta = {};
-
-				{
-					data_meta.novel = {};
-					data_meta.novel.tags = [];
-
-					$('.work_section .keyword_list a')
-						.each(function ()
-						{
-							let t = $(this).text().replace(/^\s+|\s+$/g, '');
-							if (t)
-							{
-								data_meta.novel.tags.push(t);
-							}
-						})
-					;
-				}
 
 				return {
 
@@ -280,10 +266,6 @@ export class NovelSiteNovelba extends NovelSiteDemo
 					url_data,
 
 					novel_title,
-					novel_author,
-
-					novel_desc,
-					novel_date,
 					novel_publisher,
 
 					//volume_list,
@@ -299,4 +281,28 @@ export class NovelSiteNovelba extends NovelSiteDemo
 
 }
 
-export default NovelSiteNovelba;
+export default NovelSiteESJZone;
+
+function _p_2_br(target, $)
+{
+	return $(target)
+		.each(function ()
+		{
+			let _this = $(this);
+
+			let _html = _this
+				.html()
+				.replace(/(?:&nbsp;?)/g, ' ')
+				.replace(/[\xA0\s]+$/g, '')
+			;
+
+			if (_html == '<br/>' || _html == '<br>')
+			{
+				_html = '';
+			}
+
+			_this.after(`${_html}<br/>`);
+			_this.remove()
+		})
+		;
+}

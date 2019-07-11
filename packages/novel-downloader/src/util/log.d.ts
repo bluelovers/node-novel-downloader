@@ -3,3 +3,4 @@
  */
 import { Console } from 'debug-color2';
 export declare const console: Console;
+export declare const consoleDebug: Console;
