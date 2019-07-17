@@ -25,6 +25,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 	{
+		// @ts-ignore
 		return /esjzone\.cc/i.test(new URL(url).hostname || '');
 	}
 
@@ -141,7 +142,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 		let txt: string = elem
 			.text()
-			.replace(/^由於百度 2017 年以前的貼文都刪了|所以不清楚是由哪位大佬翻譯|若轉載的動作冒犯了您，先跟您說聲抱歉！|也麻煩留言告知，我們會將此文下架|由譯者授權轉載！|原文網址：[^\n]+$/uigm, '')
+			.replace(/^(?:由於百度 2017 年以前的貼文都刪了|所以不清楚是由哪位大佬翻譯|若轉載的動作冒犯了您，先跟您說聲抱歉！|也麻煩留言告知，我們會將此文下架|已?由?譯者授權轉載！?|原文網址：[^\n]+)$/uigm, '')
 			.replace(/^\s+|\s+$/g, '')
 		;
 
@@ -218,9 +219,9 @@ export class NovelSiteESJZone extends NovelSiteDemo
 				dom.$('p[class]:has(> script[src*=google]), div[class]:has(> script[src*=google]), .adsbygoogle').remove();
 
 				table
-					.each(function (index)
+					.each(function (index, elem)
 					{
-						let tr = dom.$(this);
+						let tr = dom.$(elem);
 
 						if (1)
 						{
@@ -286,9 +287,9 @@ export default NovelSiteESJZone;
 function _p_2_br(target, $)
 {
 	return $(target)
-		.each(function ()
+		.each(function (i, elem)
 		{
-			let _this = $(this);
+			let _this = $(elem);
 
 			let _html = _this
 				.html()

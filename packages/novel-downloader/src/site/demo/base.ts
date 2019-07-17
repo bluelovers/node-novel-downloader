@@ -158,7 +158,7 @@ export class NovelSiteDemo extends _NovelSite
 
 		return PromiseBluebird
 			.bind(self)
-			.then(async function ()
+			.then(async () =>
 			{
 				url = await this.createMainUrl(url);
 

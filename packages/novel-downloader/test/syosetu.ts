@@ -406,7 +406,7 @@ import ProjectConfig from '../_root';
 
 //		'https://novel18.syosetu.com/n8321do/',
 
-//		'http://ncode.syosetu.com/n1896dc/',
+		'http://ncode.syosetu.com/n1896dc/',
 
 //		'http://ncode.syosetu.com/n1745ct/',
 
@@ -448,7 +448,15 @@ import ProjectConfig from '../_root';
 
 		//'https://ncode.syosetu.com/n2027ci/',
 
-		'https://ncode.syosetu.com/n8864fc'
+		'https://ncode.syosetu.com/n8864fc',
+
+		'http://ncode.syosetu.com/n2163n/',
+
+		'https://ncode.syosetu.com/n1619dr/',
+
+		'https://ncode.syosetu.com/n6093en/',
+
+		'https://ncode.syosetu.com/n1321ez/',
 
 
 	],async function (value, index, array)

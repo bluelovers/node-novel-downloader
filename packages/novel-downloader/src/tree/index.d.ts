@@ -42,7 +42,7 @@ export declare class NovelTree {
         depth?: number;
     };
     constructor(initData?: Partial<IRowRoot>);
-    root(): Node<IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>>;
+    root(): Node<IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>>;
     addVolume<U extends IRowVolume>(value: U, root?: Node): Node<U>;
     addChapter<U extends IRowChapter>(value: U, root?: Node): Node<U>;
     static isVolume(node: Node): node is Node<IRowVolume>;
@@ -51,7 +51,7 @@ export declare class NovelTree {
     static isChapter(node: IRowChapter): node is IRowChapter;
     protected _fixRow<U extends Node<IRowVolume | IRowChapter>>(node: U): U;
     protected _getRoot<U extends Node<IRowRoot | IRowVolume | IRowChapter>>(root: U): U;
-    toJSON(): Node<IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>> & {
+    toJSON(): Node<IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>> & {
         parent: string | number;
         children: any[];
     };
@@ -59,7 +59,7 @@ export declare class NovelTree {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
-        content: IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>;
+        content: IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
     }[];
 }
 export default NovelTree;

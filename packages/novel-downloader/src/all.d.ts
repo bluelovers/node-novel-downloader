@@ -6,6 +6,7 @@ export declare enum EnumNovelSiteList {
     NovelSiteDemoTree = "./site/demo/tree",
     NovelSiteDmzjApi = "./site/dmzj/api",
     NovelSiteDmzj = "./site/dmzj",
+    NovelSiteEsjzone = "./site/esjzone",
     NovelSiteHetubook = "./site/hetubook",
     NovelSiteIqing = "./site/iqing",
     NovelSiteKakuyomu = "./site/kakuyomu",
@@ -22,6 +23,7 @@ export declare enum EnumNovelSiteList {
     'demo/tree' = "./site/demo/tree",
     'dmzj/api' = "./site/dmzj/api",
     'dmzj' = "./site/dmzj",
+    'esjzone' = "./site/esjzone",
     'hetubook' = "./site/hetubook",
     'iqing' = "./site/iqing",
     'kakuyomu' = "./site/kakuyomu",
@@ -38,6 +40,7 @@ export declare enum EnumNovelSiteList {
     './site/demo/tree' = "./site/demo/tree",
     './site/dmzj/api' = "./site/dmzj/api",
     './site/dmzj' = "./site/dmzj",
+    './site/esjzone' = "./site/esjzone",
     './site/hetubook' = "./site/hetubook",
     './site/iqing' = "./site/iqing",
     './site/kakuyomu' = "./site/kakuyomu",
@@ -56,6 +59,7 @@ export interface INovelSiteList {
     NovelSiteDemoTree: typeof import('./site/demo/tree').default;
     NovelSiteDmzjApi: typeof import('./site/dmzj/api').default;
     NovelSiteDmzj: typeof import('./site/dmzj').default;
+    NovelSiteEsjzone: typeof import('./site/esjzone').default;
     NovelSiteHetubook: typeof import('./site/hetubook').default;
     NovelSiteIqing: typeof import('./site/iqing').default;
     NovelSiteKakuyomu: typeof import('./site/kakuyomu').default;
@@ -73,6 +77,7 @@ export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSit
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteDemoTree | 'demo/tree'): INovelSiteList["NovelSiteDemoTree"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteDmzjApi | 'dmzj/api'): INovelSiteList["NovelSiteDmzjApi"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteDmzj | 'dmzj'): INovelSiteList["NovelSiteDmzj"];
+export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteEsjzone | 'esjzone'): INovelSiteList["NovelSiteEsjzone"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteHetubook | 'hetubook'): INovelSiteList["NovelSiteHetubook"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteIqing | 'iqing'): INovelSiteList["NovelSiteIqing"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteKakuyomu | 'kakuyomu'): INovelSiteList["NovelSiteKakuyomu"];

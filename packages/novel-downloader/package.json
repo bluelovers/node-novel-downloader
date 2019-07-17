@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.2.25",
+  "version": "1.2.26",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -40,6 +40,7 @@
     "test": "test"
   },
   "scripts": {
+    "build:site:list": "ts-node ./script/create-site-list",
     "build:dts-bundle": "node ./test/dts-bundle.js",
     "build:typedoc": "typedoc --options ./typedoc.config.js",
     "check-updates": "npx npm-check-updates -u",
