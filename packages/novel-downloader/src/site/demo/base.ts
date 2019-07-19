@@ -8,6 +8,10 @@ import { getFilePath } from '../fs';
 
 import { getOptions } from '../../jsdom';
 import { normalize_val } from 'node-novel-globby/lib/helper';
+import { globbyASync } from 'node-novel-globby/g';
+import { lazyAnalyzeReportAll, lazyAnalyzeAll, dummyCache, analyzeJa002, handleJa002 } from '@node-novel/layout-reporter';
+import { outputBlock002, outputJa002 } from '@node-novel/layout-reporter/lib/md';
+
 
 import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
@@ -180,7 +184,8 @@ export class NovelSiteDemo extends _NovelSite
 						url,
 						path_novel,
 					}))
-					.tap(ls => {
+					.tap(ls =>
+					{
 						return self._outputAttach(novel, optionsRuntime, {
 							url,
 							path_novel,
@@ -189,7 +194,7 @@ export class NovelSiteDemo extends _NovelSite
 					.tap(ls =>
 					{
 						let file = path.join(path_novel,
-							`${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`
+							`${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`,
 							)
 						;
 
@@ -200,6 +205,40 @@ export class NovelSiteDemo extends _NovelSite
 				;
 
 				await self._saveReadme(optionsRuntime);
+
+				let _cache = dummyCache();
+
+				await globbyASync([
+					'**/*.txt',
+				], {
+					cwd: path_novel,
+				})
+					.mapSeries(async (file) =>
+					{
+						let _p = path.parse(file);
+						const _cache_key_ = path.join(_p.dir, _p.name);
+
+						await fs
+							.readFile(path.join(path_novel, file))
+							.then(buf =>
+							{
+								analyzeJa002({
+									input: buf.toString(),
+									_cache_key_,
+									_cache,
+								});
+							})
+						;
+					})
+					.tap(async () => {
+
+						let md = outputJa002({
+							inputData: _cache.ja2,
+						});
+
+						return fs.outputFile(path.join(path_novel, 'ja2.md'), md)
+					})
+				;
 
 				return novel;
 			})
@@ -218,7 +257,8 @@ export class NovelSiteDemo extends _NovelSite
 		{
 			return PromiseBluebird
 				.resolve(novel.volume_list)
-				.each((volume, vid) => {
+				.each((volume, vid) =>
+				{
 
 					let dirname: string;
 
@@ -232,7 +272,7 @@ export class NovelSiteDemo extends _NovelSite
 						}
 
 						dirname = path.join(path_novel,
-							`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
+							`${_vid}${self.trimFilenameVolume(volume.volume_title)}`,
 						);
 					}
 
@@ -240,13 +280,15 @@ export class NovelSiteDemo extends _NovelSite
 
 					return PromiseBluebird
 						.resolve(volume.chapter_list)
-						.each(chapter => {
+						.each(chapter =>
+						{
 							if (chapter.imgs)
 							{
 								imgs.push(...chapter.imgs);
 							}
 						})
-						.tap(() => {
+						.tap(() =>
+						{
 							imgs = imgs.filter(v => v);
 
 							if (imgs.length)
@@ -255,7 +297,8 @@ export class NovelSiteDemo extends _NovelSite
 
 								let images = Object
 									.entries(imgs as string[])
-									.reduce((a, [k, v]) => {
+									.reduce((a, [k, v]) =>
+									{
 
 										a[k.toString().padStart(3, '0')] = v;
 										return a
@@ -302,7 +345,7 @@ export class NovelSiteDemo extends _NovelSite
 					}
 
 					dirname = path.join(path_novel,
-						`${_vid}${self.trimFilenameVolume(volume.volume_title)}`
+						`${_vid}${self.trimFilenameVolume(volume.volume_title)}`,
 					);
 				}
 
@@ -313,7 +356,7 @@ export class NovelSiteDemo extends _NovelSite
 					let bool = volume.chapter_list.every(function (chapter, j)
 					{
 						let m = (optionsRuntime.filePrefixMode > 3 ?
-							chapter.chapter_title : normalize_val(chapter.chapter_title)
+								chapter.chapter_title : normalize_val(chapter.chapter_title)
 							)
 							.replace(/^\D+/, '')
 							//.replace(/^(\d+).+$/, '$1')
@@ -426,7 +469,7 @@ export class NovelSiteDemo extends _NovelSite
 			{
 				return ret as any as T;
 			})
-		;
+			;
 	}
 
 	processNovel<T>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
@@ -450,7 +493,7 @@ export class NovelSiteDemo extends _NovelSite
 					ret,
 				};
 			})
-		;
+			;
 	}
 
 	protected _stripContent(text: string)

@@ -448,13 +448,13 @@ import ProjectConfig from '../_root';
 
 		//'https://ncode.syosetu.com/n2027ci/',
 
-		'https://ncode.syosetu.com/n8864fc',
-
-		'http://ncode.syosetu.com/n2163n/',
-
-		'https://ncode.syosetu.com/n1619dr/',
-
-		'https://ncode.syosetu.com/n6093en/',
+//		'https://ncode.syosetu.com/n8864fc',
+//
+//		'http://ncode.syosetu.com/n2163n/',
+//
+//		'https://ncode.syosetu.com/n1619dr/',
+//
+//		'https://ncode.syosetu.com/n6093en/',
 
 		'https://ncode.syosetu.com/n1321ez/',
 
