@@ -9,6 +9,7 @@ import console from '../lib/log';
 import PACKAGE_JSON = require('../package.json');
 import updateNotifier = require('update-notifier');
 import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
+import { isNpx } from '@yarn-tool/is-npx';
 
 let cli = yargs
 	.option('outputDir', {
@@ -78,7 +79,12 @@ interface ICliArgv
 
 let url: string = cli._[0];
 
-checkUpdateSelf().notify();
+if (!isNpx({
+	__dirname
+}))
+{
+	checkUpdateSelf().notify();
+}
 
 if (!url)
 {

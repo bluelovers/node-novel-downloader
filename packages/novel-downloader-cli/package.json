@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader-cli",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "novel-downloader 的 CLI 版本",
   "keywords": [
     "acg",
@@ -39,27 +39,33 @@
     "test": "test"
   },
   "scripts": {
-    "test": "ts-node ./bin/novel-downloader-cli \"http://ncode.syosetu.com/n0611em/\""
+    "coverage": "npx nyc yarn run test",
+    "lint": "npx eslint **/*.ts",
+    "ncu": "npx yarn-tool ncu -u",
+    "npm:publish": "npm publish",
+    "prepublishOnly": "yarn run ncu && yarn run sort-package-json && yarn run test",
+    "postpublish": "git commit -m \"publish new version\" .",
+    "sort-package-json": "npx sort-package-json ./package.json",
+    "test": "ts-node ./bin/novel-downloader-cli \"http://ncode.syosetu.com/n0611em/\"",
+    "tsc:default": "tsc -p tsconfig.json",
+    "tsc:esm": "tsc -p tsconfig.esm.json"
   },
   "dependencies": {
+    "@yarn-tool/is-npx": "^1.0.0",
     "array-hyper-unique": "^1.0.7",
-    "bluebird": "^3.5.4",
-    "cross-spawn-extra": "^1.0.5",
-    "debug-color2": "^1.0.7",
+    "bluebird": "^3.5.5",
+    "cross-spawn-extra": "^1.0.6",
+    "debug-color2": "^1.1.6",
     "diff": "^4.0.1",
-    "dotenv": "^7.0.0",
-    "fast-glob": "^2.2.6",
-    "fs-extra": "^7.0.1",
-    "hash-sum": "^1.0.2",
     "moment": "^2.24.0",
     "node-alias": "^1.0.4",
     "node-novel-info": "^2.3.33",
-    "novel-downloader": "^1.2.23",
-    "update-notifier": "^2.5.0",
-    "yargs": "^13.2.2"
+    "novel-downloader": "^1.2.27",
+    "update-notifier": "^3.0.1",
+    "yargs": "^13.3.0"
   },
   "devDependencies": {
-    "@types/node": "^11.13.7",
+    "@types/node": "^12.6.8",
     "@types/yargs": "^13.0.0"
   }
 }
