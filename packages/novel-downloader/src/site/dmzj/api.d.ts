@@ -8,6 +8,7 @@ import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
 export declare class NovelSiteTpl extends NovelSiteBase {
     static readonly IDKEY: string;
+    static check(url: string | URL | _NovelSite.IParseUrl, options?: any): boolean;
     makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;

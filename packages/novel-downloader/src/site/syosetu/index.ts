@@ -101,6 +101,24 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			return ret.body;
 		}
 
+		const $ = ret.dom.$;
+
+		$('#novel_p, #novel_honbun, #novel_a')
+			.find('img[src]')
+			.each(function (i, elem)
+			{
+				let img = $(elem);
+				let src = img.prop('src');
+
+				cache.chapter.imgs = cache.chapter.imgs || [];
+
+				// @ts-ignore
+				cache.chapter.imgs.push(src);
+				// @ts-ignore
+				cache.novel.imgs.push(src);
+			})
+		;
+
 		return [
 			ret.dom.$('#novel_p').text(),
 			ret.dom.$('#novel_honbun').text(),
@@ -371,6 +389,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 				$('#noveltable1 tr')
 					.each(function ()
 					{
+						// @ts-ignore
 						let _tr = $(this);
 
 						let _th_text = String($('th', _tr).text());
@@ -460,7 +479,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		url = await this.createMainUrl(url as any);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				return self._novel18<T>(url, dom, optionsRuntime);
@@ -516,6 +535,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('.chapter_title'))
@@ -581,6 +601,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 								console.log(data);
 								console.log(href);
 								console.log(a.attr('href'));
+								// @ts-ignore
 								console.log(new URL(href, dom.url));
 
 								console.log(dom._options);

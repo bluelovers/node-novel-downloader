@@ -85,6 +85,7 @@
   },
   "devDependencies": {
     "@bluelovers/tsconfig": "^1.0.12",
+    "@types/bluebird": "^3.5.27",
     "@types/fs-extra": "^8.0.0",
     "@types/request-promise": "^4",
     "bluebird-decorator": "^1",

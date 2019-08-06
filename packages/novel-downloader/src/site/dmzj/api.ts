@@ -27,6 +27,12 @@ export class NovelSiteTpl extends NovelSiteBase
 {
 	public static readonly IDKEY = path.basename(__dirname);
 
+	static check(url: string | URL | _NovelSite.IParseUrl, options?): boolean
+	{
+		// @ts-ignore
+		return /dmzj\.com/i.test(new URL(url).hostname || '');
+	}
+
 	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
 	{
 		let url: string;
@@ -228,16 +234,18 @@ export class NovelSiteTpl extends NovelSiteBase
 
 			ret.dom.$('img[src]').each(function ()
 			{
+				// @ts-ignore
 				cache.chapter.imgs.push($(this).prop('src'));
+				// @ts-ignore
 				cache.novel.imgs.push($(this).prop('src'));
 			});
 		}
 
 		text = this._stripContent(text);
 
-		let sp = '[  　]*';
+		let sp = '[\u00a0 　]*';
 
-		let r = new zhRegExp(`^[  　\\s]*${escapeRegexp(cache.volume.volume_title)}${sp}${escapeRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
+		let r = new zhRegExp(`^[\u00a0 　\\s]*${escapeRegexp(cache.volume.volume_title)}${sp}${escapeRegexp(cache.chapter.chapter_title)}${sp}`, 'ig');
 
 		text = text
 			.replace(r, '')

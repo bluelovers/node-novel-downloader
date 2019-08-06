@@ -57,4 +57,6 @@ export function escapeRegexp(str: string)
 	return str.replace(/[|\\{}()\[\]^$+*?.\/]/g, '\\$&');
 }
 
+
+
 export default exports as typeof import('./util');

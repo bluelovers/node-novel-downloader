@@ -16,6 +16,7 @@ import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM
 
 export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM }
 import novelInfo, { IMdconfMeta, _handleDataForStringify } from 'node-novel-info';
+
 export { IMdconfMeta }
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
@@ -93,7 +94,7 @@ export class NovelSite implements NovelSite.INovelSite
 	}
 
 	get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
-		optionsRuntime: Partial<T & NovelSite.IDownloadOptions> = {}
+		optionsRuntime: Partial<T & NovelSite.IDownloadOptions> = {},
 	): Promise<NovelSite.INovel>
 	{
 		throw new SyntaxError(`Function not implemented`);
@@ -132,7 +133,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return novel.url_data.novel_id;
 	}
 
-	getPathNovel<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(PATH_NOVEL_MAIN: string, novel: N, optionsRuntime: T)
+	getPathNovel<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(PATH_NOVEL_MAIN: string,
+		novel: N,
+		optionsRuntime: T,
+	)
 	{
 		let name: string;
 
@@ -273,12 +277,17 @@ export class NovelSite implements NovelSite.INovelSite
 
 	trimTag(tag): string
 	{
-		return tag;
+		return (tag as string)
+			.replace(/[\[\]\/\\]/g, (s) =>
+			{
+				return StrUtil.toFullWidth(s)
+			})
+			;
 	}
 
 	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown
 	{
-		return void(0);
+		return void (0);
 	}
 
 	protected _handleDataForStringify(...argv): IMdconfMeta
@@ -297,7 +306,8 @@ export class NovelSite implements NovelSite.INovelSite
 					'书籍化',
 					'文庫化',
 					'文库化',
-				].some(v => {
+				].some(v =>
+				{
 					return mdconf.novel.tags.includes(v)
 				});
 
@@ -409,7 +419,11 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	getExtraInfo<T, M extends Partial<INovel & IMdconfMeta>, C extends unknown>(urlobj: NovelSite.IParseUrl, optionsRuntime: T & IOptionsRuntime, data_meta?: M, cache?: C): PromiseBluebird<M>
+	getExtraInfo<T, M extends Partial<INovel & IMdconfMeta>, C extends unknown>(urlobj: NovelSite.IParseUrl,
+		optionsRuntime: T & IOptionsRuntime,
+		data_meta?: M,
+		cache?: C,
+	): PromiseBluebird<M>
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -589,7 +603,7 @@ export namespace NovelSite
 
 export interface Type<T>
 {
-	new (options: NovelSite.IOptions, ...args: any[]): T;
+	new(options: NovelSite.IOptions, ...args: any[]): T;
 }
 
 export function staticImplements<T>()

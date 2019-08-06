@@ -19,6 +19,9 @@ import * as shortid from 'shortid';
 import { manyRequest } from '../../fetch';
 import { createOptionsJSDOM } from '../../jsdom';
 
+/**
+ * @deprecated
+ */
 // @ts-ignore
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteDmzj>>()
 export class NovelSiteDmzj extends NovelSite
@@ -53,6 +56,7 @@ export class NovelSiteDmzj extends NovelSite
 	parseUrl(url: string | URL): NovelSite.IParseUrl
 	{
 		let urlobj = {
+			// @ts-ignore
 			url: new URL(url),
 
 			novel_id: null,
@@ -375,7 +379,7 @@ export class NovelSiteDmzj extends NovelSite
 
 		let $;
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async (dom) =>
 			{
 				let window = dom.window as {
@@ -478,6 +482,7 @@ export class NovelSiteDmzj extends NovelSite
 					{
 						_img.each(function (index, elem)
 						{
+							// @ts-ignore
 							let _this = $(this);
 
 							if (_this.prop('src'))
@@ -487,8 +492,10 @@ export class NovelSiteDmzj extends NovelSite
 								_c[id] = _this.prop('src');
 								_data.imgs.push(_c[id]);
 
+								// @ts-ignore
 								$(`<span>{{@${id}@}}</span>`).insertAfter(this);
 
+								// @ts-ignore
 								$(this)
 									.remove()
 								;

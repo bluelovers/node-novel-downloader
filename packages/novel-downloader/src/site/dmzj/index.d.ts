@@ -4,6 +4,9 @@
 /// <reference types="bluebird" />
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
+/**
+ * @deprecated
+ */
 export declare class NovelSiteDmzj extends NovelSite {
     static IDKEY: string;
     _makeUrl(urlobj: NovelSite.IParseUrl, page?: any): string;
