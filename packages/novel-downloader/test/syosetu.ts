@@ -458,6 +458,14 @@ import ProjectConfig from '../_root';
 
 		'https://ncode.syosetu.com/n1321ez/',
 
+		'https://ncode.syosetu.com/n6339do/',
+
+		'https://ncode.syosetu.com/n4942cw/',
+
+		'http://ncode.syosetu.com/n9016cm/',
+
+		'https://ncode.syosetu.com/n1785ek/',
+
 
 	],async function (value, index, array)
 	{

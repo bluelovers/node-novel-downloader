@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.2.28",
+  "version": "1.2.29",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -58,7 +58,7 @@
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
   "dependencies": {
-    "@node-novel/layout-reporter": "^1.0.2",
+    "@node-novel/layout-reporter": "^1.0.3",
     "bluebird": "^3.5.5",
     "cached-request": "^2.0.1",
     "content-type-parser": "^1.0.2",
@@ -76,7 +76,7 @@
     "node-novel-globby": "^2.0.9",
     "node-novel-info": "^2.3.33",
     "novel-text": "^1.1.25",
-    "regexp-cjk": "^3.3.7",
+    "regexp-cjk": "^3.3.8",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "shortid": "^2.2.14",
