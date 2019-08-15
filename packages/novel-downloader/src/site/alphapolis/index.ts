@@ -47,16 +47,34 @@ export class NovelSiteClass extends NovelSiteBase
 			chapter_vip: null,
 		};
 
-		// @ts-ignore
-		urlobj.url = new URL(url);
-		// @ts-ignore
-		url = urlobj.url.href;
+		try
+		{
+			// @ts-ignore
+			urlobj.url = new URL(url);
+			// @ts-ignore
+			url = urlobj.url.href;
+		}
+		catch (e)
+		{
+
+		}
 
 		let r = /alphapolis\.co\.jp\/novel\/([^\/]+)\/([^\/]+)(?:\/episode\/([^\/]+))?/;
 
 		let m = r.exec(url as string);
 
 		if (m)
+		{
+			urlobj.novel_pid = m[1];
+			urlobj.novel_id = m[2];
+			urlobj.chapter_id = m[3];
+
+			return urlobj;
+		}
+
+		r = /novel\/([^\/]+)\/([^\/]+)(?:\/episode\/([^\/]+))?/;
+
+		if (m = r.exec(url as string))
 		{
 			urlobj.novel_pid = m[1];
 			urlobj.novel_id = m[2];
@@ -115,7 +133,7 @@ export class NovelSiteClass extends NovelSiteBase
 		const self = this;
 		let url = await this.createMainUrl(inputUrl);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -137,6 +155,7 @@ export class NovelSiteClass extends NovelSiteBase
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('h3'))
@@ -148,6 +167,75 @@ export class NovelSiteClass extends NovelSiteBase
 								volume_title: title,
 								chapter_list: [],
 							};
+						}
+						else if (tr.is('.chapter-rental'))
+						{
+							let title = novelText.trim(trim(tr.find('h3').text())) || 'null';
+
+							currentVolume = volume_list[volume_list.length] = {
+								volume_index: volume_list.length,
+								volume_title: title,
+								chapter_list: [],
+							};
+						}
+						else if (tr.is('.rental'))
+						{
+							if (!currentVolume)
+							{
+								currentVolume = volume_list[volume_list.length] = {
+									volume_index: volume_list.length,
+									volume_title: 'null',
+									chapter_list: [],
+								};
+							}
+
+							tr.find('.rental-episode')
+								.each(function ()
+								{
+									// @ts-ignore
+									let item = dom.$(this);
+
+									let a = item.find('a:has(> h3)');
+
+									let href = a.prop('href') || a.attr('data-href') || a.attr('href');
+
+									let data = self.parseUrl(href);
+
+									if (!data.chapter_id)
+									{
+										//console.log(href, data);
+										//console.log(item.html());
+										//console.log(a.html());
+
+										throw new Error(`發生錯誤 無法解析章節網址`)
+									}
+									else
+									{
+										href = self.makeUrl(data);
+
+										data.url = href;
+									}
+
+									let chapter_title = trim(a.find('> h3').text());
+
+									if (!chapter_title)
+									{
+										console.log(href);
+										console.log(a);
+										throw new Error()
+									}
+
+									currentVolume
+										.chapter_list
+										.push({
+											chapter_index: currentVolume.chapter_list.length,
+											chapter_title,
+											chapter_id: data.chapter_id,
+											chapter_url: href,
+											chapter_url_data: data,
+										})
+									;
+								})
 						}
 						else if (tr.is('.episode'))
 						{
@@ -287,6 +375,7 @@ export class NovelSiteClass extends NovelSiteBase
 				$('#main .content-tags .tag > a')
 					.each(function ()
 					{
+						// @ts-ignore
 						data.novel.tags.push(trim($(this).text()))
 					})
 				;

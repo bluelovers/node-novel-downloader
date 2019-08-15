@@ -18,7 +18,9 @@ import ProjectConfig from '../_root';
 	console.log(Site);
 
 	Promise.mapSeries([
-		'https://www.alphapolis.co.jp/novel/979291234/759157420',
+//		'https://www.alphapolis.co.jp/novel/979291234/759157420',
+
+		'https://www.alphapolis.co.jp/novel/675104537/65069615',
 
 	],async function (value, index, array)
 	{
