@@ -32,6 +32,7 @@ export function download_image(img: string | URL, options: {
 		throw new Error();
 	}
 
+	// @ts-ignore
 	let url = new URL(img);
 
 	let filename = options.name || path.basename(url.href);

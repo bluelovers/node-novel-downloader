@@ -2,6 +2,7 @@
  * Created by user on 2018/3/18/018.
  */
 
+import StrUtil = require('str-util');
 import novelText from 'novel-text';
 // @ts-ignore
 import { minifyHTML } from 'jsdom-extra/lib/html';
@@ -57,6 +58,9 @@ export function escapeRegexp(str: string)
 	return str.replace(/[|\\{}()\[\]^$+*?.\/]/g, '\\$&');
 }
 
-
+export function _fixVolumeChapterName(name: string)
+{
+	return name.replace(/[?@!$#\\\/<>\[\]{}()*]+/g, s => StrUtil.toFullWidth(s))
+}
 
 export default exports as typeof import('./util');

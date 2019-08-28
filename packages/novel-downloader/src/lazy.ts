@@ -17,6 +17,7 @@ export function searchSiteID(url: string | URL | NovelSite.IParseUrl)
 	let href: string;
 	try
 	{
+		// @ts-ignore
 		let uo = new URL(url);
 		href = uo.href;
 	}

@@ -132,7 +132,7 @@ import ProjectConfig from '../_root';
 
 		//'http://ncode.syosetu.com/n2435cr',
 
-		//'http://ncode.syosetu.com/n1592db/',
+		'http://ncode.syosetu.com/n1592db/',
 
 		//'https://ncode.syosetu.com/n2880eh/',
 
@@ -398,7 +398,7 @@ import ProjectConfig from '../_root';
 
 //		'https://ncode.syosetu.com/n6116dk/',
 
-//		'https://ncode.syosetu.com/n3148ex/',
+		'https://ncode.syosetu.com/n3148ex/',
 
 //		'http://ncode.syosetu.com/n6849da/',
 
@@ -410,7 +410,7 @@ import ProjectConfig from '../_root';
 
 //		'http://ncode.syosetu.com/n1745ct/',
 
-//		'https://ncode.syosetu.com/n4912do/',
+		'https://ncode.syosetu.com/n4912do/',
 
 //		'https://ncode.syosetu.com/n2360eu/',
 
@@ -426,7 +426,7 @@ import ProjectConfig from '../_root';
 //		'https://ncode.syosetu.com/n3170ed/',
 //		'https://ncode.syosetu.com/n5298fh/',
 //
-//		'http://ncode.syosetu.com/n4072er',
+		'http://ncode.syosetu.com/n4072er',
 
 //		'n7787eq',
 //
@@ -436,7 +436,7 @@ import ProjectConfig from '../_root';
 //
 //		'https://ncode.syosetu.com/n2665dw/',
 //
-//		'https://ncode.syosetu.com/n5694fk/',
+		'https://ncode.syosetu.com/n5694fk/',
 
 //		'http://ncode.syosetu.com/n4936dp/',
 
@@ -458,7 +458,7 @@ import ProjectConfig from '../_root';
 
 		'https://ncode.syosetu.com/n1321ez/',
 
-		'https://ncode.syosetu.com/n6339do/',
+//		'https://ncode.syosetu.com/n6339do/',
 
 		'https://ncode.syosetu.com/n4942cw/',
 
@@ -466,6 +466,15 @@ import ProjectConfig from '../_root';
 
 		'https://ncode.syosetu.com/n1785ek/',
 
+		'https://ncode.syosetu.com/n7709cn',
+
+		'https://ncode.syosetu.com/n1474fh/',
+
+		'http://ncode.syosetu.com/n3771ci/',
+
+		'https://ncode.syosetu.com/n5298fh/',
+
+		'https://ncode.syosetu.com/n8304fa/',
 
 	],async function (value, index, array)
 	{

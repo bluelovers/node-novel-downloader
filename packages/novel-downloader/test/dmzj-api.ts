@@ -28,7 +28,7 @@ import ProjectConfig from '../_root';
 
 		//'1279',
 
-//		'2440',
+		'2440',
 
 		//'http://q.dmzj.com/2476/index.shtml',
 
@@ -95,7 +95,7 @@ import ProjectConfig from '../_root';
 
 		2656,
 
-
+		2471,
 
 	],async function (value, index, array)
 	{

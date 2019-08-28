@@ -28,7 +28,7 @@ import { EnumNovelStatus } from 'node-novel-info/lib/const';
 
 //import * as moment from 'moment';
 import moment = require('moment-timezone');
-import { isUndef } from '../util';
+import { _fixVolumeChapterName, isUndef } from '../util';
 
 import EventEmitter = require('events');
 import { IDownloadOptions } from './demo/base';
@@ -268,11 +268,7 @@ export class NovelSite implements NovelSite.INovelSite
 
 	trimFilename(name): string
 	{
-		name = name
-			.replace(/[\*\?\\\/]+/g, (v) => StrUtil.toFullWidth(v))
-		;
-
-		return trimFilename(name);
+		return trimFilename(_fixVolumeChapterName(name));
 	}
 
 	trimTag(tag): string
