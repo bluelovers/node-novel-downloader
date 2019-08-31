@@ -48,6 +48,14 @@ let cli = yargs
 		desc: `小說目錄樣式 0 = 預設 , 1 = 小說 ID`,
 		type: "number",
 	})
+	.option('crlf', {
+		desc: `使用 crlf 作為 換行`,
+		type: 'boolean',
+	})
+	.option('debug', {
+		desc: `debugLog`,
+		type: 'boolean',
+	})
 	.option('startIndex', {
 		type: "number",
 	})
@@ -75,6 +83,10 @@ interface ICliArgv
 	startIndex?: number,
 
 	pathNovelStyle?: EnumPathNovelStyle,
+
+	crlf?: boolean,
+
+	debug?: boolean,
 }
 
 let url: string = cli._[0];
@@ -143,6 +155,9 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	downloadOptions.filePrefixMode = cli.filePrefixMode;
 	downloadOptions.startIndex = cli.startIndex;
 	downloadOptions.pathNovelStyle = cli.pathNovelStyle;
+
+	downloadOptions.lineBreakCrlf = cli.crlf;
+	downloadOptions.debugLog = cli.debug;
 
 	siteOptions.outputDir = cli.outputDir;
 

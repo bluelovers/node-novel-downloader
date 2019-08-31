@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader-cli",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "novel-downloader 的 CLI 版本",
   "keywords": [
     "acg",
@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@yarn-tool/is-npx": "^1.0.0",
-    "array-hyper-unique": "^1.0.7",
+    "array-hyper-unique": "^1.1.0",
     "bluebird": "^3.5.5",
     "cross-spawn-extra": "^1.0.6",
     "debug-color2": "^1.1.6",
@@ -60,12 +60,12 @@
     "moment": "^2.24.0",
     "node-alias": "^1.0.4",
     "node-novel-info": "^2.3.33",
-    "novel-downloader": "^1.2.27",
+    "novel-downloader": "^1.2.31",
     "update-notifier": "^3.0.1",
-    "yargs": "^13.3.0"
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.6.8",
-    "@types/yargs": "^13.0.0"
+    "@types/node": "^12.7.3",
+    "@types/yargs": "^13.0.2"
   }
 }

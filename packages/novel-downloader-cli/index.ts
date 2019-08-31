@@ -19,7 +19,7 @@ export function createSite<T extends NovelSite, O extends NovelSite.IOptions>(si
 	return new o(options);
 }
 
-export function download<O extends NovelSite.IDownloadOptions, O2 extends NovelSite.IOptions>(url: string,
+export function download<O extends NovelSite.IDownloadOptions = NovelSite.IDownloadOptions, O2 extends NovelSite.IOptions = NovelSite.IOptions>(url: string,
 	downloadOptions?: O & {
 		[k: string]: any
 	},
