@@ -21,7 +21,7 @@ import novelText from 'novel-text';
 
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
-import { stringify as mdconf_stringify } from 'mdconf2';
+import { stringify as mdconf_stringify, parse as mdconf_parse } from 'mdconf2';
 
 export type IOptionsPlus = {}
 
@@ -33,6 +33,7 @@ export import INovel = _NovelSite.INovel;
 import { ResponseRequest } from 'request';
 
 import { console, consoleDebug } from '../../util/log';
+import { hashSum } from '../../util/hash';
 
 export type IFetchChapter = {
 	body?: any;
@@ -257,6 +258,8 @@ export class NovelSiteDemo extends _NovelSite
 
 		if (novel.volume_list)
 		{
+			const { keepImage = false } = optionsRuntime;
+
 			return PromiseBluebird
 				.resolve(novel.volume_list)
 				.each((volume, vid) =>
@@ -282,14 +285,14 @@ export class NovelSiteDemo extends _NovelSite
 
 					return PromiseBluebird
 						.resolve(volume.chapter_list)
-						.each(chapter =>
+						.each(async (chapter) =>
 						{
 							if (chapter.imgs)
 							{
 								imgs.push(...chapter.imgs);
 							}
 						})
-						.tap(() =>
+						.tap(async () =>
 						{
 							imgs = imgs.filter(v => v);
 
@@ -297,20 +300,45 @@ export class NovelSiteDemo extends _NovelSite
 							{
 								let file = path.join(dirname, 'ATTACH.md');
 
-								let images = Object
+								let md_data = {
+									attach: {
+										images: {} as Record<string, string>,
+									},
+								};
+
+								if (keepImage)
+								{
+									await fs.readFile(file)
+										.then(v => mdconf_parse(v))
+										.then((data: typeof md_data) => {
+											data.attach = data.attach || {} as any;
+											data.attach.images = data.attach.images || {};
+
+											md_data = data;
+
+											consoleDebug.debug(`Load data from exists ATTACH.md`)
+										})
+										.catch(null)
+								}
+
+								md_data.attach.images = Object
 									.entries(imgs as string[])
 									.reduce((a, [k, v]) =>
 									{
 
-										a[k.toString().padStart(3, '0')] = v;
-										return a
-									}, {} as Record<string, string>);
+										if (keepImage)
+										{
+											a[hashSum(v)] = v;
+										}
+										else
+										{
+											a[k.toString().padStart(3, '0')] = v;
+										}
 
-								let md = mdconf_stringify({
-									attach: {
-										images,
-									},
-								});
+										return a
+									}, md_data.attach.images);
+
+								let md = mdconf_stringify(md_data);
 
 								return fs.outputFile(file, md);
 							}

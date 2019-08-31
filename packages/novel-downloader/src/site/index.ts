@@ -503,6 +503,9 @@ import { consoleDebug } from '../util/log';
 
 export namespace NovelSite
 {
+
+	export type IFilePrefixMode = 0 | 1 | 2 | 3 | 4 | 5;
+
 	export type IOptionsPlus = {
 
 		disableOutputDirPrefix?: boolean,
@@ -516,7 +519,7 @@ export namespace NovelSite
 		retryDelay?: number,
 		startIndex?: number,
 
-		filePrefixMode?: number,
+		filePrefixMode?: number | IFilePrefixMode,
 
 		allowEmptyVolumeTitle?: boolean,
 
@@ -537,6 +540,21 @@ export namespace NovelSite
 		debugLog?: boolean,
 
 		lineBreakCrlf?: boolean,
+
+		/**
+		 * 保留注音格式
+		 */
+		keepRuby?: boolean;
+		/**
+		 * 保留其他格式
+		 */
+		keepFormat?: boolean;
+
+		/**
+		 * 在內文原始位置上保留圖片
+		 */
+		keepImage?: boolean;
+
 	}
 
 	export type IOptions = {

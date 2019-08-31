@@ -78,6 +78,7 @@ export import IChapter = NovelSite.IChapter;
 export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
 import { INovel } from './syosetu';
 export declare namespace NovelSite {
+    type IFilePrefixMode = 0 | 1 | 2 | 3 | 4 | 5;
     type IOptionsPlus = {
         disableOutputDirPrefix?: boolean;
         noDirPrefix?: boolean;
@@ -86,7 +87,7 @@ export declare namespace NovelSite {
         noFilePadend?: boolean;
         retryDelay?: number;
         startIndex?: number;
-        filePrefixMode?: number;
+        filePrefixMode?: number | IFilePrefixMode;
         allowEmptyVolumeTitle?: boolean;
         event?: EventEmitter;
         /**
@@ -101,6 +102,18 @@ export declare namespace NovelSite {
         fetchMetaDataOnly?: boolean;
         debugLog?: boolean;
         lineBreakCrlf?: boolean;
+        /**
+         * 保留注音格式
+         */
+        keepRuby?: boolean;
+        /**
+         * 保留其他格式
+         */
+        keepFormat?: boolean;
+        /**
+         * 在內文原始位置上保留圖片
+         */
+        keepImage?: boolean;
     };
     type IOptions = {
         outputDir?: string;

@@ -1,3 +1,4 @@
+/// <reference types="jquery" />
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { retryRequest } from '../../fetch';
 
@@ -19,6 +20,8 @@ import NovelSiteDemo = require('../demo/base');
 import novelText from 'novel-text';
 
 import { console } from '../../util/log';
+import { _keepImageInContext, keepFormatTag } from '../../util/html';
+import { hashSum } from '../../util/hash';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -101,10 +104,13 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			return ret.body;
 		}
 
-		const $ = ret.dom.$;
+		const $: JQueryStatic = ret.dom.$;
 
-		$('#novel_p, #novel_honbun, #novel_a')
+		let _imgs = $('#novel_p, #novel_honbun, #novel_a')
 			.find('img[src]')
+		;
+
+		_imgs
 			.each(function (i, elem)
 			{
 				let img = $(elem);
@@ -119,11 +125,23 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			})
 		;
 
-		return [
-			ret.dom.$('#novel_p').text(),
-			ret.dom.$('#novel_honbun').text(),
-			ret.dom.$('#novel_a').text(),
-		].filter(function (v)
+		if (optionsRuntime.keepImage)
+		{
+			_keepImageInContext(_imgs, $);
+		}
+
+		let bodys: JQuery[] = [
+			$('#novel_p'),
+			$('#novel_honbun'),
+			$('#novel_a'),
+		];
+
+		bodys.forEach(t => keepFormatTag(t, {
+			$,
+			optionsRuntime,
+		}));
+
+		return bodys.map(v => v.text()).filter(function (v)
 		{
 			return v;
 		}).join('\n\n==================\n\n');
