@@ -90,6 +90,14 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			urlobj.chapter_id = m[3];
 		}
 
+		r = /^(\d+)$/;
+		if (m = r.exec(url))
+		{
+			urlobj.novel_id = m[1];
+
+			return urlobj;
+		}
+
 		return urlobj;
 	}
 
@@ -139,6 +147,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 
 		ret.dom.$('#content img[src]').each(function ()
 		{
+			// @ts-ignore
 			let src = ret.dom.$(this).prop('src').trim();
 
 			if (src)
@@ -162,7 +171,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		const self = this;
 		let url = await this.createMainUrl(inputUrl);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -183,6 +192,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 					.find('td.vcss, td.ccss')
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('.vcss'))

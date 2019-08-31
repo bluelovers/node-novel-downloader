@@ -19,7 +19,7 @@ import { moment } from '../index';
 import NovelSiteDemo = require('../demo/base');
 import novelText from 'novel-text';
 
-import { console } from '../../util/log';
+import { console, consoleDebug } from '../../util/log';
 import { _keepImageInContext, keepFormatTag } from '../../util/html';
 import { hashSum } from '../../util/hash';
 
@@ -481,8 +481,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			})
 			.catch(e =>
 			{
-				console.error(e);
-				console.error(`can't download novel extra info 2`);
+				consoleDebug.gray.error(e);
+				console.warn(`下載小說資訊時發生錯誤 (2)，此錯誤訊息可以無視`);
 
 				return data_meta;
 			})
@@ -779,8 +779,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					})
 					.catch(function (e)
 					{
-						console.error(e);
-						console.error(`can't download novel extra info`);
+						consoleDebug.gray.error(e);
+						console.warn(`下載小說資訊時發生錯誤 (1)，此錯誤訊息可以無視`);
 
 						return {};
 					})
