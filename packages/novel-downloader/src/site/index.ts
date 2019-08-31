@@ -176,11 +176,13 @@ export class NovelSite implements NovelSite.INovelSite
 				throw: false,
 			});
 
+			consoleDebug.debug('檢查 README.md 是否存在下載設定');
+
 			if (conf && conf.options)
 			{
 				if (conf.options.downloadOptions || conf.options.downloadoptions)
 				{
-					//console.log('載入已存在的設定', conf.options.downloadOptions);
+					consoleDebug.debug('載入並且合併已存在的設定', conf.options.downloadOptions);
 
 					Object.entries(conf.options.downloadOptions || conf.options.downloadoptions)
 						.forEach(function ([k, v])
@@ -364,6 +366,8 @@ export class NovelSite implements NovelSite.INovelSite
 		let md = novelInfo.stringify(mdconfig);
 
 		let file = path.join(path_novel, `README.md`);
+
+		consoleDebug.debug(`save README.md`);
 
 		return fs.outputFile(file, md)
 			.then(function ()

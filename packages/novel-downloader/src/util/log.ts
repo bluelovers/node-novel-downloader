@@ -17,6 +17,7 @@ export const consoleDebug = new Console(null, {
 		colors: true,
 	},
 	time: true,
+	label: true,
 });
 
 consoleDebug.enabledColor = true;

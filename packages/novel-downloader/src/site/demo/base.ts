@@ -171,6 +171,8 @@ export class NovelSiteDemo extends _NovelSite
 
 				self.session(optionsRuntime, url);
 
+				consoleDebug.info('分析章節列表', url.toString());
+
 				let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
 				let path_novel = self.getPathNovel(PATH_NOVEL_MAIN, novel, optionsRuntime);
@@ -379,6 +381,8 @@ export class NovelSiteDemo extends _NovelSite
 					);
 				}
 
+				consoleDebug.debug(vid, volume.volume_title);
+
 				if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2)
 				{
 					let i: number;
@@ -453,6 +457,8 @@ export class NovelSiteDemo extends _NovelSite
 							volume, vid,
 						}, optionsRuntime);
 
+						consoleDebug.debug(vid, cid, chapter.chapter_title);
+
 						if (self._checkExists(optionsRuntime, file))
 						{
 							return file;
@@ -513,6 +519,8 @@ export class NovelSiteDemo extends _NovelSite
 	{
 		// @ts-ignore
 		let pr: any;
+
+		consoleDebug.info('開始處理小說');
 
 		pr = optionsRuntime.fetchMetaDataOnly ? [] : this._processNovel<T>(novel, optionsRuntime, _cache_, ...argv);
 
@@ -628,6 +636,9 @@ export class NovelSiteDemo extends _NovelSite
 				'noFilePadend',
 				'filePrefixMode',
 				'startIndex',
+				'keepRuby',
+				'keepFormat',
+				'keepImage',
 			])
 			{
 				if ((k in optionsRuntime) && typeof optionsRuntime[k] !== 'undefined')

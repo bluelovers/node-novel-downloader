@@ -383,9 +383,13 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		let _domain = 1 ? 'nar.jp' : 'dip.jp';
 
-		return fromURL(`https://${url_data.novel_r18
+		let _url = `https://${url_data.novel_r18
 			? 'narou18'
-			: 'narou'}.${_domain}/search.php?text=${search}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`, optionsJSDOM)
+			: 'narou'}.${_domain}/search.php?text=${search}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`;
+
+		consoleDebug.debug(`試圖取得小說相關資訊 (1)`, _url);
+
+		return fromURL(_url, optionsJSDOM)
 	}
 
 	protected _getExtraInfoURL2<T, M extends Partial<INovel & IMdconfMeta>>(url_data: NovelSite.IParseUrl,
@@ -398,6 +402,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		let info_url = `https://${subdomain}.syosetu.com/novelview/infotop/ncode/${url_data.novel_id}/`;
 
 		data_meta = data_meta || ({} as M);
+
+		consoleDebug.debug(`試圖取得小說相關資訊 (2)`, info_url);
 
 		return fromURL(info_url, optionsRuntime.optionsJSDOM)
 			.then(function (dom)
@@ -481,7 +487,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			})
 			.catch(e =>
 			{
-				consoleDebug.gray.error(e);
+				consoleDebug.gray.error(e.toString());
 				console.warn(`下載小說資訊時發生錯誤 (2)，此提醒訊息可以無視`);
 
 				return data_meta;
@@ -497,6 +503,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		url = await this.createMainUrl(url as any);
 
+		consoleDebug.debug(`get_volume_list`, url.toString());
+
 		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
@@ -504,6 +512,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			})
 			.then(async function (dom: IJSDOM)
 			{
+				consoleDebug.debug(`開始處理小說資訊以及章節列表`);
+
 				let novel_title = dom.$('.novel_title').text();
 				let novel_author = novelText.trim(dom
 					.$('.novel_writername a, .novel_writername')
@@ -779,7 +789,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					})
 					.catch(function (e)
 					{
-						consoleDebug.gray.error(e);
+						consoleDebug.gray.error(e.toString());
 						console.warn(`下載小說資訊時發生錯誤 (1)，此提醒訊息可以無視`);
 
 						return {};
@@ -822,6 +832,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 						}
 					}
 				}
+
+				consoleDebug.debug(`結束處理小說資訊以及章節列表`);
 
 				return {
 
