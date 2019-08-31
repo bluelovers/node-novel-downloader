@@ -10,6 +10,9 @@ import PACKAGE_JSON = require('../package.json');
 import updateNotifier = require('update-notifier');
 import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
 import { isNpx } from '@yarn-tool/is-npx';
+import { ITSPartialPick } from 'ts-type';
+import NovelSiteSyosetu, { IOptionsPlus as IOptionsPlusNovelSiteSyosetu } from 'novel-downloader/src/site/syosetu/index';
+
 
 let cli = yargs
 	.option('outputDir', {
@@ -36,12 +39,15 @@ let cli = yargs
 		type: "boolean",
 	})
 	.option('noFirePrefix', {
+		desc: `不生成檔名前綴`,
 		type: "boolean",
 	})
 	.option('noFilePadend', {
+		desc: `不生成檔名後綴(例如時間日期那些，可用來保持檔案只有一個版本ˋ)`,
 		type: "boolean",
 	})
 	.option('filePrefixMode', {
+		desc: `更改檔名前綴風格 0 | 1 | 2 | 3 | 4 | 5`,
 		type: "number",
 	})
 	.option('pathNovelStyle', {
@@ -56,8 +62,28 @@ let cli = yargs
 		desc: `debugLog`,
 		type: 'boolean',
 	})
+	.option('fetchMetaDataOnly', {
+		desc: `只抓取小說的 META 資料`,
+		type: 'boolean',
+	})
+	.option('disableCheckExists', {
+		desc: `不檢查章節是否已經下載過`,
+		type: 'boolean',
+	})
 	.option('startIndex', {
 		type: "number",
+	})
+	.option('keepRuby', {
+		desc: `保留 Ruby 注音語法`,
+		type: 'boolean',
+	})
+	.option('keepFormat', {
+		desc: `保留其他格式語法`,
+		type: 'boolean',
+	})
+	.option('keepImage', {
+		desc: `在內文原始位置上保留圖片`,
+		type: 'boolean',
 	})
 	.command('list', '顯示出目前的模組名稱', function (args)
 	{
@@ -70,19 +96,9 @@ let cli = yargs
 	.argv as Arguments<ICliArgv>
 ;
 
-interface ICliArgv
+interface ICliArgv extends ITSPartialPick<IOptionsPlusNovelSiteSyosetu, 'disableTxtdownload'>, ITSPartialPick<NovelSite.IDownloadOptions, 'disableDownload' | 'noFirePrefix' | 'noFilePadend' | 'filePrefixMode' | 'startIndex' | 'pathNovelStyle' | 'disableCheckExists' | 'fetchMetaDataOnly' | 'keepRuby' | 'keepFormat' | 'keepImage'>, ITSPartialPick<NovelSite.IOptions, 'outputDir'>
 {
 	siteID?: EnumNovelSiteList,
-	outputDir?: string,
-	disableTxtdownload?: boolean,
-	disableDownload?: boolean,
-
-	noFirePrefix?: boolean,
-	noFilePadend?: boolean,
-	filePrefixMode?: number,
-	startIndex?: number,
-
-	pathNovelStyle?: EnumPathNovelStyle,
 
 	crlf?: boolean,
 
@@ -155,9 +171,15 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	downloadOptions.filePrefixMode = cli.filePrefixMode;
 	downloadOptions.startIndex = cli.startIndex;
 	downloadOptions.pathNovelStyle = cli.pathNovelStyle;
+	downloadOptions.disableCheckExists = cli.disableCheckExists;
+	downloadOptions.fetchMetaDataOnly = cli.fetchMetaDataOnly;
 
 	downloadOptions.lineBreakCrlf = cli.crlf;
 	downloadOptions.debugLog = cli.debug;
+
+	downloadOptions.keepFormat = cli.keepFormat;
+	downloadOptions.keepRuby = cli.keepRuby;
+	downloadOptions.keepImage = cli.keepImage;
 
 	siteOptions.outputDir = cli.outputDir;
 

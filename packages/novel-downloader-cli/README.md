@@ -23,6 +23,7 @@
 ## 安裝
 
 > 此步驟可以省略，但如果進行此步驟則可以加快開啟速度
+> 一但使用此指令，日後有新版時需要自行手動升級
 
 ```bash
 npm install -g novel-downloader-cli
@@ -32,6 +33,32 @@ npm install -g novel-downloader-cli
 
 ```bash
 npx novel-downloader-cli help
+```
+
+```
+Options:
+  --help                Show help                                      [boolean]
+  --version             Show version number                            [boolean]
+  --outputDir, -o       用來儲存下載的內容的主資料夾
+                                                [string] [default: "G:\Users\The
+       Project\nodejs-yarn\node-novel-downloader\packages\novel-downloader-cli"]
+  --siteID, -s          網站模組名稱                                    [string]
+  --disableTxtdownload  此選項目前僅適用於 Syosetu 小說家網站
+                                                       [boolean] [default: true]
+  --disableDownload     不下載小說內容僅生成檔案結構                   [boolean]
+  --noFirePrefix        不生成檔名前綴                                 [boolean]
+  --noFilePadend        不生成檔名後綴(例如時間日期那些，可用來保持檔案只有一個
+                        版本ˋ)                                         [boolean]
+  --filePrefixMode      更改檔名前綴風格 0 | 1 | 2 | 3 | 4 | 5          [number]
+  --pathNovelStyle      小說目錄樣式 0 = 預設 , 1 = 小說 ID             [number]
+  --crlf                使用 crlf 作為 換行                            [boolean]
+  --debug               debugLog                                       [boolean]
+  --fetchMetaDataOnly   只抓取小說的 META 資料                         [boolean]
+  --disableCheckExists  不檢查章節是否已經下載過                       [boolean]
+  --startIndex                                                          [number]
+  --keepRuby            保留 Ruby 注音語法                                   [boolean]
+  --keepFormat          保留其他格式語法                                   [boolean]
+  --keepImage           在內文原始位置上保留圖片                       [boolean]
 ```
 
 ## 下載小說
