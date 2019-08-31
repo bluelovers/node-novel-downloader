@@ -482,7 +482,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			.catch(e =>
 			{
 				consoleDebug.gray.error(e);
-				console.warn(`下載小說資訊時發生錯誤 (2)，此錯誤訊息可以無視`);
+				console.warn(`下載小說資訊時發生錯誤 (2)，此提醒訊息可以無視`);
 
 				return data_meta;
 			})
@@ -780,7 +780,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					.catch(function (e)
 					{
 						consoleDebug.gray.error(e);
-						console.warn(`下載小說資訊時發生錯誤 (1)，此錯誤訊息可以無視`);
+						console.warn(`下載小說資訊時發生錯誤 (1)，此提醒訊息可以無視`);
 
 						return {};
 					})

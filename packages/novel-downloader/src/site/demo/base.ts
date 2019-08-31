@@ -318,7 +318,7 @@ export class NovelSiteDemo extends _NovelSite
 
 											consoleDebug.debug(`Load data from exists ATTACH.md`)
 										})
-										.catch(null)
+										.catch(e => null)
 								}
 
 								md_data.attach.images = Object
