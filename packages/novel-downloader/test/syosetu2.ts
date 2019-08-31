@@ -52,6 +52,8 @@ import * as path from 'path';
 			keepRuby: true,
 			keepImage: true,
 
+			debugLog: true,
+
 		}).then(function (novel)
 		{
 			console.log(novel);
