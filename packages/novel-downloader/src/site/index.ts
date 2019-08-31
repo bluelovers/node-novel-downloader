@@ -22,7 +22,7 @@ import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
 import fs = require('fs-extra');
 import { trimFilename } from 'fs-iconv/util';
-
+import { crlf, CRLF, R_CRLF } from 'crlf-normalize';
 import StrUtil = require('str-util');
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 
@@ -248,6 +248,12 @@ export class NovelSite implements NovelSite.INovelSite
 		// @ts-ignore
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
+
+		if (optionsRuntime.debugLog != null)
+		{
+			optionsRuntime.debugLog = !!optionsRuntime.debugLog;
+		}
+
 		return optionsRuntime;
 	}
 
@@ -444,6 +450,48 @@ export class NovelSite implements NovelSite.INovelSite
 		let bool = event.emit(eventName, this, ...argv);
 		return [event, bool];
 	}
+
+	_saveFile<T = NovelSite.IOptionsRuntime>(opts: {
+		file: string,
+		context: string | Buffer,
+		optionsRuntime: T & NovelSite.IOptionsRuntime,
+	})
+	{
+		return PromiseBluebird.resolve()
+			.bind(this)
+			.then(() => {
+				let { file, context, optionsRuntime } = opts;
+
+				if (optionsRuntime.lineBreakCrlf)
+				{
+					let txt1 = context.toString();
+
+					if (R_CRLF.test(txt1))
+					{
+						let txt2 = crlf(txt1, CRLF);
+
+						if (txt1 !== txt2)
+						{
+							context = txt2;
+						}
+
+						txt1 = null;
+						txt2 = null;
+					}
+				}
+
+				if (optionsRuntime.debugLog)
+				{
+					let file2 = path.relative(optionsRuntime.outputDir, file)
+
+					consoleDebug.log(`save`, file2);
+				}
+
+				return fs.outputFile(file, context)
+			})
+		;
+	}
+
 }
 
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
@@ -487,6 +535,8 @@ export namespace NovelSite
 		fetchMetaDataOnly?: boolean,
 
 		debugLog?: boolean,
+
+		lineBreakCrlf?: boolean,
 	}
 
 	export type IOptions = {

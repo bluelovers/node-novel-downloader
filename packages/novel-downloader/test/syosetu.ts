@@ -196,7 +196,7 @@ import ProjectConfig from '../_root';
 
 //		'https://ncode.syosetu.com/n3722ev/',
 
-		//'https://ncode.syosetu.com/n8577dn/',
+		'https://ncode.syosetu.com/n8577dn/',
 
 		//'http://ncode.syosetu.com/n1136bt/',
 

@@ -241,7 +241,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 		//console.log(optionsRuntime);
 
 		return PromiseBluebird
-			.mapSeries(treeList.slice(1), async function (listRow)
+			.mapSeries(treeList.slice(1), async (listRow) =>
 			{
 				let nodeChapter = listRow[SYMBOL_NODE] as TreeNode<IRowChapter>;
 				let ntype = nodeChapter.get('type');
@@ -316,9 +316,13 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 						return text;
 					})
-					.then(async function (text: string)
+					.then(async (text: string) =>
 					{
-						await fs.outputFile(file, text);
+						await this._saveFile({
+							file,
+							context: text,
+							optionsRuntime,
+						});
 
 						return text;
 					})

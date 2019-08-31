@@ -160,6 +160,8 @@ export class NovelSiteDemo extends _NovelSite
 
 		const [PATH_NOVEL_MAIN, optionsRuntime] = this.getOutputDir<IOptionsRuntime & IDownloadOptions>(downloadOptions);
 
+		consoleDebug.enabled = optionsRuntime.debugLog;
+
 		return PromiseBluebird
 			.bind(self)
 			.then(async () =>
@@ -331,7 +333,7 @@ export class NovelSiteDemo extends _NovelSite
 		let { url, path_novel } = _cache_;
 
 		return PromiseBluebird
-			.mapSeries(novel.volume_list, function (volume, vid)
+			.mapSeries(novel.volume_list, (volume, vid) =>
 			{
 				let dirname: string;
 
@@ -407,7 +409,7 @@ export class NovelSiteDemo extends _NovelSite
 				}
 
 				return PromiseBluebird
-					.mapSeries(volume.chapter_list, async function (chapter, cid)
+					.mapSeries(volume.chapter_list, async (chapter, cid) =>
 					{
 						//chapter.chapter_index = (idx++);
 
@@ -453,9 +455,13 @@ export class NovelSiteDemo extends _NovelSite
 
 								return text;
 							})
-							.then(async function (text: string)
+							.then(async (text: string) =>
 							{
-								await fs.outputFile(file, text);
+								await this._saveFile({
+									file,
+									context: text,
+									optionsRuntime,
+								});
 
 								return text;
 							})

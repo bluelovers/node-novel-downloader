@@ -66,6 +66,11 @@ export declare class NovelSite implements NovelSite.INovelSite {
     getExtraInfo<T, M extends Partial<INovel & IMdconfMeta>, C extends unknown>(urlobj: NovelSite.IParseUrl, optionsRuntime: T & IOptionsRuntime, data_meta?: M, cache?: C): PromiseBluebird<M>;
     protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean;
     protected emit(event: EventEmitter, eventName: string, ...argv: any[]): (boolean | EventEmitter)[];
+    _saveFile<T = NovelSite.IOptionsRuntime>(opts: {
+        file: string;
+        context: string | Buffer;
+        optionsRuntime: T & NovelSite.IOptionsRuntime;
+    }): PromiseBluebird<void>;
 }
 export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
@@ -95,6 +100,7 @@ export declare namespace NovelSite {
          */
         fetchMetaDataOnly?: boolean;
         debugLog?: boolean;
+        lineBreakCrlf?: boolean;
     };
     type IOptions = {
         outputDir?: string;
