@@ -48,16 +48,19 @@ Options:
   --disableDownload     不下載小說內容僅生成檔案結構                   [boolean]
   --noFirePrefix        不生成檔名前綴                                 [boolean]
   --noFilePadend        不生成檔名後綴(例如時間日期那些，可用來保持檔案只有一個
-                        版本ˋ)                                         [boolean]
+                        版本)，當使用此選項後，即使網站上有編輯過的新版依然不會
+                        去下載，如果要強制下載則請額外加上 --disableCheckExists
+                                                                       [boolean]
   --filePrefixMode      更改檔名前綴風格 0 | 1 | 2 | 3 | 4 | 5          [number]
   --pathNovelStyle      小說目錄樣式 0 = 預設 , 1 = 小說 ID             [number]
   --crlf                使用 crlf 作為 換行                            [boolean]
-  --debug               debugLog                                       [boolean]
+  --debug               debug 模式用來顯示額外訊息 或者 提示目前執行的進度
+                                                                       [boolean]
   --fetchMetaDataOnly   只抓取小說的 META 資料                         [boolean]
   --disableCheckExists  不檢查章節是否已經下載過                       [boolean]
   --startIndex                                                          [number]
-  --keepRuby            保留 Ruby 注音語法                                   [boolean]
-  --keepFormat          保留其他格式語法                                   [boolean]
+  --keepRuby            保留 Ruby 注音語法                             [boolean]
+  --keepFormat          保留其他格式語法                               [boolean]
   --keepImage           在內文原始位置上保留圖片                       [boolean]
 ```
 

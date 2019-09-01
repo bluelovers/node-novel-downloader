@@ -43,7 +43,7 @@ let cli = yargs
 		type: "boolean",
 	})
 	.option('noFilePadend', {
-		desc: `不生成檔名後綴(例如時間日期那些，可用來保持檔案只有一個版本ˋ)`,
+		desc: `不生成檔名後綴(例如時間日期那些，可用來保持檔案只有一個版本)，當使用此選項後，即使網站上有編輯過的新版依然不會去下載，如果要強制下載則請額外加上 --disableCheckExists`,
 		type: "boolean",
 	})
 	.option('filePrefixMode', {
@@ -59,7 +59,7 @@ let cli = yargs
 		type: 'boolean',
 	})
 	.option('debug', {
-		desc: `debugLog`,
+		desc: `debug 模式用來顯示額外訊息 或者 提示目前執行的進度`,
 		type: 'boolean',
 	})
 	.option('fetchMetaDataOnly', {
