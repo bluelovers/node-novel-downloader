@@ -1,6 +1,6 @@
 import { retryRequest } from '../../fetch';
 import fs = require('fs-extra');
-import path = require('path');
+import path = require('upath2');
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM, packJSDOM } from 'jsdom-extra';
 import { URL } from 'jsdom-url';
@@ -9,9 +9,15 @@ import { getFilePath } from '../fs';
 import { getOptions } from '../../jsdom';
 import { normalize_val } from 'node-novel-globby/lib/helper';
 import { globbyASync } from 'node-novel-globby/g';
-import { lazyAnalyzeReportAll, lazyAnalyzeAll, dummyCache, analyzeJa002, handleJa002 } from '@node-novel/layout-reporter';
+import {
+	lazyAnalyzeReportAll,
+	lazyAnalyzeAll,
+	dummyCache,
+	analyzeJa002,
+	handleJa002,
+} from '@node-novel/layout-reporter';
 import { outputBlock002, outputJa002 } from '@node-novel/layout-reporter/lib/md';
-
+import { ITSPartialPick } from 'ts-type';
 
 import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
@@ -32,7 +38,7 @@ export import INovel = _NovelSite.INovel;
 
 import { ResponseRequest } from 'request';
 
-import { console, consoleDebug } from '../../util/log';
+import { chalkByConsole, console, consoleDebug } from '../../util/log';
 import { hashSum } from '../../util/hash';
 
 export type IFetchChapter = {
@@ -235,7 +241,8 @@ export class NovelSiteDemo extends _NovelSite
 							})
 						;
 					})
-					.tap(async () => {
+					.tap(async () =>
+					{
 
 						let md = outputJa002({
 							inputData: _cache.ja2,
@@ -261,6 +268,8 @@ export class NovelSiteDemo extends _NovelSite
 		if (novel.volume_list)
 		{
 			const { keepImage = false } = optionsRuntime;
+
+			consoleDebug.info(`檢查 ATTACH 資料`);
 
 			return PromiseBluebird
 				.resolve(novel.volume_list)
@@ -298,6 +307,8 @@ export class NovelSiteDemo extends _NovelSite
 						{
 							imgs = imgs.filter(v => v);
 
+							consoleDebug.debug(`[ATTACH]`, `${path.relative(path_novel, dirname)}`, imgs.length);
+
 							if (imgs.length)
 							{
 								let file = path.join(dirname, 'ATTACH.md');
@@ -308,11 +319,12 @@ export class NovelSiteDemo extends _NovelSite
 									},
 								};
 
-								if (keepImage)
+								if (keepImage || 1)
 								{
 									await fs.readFile(file)
 										.then(v => mdconf_parse(v))
-										.then((data: typeof md_data) => {
+										.then((data: typeof md_data) =>
+										{
 											data.attach = data.attach || {} as any;
 											data.attach.images = data.attach.images || {};
 
@@ -342,7 +354,14 @@ export class NovelSiteDemo extends _NovelSite
 
 								let md = mdconf_stringify(md_data);
 
-								return fs.outputFile(file, md);
+								return fs.outputFile(file, md)
+									.then(r => {
+
+										consoleDebug.success(`[ATTACH]`, `[SAVE]`, `${path.relative(path_novel, file)}`);
+
+										return r;
+									})
+									;
 							}
 						})
 				})
@@ -457,10 +476,10 @@ export class NovelSiteDemo extends _NovelSite
 							volume, vid,
 						}, optionsRuntime);
 
-						consoleDebug.debug(vid, cid, chapter.chapter_title);
-
 						if (self._checkExists(optionsRuntime, file))
 						{
+							consoleDebug.debug(`[SKIP]`, vid, cid, chapter.chapter_title);
+
 							return file;
 						}
 
@@ -469,6 +488,9 @@ export class NovelSiteDemo extends _NovelSite
 							volume,
 							chapter,
 						}, optionsRuntime);
+
+						consoleDebug.debug(vid, cid, chapter.chapter_title);
+						//consoleDebug.debug(url.toString());
 
 						await self._fetchChapter(url, optionsRuntime)
 							.then(function (ret)
@@ -623,9 +645,9 @@ export class NovelSiteDemo extends _NovelSite
 		});
 	}
 
-	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): any
+	protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): Partial<T & IOptionsRuntime>
 	{
-		let opts = {};
+		let opts: Partial<T & IOptionsRuntime> = {};
 
 		if (optionsRuntime)
 		{
@@ -639,11 +661,14 @@ export class NovelSiteDemo extends _NovelSite
 				'keepRuby',
 				'keepFormat',
 				'keepImage',
-			])
+				'allowEmptyVolumeTitle',
+				'disableOutputDirPrefix',
+			] as (keyof IOptionsRuntime)[])
 			{
 				if ((k in optionsRuntime) && typeof optionsRuntime[k] !== 'undefined')
 				{
 					bool = true;
+					// @ts-ignore
 					opts[k] = optionsRuntime[k];
 				}
 			}

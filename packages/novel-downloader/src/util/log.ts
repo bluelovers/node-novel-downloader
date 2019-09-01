@@ -2,7 +2,7 @@
  * Created by user on 2019/2/3/003.
  */
 
-import { Console } from 'debug-color2';
+import { Console, chalkByConsole } from 'debug-color2';
 
 export const console = new Console(null, {
 	inspectOptions: {
@@ -23,3 +23,5 @@ export const consoleDebug = new Console(null, {
 consoleDebug.enabledColor = true;
 
 consoleDebug.enabled = false;
+
+export { chalkByConsole }

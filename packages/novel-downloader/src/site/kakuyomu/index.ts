@@ -8,7 +8,7 @@ import { IRowVolume, TreeNode } from '../../tree/index';
 
 import fs = require('fs-extra');
 import { trimFilename } from 'fs-iconv/util';
-import * as path from 'path';
+import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 

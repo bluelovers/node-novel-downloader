@@ -24,7 +24,7 @@ import * as path from 'path';
 
 		'https://ncode.syosetu.com/n5191ey/',
 
-		'http://novel18.syosetu.com/n3640eg/',
+		//'http://novel18.syosetu.com/n3640eg/',
 
 	],async function (value, index, array)
 	{
@@ -56,7 +56,7 @@ import * as path from 'path';
 
 		}).then(function (novel)
 		{
-			console.log(novel);
+			//console.log(novel);
 
 			console.log(novel.novel_title);
 		})

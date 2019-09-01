@@ -182,7 +182,7 @@ export class NovelSite implements NovelSite.INovelSite
 			{
 				if (conf.options.downloadOptions || conf.options.downloadoptions)
 				{
-					consoleDebug.debug('載入並且合併已存在的設定', conf.options.downloadOptions);
+					consoleDebug.debug('載入並且合併已存在的設定');
 
 					Object.entries(conf.options.downloadOptions || conf.options.downloadoptions)
 						.forEach(function ([k, v])
@@ -289,7 +289,7 @@ export class NovelSite implements NovelSite.INovelSite
 			;
 	}
 
-	protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown
+	protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): unknown
 	{
 		return void (0);
 	}
@@ -367,7 +367,7 @@ export class NovelSite implements NovelSite.INovelSite
 
 		let file = path.join(path_novel, `README.md`);
 
-		consoleDebug.debug(`save README.md`);
+		consoleDebug.info(`[META]`, `save README.md`);
 
 		return fs.outputFile(file, md)
 			.then(function ()
@@ -484,14 +484,18 @@ export class NovelSite implements NovelSite.INovelSite
 					}
 				}
 
-				if (optionsRuntime.debugLog)
-				{
-					let file2 = path.relative(optionsRuntime.outputDir, file)
-
-					consoleDebug.log(`save`, file2);
-				}
-
 				return fs.outputFile(file, context)
+					.then(r => {
+
+						if (optionsRuntime.debugLog)
+						{
+							let file2 = path.relative(optionsRuntime.outputDir, file);
+
+							consoleDebug.success(`[SAVE]`, file2);
+						}
+
+						return r;
+					})
 			})
 		;
 	}

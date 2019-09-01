@@ -8,7 +8,7 @@ import request = require('request-promise');
 import { URL } from 'jsdom-extra';
 import Promise = require("bluebird");
 
-import path = require('path');
+import path = require('upath2');
 
 export function download_image(img: string | URL, options: {
 	name?: string,

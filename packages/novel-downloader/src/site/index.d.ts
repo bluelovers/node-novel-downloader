@@ -43,7 +43,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     trimFilenameNovel(name: any): string;
     trimFilename(name: any): string;
     trimTag(tag: any): string;
-    protected _exportDownloadOptions(optionsRuntime?: IOptionsRuntime): unknown;
+    protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): unknown;
     protected _handleDataForStringify(...argv: any[]): IMdconfMeta;
     protected _saveReadme(optionsRuntime?: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
         file: string;

@@ -4,7 +4,7 @@ import { retryRequest } from '../../fetch';
 
 import fs = require('fs-extra');
 import { trimFilename } from 'fs-iconv/util';
-import * as path from 'path';
+import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 // @ts-ignore
@@ -512,7 +512,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			})
 			.then(async function (dom: IJSDOM)
 			{
-				consoleDebug.debug(`開始處理小說資訊以及章節列表`);
+				consoleDebug.info(`開始處理小說資訊以及章節列表`);
 
 				let novel_title = dom.$('.novel_title').text();
 				let novel_author = novelText.trim(dom
