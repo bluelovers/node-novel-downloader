@@ -23,6 +23,9 @@ import * as path from 'path';
 //		'https://ncode.syosetu.com/n3711cs/',
 
 		'https://ncode.syosetu.com/n5191ey/',
+		'https://ncode.syosetu.com/n7933eb/',
+
+		'https://novel18.syosetu.com/n6111fe/',
 
 		//'http://novel18.syosetu.com/n3640eg/',
 

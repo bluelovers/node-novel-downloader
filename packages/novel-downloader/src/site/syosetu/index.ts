@@ -27,11 +27,20 @@ export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
 };
 
+export const enum EnumProtocolMode
+{
+	NONE,
+	HTTPS,
+	HTTP,
+}
+
 export type IOptionsPlus = {
 	/**
 	 * 不使用小說家提供的 txt 下載連結
 	 */
 	disableTxtdownload?: boolean,
+
+	protocolMode?: EnumProtocolMode | boolean,
 }
 
 export type IDownloadOptions = NovelSiteDemo.IDownloadOptions & IOptionsPlus
@@ -164,7 +173,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 				novel_id: novel.url_data.novel_id,
 			});
 
-			return url;
+			return this._hackURL(url, optionsRuntime);
 		}
 
 		return super._createChapterUrl({
@@ -188,6 +197,31 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 				},
 			},
 		}, ...opts);
+	}
+
+	_hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime)
+	{
+		if (typeof obj === 'string')
+		{
+			// @ts-ignore
+			obj = new URL(obj) as URL;
+		}
+
+		if (obj.hostname === 'ncode.syosetu.com')
+		{
+			switch (optionsRuntime.protocolMode)
+			{
+				case EnumProtocolMode.HTTP:
+					obj.protocol = 'http';
+					break;
+				case true:
+				case EnumProtocolMode.HTTPS:
+					obj.protocol = 'https';
+					break;
+			}
+		}
+
+		return obj
 	}
 
 	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
@@ -644,7 +678,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 									chapter_id: data.chapter_id as string,
 								} as any;
 
-								href = self.makeUrl(data);
+								href = self._hackURL(self.makeUrl(data), optionsRuntime);
 
 								data.url = href;
 							}

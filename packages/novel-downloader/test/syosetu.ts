@@ -476,6 +476,10 @@ import ProjectConfig from '../_root';
 
 		'https://ncode.syosetu.com/n8304fa/',
 
+		'https://ncode.syosetu.com/n3097fl/',
+
+		'https://ncode.syosetu.com/n8618ef/',
+
 	],async function (value, index, array)
 	{
 		await Site.download(value, {

@@ -16,7 +16,7 @@ import NovelSite from '../src/site/esjzone/index';
 
 	console.log(Site);
 
-	Promise.mapSeries([
+	await Promise.mapSeries([
 
 		'https://www.esjzone.cc/detail/1549069251.html',
 
@@ -25,6 +25,12 @@ import NovelSite from '../src/site/esjzone/index';
 		'https://www.esjzone.cc/detail/1548762549.html',
 
 		'https://www.esjzone.cc/detail/1558630189.html',
+
+		'https://www.esjzone.cc/detail/1562435808.html',
+
+		'https://www.esjzone.cc/detail/1546323204.html',
+
+		'https://www.esjzone.cc/detail/1566804047.html',
 
 	], async function (value, index, array)
 	{

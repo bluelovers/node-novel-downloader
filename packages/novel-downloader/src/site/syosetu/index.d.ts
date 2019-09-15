@@ -7,11 +7,17 @@ import NovelSiteDemo = require('../demo/base');
 export declare type INovel = NovelSiteDemo.INovel & {
     novel_syosetu_id: string;
 };
+export declare const enum EnumProtocolMode {
+    NONE = 0,
+    HTTPS = 1,
+    HTTP = 2
+}
 export declare type IOptionsPlus = {
     /**
      * 不使用小說家提供的 txt 下載連結
      */
     disableTxtdownload?: boolean;
+    protocolMode?: EnumProtocolMode | boolean;
 };
 export declare type IDownloadOptions = NovelSiteDemo.IDownloadOptions & IOptionsPlus;
 export declare type IOptionsRuntime = NovelSiteDemo.IOptionsRuntime & IDownloadOptions & IOptionsPlus;
@@ -30,6 +36,7 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         file: string;
         md: string;
     }>;
+    _hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime): URL;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<NovelSiteDemo.IFetchChapter>;
