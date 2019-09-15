@@ -85,6 +85,9 @@ let cli = yargs
 		desc: `在內文原始位置上保留圖片`,
 		type: 'boolean',
 	})
+	.option('protocolMode', {
+		desc: `強制使用 http = 2 / https = 1 (僅限支援的模組)`,
+	})
 	.command('list', '顯示出目前的模組名稱', function (args)
 	{
 		console.log(Object.keys(EnumNovelSiteList).filter(v => /^[a-z]/i.test(v)));
@@ -96,7 +99,7 @@ let cli = yargs
 	.argv as Arguments<ICliArgv>
 ;
 
-interface ICliArgv extends ITSPartialPick<IOptionsPlusNovelSiteSyosetu, 'disableTxtdownload'>, ITSPartialPick<NovelSite.IDownloadOptions, 'disableDownload' | 'noFirePrefix' | 'noFilePadend' | 'filePrefixMode' | 'startIndex' | 'pathNovelStyle' | 'disableCheckExists' | 'fetchMetaDataOnly' | 'keepRuby' | 'keepFormat' | 'keepImage'>, ITSPartialPick<NovelSite.IOptions, 'outputDir'>
+interface ICliArgv extends ITSPartialPick<IOptionsPlusNovelSiteSyosetu, 'disableTxtdownload' | 'protocolMode'>, ITSPartialPick<NovelSite.IDownloadOptions, 'disableDownload' | 'noFirePrefix' | 'noFilePadend' | 'filePrefixMode' | 'startIndex' | 'pathNovelStyle' | 'disableCheckExists' | 'fetchMetaDataOnly' | 'keepRuby' | 'keepFormat' | 'keepImage'>, ITSPartialPick<NovelSite.IOptions, 'outputDir'>
 {
 	siteID?: EnumNovelSiteList,
 
@@ -180,6 +183,9 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	downloadOptions.keepFormat = cli.keepFormat;
 	downloadOptions.keepRuby = cli.keepRuby;
 	downloadOptions.keepImage = cli.keepImage;
+
+	// @ts-ignore
+	downloadOptions.protocolMode = cli.protocolMode;
 
 	siteOptions.outputDir = cli.outputDir;
 
