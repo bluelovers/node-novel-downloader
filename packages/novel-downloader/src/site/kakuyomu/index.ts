@@ -106,9 +106,9 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 	{
 		const self = this;
 
-		url = await this.createMainUrl(url as any);
+		url = await this.createMainUrl(url as any, optionsRuntime);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -126,10 +126,12 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 
 					let d = [];
 
+					// @ts-ignore
 					$(this)
 						.find('#catchphrase-body, #catchphrase-authorLabel')
 						.each(function ()
 						{
+							// @ts-ignore
 							d.push($(this).text().replace(/\s+$/g, ''));
 						})
 					;
@@ -167,6 +169,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('.widget-toc-chapter'))
@@ -366,6 +369,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 						.find('#workGenre a, #workMeta-attentionsAndTags [itemprop="keywords"] a')
 						.each(function ()
 						{
+							// @ts-ignore
 							let t = $(this).text().replace(/^\s+|\s+$/g, '');
 							if (t)
 							{
@@ -378,6 +382,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 						.find('#workMeta-attention li, #workGenre > a:eq(0)')
 						.each(function ()
 						{
+							// @ts-ignore
 							let t = $(this).text().replace(/^\s+|\s+$/g, '');
 							if (t)
 							{
@@ -394,6 +399,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 					$('#table-of-contents .widget-toc-workStatus span:eq(0)')
 						.each(function ()
 						{
+							// @ts-ignore
 							data_meta.novel.status = $(this).text().replace(/^\s+|\s+$/g, '');
 						})
 					;

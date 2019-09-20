@@ -48,7 +48,7 @@ export class NovelSiteIqing extends NovelSiteBase
 		return data;
 	}
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
+	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let url: string;
 
@@ -112,7 +112,7 @@ export class NovelSiteIqing extends NovelSiteBase
 		return urlobj;
 	}
 
-	createMainUrl(url)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
 	{
 		let data = this.parseUrl(url);
 
@@ -123,7 +123,7 @@ export class NovelSiteIqing extends NovelSiteBase
 			throw new ReferenceError();
 		}
 
-		let ret = this.makeUrl(data, true);
+		let ret = this.makeUrl(data, true, optionsRuntime);
 
 		return ret;
 	}
@@ -188,9 +188,9 @@ export class NovelSiteIqing extends NovelSiteBase
 	): Promise<INovel>
 	{
 		const self = this;
-		let url = await this.createMainUrl(inputUrl);
+		let url = await this.createMainUrl(inputUrl, optionsRuntime);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -212,6 +212,7 @@ export class NovelSiteIqing extends NovelSiteBase
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('.volume'))
@@ -351,6 +352,7 @@ export class NovelSiteIqing extends NovelSiteBase
 				$('#cat-list .cat, .book-title .book-tag')
 					.each(function ()
 					{
+						// @ts-ignore
 						let t = trim($(this)
 							.text()
 							.replace(/\(\d+\)/g, ''))
@@ -360,6 +362,7 @@ export class NovelSiteIqing extends NovelSiteBase
 						{
 							data.novel.tags.push(t);
 
+							// @ts-ignore
 							if (t == '连载' && $(this).is('.book-tag'))
 							{
 								data.novel.status = t;
@@ -386,6 +389,7 @@ export class NovelSiteIqing extends NovelSiteBase
 
 				$('#book-top img.cover[src]').each(function ()
 				{
+					// @ts-ignore
 					data.novel.cover = $(this)
 						.prop('src')
 						.replace(/\?imageMogr2.+$/, '')

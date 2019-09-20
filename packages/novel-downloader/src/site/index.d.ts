@@ -24,7 +24,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime, url?: URL): this;
     download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
     get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & NovelSite.IDownloadOptions>): Promise<NovelSite.INovel>;
-    makeUrl(urlobj: NovelSite.IParseUrl, options?: any): URL;
+    makeUrl<T extends NovelSite.IOptionsRuntime>(urlobj: NovelSite.IParseUrl, options?: any, optionsRuntime?: T): URL;
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
     getStatic<T = typeof NovelSite>(): T;
     readonly IDKEY: string;
@@ -49,8 +49,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
         file: string;
         md: string;
     }>;
-    createMainUrl(url: string): URL;
-    createMainUrl(url: URL): URL;
+    createMainUrl<T = IOptionsRuntime>(url: string | URL, optionsRuntime?: T & IOptionsRuntime): URL;
     protected _createChapterUrl<T = IOptionsRuntime>({ novel, volume, chapter, }: {
         novel: NovelSite.INovel;
         volume: NovelSite.IVolume;

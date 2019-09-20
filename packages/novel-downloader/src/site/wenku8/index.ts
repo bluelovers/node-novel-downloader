@@ -20,7 +20,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 {
 	public static readonly IDKEY = 'wenku8';
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
+	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let url: string;
 
@@ -101,7 +101,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		return urlobj;
 	}
 
-	createMainUrl(url)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
 	{
 		let data = this.parseUrl(url);
 
@@ -112,7 +112,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			throw new ReferenceError();
 		}
 
-		let ret = this.makeUrl(data, true);
+		let ret = this.makeUrl(data, true, optionsRuntime);
 
 		return ret;
 	}
@@ -169,7 +169,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 	): Promise<INovel>
 	{
 		const self = this;
-		let url = await this.createMainUrl(inputUrl);
+		let url = await this.createMainUrl(inputUrl, optionsRuntime);
 
 		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)

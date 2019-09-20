@@ -207,7 +207,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			obj = new URL(obj) as URL;
 		}
 
-		if (obj.hostname === 'ncode.syosetu.com')
+		if (obj.hostname === 'ncode.syosetu.com' || obj.hostname === 'novel18.syosetu.com')
 		{
 			switch (optionsRuntime.protocolMode)
 			{
@@ -224,7 +224,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return obj
 	}
 
-	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
+	makeUrl<T>(urlobj: NovelSite.IParseUrl, bool ?: boolean, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let subdomain = urlobj.novel_r18 ? 'novel18' : 'ncode';
 
@@ -529,13 +529,18 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			;
 	}
 
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
+	{
+		return this._hackURL(super.createMainUrl(url as any, optionsRuntime), optionsRuntime)
+	}
+
 	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {},
 	): Promise<INovel>
 	{
 		const self = this;
 
-		url = await this.createMainUrl(url as any);
+		url = await this.createMainUrl(url as any, optionsRuntime);
 
 		consoleDebug.debug(`get_volume_list`, url.toString());
 

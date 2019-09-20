@@ -19,7 +19,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 {
 	public static readonly IDKEY = 'webqxs';
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
+	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let url: string;
 
@@ -34,19 +34,21 @@ export class NovelSiteWebqxs extends NovelSiteBase
 			url = `http://www.webqxs.com/${urlobj.novel_pid}/${urlobj.novel_id}/${cid}`;
 		}
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
 	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
 	{
 		let urlobj = {
-			url: url,
+			url: url as URL,
 
 			novel_pid: null,
 			novel_id: null,
 			chapter_id: null,
 		};
 
+		// @ts-ignore
 		urlobj.url = new URL(url);
 		url = urlobj.url.href;
 
@@ -73,7 +75,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 		return urlobj;
 	}
 
-	createMainUrl(url)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
 	{
 		let data = this.parseUrl(url);
 
@@ -84,7 +86,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 			throw new ReferenceError();
 		}
 
-		let ret = this.makeUrl(data, true);
+		let ret = this.makeUrl(data, true, optionsRuntime);
 
 		return ret;
 	}
@@ -119,9 +121,9 @@ export class NovelSiteWebqxs extends NovelSiteBase
 	): Promise<INovel>
 	{
 		const self = this;
-		let url = await this.createMainUrl(inputUrl);
+		let url = await this.createMainUrl(inputUrl, optionsRuntime);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -140,6 +142,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 				table.children()
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('div.volume-z'))
@@ -155,6 +158,7 @@ export class NovelSiteWebqxs extends NovelSiteBase
 							tr.find('a')
 								.each(function (index)
 								{
+									// @ts-ignore
 									let a = dom.$(this);
 
 									let href = a.prop('href');

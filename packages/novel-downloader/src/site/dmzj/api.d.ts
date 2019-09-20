@@ -9,10 +9,10 @@ import { IJSDOM } from 'jsdom-extra';
 export declare class NovelSiteTpl extends NovelSiteBase {
     static readonly IDKEY: string;
     static check(url: string | URL | _NovelSite.IParseUrl, options?: any): boolean;
-    makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL;
+    makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
-    createMainUrl(url: any): URL;
+    createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
     _stripContent(text: string): string;
     protected _saveReadme(optionsRuntime: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
         file: string;

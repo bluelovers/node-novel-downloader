@@ -25,6 +25,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 
 	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 	{
+		// @ts-ignore
 		return /novelba\.com/i.test(new URL(url).hostname || '');
 	}
 
@@ -124,7 +125,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 	{
 		const self = this;
 
-		url = await this.createMainUrl(url as any);
+		url = await this.createMainUrl(url as any, optionsRuntime);
 
 		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
@@ -174,6 +175,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (1)
@@ -263,6 +265,7 @@ export class NovelSiteNovelba extends NovelSiteDemo
 					$('.work_section .keyword_list a')
 						.each(function ()
 						{
+							// @ts-ignore
 							let t = $(this).text().replace(/^\s+|\s+$/g, '');
 							if (t)
 							{

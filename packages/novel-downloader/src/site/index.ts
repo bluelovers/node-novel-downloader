@@ -100,7 +100,7 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	makeUrl(urlobj: NovelSite.IParseUrl, options?): URL
+	makeUrl<T extends NovelSite.IOptionsRuntime>(urlobj: NovelSite.IParseUrl, options?, optionsRuntime?: T): URL
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -380,9 +380,7 @@ export class NovelSite implements NovelSite.INovelSite
 			;
 	}
 
-	createMainUrl(url: string): URL
-	createMainUrl(url: URL): URL
-	createMainUrl(url)
+	createMainUrl<T = IOptionsRuntime>(url: string | URL, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let data = this.parseUrl(url);
 
@@ -393,7 +391,7 @@ export class NovelSite implements NovelSite.INovelSite
 			throw new ReferenceError();
 		}
 
-		return this.makeUrl(data, true);
+		return this.makeUrl(data, true, optionsRuntime);
 	}
 
 	protected _createChapterUrl<T = IOptionsRuntime>({

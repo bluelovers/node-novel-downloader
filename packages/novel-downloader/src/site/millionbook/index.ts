@@ -23,7 +23,7 @@ export class NovelSiteClass extends NovelSiteBase
 {
 	public static readonly IDKEY = path.basename(__dirname);
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
+	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let url: string;
 
@@ -69,7 +69,7 @@ export class NovelSiteClass extends NovelSiteBase
 		return urlobj;
 	}
 
-	createMainUrl(url)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
 	{
 		let data = this.parseUrl(url);
 
@@ -80,7 +80,7 @@ export class NovelSiteClass extends NovelSiteBase
 			throw new ReferenceError();
 		}
 
-		let ret = this.makeUrl(data, true);
+		let ret = this.makeUrl(data, true, optionsRuntime);
 
 		return ret;
 	}
@@ -144,9 +144,9 @@ export class NovelSiteClass extends NovelSiteBase
 	): Promise<INovel>
 	{
 		const self = this;
-		let url = await this.createMainUrl(inputUrl);
+		let url = await this.createMainUrl(inputUrl, optionsRuntime);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -173,6 +173,7 @@ export class NovelSiteClass extends NovelSiteBase
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						let title = novelText.trim(trim(tr.text())).replace(/^◎/, '');
@@ -190,6 +191,7 @@ export class NovelSiteClass extends NovelSiteBase
 							tr.find('a:eq(0)')
 								.each(function (index)
 								{
+									// @ts-ignore
 									let a = dom.$(this);
 
 									let href = a.prop('href');

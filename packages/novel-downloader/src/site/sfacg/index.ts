@@ -19,7 +19,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 {
 	public static readonly IDKEY = 'sfacg';
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
+	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let url: string;
 
@@ -38,13 +38,14 @@ export class NovelSiteSfacg extends NovelSiteBase
 			url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/${cid}/`;
 		}
 
+		// @ts-ignore
 		return new URL(url);
 	}
 
 	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
 	{
 		let urlobj = {
-			url: url,
+			url: url as any as URL,
 
 			novel_pid: null,
 			novel_id: null,
@@ -53,6 +54,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 			chapter_vip: null,
 		};
 
+		// @ts-ignore
 		urlobj.url = new URL(url);
 		url = urlobj.url.href;
 
@@ -88,7 +90,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 		return urlobj;
 	}
 
-	createMainUrl(url)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
 	{
 		let data = this.parseUrl(url);
 
@@ -99,7 +101,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 			throw new ReferenceError();
 		}
 
-		let ret = this.makeUrl(data, true);
+		let ret = this.makeUrl(data, true, optionsRuntime);
 
 		return ret;
 	}
@@ -139,6 +141,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 
 		ret.dom.$('#ChapterBody img[src]').each(function ()
 		{
+			// @ts-ignore
 			let src = ret.dom.$(this).prop('src').trim();
 
 			if (src)
@@ -181,9 +184,9 @@ export class NovelSiteSfacg extends NovelSiteBase
 	): Promise<INovel>
 	{
 		const self = this;
-		let url = await this.createMainUrl(inputUrl);
+		let url = await this.createMainUrl(inputUrl, optionsRuntime);
 
-		return await fromURL(url, optionsRuntime.optionsJSDOM)
+		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
 			{
 				const $ = dom.$;
@@ -203,6 +206,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 				table
 					.each(function (index)
 					{
+						// @ts-ignore
 						let tr = dom.$(this);
 
 						if (tr.is('.catalog-hd'))
@@ -218,6 +222,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 							tr.find('ul > li > a')
 								.each(function (index)
 								{
+									// @ts-ignore
 									let a = dom.$(this);
 
 									let href = a.prop('href');
@@ -367,6 +372,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 				$('.main-part .tag-list .tag .text')
 					.each(function ()
 					{
+						// @ts-ignore
 						let t = trim($(this)
 							.text()
 							.replace(/\(\d+\)/g, ''))
@@ -399,6 +405,7 @@ export class NovelSiteSfacg extends NovelSiteBase
 
 				$(`.d-summary .summary-pic img[src], #hasTicket .left-part a[href*="${url_data.novel_id}"] img[src]`).each(function ()
 				{
+					// @ts-ignore
 					let src = $(this).prop('src');
 
 					if (src)

@@ -33,7 +33,7 @@ export class NovelSiteTpl extends NovelSiteBase
 		return /dmzj\.com/i.test(new URL(url).hostname || '');
 	}
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL
+	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{
 		let url: string;
 
@@ -147,7 +147,7 @@ export class NovelSiteTpl extends NovelSiteBase
 		return this;
 	}
 
-	createMainUrl(url)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
 	{
 		let data = this.parseUrl(url);
 
@@ -158,7 +158,7 @@ export class NovelSiteTpl extends NovelSiteBase
 			throw new ReferenceError();
 		}
 
-		let ret = this.makeUrl(data, true);
+		let ret = this.makeUrl(data, true, optionsRuntime);
 
 		return ret;
 	}
@@ -270,7 +270,7 @@ export class NovelSiteTpl extends NovelSiteBase
 	): Promise<INovel>
 	{
 		const self = this;
-		let url = await this.createMainUrl(inputUrl);
+		let url = await this.createMainUrl(inputUrl, optionsRuntime);
 
 		// @ts-ignore
 		return retryRequest(url, optionsRuntime.requestOptions)

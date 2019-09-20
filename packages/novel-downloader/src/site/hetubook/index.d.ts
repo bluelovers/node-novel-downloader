@@ -8,9 +8,9 @@ import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
 export declare class NovelSiteHetubook extends NovelSiteBase {
     static readonly IDKEY: string;
-    makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number): URL;
+    makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
-    createMainUrl(url: any): URL;
+    createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
     _stripContent(text: string): string;
     session(optionsRuntime: any, url: any): this;
     protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): any;

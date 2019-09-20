@@ -173,7 +173,7 @@ export class NovelSiteDemo extends _NovelSite
 			.bind(self)
 			.then(async () =>
 			{
-				url = await this.createMainUrl(url);
+				url = await this.createMainUrl(url, optionsRuntime);
 
 				self.session(optionsRuntime, url);
 

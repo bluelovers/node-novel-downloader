@@ -169,7 +169,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 	{
 		const self = this;
 
-		url = await this.createMainUrl(url as any);
+		url = await this.createMainUrl(url as any, optionsRuntime);
 
 		return fromURL(url, optionsRuntime.optionsJSDOM)
 			.then(async function (dom: IJSDOM)
