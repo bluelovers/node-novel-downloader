@@ -29,7 +29,9 @@ import * as path from 'path';
 
 //		'http://novel18.syosetu.com/n3640eg/',
 
-		'n8792em',
+//		'n8792em',
+
+		'http://ncode.syosetu.com/n5964cj/',
 
 	],async function (value, index, array)
 	{

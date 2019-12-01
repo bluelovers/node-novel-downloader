@@ -480,6 +480,12 @@ import ProjectConfig from '../_root';
 
 		'https://ncode.syosetu.com/n8618ef/',
 
+		'http://ncode.syosetu.com/n5964cj/',
+
+		'https://ncode.syosetu.com/n3995ex/',
+
+		'https://ncode.syosetu.com/n7608cw/',
+
 	],async function (value, index, array)
 	{
 		await Site.download(value, {
