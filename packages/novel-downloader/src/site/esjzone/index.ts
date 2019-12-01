@@ -3,7 +3,7 @@
  */
 
 import { minifyHTML, trim } from '../../util';
-import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../demo/tree';
+import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime, IFetchChapter } from '../demo/tree';
 import { IRowVolume, TreeNode } from '../../tree/index';
 
 import fs = require('fs-extra');
@@ -17,11 +17,23 @@ import { URL } from 'jsdom-url';
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
+import { retryRequest } from '../../fetch';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
 export class NovelSiteESJZone extends NovelSiteDemo
 {
 	public static readonly IDKEY = 'esjzone';
+
+	/*
+	protected _fixOptionsRuntime(optionsRuntime)
+	{
+		optionsRuntime.optionsJSDOM = optionsRuntime.optionsJSDOM || {};
+
+		//optionsRuntime.optionsJSDOM.runScripts = 'dangerously';
+
+		return super._fixOptionsRuntime(optionsRuntime)
+	}
+	 */
 
 	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 	{
@@ -107,7 +119,63 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		return urlobj;
 	}
 
-	protected _parseChapter<T>(ret, optionsRuntime, cache): string
+	protected async _decodeChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache)
+	{
+		const { dom } = ret;
+		const { $ } = dom;
+
+		let html = dom.serialize();
+
+		let m = html
+			.match(/getTranslation\(['"]([^\'"]+)['"]/i)
+		;
+
+		if (m)
+		{
+			let code = m[1];
+
+			await retryRequest(ret.url, {
+				// @ts-ignore
+				...optionsRuntime.requestOptions,
+				method: 'POST',
+				form: {
+					plxf: 'getTranslation',
+					plxa: [code],
+				},
+			})
+				.then((v: string) => {
+					v = v
+						.replace(/\<JinJing\>/, '')
+						.replace(/\<\/JinJing\>/, '')
+					;
+
+					return JSON.parse(v)
+				})
+				/*
+				.tap(v => {
+					console.dir('-----------------------')
+					console.dir(v)
+					console.dir('-----------------------')
+				})
+				 */
+				.tap((a: string[]) => {
+
+					let elems = $('.trans');
+
+					a.forEach((v, i) => {
+						elems.eq(i).html(v);
+					})
+
+				})
+			;
+
+		}
+
+		//console.dir(m);
+		//process.exit();
+	}
+
+	protected async _parseChapter<T>(ret, optionsRuntime, cache)
 	{
 		if (!ret)
 		{
@@ -126,6 +194,8 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		}
 
 		ret.dom.$('p[class]:has(> script), .adsbygoogle').remove();
+
+		await this._decodeChapter(ret, optionsRuntime, cache);
 
 		_p_2_br('.forum-content > p', ret.dom.$);
 
@@ -153,14 +223,20 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			;
 		}
 
+		/*
 		let html = elem.html();
 
-//		throw console.dir({
-//			html,
-//			txt,
-//		});
+		throw console.dir({
+			html,
+			txt,
+		});
+		 */
 
-		return txt
+		//console.dir(txt);
+
+		//process.exit();
+
+		return txt as string
 	}
 
 	async get_volume_list<T extends IOptionsRuntime>(url: string | URL,

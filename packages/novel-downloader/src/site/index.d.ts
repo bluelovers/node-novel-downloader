@@ -27,7 +27,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     makeUrl<T extends NovelSite.IOptionsRuntime>(urlobj: NovelSite.IParseUrl, options?: any, optionsRuntime?: T): URL;
     parseUrl(url: URL | string, options?: any): NovelSite.IParseUrl;
     getStatic<T = typeof NovelSite>(): T;
-    readonly IDKEY: string;
+    get IDKEY(): string;
     protected _pathNovelID<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(novel: N, optionsRuntime: T): any;
     getPathNovel<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(PATH_NOVEL_MAIN: string, novel: N, optionsRuntime: T): string;
     /**
