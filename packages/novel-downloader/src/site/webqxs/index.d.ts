@@ -14,8 +14,8 @@ export declare class NovelSiteWebqxs extends NovelSiteBase {
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any): Promise<{
         url: URL;
-        novel_author: any;
-        novel_desc: any;
+        novel_author: string;
+        novel_desc: string;
     }>;
 }
 export default NovelSiteWebqxs;

@@ -13,7 +13,7 @@ export declare class NovelSiteHetubook extends NovelSiteBase {
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
     _stripContent(text: string): string;
     session(optionsRuntime: any, url: any): this;
-    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): any;
+    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): string;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;

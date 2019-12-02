@@ -16,9 +16,9 @@ export declare class NovelSiteWenku8 extends NovelSiteBase {
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;
     }): Promise<{
-        novel_title: any;
+        novel_title: string;
         novel_cover: any;
-        novel_author: any;
+        novel_author: string;
         novel_desc: string;
         novel_date: any;
         novel_status: any;

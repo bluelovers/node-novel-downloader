@@ -64,3 +64,4 @@ tsconfig.esm.json.tpl
 /docs/
 /script/
 /typedoc.config.js
+/package.d.ts

@@ -14,8 +14,8 @@ export declare class NovelSiteSfacg extends NovelSiteBase {
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any): Promise<{
         novel_title: string;
-        novel_author: any;
-        novel_desc: any;
+        novel_author: string;
+        novel_desc: string;
         novel_date: any;
         novel?: {
             title?: string;

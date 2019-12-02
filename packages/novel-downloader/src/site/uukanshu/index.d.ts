@@ -19,7 +19,7 @@ export declare class NovelSiteUukanshu extends NovelSiteBase {
     }): Promise<{
         novel_title: string;
         novel_author: string;
-        novel_desc: any;
+        novel_desc: string;
         novel?: {
             title?: string;
             title_source?: string;

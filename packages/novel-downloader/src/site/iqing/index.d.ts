@@ -26,8 +26,8 @@ export declare class NovelSiteIqing extends NovelSiteBase {
         dom: IJSDOM;
     }): Promise<{
         novel_title: string;
-        novel_author: any;
-        novel_desc: any;
+        novel_author: string;
+        novel_desc: string;
         novel_date: any;
         novel?: {
             title?: string;
