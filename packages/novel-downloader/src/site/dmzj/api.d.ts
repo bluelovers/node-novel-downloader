@@ -23,7 +23,7 @@ export declare class NovelSiteTpl extends NovelSiteBase {
         novel: any;
         volume: any;
         chapter: any;
-    }, optionsRuntime?: any): any;
+    }, optionsRuntime?: any): import("jsdom-url/lib/URL").URLCore;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;
