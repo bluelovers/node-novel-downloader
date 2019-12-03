@@ -310,7 +310,11 @@ export class NovelSiteX23qb extends NovelSiteDemo
 					})
 				;
 
-				let data_meta: IMdconfMeta = {};
+				let data_meta: IMdconfMeta = {
+					novel: {
+						tags: [],
+					},
+				};
 
 				let novel_date = moment($('#uptime > span').text());
 
@@ -318,17 +322,38 @@ export class NovelSiteX23qb extends NovelSiteDemo
 
 				if (tag)
 				{
-					data_meta.novel = {
-						tags: [
-							tag,
-						],
-					};
+					data_meta.novel.tags.push(tag)
 				}
 
 				let novel_author = $('.p_author a:eq(0)').text().trim();
 
 				data_meta.link = data_meta.link || [];
 				data_meta.link.push($('.p_author a:eq(0)').prop('href'));
+
+				$('.bookright #count li span')
+					.each((i, elem) => {
+
+						let txt = $(elem).text().trim();
+
+						let bool = [
+							'完結済',
+							'完結',
+							'已完結',
+							'已完成',
+							'完结済',
+							'完结',
+							'已完结',
+							'已完成',
+						].includes(txt)
+						;
+
+						if (bool)
+						{
+							data_meta.novel.status = txt;
+						}
+
+					})
+				;
 
 				return {
 

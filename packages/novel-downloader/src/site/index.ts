@@ -301,10 +301,10 @@ export class NovelSite implements NovelSite.INovelSite
 
 		if (mdconf.novel)
 		{
+			let bool: boolean;
+
 			if (mdconf.novel.tags && Array.isArray(mdconf.novel.tags))
 			{
-				let bool: boolean;
-
 				bool = [
 					'書籍化',
 					'书籍化',
@@ -318,6 +318,25 @@ export class NovelSite implements NovelSite.INovelSite
 				if (bool)
 				{
 					mdconf.novel.novel_status = (mdconf.novel.novel_status | 0) | EnumNovelStatus.P_BOOK;
+				}
+			}
+
+			if (mdconf.novel.status)
+			{
+				bool = [
+					'完結済',
+					'完結',
+					'已完結',
+					'已完成',
+					'完结済',
+					'完结',
+					'已完结',
+					'已完成',
+				].includes(mdconf.novel.status);
+
+				if (bool)
+				{
+					mdconf.novel.novel_status = (mdconf.novel.novel_status | 0) | EnumNovelStatus.AUTHOR_DONE;
 				}
 			}
 		}
