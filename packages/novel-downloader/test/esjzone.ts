@@ -32,6 +32,8 @@ import NovelSite from '../src/site/esjzone/index';
 //
 //		'https://www.esjzone.cc/detail/1566804047.html',
 
+		'https://www.esjzone.cc/detail/1572969953.html',
+
 	], async function (value, index, array)
 	{
 		await Site.download(value, {

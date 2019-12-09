@@ -269,6 +269,38 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 				let url_data = self.parseUrl(dom.url.href);
 
+				let novel_author: string;
+				let novel_date;
+
+				$('.product-detail .well .nav-list > li')
+					.each(function (i, elem)
+					{
+						let _this = $(this);
+
+						let _text = trim(_this.text());
+
+						let _m: RegExpMatchArray;
+
+						if (_m = _text.match(/作者\s*[：:]\s*([^\n]+)/))
+						{
+							novel_author = trim(_m[1])
+						}
+						else if (_m = _text.match(/\b(\d{4}\-\d{1,2}\-\d{1,2})\b/))
+						{
+							try
+							{
+								let last_update_time = moment(_m[1]);
+								novel_date = last_update_time;
+							}
+							catch (e)
+							{
+
+							}
+						}
+
+					})
+				;
+
 				let volume_list = [] as NovelSite.IVolume[];
 
 				const novelTree = optionsRuntime.novelTree;
@@ -333,7 +365,15 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					})
 				;
 
-				let data_meta: IMdconfMeta = {};
+				let data_meta: IMdconfMeta = {
+					novel: {
+
+					},
+				};
+
+				data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image').prop('src');
+
+				let novel_desc = trim($('.product-detail:eq(0)').find('.book_description').text() || '');
 
 				return {
 
@@ -341,6 +381,11 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 					url: dom.url,
 					url_data,
+
+					novel_author,
+					novel_date,
+
+					novel_desc,
 
 					novel_title,
 					novel_publisher,

@@ -25,6 +25,7 @@ export const defaultJSDOMOptions: IFromUrlOptions = {
 export function createOptionsJSDOM<T = INovelOptionsJSDOM>(options: Partial<T & INovelOptionsJSDOM> = {}, ...opts: INovelOptionsJSDOM[]): Partial<T & INovelOptionsJSDOM>
 {
 	options = Object.assign({}, defaultJSDOMOptions, options, ...opts);
+	// @ts-ignore
 	options.cookieJar = options.cookieJar || new LazyCookieJar();
 
 	return options;

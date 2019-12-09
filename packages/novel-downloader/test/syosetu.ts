@@ -5,6 +5,7 @@
 import * as Promise from 'bluebird';
 import NovelSiteSyosetu from '../src/site/syosetu/index';
 import ProjectConfig from '../_root';
+import { consoleDebug, console } from '../src/util/log';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 
@@ -24,7 +25,7 @@ import ProjectConfig from '../_root';
 
 		'http://ncode.syosetu.com/n1745ct/',
 
-		'https://ncode.syosetu.com/n3512ds/',
+//		'https://ncode.syosetu.com/n3512ds/',
 
 		//'https://novel18.syosetu.com/n1413cw/',
 
@@ -486,8 +487,12 @@ import ProjectConfig from '../_root';
 
 		'https://ncode.syosetu.com/n7608cw/',
 
+		'https://ncode.syosetu.com/n2477eq/',
+
 	],async function (value, index, array)
 	{
+		consoleDebug.debug(`[task]`, `Site.download`, value);
+
 		await Site.download(value, {
 			disableTxtdownload: true,
 			disableDownload: true,
@@ -506,11 +511,13 @@ import ProjectConfig from '../_root';
 
 			//fetchMetaDataOnly: true,
 
+			debugLog: true,
+
 		}).then(function (novel)
 		{
 			console.log(novel);
 
-			console.log(novel.novel_title);
+			console.success(`[DONE]`, novel.novel_title);
 		})
 		;
 	});

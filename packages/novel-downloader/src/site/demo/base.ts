@@ -27,6 +27,8 @@ import novelText from 'novel-text';
 
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
+import { toughCookie } from 'jsdom-extra';
+
 import { stringify as mdconf_stringify, parse as mdconf_parse } from 'mdconf2';
 
 export type IOptionsPlus = {}
@@ -124,6 +126,12 @@ export class NovelSiteDemo extends _NovelSite
 							}
 						}
 
+						if (!(typeof c === 'string' || c instanceof LazyCookie || c instanceof toughCookie.Cookie))
+						{
+							// @ts-ignore
+							c = new toughCookie.Cookie(c)
+						}
+
 						optionsRuntime.optionsJSDOM.cookieJar
 							.setCookieSync(c, url.href)
 						;
@@ -154,7 +162,7 @@ export class NovelSiteDemo extends _NovelSite
 				})
 			;
 
-			console.dir(optionsRuntime.optionsJSDOM.cookieJar);
+			consoleDebug.debug(`session`, optionsRuntime.optionsJSDOM.cookieJar);
 		}
 
 		return this;
