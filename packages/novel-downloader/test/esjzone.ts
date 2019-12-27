@@ -23,16 +23,18 @@ import NovelSite from '../src/site/esjzone/index';
 //		'https://www.esjzone.cc/detail/1553655445.html',
 //
 //		'https://www.esjzone.cc/detail/1548762549.html',
-
-		'https://www.esjzone.cc/detail/1558630189.html',
-
+//
+//		'https://www.esjzone.cc/detail/1558630189.html',
+//
 //		'https://www.esjzone.cc/detail/1562435808.html',
 //
 //		'https://www.esjzone.cc/detail/1546323204.html',
 //
 //		'https://www.esjzone.cc/detail/1566804047.html',
+//
+//		'https://www.esjzone.cc/detail/1572969953.html',
 
-		'https://www.esjzone.cc/detail/1572969953.html',
+		'https://www.esjzone.cc/detail/1546793005.html',
 
 	], async function (value, index, array)
 	{

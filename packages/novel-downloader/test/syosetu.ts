@@ -232,7 +232,7 @@ import { consoleDebug, console } from '../src/util/log';
 
 //		'https://ncode.syosetu.com/n7975cr/',
 
-//		'https://ncode.syosetu.com/n9107ee/',
+		'https://ncode.syosetu.com/n9107ee/',
 
 //		'http://novel18.syosetu.com/n7623br/',
 
@@ -488,6 +488,8 @@ import { consoleDebug, console } from '../src/util/log';
 		'https://ncode.syosetu.com/n7608cw/',
 
 		'https://ncode.syosetu.com/n2477eq/',
+
+		'https://ncode.syosetu.com/n2740ca/',
 
 	],async function (value, index, array)
 	{
