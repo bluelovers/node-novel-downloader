@@ -407,7 +407,7 @@ export class NovelSite implements NovelSite.INovelSite
 		{
 			//console.log(data);
 
-			throw new ReferenceError();
+			throw new ReferenceError(JSON.stringify(data));
 		}
 
 		return this.makeUrl(data, true, optionsRuntime);

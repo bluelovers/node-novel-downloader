@@ -12,11 +12,13 @@ export declare enum EnumNovelSiteList {
     NovelSiteKakuyomu = "./site/kakuyomu",
     NovelSiteMillionbook = "./site/millionbook",
     NovelSiteNovelba = "./site/novelba",
+    NovelSiteNovelup = "./site/novelup",
     NovelSiteSfacg = "./site/sfacg",
     NovelSiteSyosetu = "./site/syosetu",
     NovelSiteUukanshu = "./site/uukanshu",
     NovelSiteWebqxs = "./site/webqxs",
     NovelSiteWenku8 = "./site/wenku8",
+    NovelSiteX23qb = "./site/x23qb",
     'alphapolis' = "./site/alphapolis",
     'demo/base' = "./site/demo/base",
     'demo/demo' = "./site/demo/demo",
@@ -29,11 +31,13 @@ export declare enum EnumNovelSiteList {
     'kakuyomu' = "./site/kakuyomu",
     'millionbook' = "./site/millionbook",
     'novelba' = "./site/novelba",
+    'novelup' = "./site/novelup",
     'sfacg' = "./site/sfacg",
     'syosetu' = "./site/syosetu",
     'uukanshu' = "./site/uukanshu",
     'webqxs' = "./site/webqxs",
     'wenku8' = "./site/wenku8",
+    'x23qb' = "./site/x23qb",
     './site/alphapolis' = "./site/alphapolis",
     './site/demo/base' = "./site/demo/base",
     './site/demo/demo' = "./site/demo/demo",
@@ -46,11 +50,13 @@ export declare enum EnumNovelSiteList {
     './site/kakuyomu' = "./site/kakuyomu",
     './site/millionbook' = "./site/millionbook",
     './site/novelba' = "./site/novelba",
+    './site/novelup' = "./site/novelup",
     './site/sfacg' = "./site/sfacg",
     './site/syosetu' = "./site/syosetu",
     './site/uukanshu' = "./site/uukanshu",
     './site/webqxs' = "./site/webqxs",
-    './site/wenku8' = "./site/wenku8"
+    './site/wenku8' = "./site/wenku8",
+    './site/x23qb' = "./site/x23qb"
 }
 export interface INovelSiteList {
     NovelSiteAlphapolis: typeof import('./site/alphapolis').default;
@@ -65,11 +71,13 @@ export interface INovelSiteList {
     NovelSiteKakuyomu: typeof import('./site/kakuyomu').default;
     NovelSiteMillionbook: typeof import('./site/millionbook').default;
     NovelSiteNovelba: typeof import('./site/novelba').default;
+    NovelSiteNovelup: typeof import('./site/novelup').default;
     NovelSiteSfacg: typeof import('./site/sfacg').default;
     NovelSiteSyosetu: typeof import('./site/syosetu').default;
     NovelSiteUukanshu: typeof import('./site/uukanshu').default;
     NovelSiteWebqxs: typeof import('./site/webqxs').default;
     NovelSiteWenku8: typeof import('./site/wenku8').default;
+    NovelSiteX23qb: typeof import('./site/x23qb').default;
 }
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteAlphapolis | 'alphapolis'): INovelSiteList["NovelSiteAlphapolis"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteDemoBase | 'demo/base'): INovelSiteList["NovelSiteDemoBase"];
@@ -83,10 +91,12 @@ export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSit
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteKakuyomu | 'kakuyomu'): INovelSiteList["NovelSiteKakuyomu"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteMillionbook | 'millionbook'): INovelSiteList["NovelSiteMillionbook"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteNovelba | 'novelba'): INovelSiteList["NovelSiteNovelba"];
+export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteNovelup | 'novelup'): INovelSiteList["NovelSiteNovelup"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteSfacg | 'sfacg'): INovelSiteList["NovelSiteSfacg"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteSyosetu | 'syosetu'): INovelSiteList["NovelSiteSyosetu"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteUukanshu | 'uukanshu'): INovelSiteList["NovelSiteUukanshu"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteWebqxs | 'webqxs'): INovelSiteList["NovelSiteWebqxs"];
 export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteWenku8 | 'wenku8'): INovelSiteList["NovelSiteWenku8"];
+export declare function requireNovelSiteClass(siteID: EnumNovelSiteList.NovelSiteX23qb | 'x23qb'): INovelSiteList["NovelSiteX23qb"];
 export declare function requireNovelSiteClass<T extends typeof _NovelSite>(siteID: EnumNovelSiteList | string): T;
 export default requireNovelSiteClass;

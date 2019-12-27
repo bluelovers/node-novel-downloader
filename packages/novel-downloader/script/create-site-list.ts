@@ -2,7 +2,7 @@
  * Created by user on 2019/1/3/003.
  */
 
-import fg = require("fast-glob");
+import fg = require("@bluelovers/fast-glob");
 import path = require("path");
 import fs = require("fs-extra");
 

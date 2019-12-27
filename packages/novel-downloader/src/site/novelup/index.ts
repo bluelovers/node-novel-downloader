@@ -22,7 +22,7 @@ import { retryRequest } from '../../fetch';
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
 export class NovelSiteESJZone extends NovelSiteDemo
 {
-	public static readonly IDKEY = 'esjzone';
+	public static readonly IDKEY = 'novelup';
 
 	/*
 	protected _fixOptionsRuntime(optionsRuntime)
@@ -38,24 +38,22 @@ export class NovelSiteESJZone extends NovelSiteDemo
 	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 	{
 		// @ts-ignore
-		return /esjzone\.cc/i.test(new URL(url).hostname || '');
+		return /novelup\.plus/i.test(new URL(url).hostname || '');
 	}
 
 	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
 	{
 		let pad: string;
 
+		pad = `story/${urlobj.novel_id}`;
+
 		if (!bool && urlobj.chapter_id)
 		{
-			pad = `forum/${urlobj.novel_id}/${urlobj.chapter_id}.html`
-		}
-		else
-		{
-			pad = `detail/${urlobj.novel_id}.html`
+			pad += `/${urlobj.chapter_id}`
 		}
 
 		// @ts-ignore
-		return new URL(`https://www.esjzone.cc/${pad}`);
+		return new URL(`https://novelup.plus/${pad}`);
 	}
 
 	parseUrl(url: string | URL): NovelSite.IParseUrl
@@ -99,7 +97,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			return urlobj;
 		}
 
-		r = /esjzone\.cc\/forum\/(\d+)(?:\.html|\/(\d+).html)/g;
+		r = /novelup\.plus\/story\/(\d+)(?:\/(\d+))?/g;
 		if (m = r.exec(url))
 		{
 			urlobj.novel_id = m[1];
@@ -108,13 +106,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			return urlobj;
 		}
 
-		r = /esjzone\.cc\/detail\/(\d+)(?:\.html)?/g;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-
-			return urlobj;
-		}
+		console.dir(urlobj);
 
 		return urlobj;
 	}
@@ -123,56 +115,6 @@ export class NovelSiteESJZone extends NovelSiteDemo
 	{
 		const { dom } = ret;
 		const { $ } = dom;
-
-		let html = dom.serialize();
-
-		let m = html
-			.match(/getTranslation\(['"]([^\'"]+)['"]/i)
-		;
-
-		if (m)
-		{
-			let code = m[1];
-
-			await retryRequest(ret.url, {
-				// @ts-ignore
-				...optionsRuntime.requestOptions,
-				method: 'POST',
-				form: {
-					plxf: 'getTranslation',
-					plxa: [code],
-				},
-			})
-				.then((v: string) => {
-					v = v
-						.replace(/\<JinJing\>/, '')
-						.replace(/\<\/JinJing\>/, '')
-					;
-
-					return JSON.parse(v)
-				})
-				/*
-				.tap(v => {
-					console.dir('-----------------------')
-					console.dir(v)
-					console.dir('-----------------------')
-				})
-				 */
-				.tap((a: string[]) => {
-
-					let elems = $('.trans, .t');
-
-					a.forEach((v, i) => {
-						elems.eq(i).html(v);
-					})
-
-				})
-			;
-
-		}
-
-		//console.dir(m);
-		//process.exit();
 	}
 
 	protected async _parseChapter<T>(ret, optionsRuntime, cache)
@@ -182,46 +124,34 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			return '';
 		}
 
+		const $ = ret.dom.$;
+
+		let section_episode = $('#section_episode');
+
 		try
 		{
-			let html = minifyHTML(ret.dom.$('.container .row:has(.forum-content)').html());
+			//let html = minifyHTML(section_episode.html());
 
-			ret.dom.$('.container .row:has(.forum-content)').html(html);
+			//section_episode.html(html);
 		}
 		catch (e)
 		{
 
 		}
 
-		ret.dom.$('p[class]:has(> script), .adsbygoogle').remove();
+		//await this._decodeChapter(ret, optionsRuntime, cache);
 
-		await this._decodeChapter(ret, optionsRuntime, cache);
+		//_p_2_br(section_episode.find('.content > p'), ret.dom.$);
 
-		_p_2_br('.forum-content > p', ret.dom.$);
+		let elem = section_episode.find('.content > p');
 
-		let elem = ret.dom.$('.container .forum-content');
-
-		elem.html(function (i, old: string)
-		{
-			return old
-				.replace(/(\<br\>){3,4}/g, '$1')
-				.replace(/(?<=\<br\>)(?=[^\n])/g, '\n')
-		});
-
-		let title = trim(ret.dom.$('.container .row > div > h3').text());
-
-		let txt: string = elem
-			.text()
-			.replace(/^(?:由於百度\s*\d+\s*年以前的貼文都刪了|所以不清楚是由哪位大佬翻譯|若轉載的動作冒犯了您，先跟您說聲抱歉！|也麻煩留言告知，我們會將此文下架|已?由?譯者授權轉載！?|原文網址：[^\n]+|轉載自貼吧)$/uigm, '')
-			.replace(/^\s+|\s+$/g, '')
+		let txt: string = (await elem
+			.text())
+			//.replace(/\x20/g, '\n')
+			.replace(/^\n+|\s+$/g, '')
 		;
 
-		if (txt.indexOf(title + '\n') === 0)
-		{
-			txt = txt.slice(title.length + 1)
-				.replace(/^\n+/g, '')
-			;
-		}
+//		let html = elem.html();
 
 		/*
 		let html = elem.html();
@@ -232,11 +162,24 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		});
 		 */
 
+//		console.dir(html);
+//
 //		console.dir(txt);
 
+//		console.dir(txt);
+//
 //		process.exit();
 
 		return txt as string
+	}
+
+	getOutputDir<T extends IOptionsRuntime>(options?: T & IOptionsRuntime, novelName?: string)
+	{
+		let ret = super.getOutputDir<T>(options, novelName);
+
+		ret[1].optionsJSDOM.minifyHTML = false;
+
+		return ret;
 	}
 
 	async get_volume_list<T extends IOptionsRuntime>(url: string | URL,
@@ -252,61 +195,25 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			{
 				const $ = dom.$;
 
-				try
-				{
-					let html = minifyHTML(dom.$('.product-detail').html());
+				let data_meta: IMdconfMeta = {
+					novel: {
 
-					dom.$('.product-detail').html(html);
-				}
-				catch (e)
-				{
+					},
+				};
 
-				}
+				let section_works_info = $('#section_works_info');
 
-				let novel_title = dom.$('.container .row > div > h3').text();
+				let novel_title = trim(section_works_info.find('.novel_title').text());
 
 				let novel_publisher = self.IDKEY;
 
 				let url_data = self.parseUrl(dom.url.href);
 
-				let novel_author: string;
+				let novel_author = trim(section_works_info.find('.novel_author').text());
 				let novel_date;
-
-				$('.product-detail .well .nav-list > li')
-					.each(function (i, elem)
-					{
-						let _this = $(this);
-
-						let _text = trim(_this.text());
-
-						let _m: RegExpMatchArray;
-
-						if (_m = _text.match(/作者\s*[：:]\s*([^\n]+)/))
-						{
-							novel_author = trim(_m[1])
-						}
-						else if (_m = _text.match(/\b(\d{4}\-\d{1,2}\-\d{1,2})\b/))
-						{
-							try
-							{
-								let last_update_time = moment(_m[1]);
-								novel_date = last_update_time;
-							}
-							catch (e)
-							{
-
-							}
-						}
-
-					})
-				;
-
-				let volume_list = [] as NovelSite.IVolume[];
 
 				const novelTree = optionsRuntime.novelTree;
 				let currentVolume: TreeNode<IRowVolume>;
-
-				let table = dom.$('.product-detail .tabbable .tab-content.show-desc').find('a');
 
 				let _cache_dates = [];
 
@@ -324,16 +231,33 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					});
 				}
 
-				dom.$('p[class]:has(> script[src*=google]), div[class]:has(> script[src*=google]), .adsbygoogle').remove();
+				let table = $('#section_episode .episode_list ul:eq(0) > li');
 
 				table
 					.each(function (index, elem)
 					{
-						let tr = dom.$(elem);
+						let tr = $(elem);
 
-						if (1)
+						if (tr.is('.chapter'))
 						{
-							let a = tr;
+							let volume_title = trim(tr.text());
+
+							if (volume_title != currentVolume.content.volume_title)
+							{
+
+								currentVolume = novelTree.addVolume({
+									volume_title,
+									volume_index: novelTree.root().size(),
+									total_idx: total_idx++,
+								});
+
+							}
+						}
+						else
+						{
+
+
+							let a = tr.find('.episode_link a');
 							let chapter_title = trim(a.text(), true);
 
 							let href = a.prop('href');
@@ -365,15 +289,20 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					})
 				;
 
-				let data_meta: IMdconfMeta = {
-					novel: {
+				data_meta.novel.cover = section_works_info.find('.novel_cover img').prop('src');
 
-					},
-				};
+				let novel_desc = trim(section_works_info.find('.novel_synopsis').text());
 
-				data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image').prop('src');
+				data_meta.novel.tags = data_meta.novel.tags || [];
 
-				let novel_desc = trim($('.product-detail:eq(0)').find('.book_description').text() || '');
+				$('#section_episode .info_table dd')
+					.find(`a[href*="[tag]"], a[href*="genre[1]"]`)
+					.each((i, elem) => {
+
+						data_meta.novel.tags.push(trim($(elem).text()));
+
+					})
+				;
 
 				return {
 

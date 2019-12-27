@@ -49,6 +49,13 @@ export class NovelSiteWenku8 extends NovelSiteBase
 			chapter_id: null,
 		};
 
+		if (/^\d+$/.test(String(url)))
+		{
+			urlobj.novel_id = String(url);
+
+			return urlobj;
+		}
+
 		// @ts-ignore
 		urlobj.url = new URL(url);
 		// @ts-ignore
