@@ -9,7 +9,9 @@ export declare class NovelSiteDemo extends NovelSiteBase {
     static readonly IDKEY = "";
     makeUrl(urlobj: _NovelSite.IParseUrl, options?: any): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
-    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime): string;
+    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, _cache_: {
+        novel: INovel;
+    }): string;
     get_volume_list<T = IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IOptionsRuntime>): Promise<INovel>;
 }
 export default NovelSiteDemo;

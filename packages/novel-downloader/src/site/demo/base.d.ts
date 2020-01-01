@@ -60,7 +60,9 @@ export declare class NovelSiteDemo extends _NovelSite {
         volume: _NovelSite.IVolume;
         chapter: _NovelSite.IChapter;
     }): string | Promise<string>;
-    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<IFetchChapter>;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
+        novel: INovel;
+    }): PromiseBluebird<IFetchChapter>;
     protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): Partial<T & IOptionsRuntime>;
     protected _saveReadme(optionsRuntime: IOptionsRuntime, options?: {}, ...opts: any[]): Promise<{
         file: string;

@@ -308,14 +308,16 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return urlobj;
 	}
 
-	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime)
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
+		novel: INovel,
+	})
 	{
 		let tryed: boolean;
 		const self = this;
 
 		let _fetchChapter = super._fetchChapter;
 
-		return super._fetchChapter(url, optionsRuntime)
+		return super._fetchChapter(url, optionsRuntime, _cache_)
 			.then(async function (ret)
 			{
 				if (ret == null) return ret;
@@ -349,7 +351,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					optionsRuntime.optionsJSDOM.requestOptions = optionsRuntime.optionsJSDOM.requestOptions || {};
 					optionsRuntime.optionsJSDOM.requestOptions.form = dom.url;
 
-					return _fetchChapter.call(self, url, optionsRuntime)
+					return _fetchChapter.call(self, url, optionsRuntime, _cache_)
 						.then(function (ret)
 						{
 							const dom = ret.dom;

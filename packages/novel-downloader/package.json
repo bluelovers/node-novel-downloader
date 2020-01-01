@@ -69,6 +69,7 @@
     "escape-string-regexp": "^2.0.0",
     "fs-extra": "^8.1.0",
     "fs-iconv": "^2.0.10",
+    "get-value": "^3.0.1",
     "hash-sum": "^2.0.0",
     "jquery": "^3.4.1",
     "js-tree-list2": "^1.1.19",
@@ -81,6 +82,7 @@
     "regexp-cjk": "^3.3.8",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
+    "set-value": "^3.0.1",
     "shortid": "^2.2.15",
     "str-util": "^2.3.21",
     "tough-cookie": "^3.0.1",
@@ -91,10 +93,12 @@
     "@bluelovers/tsconfig": "^1.0.13",
     "@types/bluebird": "^3.5.29",
     "@types/fs-extra": "^8.0.1",
+    "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
     "@types/jquery": "^3.3.31",
     "@types/jsdom": "^12.2.4",
     "@types/request-promise": "^4",
+    "@types/set-value": "^2.0.0",
     "bluebird-decorator": "^1"
   },
   "resolutions": {

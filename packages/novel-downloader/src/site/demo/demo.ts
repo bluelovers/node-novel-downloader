@@ -27,7 +27,9 @@ export class NovelSiteDemo extends NovelSiteBase
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime): string
+	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, _cache_: {
+		novel: INovel,
+	}): string
 	{
 		if (!ret)
 		{

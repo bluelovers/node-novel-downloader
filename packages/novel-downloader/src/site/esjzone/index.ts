@@ -18,6 +18,7 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import { retryRequest } from '../../fetch';
+import { dotSetValue, dotGetValue } from '../../util/value';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
 export class NovelSiteESJZone extends NovelSiteDemo
@@ -221,6 +222,25 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			txt = txt.slice(title.length + 1)
 				.replace(/^\n+/g, '')
 			;
+		}
+
+		let contribute: string[] = dotGetValue(cache, 'novel.contribute', { default: [] });
+
+		txt = txt.replace(/^翻譯：([^\n]+)\n/, (s, v) => {
+
+			v = v.replace(/^[\s　\xA0]+|[\s　\xA0]+$/g, '');
+
+			if (v && !contribute.includes(v))
+			{
+				contribute.push(v);
+			}
+
+			return ''
+		});
+
+		if (contribute.length)
+		{
+			dotSetValue(cache, 'novel.contribute', contribute);
 		}
 
 		/*

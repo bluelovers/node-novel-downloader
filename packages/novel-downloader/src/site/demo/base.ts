@@ -500,7 +500,9 @@ export class NovelSiteDemo extends _NovelSite
 						consoleDebug.debug(vid, cid, chapter.chapter_title);
 						//consoleDebug.debug(url.toString());
 
-						await self._fetchChapter(url, optionsRuntime)
+						await self._fetchChapter(url, optionsRuntime, {
+								novel,
+							})
 							.then(function (ret)
 							{
 								return self._parseChapter(ret, optionsRuntime, {
@@ -588,7 +590,9 @@ export class NovelSiteDemo extends _NovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime)
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
+		novel: INovel,
+	})
 	{
 		return PromiseBluebird.resolve().then(async function ()
 		{

@@ -427,7 +427,9 @@ export class NovelSite implements NovelSite.INovelSite
 		return new URL(chapter.chapter_url);
 	}
 
-	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime)
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
+		novel: INovel,
+	})
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}

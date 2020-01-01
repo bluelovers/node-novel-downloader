@@ -39,7 +39,9 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     _hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime): URL;
     makeUrl<T>(urlobj: NovelSite.IParseUrl, bool?: boolean, optionsRuntime?: T & IOptionsRuntime): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
-    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): PromiseBluebird<NovelSiteDemo.IFetchChapter>;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
+        novel: INovel;
+    }): PromiseBluebird<NovelSiteDemo.IFetchChapter>;
     _novel18<T = NovelSite.IOptionsRuntime>(url: any, dom: IJSDOM, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<IJSDOM>;
     protected _getExtraInfoURL<T>(search: string, url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>): PromiseBluebird<IJSDOM>;
     protected _getExtraInfoURL2<T, M extends Partial<INovel & IMdconfMeta>>(url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>, data_meta: M): PromiseBluebird<M>;

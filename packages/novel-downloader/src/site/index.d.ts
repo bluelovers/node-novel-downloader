@@ -55,7 +55,9 @@ export declare class NovelSite implements NovelSite.INovelSite {
         volume: NovelSite.IVolume;
         chapter: NovelSite.IChapter;
     }, optionsRuntime?: T & IOptionsRuntime): URL;
-    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime): void;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
+        novel: INovel;
+    }): void;
     protected _parseChapter<T>(dom: any, optionsRuntime: T & IOptionsRuntime, cache: {
         file: string;
         novel: NovelSite.INovel;

@@ -297,7 +297,9 @@ export class NovelSiteDemo extends _NovelSiteBase
 					chapter,
 				}, optionsRuntime);
 
-				await self._fetchChapter(url, optionsRuntime)
+				await self._fetchChapter(url, optionsRuntime, {
+						novel,
+					})
 					.then(function (ret)
 					{
 						return self._parseChapter(ret, optionsRuntime, {
