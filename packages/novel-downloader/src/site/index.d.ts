@@ -19,6 +19,7 @@ export declare class NovelSite implements NovelSite.INovelSite {
     PATH_NOVEL_MAIN: string;
     optionsInit?: NovelSite.IOptions;
     constructor(options: NovelSite.IOptions, ...argv: any[]);
+    _constructor(options: NovelSite.IOptions, ...argv: any[]): void;
     static create(options: NovelSite.IOptions, ...argv: any[]): NovelSite;
     static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
     session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime, url?: URL): this;

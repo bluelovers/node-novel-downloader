@@ -5,6 +5,8 @@ import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime, IFetchChapter
 import NovelSite from '../index';
 export declare class NovelSiteESJZone extends NovelSiteDemo {
     static readonly IDKEY = "esjzone";
+    protected _reContext: RegExp;
+    _constructor(...argv: any[]): void;
     static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;

@@ -64,6 +64,13 @@ export class NovelSite implements NovelSite.INovelSite
 		{
 			consoleDebug.enabled = true;
 		}
+
+		this._constructor(options, ...argv);
+	}
+
+	_constructor(options: NovelSite.IOptions, ...argv)
+	{
+		consoleDebug.debug('root._constructor');
 	}
 
 	static create(options: NovelSite.IOptions, ...argv)
