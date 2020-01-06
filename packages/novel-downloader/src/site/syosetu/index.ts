@@ -22,6 +22,7 @@ import novelText from 'novel-text';
 import { console, consoleDebug } from '../../util/log';
 import { _keepImageInContext, keepFormatTag } from '../../util/html';
 import { hashSum } from '../../util/hash';
+import { parseAsync } from 'mitemin';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -101,7 +102,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		return super.download(url, downloadOptions);
 	}
 
-	protected _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime, cache): string
+	protected async _parseChapter<T>(ret, optionsRuntime: T & IOptionsRuntime, cache): Promise<string>
 	{
 		if (!ret)
 		{
@@ -119,13 +120,26 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			.find('img[src]')
 		;
 
-		_imgs
-			.each(function (i, elem)
+		await PromiseBluebird
+			.resolve(_imgs.toArray())
+			.each(async (elem, i) =>
 			{
 				let img = $(elem);
 				let src = img.prop('src');
 
 				cache.chapter.imgs = cache.chapter.imgs || [];
+
+				await parseAsync(src)
+					.then(data => {
+						if (data.fullsize)
+						{
+							src = data.fullsize;
+
+							img.prop('src', src);
+						}
+					})
+					.catch(e => console.error(e))
+				;
 
 				// @ts-ignore
 				cache.chapter.imgs.push(src);
@@ -136,7 +150,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		if (optionsRuntime.keepImage)
 		{
-			_keepImageInContext(_imgs, $);
+			await _keepImageInContext(_imgs, $, '挿絵');
 		}
 
 		let bodys: JQuery[] = [

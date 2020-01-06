@@ -13,6 +13,7 @@
     "packages/*"
   ],
   "scripts": {
+    "lerna:publish": "lerna publish --yes --cd-version patch",
     "check-updates": "npx npm-check-updates -u",
     "do-install": "npx yarn-tool install",
     "do-init": "npm run check-updates && npm run do-install",

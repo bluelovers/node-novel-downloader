@@ -41,4 +41,5 @@ node_modules
 
 **/bin/*.d.ts
 *.tgz
-/packages/novel-downloader/package.d.ts
+package.d.ts
+.eslintignore

@@ -43,14 +43,14 @@ export function keepFormatTag<O = NovelSite.IOptionsRuntime, E extends unknown |
 	return _target
 }
 
-export function _keepImageInContext(_imgs: JQuery, $: JQueryStatic)
+export function _keepImageInContext(_imgs: JQuery, $: JQueryStatic, prefix = '插圖')
 {
 	_imgs.each((i, elem) => {
 
 		let img = $(elem);
 		let src = img.prop('src');
 
-		img.after(`（插圖${hashSum(src)}）`);
+		img.after(`（${prefix}${hashSum(src)}）`);
 		img.remove();
 
 	});
