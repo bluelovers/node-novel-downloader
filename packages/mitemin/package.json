@@ -1,0 +1,31 @@
+{
+  "name": "mitemin",
+  "version": "1.0.0",
+  "description": "parse mitemin url",
+  "homepage": "https://github.com/bluelovers/node-novel-downloader#readme",
+  "bugs": {
+    "url": "https://github.com/bluelovers/node-novel-downloader/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/node-novel-downloader.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "npx nyc yarn run test",
+    "lint": "npx eslint **/*.ts",
+    "ncu": "npx yarn-tool ncu -u",
+    "npm:publish": "npm publish",
+    "postpublish_": "git commit -m \"publish new version\" .",
+    "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
+    "sort-package-json": "npx sort-package-json ./package.json",
+    "test": "ts-node ./test/demo",
+    "tsc:default": "tsc -p tsconfig.json",
+    "tsc:esm": "tsc -p tsconfig.esm.json"
+  },
+  "dependencies": {
+    "lazy-url": "^1.0.8"
+  }
+}
