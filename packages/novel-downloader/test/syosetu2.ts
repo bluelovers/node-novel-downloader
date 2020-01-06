@@ -22,7 +22,7 @@ import * as path from 'path';
 
 //		'https://ncode.syosetu.com/n3711cs/',
 
-//		'https://ncode.syosetu.com/n5191ey/',
+		'https://ncode.syosetu.com/n5191ey/',
 //		'https://ncode.syosetu.com/n7933eb/',
 
 //		'https://novel18.syosetu.com/n6111fe/',
@@ -31,7 +31,9 @@ import * as path from 'path';
 
 //		'n8792em',
 
-		'http://ncode.syosetu.com/n5964cj/',
+//		'http://ncode.syosetu.com/n5964cj/',
+//
+//		'https://ncode.syosetu.com/n0865em',
 
 	],async function (value, index, array)
 	{

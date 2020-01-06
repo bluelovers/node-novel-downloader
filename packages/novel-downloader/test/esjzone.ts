@@ -36,6 +36,12 @@ import NovelSite from '../src/site/esjzone/index';
 
 		'https://www.esjzone.cc/detail/1546793005.html',
 
+		'https://www.esjzone.cc/detail/1546060392.html',
+
+		'https://www.esjzone.cc/detail/1563843171.html',
+
+		'https://www.esjzone.cc/detail/1553499716.html',
+
 	], async function (value, index, array)
 	{
 		await Site.download(value, {

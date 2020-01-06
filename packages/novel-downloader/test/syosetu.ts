@@ -491,6 +491,18 @@ import { consoleDebug, console } from '../src/util/log';
 
 		'https://ncode.syosetu.com/n2740ca/',
 
+		'https://novel18.syosetu.com/n2498fn/',
+
+		'https://ncode.syosetu.com/n0865em',
+
+		'https://ncode.syosetu.com/n0608dy/',
+
+		'https://ncode.syosetu.com/n3930eh/',
+
+		'https://ncode.syosetu.com/n7130fe/',
+
+		'https://ncode.syosetu.com/n9551ee/',
+
 	],async function (value, index, array)
 	{
 		consoleDebug.debug(`[task]`, `Site.download`, value);

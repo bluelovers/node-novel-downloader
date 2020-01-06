@@ -65,6 +65,8 @@ import NovelSite from '../src/site/wenku8/index';
 
 		'https://www.wenku8.net/book/2661.htm',
 
+		'https://www.wenku8.net/book/2665.htm',
+
 		697,
 
 	],async function (value, index, array)
