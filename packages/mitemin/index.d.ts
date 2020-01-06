@@ -4,11 +4,13 @@ export declare function parse(input: string | URL): {
     size: string;
     filename: string;
     icode?: undefined;
+    authorid?: undefined;
 } | {
     url: string;
     fullsize: string;
     size: string;
     icode: string;
+    authorid: string;
     filename?: undefined;
 };
 export declare function parseAsync(input: string | URL): Promise<{
@@ -17,11 +19,13 @@ export declare function parseAsync(input: string | URL): Promise<{
     size: string;
     filename: string;
     icode?: undefined;
+    authorid?: undefined;
 } | {
     url: string;
     fullsize: string;
     size: string;
     icode: string;
+    authorid: string;
     filename?: undefined;
 }>;
 export default parse;

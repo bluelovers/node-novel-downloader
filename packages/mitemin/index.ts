@@ -55,11 +55,14 @@ export function parse(input: string | URL)
 
 		u2.pathname = paths.join('/');
 
+		let authorid: string = subdomain;
+
 		return {
 			url: u.toString(),
 			fullsize: u2.toString(),
 			size,
 			icode,
+			authorid,
 		}
 	}
 
