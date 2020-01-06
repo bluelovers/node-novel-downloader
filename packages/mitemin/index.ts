@@ -18,7 +18,7 @@ export function parse(input: string | URL)
 	{
 		let basename: string = u.paths[u.paths.length - 1];
 
-		let m = basename.match(/^(?<filename>.+)(?:\.(?<size>\d+)\.(?:jpg|png|gif|bmp))?$/);
+		let m = basename.match(/^(?<filename>.+?)(?:\.(?<size>\d+)\.(?:jpg|png|gif|bmp))?$/);
 
 		let { filename, size } = m.groups;
 
@@ -44,7 +44,7 @@ export function parse(input: string | URL)
 		let u2 = new LazyURL(u);
 
 		let paths = u2.paths.slice();
-		paths.map(v => {
+		paths = paths.map(v => {
 			if (/^(viewimage)(?:big)?$/.test(v))
 			{
 				return RegExp.$1;
