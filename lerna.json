@@ -4,7 +4,7 @@
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["test", "**/test/**/*", "**/test", "node_modules", "packages/novel-downloader/test", "packages/novel-downloader/test/**/*"],
+      "ignoreChanges": ["test", "**/test/**/*", "**/test/**", "**/test", "node_modules", "packages/novel-downloader/test", "packages/novel-downloader/test/**/*", "**/test/**/*.ts"],
       "message": "chore(release): publish"
     }
   },
