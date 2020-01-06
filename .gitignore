@@ -43,3 +43,9 @@ node_modules
 *.tgz
 package.d.ts
 .eslintignore
+.browserslistrc
+.eslintrc.json.tpl
+.nvmrc
+tsconfig.esm.json.tpl
+tsconfig.json.tpl
+tsconfig.tsbuildinfo
