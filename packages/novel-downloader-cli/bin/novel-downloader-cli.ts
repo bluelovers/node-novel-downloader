@@ -45,10 +45,12 @@ let cli = yargs
 	.option('noFilePadend', {
 		desc: `不生成檔名後綴(例如時間日期那些，可用來保持檔案只有一個版本)，當使用此選項後，即使網站上有編輯過的新版依然不會去下載，如果要強制下載則請額外加上 --disableCheckExists`,
 		type: "boolean",
+		default: true,
 	})
 	.option('filePrefixMode', {
 		desc: `更改檔名前綴風格 0 | 1 | 2 | 3 | 4 | 5`,
 		type: "number",
+		default: 1,
 	})
 	.option('pathNovelStyle', {
 		desc: `小說目錄樣式 0 = 預設 , 1 = 小說 ID`,
@@ -61,6 +63,7 @@ let cli = yargs
 	.option('debug', {
 		desc: `debug 模式用來顯示額外訊息 或者 提示目前執行的進度`,
 		type: 'boolean',
+		default: true,
 	})
 	.option('fetchMetaDataOnly', {
 		desc: `只抓取小說的 META 資料`,
@@ -72,10 +75,12 @@ let cli = yargs
 	})
 	.option('startIndex', {
 		type: "number",
+		default: 1,
 	})
 	.option('keepRuby', {
 		desc: `保留 Ruby 注音語法`,
 		type: 'boolean',
+		default: true,
 	})
 	.option('keepFormat', {
 		desc: `保留其他格式語法`,
@@ -84,6 +89,7 @@ let cli = yargs
 	.option('keepImage', {
 		desc: `在內文原始位置上保留圖片`,
 		type: 'boolean',
+		default: true,
 	})
 	.option('protocolMode', {
 		desc: `強制使用 http = 2 / https = 1 (僅限支援的模組)`,
