@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -78,7 +78,7 @@
     "mitemin": "^1.0.2",
     "moment-timezone": "^0.5.27",
     "node-novel-globby": "^2.0.9",
-    "node-novel-info": "^2.3.33",
+    "node-novel-info": "^3.0.0",
     "novel-text": "^1.1.25",
     "regexp-cjk": "^3.3.8",
     "regexp-cjk-plugin-escape-unicode-property": "^1.0.1",

@@ -18,7 +18,7 @@ export declare class NovelSiteTpl extends NovelSiteBase {
         file: string;
         md: string;
     }>;
-    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): string;
+    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): Promise<string>;
     _createChapterUrl<T = IOptionsRuntime>({ novel, volume, chapter, }: {
         novel: any;
         volume: any;

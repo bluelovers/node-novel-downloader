@@ -263,6 +263,16 @@ export class NovelSite implements NovelSite.INovelSite
 			optionsRuntime.debugLog = !!optionsRuntime.debugLog;
 		}
 
+		if (optionsRuntime.keepImage == null)
+		{
+			optionsRuntime.keepImage = true;
+		}
+
+		if (optionsRuntime.keepRuby == null)
+		{
+			optionsRuntime.keepRuby = true;
+		}
+
 		return optionsRuntime;
 	}
 

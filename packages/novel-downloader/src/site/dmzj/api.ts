@@ -19,6 +19,7 @@ import * as path from "path";
 import * as StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { requestToJSDOM, packJSDOM, createJSDOM } from 'jsdom-extra';
+import { _keepImageInContext } from '../../util/html';
 
 //import escapeStringRegexp = require('escape-string-regexp');
 
@@ -190,12 +191,14 @@ export class NovelSiteTpl extends NovelSiteBase
 		}, ...opts);
 	}
 
-	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache): string
+	protected async _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache)
 	{
 		if (!ret)
 		{
 			return '';
 		}
+
+		const $ = ret.dom.$;
 
 		let body_selector = 'body';
 
@@ -228,17 +231,20 @@ export class NovelSiteTpl extends NovelSiteBase
 
 		if (ret.dom && ret.dom.$ && ret.dom.$('img').length)
 		{
-			let $ = ret.dom.$;
-
 			cache.chapter.imgs = cache.chapter.imgs || [];
 
-			ret.dom.$('img[src]').each(function ()
+			$('img[src]').each(function ()
 			{
 				// @ts-ignore
 				cache.chapter.imgs.push($(this).prop('src'));
 				// @ts-ignore
 				cache.novel.imgs.push($(this).prop('src'));
 			});
+
+			if (optionsRuntime.keepImage)
+			{
+				await _keepImageInContext($('img[src]'), $);
+			}
 		}
 
 		text = this._stripContent(text);

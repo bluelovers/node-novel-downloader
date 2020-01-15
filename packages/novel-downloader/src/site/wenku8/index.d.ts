@@ -11,7 +11,7 @@ export declare class NovelSiteWenku8 extends NovelSiteBase {
     makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
-    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): string;
+    protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): Promise<string>;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;

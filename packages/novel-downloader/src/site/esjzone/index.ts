@@ -20,6 +20,7 @@ import { moment } from '../index';
 import { retryRequest } from '../../fetch';
 import { dotSetValue, dotGetValue } from '../../util/value';
 import { zhRegExp } from '../../util/regex';
+import { _keepImageInContext } from '../../util/html';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
 export class NovelSiteESJZone extends NovelSiteDemo
@@ -195,6 +196,8 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			return '';
 		}
 
+		const $ = ret.dom.$;
+
 		try
 		{
 			let html = minifyHTML(ret.dom.$('.container .row:has(.forum-content)').html());
@@ -222,6 +225,11 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		});
 
 		let title = trim(ret.dom.$('.container .row > div > h3').text());
+
+		if (optionsRuntime.keepImage)
+		{
+			await _keepImageInContext(elem.find('img[src]'), $);
+		}
 
 		let txt: string = elem
 			.text()

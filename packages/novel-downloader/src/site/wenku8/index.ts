@@ -14,6 +14,7 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
+import { _keepImageInContext } from '../../util/html';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteWenku8>>()
 export class NovelSiteWenku8 extends NovelSiteBase
@@ -124,12 +125,14 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		return ret;
 	}
 
-	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache): string
+	protected async _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache)
 	{
 		if (!ret)
 		{
 			return '';
 		}
+
+		const $ = ret.dom.$;
 
 		{
 			let c = ret.dom.$('#content');
@@ -165,6 +168,11 @@ export class NovelSiteWenku8 extends NovelSiteBase
 				cache.novel.imgs.push(src);
 			}
 		});
+
+		if (optionsRuntime.keepImage)
+		{
+			await _keepImageInContext(ret.dom.$('#content img[src]'), $);
+		}
 
 		//console.log(ret.dom.serialize());
 
