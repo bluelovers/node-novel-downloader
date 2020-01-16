@@ -198,8 +198,6 @@ export class NovelSiteTpl extends NovelSiteBase
 			return '';
 		}
 
-		const $ = ret.dom.$;
-
 		let body_selector = 'body';
 
 		try
@@ -229,21 +227,23 @@ export class NovelSiteTpl extends NovelSiteBase
 			text = ret.dom.$(body_selector).text();
 		}
 
-		if (ret.dom && ret.dom.$ && ret.dom.$('img').length)
+		const $ = ret.dom.$;
+
+		if (ret.dom.$('img').length)
 		{
 			cache.chapter.imgs = cache.chapter.imgs || [];
 
-			$('img[src]').each(function ()
+			ret.dom.$('img[src]').each(function ()
 			{
 				// @ts-ignore
-				cache.chapter.imgs.push($(this).prop('src'));
+				cache.chapter.imgs.push(ret.dom.$(this).prop('src'));
 				// @ts-ignore
-				cache.novel.imgs.push($(this).prop('src'));
+				cache.novel.imgs.push(ret.dom.$(this).prop('src'));
 			});
 
 			if (optionsRuntime.keepImage)
 			{
-				await _keepImageInContext($('img[src]'), $);
+				await _keepImageInContext(ret.dom.$('img[src]'), ret.dom.$);
 			}
 		}
 
