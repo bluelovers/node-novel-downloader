@@ -150,7 +150,9 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		if (optionsRuntime.keepImage)
 		{
-			await _keepImageInContext(_imgs, $, '挿絵');
+			await _keepImageInContext(_imgs, $, {
+				prefix: '挿絵',
+			});
 		}
 
 		let bodys: JQuery[] = [

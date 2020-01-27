@@ -171,7 +171,9 @@ export class NovelSiteWenku8 extends NovelSiteBase
 
 		if (optionsRuntime.keepImage)
 		{
-			await _keepImageInContext(ret.dom.$('#content img[src]'), $);
+			await _keepImageInContext(ret.dom.$('#content img[src]'), $, {
+				append: '\n',
+			});
 		}
 
 		//console.log(ret.dom.serialize());
