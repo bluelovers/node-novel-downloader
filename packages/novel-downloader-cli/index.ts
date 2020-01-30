@@ -23,6 +23,7 @@ export function download<O extends NovelSite.IDownloadOptions = NovelSite.IDownl
 	downloadOptions?: O & {
 		[k: string]: any
 	},
+
 	siteID?: EnumNovelSiteList,
 	options?: O2 & {
 		[k: string]: any
