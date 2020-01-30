@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
