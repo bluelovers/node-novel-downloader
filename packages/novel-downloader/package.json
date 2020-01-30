@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -50,12 +50,15 @@
     "lint": "npx eslint **/*.ts",
     "ncu": "npx yarn-tool ncu -u",
     "npm:publish": "npm publish",
-    "prepublishOnly": "yarn run check-updates && yarn run sort-package-json",
     "postpublish_": "git commit -m \"publish new version\" .",
+    "prepublishOnly": "yarn run check-updates && yarn run sort-package-json",
     "sort-package-json": "npx sort-package-json ./package.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc:default": "tsc -p tsconfig.json",
     "tsc:esm": "tsc -p tsconfig.esm.json"
+  },
+  "resolutions": {
+    "tough-cookie": "^3"
   },
   "dependencies": {
     "@node-novel/layout-reporter": "^1.0.3",
@@ -63,7 +66,7 @@
     "cached-request": "^2.0.1",
     "content-type-parser": "^1.0.2",
     "crlf-normalize": "^1.0.3",
-    "debug-color2": "^1.1.6",
+    "debug-color2": "^1.1.7",
     "decorator-utils": "^2.0.0",
     "env-bool": "^1.0.3",
     "escape-string-regexp": "^2.0.0",
@@ -89,12 +92,12 @@
     "shortid": "^2.2.15",
     "str-util": "^2.3.21",
     "tough-cookie": "^3.0.1",
-    "ts-type": "^1.2.12",
+    "ts-type": "^1.2.13",
     "upath2": "^2.1.3"
   },
   "devDependencies": {
     "@bluelovers/fast-glob": "^3.0.4",
-    "@bluelovers/tsconfig": "^1.0.13",
+    "@bluelovers/tsconfig": "^1.0.17",
     "@types/bluebird": "^3.5.29",
     "@types/fs-extra": "^8.0.1",
     "@types/get-value": "^3.0.1",
@@ -104,9 +107,6 @@
     "@types/request-promise": "^4",
     "@types/set-value": "^2.0.0",
     "bluebird-decorator": "^1"
-  },
-  "resolutions": {
-    "tough-cookie": "^3"
   },
   "_types": "novel-downloader.d.ts"
 }

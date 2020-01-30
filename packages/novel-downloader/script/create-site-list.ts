@@ -64,9 +64,9 @@ fg.async<string>([
 
 		s = `export enum EnumNovelSiteList
 {
-	${ls.map(([k, v]) => `${k} = './site/${v}',`).join('\n\t')}
-	${ls.map(([k, v]) => `'${v}' = './site/${v}',`).join('\n\t')}
-	${ls.map(([k, v]) => `'./site/${v}' = './site/${v}',`).join('\n\t')}
+	${ls.map(([k, v]) => `${k} = '${v}',`).join('\n\t')}
+	${ls.map(([k, v]) => `'${v}' = '${v}',`).join('\n\t')}
+	${ls.map(([k, v]) => `'./site/${v}' = '${v}',`).join('\n\t')}
 }`;
 
 		ret.push(s);
@@ -87,7 +87,7 @@ export function requireNovelSiteClass(siteID: EnumNovelSiteList | string)
 	{
 		throw new RangeError(\`'\${siteID}' not exists\`);
 	}
-	return require(EnumNovelSiteList[siteID]).default
+	return require(\`./site/\$\{EnumNovelSiteList[siteID]\}\`).default
 }`;
 
 		ret.push(s);
