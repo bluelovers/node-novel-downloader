@@ -3,5 +3,3 @@
  */
 export declare function stripInit(): RegExp[];
 export declare function stripContent(text: string): string;
-declare const _default: typeof import("./strip");
-export default _default;

@@ -99,5 +99,3 @@ function char_autoFH(text: string)
 		})
 		;
 }
-
-export default exports as typeof import('./strip');

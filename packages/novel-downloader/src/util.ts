@@ -6,8 +6,9 @@ import StrUtil = require('str-util');
 import novelText from 'novel-text';
 // @ts-ignore
 import { minifyHTML } from 'jsdom-extra/lib/html';
+import { array_unique } from 'array-hyper-unique';
 
-export { minifyHTML }
+export { minifyHTML, array_unique }
 
 export function isUndef(v, opts: any = null, strict?: boolean): boolean
 {
@@ -45,14 +46,6 @@ export function trim(str: string, bool?: boolean)
 	return t;
 }
 
-export function array_unique<T>(array: T[]): T[]
-{
-	return array.filter(function (el, index, arr)
-	{
-		return index == arr.indexOf(el);
-	});
-}
-
 export function escapeRegexp(str: string)
 {
 	return str.replace(/[|\\{}()\[\]^$+*?.\/]/g, '\\$&');
@@ -62,5 +55,3 @@ export function _fixVolumeChapterName(name: string)
 {
 	return name.replace(/[?@!$#\\\/<>\[\]{}()*]+/g, s => StrUtil.toFullWidth(s))
 }
-
-export default exports as typeof import('./util');

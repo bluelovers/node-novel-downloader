@@ -44,5 +44,3 @@ export function getOptions(options)
 		requestOptions,
 	}
 }
-
-export default exports as typeof import('./jsdom');

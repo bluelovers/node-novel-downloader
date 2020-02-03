@@ -17,5 +17,3 @@ export declare function getOptions(options: any): {
     } & import("jsdom-extra/lib/browser/resource-loader").IOptionsWithWindowOptionsWithResourceLoader & IFromUrlOptions>;
     requestOptions: Partial<IRequestOptions>;
 };
-declare const _default: typeof import("./jsdom");
-export default _default;

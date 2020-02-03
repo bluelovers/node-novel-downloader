@@ -5,6 +5,8 @@
 import fg = require("@bluelovers/fast-glob");
 import path = require("path");
 import fs = require("fs-extra");
+import Bluebird = require("bluebird");
+import { array_unique_overwrite } from 'array-hyper-unique';
 
 fg.async<string>([
 	'*/**.ts',
@@ -51,16 +53,12 @@ fg.async<string>([
 			return a;
 		}, [])
 	})
-	.then(ls => {
+	.then(async (ls) => {
 		//console.log(ls);
 
-		let ret: string[] = [];
+		let ret: string[] = [''];
 
 		let s: string;
-
-		s = `import _NovelSite from './site';\nimport Bluebird = require("bluebird");`;
-
-		ret.push(s);
 
 		s = `export enum EnumNovelSiteList
 {
@@ -71,12 +69,60 @@ fg.async<string>([
 
 		ret.push(s);
 
+		await Bluebird.resolve(ls)
+			.reduce(async (a, [k, v]) => {
+
+				let IDKEY = await import(`../src/site/${v}`)
+					.then(m => m.default.IDKEY)
+					.catch(e => null)
+				;
+
+				if (IDKEY)
+				{
+					a[0].push(`${k} = '${IDKEY}',`);
+					a[1].push(`'${v}' = '${IDKEY}',`);
+					a[1].push(`'${IDKEY}' = '${IDKEY}',`);
+					a[2].push(`'./site/${v}' = '${IDKEY}',`);
+
+				}
+
+				return a
+			}, [[], [], []])
+			.then(a => {
+
+				array_unique_overwrite(a[0]);
+				array_unique_overwrite(a[1]);
+				array_unique_overwrite(a[2]);
+
+				let s = `export enum EnumIDKEYList
+{
+	${a[0].join('\n\t')}
+	${a[1].join('\n\t')}
+	${a[2].join('\n\t')}
+}`;
+
+				ret.push(s);
+
+			})
+		;
+
 		s = `export interface INovelSiteList
 {
-	${ls.map(([k, v]) => `${k}: typeof import('./site/${v}').default`).join('\n\t')}
+	${ls.map(([k, v]) => `${k}: typeof import('../site/${v}').default`).join('\n\t')}
 }`;
 
 		ret.push(s);
+
+		await fs.writeFile(path.join(__dirname, '..', 'src/all/const.ts'), ret.join('\n\n'));
+
+		ret = [];
+
+		s = `import _NovelSite from './site';\nimport Bluebird = require("bluebird");`;
+
+		ret.push(s);
+
+		ret.push(`import { EnumNovelSiteList, INovelSiteList } from './all/const';`);
+		ret.push(`export { EnumNovelSiteList, INovelSiteList }`);
 
 		s = ls.map(([k, v]) => `export function requireNovelSiteClass(siteID: EnumNovelSiteList.${k} | '${v}'): INovelSiteList["${k}"]\n`).join('');
 
