@@ -209,6 +209,11 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 		}
 
+		if (!ret.dom.$('.container .row:has(.forum-content)').html())
+		{
+			throw this._fetchChapterRetryError(`發現防爬蟲機制，將稍後再試圖下載`, ret, optionsRuntime, cache);
+		}
+
 		ret.dom.$('p[class]:has(> script), .adsbygoogle').remove();
 
 		await this._decodeChapter(ret, optionsRuntime, cache);

@@ -331,6 +331,7 @@ export class NovelSiteDemo extends _NovelSite
 								{
 									await fs.readFile(file)
 										.then(v => mdconf_parse(v))
+										// @ts-ignore
 										.then((data: typeof md_data) =>
 										{
 											data.attach = data.attach || {} as any;
@@ -363,7 +364,8 @@ export class NovelSiteDemo extends _NovelSite
 								let md = mdconf_stringify(md_data);
 
 								return fs.outputFile(file, md)
-									.then(r => {
+									.then(r =>
+									{
 
 										consoleDebug.success(`[ATTACH]`, `[SAVE]`, `${path.relative(path_novel, file)}`);
 
@@ -500,27 +502,15 @@ export class NovelSiteDemo extends _NovelSite
 						consoleDebug.debug(vid, cid, chapter.chapter_title);
 						//consoleDebug.debug(url.toString());
 
-						await self._fetchChapter(url, optionsRuntime, {
+						await self._fetchChapterMain({
+								url,
+								file,
+								volume,
+								chapter,
+							}, optionsRuntime, {
 								novel,
 							})
-							.then(function (ret)
-							{
-								return self._parseChapter(ret, optionsRuntime, {
-									file,
-									novel,
-									volume,
-									chapter,
-								});
-							})
-							.then(function (text)
-							{
-								if (typeof text == 'string')
-								{
-									return novelText.toStr(text);
-								}
 
-								return text;
-							})
 							.then(async (text: string) =>
 							{
 								await this._saveFile({
@@ -580,6 +570,7 @@ export class NovelSiteDemo extends _NovelSite
 		novel: _NovelSite.INovel,
 		volume: _NovelSite.IVolume,
 		chapter: _NovelSite.IChapter,
+		doRetry: number,
 	}): string | Promise<string>
 	{
 		if (!ret)
@@ -588,6 +579,99 @@ export class NovelSiteDemo extends _NovelSite
 		}
 
 		throw new SyntaxError(`Function not implemented`);
+	}
+
+	protected _fetchChapterRetryError<T>(message: string, ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
+		file: string,
+		novel: _NovelSite.INovel,
+		volume: _NovelSite.IVolume,
+		chapter: _NovelSite.IChapter,
+		doRetry: number,
+	}): Error & {
+		doRetry: number
+	}
+	{
+		let e: Error & {
+			doRetry: number
+		} = new Error(message) as any;
+
+		e.doRetry = (cache.doRetry | 0) + 1;
+
+		return e
+	}
+
+	protected _fetchChapterMain<T>(argv: {
+		url: URL,
+		file: string,
+		volume: _NovelSite.IVolume,
+		chapter: _NovelSite.IChapter,
+	}, optionsRuntime: T & IOptionsRuntime, _cache_: {
+		novel: INovel,
+	})
+	{
+		const self = this;
+
+		let { url, file, volume, chapter } = argv;
+		let { novel } = _cache_;
+
+		return PromiseBluebird.resolve()
+			.then(async () =>
+			{
+				let _do = false;
+				let doRetry = 0;
+				let value: string;
+				do
+				{
+					_do = false;
+
+					value = await self._fetchChapter(url, optionsRuntime, {
+							novel,
+						})
+						.then(async (ret) =>
+						{
+							return self._parseChapter(ret, optionsRuntime, {
+								file,
+								novel,
+								volume,
+								chapter,
+								doRetry,
+							});
+						})
+						.catch(async (e: Error & {
+							doRetry: number
+						}) =>
+						{
+							if (e.doRetry > 0 && e.doRetry < 5)
+							{
+								_do = true;
+								doRetry = e.doRetry | 0;
+								let delay = 5000 + doRetry * 1000;
+
+								console.warn(e.message, doRetry, delay);
+
+								await PromiseBluebird.delay(delay);
+
+								return
+							}
+
+							return Promise.reject(e)
+						})
+
+				}
+				while (_do);
+
+				return value
+			})
+			.then(function (text)
+			{
+				if (typeof text == 'string')
+				{
+					return novelText.toStr(text);
+				}
+
+				return text;
+			})
+			;
 	}
 
 	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {

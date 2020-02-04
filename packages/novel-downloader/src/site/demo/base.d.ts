@@ -59,7 +59,25 @@ export declare class NovelSiteDemo extends _NovelSite {
         novel: _NovelSite.INovel;
         volume: _NovelSite.IVolume;
         chapter: _NovelSite.IChapter;
+        doRetry: number;
     }): string | Promise<string>;
+    protected _fetchChapterRetryError<T>(message: string, ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
+        file: string;
+        novel: _NovelSite.INovel;
+        volume: _NovelSite.IVolume;
+        chapter: _NovelSite.IChapter;
+        doRetry: number;
+    }): Error & {
+        doRetry: number;
+    };
+    protected _fetchChapterMain<T>(argv: {
+        url: URL;
+        file: string;
+        volume: _NovelSite.IVolume;
+        chapter: _NovelSite.IChapter;
+    }, optionsRuntime: T & IOptionsRuntime, _cache_: {
+        novel: INovel;
+    }): PromiseBluebird<string>;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
         novel: INovel;
     }): PromiseBluebird<IFetchChapter>;

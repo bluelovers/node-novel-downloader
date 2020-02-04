@@ -297,26 +297,13 @@ export class NovelSiteDemo extends _NovelSiteBase
 					chapter,
 				}, optionsRuntime);
 
-				await self._fetchChapter(url, optionsRuntime, {
+				await self._fetchChapterMain({
+						url,
+						file,
+						volume,
+						chapter,
+					}, optionsRuntime, {
 						novel,
-					})
-					.then(function (ret)
-					{
-						return self._parseChapter(ret, optionsRuntime, {
-							file,
-							novel,
-							volume,
-							chapter,
-						});
-					})
-					.then(function (text)
-					{
-						if (typeof text == 'string')
-						{
-							return novelText.toStr(text);
-						}
-
-						return text;
 					})
 					.then(async (text: string) =>
 					{
