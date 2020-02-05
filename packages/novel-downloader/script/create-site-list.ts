@@ -6,7 +6,7 @@ import fg = require("@bluelovers/fast-glob");
 import path = require("path");
 import fs = require("fs-extra");
 import Bluebird = require("bluebird");
-import { array_unique_overwrite } from 'array-hyper-unique';
+import { array_unique_overwrite, array_unique } from 'array-hyper-unique';
 
 fg.async<string>([
 	'*/**.ts',
@@ -69,6 +69,12 @@ fg.async<string>([
 
 		ret.push(s);
 
+		s = `export type EnumNovelSiteListString = '${array_unique(ls.map(([k, v]) => v)).join('\' | \'')}';`;
+
+		ret.push(s);
+
+		s = ``;
+
 		await Bluebird.resolve(ls)
 			.reduce(async (a, [k, v]) => {
 
@@ -84,10 +90,11 @@ fg.async<string>([
 					a[1].push(`'${IDKEY}' = '${IDKEY}',`);
 					a[2].push(`'./site/${v}' = '${IDKEY}',`);
 
+					a[3].push(IDKEY);
 				}
 
 				return a
-			}, [[], [], []])
+			}, [[], [], [], []])
 			.then(a => {
 
 				array_unique_overwrite(a[0]);
@@ -100,6 +107,10 @@ fg.async<string>([
 	${a[1].join('\n\t')}
 	${a[2].join('\n\t')}
 }`;
+
+				ret.push(s);
+
+				s = `export type EnumIDKEYListString = '${array_unique(a[3]).join('\' | \'')}';`;
 
 				ret.push(s);
 

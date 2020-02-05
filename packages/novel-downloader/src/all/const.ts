@@ -61,6 +61,8 @@ export enum EnumNovelSiteList
 	'./site/x23qb' = 'x23qb',
 }
 
+export type EnumNovelSiteListString = 'alphapolis' | 'demo/base' | 'demo/demo' | 'demo/tree' | 'dmzj/api' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
+
 export enum EnumIDKEYList
 {
 	NovelSiteAlphapolis = 'alphapolis',
@@ -112,6 +114,8 @@ export enum EnumIDKEYList
 	'./site/wenku8' = 'wenku8',
 	'./site/x23qb' = 'x23qb',
 }
+
+export type EnumIDKEYListString = 'alphapolis' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
 
 export interface INovelSiteList
 {
