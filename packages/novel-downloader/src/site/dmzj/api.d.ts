@@ -21,11 +21,6 @@ export declare class NovelSiteTpl extends NovelSiteBase {
         md: string;
     }>;
     protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): Promise<string>;
-    _createChapterUrl<T = IOptionsRuntime>({ novel, volume, chapter, }: {
-        novel: any;
-        volume: any;
-        chapter: any;
-    }, optionsRuntime?: any): URL;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;

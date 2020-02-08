@@ -9,6 +9,7 @@ export { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM
 import { IMdconfMeta } from 'node-novel-info';
 export { IMdconfMeta };
 import { LazyCookieJar } from 'jsdom-extra';
+import { INovel } from './syosetu';
 import moment = require('moment-timezone');
 import EventEmitter = require('events');
 export { moment };
@@ -78,7 +79,6 @@ export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
 export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
-import { INovel } from './syosetu';
 export declare namespace NovelSite {
     type IFilePrefixMode = 0 | 1 | 2 | 3 | 4 | 5;
     type IOptionsPlus = {

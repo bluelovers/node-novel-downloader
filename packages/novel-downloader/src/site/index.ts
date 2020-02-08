@@ -25,6 +25,9 @@ import { trimFilename } from 'fs-iconv/util';
 import { crlf, CRLF, R_CRLF } from 'crlf-normalize';
 import StrUtil = require('str-util');
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
+import { INovel } from './syosetu';
+import { consoleDebug } from '../util/log';
+import createURL from '../util/url';
 
 //import * as moment from 'moment';
 import moment = require('moment-timezone');
@@ -438,10 +441,9 @@ export class NovelSite implements NovelSite.INovelSite
 		novel: NovelSite.INovel,
 		volume: NovelSite.IVolume,
 		chapter: NovelSite.IChapter,
-	}, optionsRuntime?: T & IOptionsRuntime): URL
+	}, optionsRuntime?: T & IOptionsRuntime)
 	{
-		// @ts-ignore
-		return new URL(chapter.chapter_url);
+		return createURL(chapter.chapter_url);
 	}
 
 	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
@@ -542,8 +544,6 @@ export import IOptionsRuntime = NovelSite.IOptionsRuntime;
 export import IVolume = NovelSite.IVolume;
 export import IChapter = NovelSite.IChapter;
 export import EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
-import { INovel } from './syosetu';
-import { consoleDebug } from '../util/log';
 
 export namespace NovelSite
 {

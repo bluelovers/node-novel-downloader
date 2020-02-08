@@ -24,6 +24,7 @@ import { _keepImageInContext, keepFormatTag } from '../../util/html';
 import { hashSum } from '../../util/hash';
 import { parseAsync } from 'mitemin';
 import { parseUrl, makeUrl, check } from './util';
+import createURL from '../../util/url';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -245,8 +246,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 	{
 		if (typeof obj === 'string')
 		{
-			// @ts-ignore
-			obj = new URL(obj) as URL;
+			obj = createURL(obj);
 		}
 
 		if (obj.hostname === 'ncode.syosetu.com' || obj.hostname === 'novel18.syosetu.com')

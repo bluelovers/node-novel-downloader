@@ -185,17 +185,6 @@ export class NovelSiteTpl extends NovelSiteBase
 		return text;
 	}
 
-	// @ts-ignore
-	_createChapterUrl<T = IOptionsRuntime>({
-		novel,
-		volume,
-		chapter,
-	}, optionsRuntime?)
-	{
-		// @ts-ignore
-		return new URL(chapter.chapter_url);
-	}
-
 	async get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL,
 		optionsRuntime: Partial<T & IDownloadOptions> = {}
 	): Promise<INovel>
