@@ -69,6 +69,10 @@ import NovelSite from '../src/site/wenku8/index';
 
 		697,
 
+		'https://www.wenku8.net/novel/2/2518/index.htm',
+
+		'https://www.wenku8.net/book/2677.htm',
+
 	],async function (value, index, array)
 	{
 		await Site.download(value.toString(), {

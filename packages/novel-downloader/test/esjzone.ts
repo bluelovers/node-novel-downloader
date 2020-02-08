@@ -28,7 +28,7 @@ import NovelSite from '../src/site/esjzone/index';
 //
 //		'https://www.esjzone.cc/detail/1562435808.html',
 //
-//		'https://www.esjzone.cc/detail/1546323204.html',
+		'https://www.esjzone.cc/detail/1546323204.html',
 //
 //		'https://www.esjzone.cc/detail/1566804047.html',
 //
@@ -41,6 +41,8 @@ import NovelSite from '../src/site/esjzone/index';
 		'https://www.esjzone.cc/detail/1563843171.html',
 
 		'https://www.esjzone.cc/detail/1553499716.html',
+
+		`https://www.esjzone.cc/detail/1578022447.html`,
 
 	], async function (value, index, array)
 	{

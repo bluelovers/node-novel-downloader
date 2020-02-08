@@ -103,6 +103,15 @@ import ProjectConfig from '../_root';
 
 		534,
 
+		2786,
+		2784,
+
+		2357,
+
+//		1986,
+
+		2784,
+
 	],async function (value, index, array)
 	{
 		await Site.download(value.toString(), {
