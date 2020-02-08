@@ -145,6 +145,7 @@ export declare namespace NovelSite {
         novel_pid?: any;
         novel_id?: any;
         chapter_id?: any;
+        volume_id?: any;
         novel_r18?: any;
         [key: string]: any;
     }
@@ -179,12 +180,16 @@ export declare namespace NovelSite {
         [key: string]: any;
     }
     interface INovelSiteStatic<T> extends Type<T & NovelSite.INovelSite> {
-        IDKEY: string;
+        readonly IDKEY: string;
+        readonly disabled?: boolean;
+        check?(url: string | URL | NovelSite.IParseUrl | number, options?: any, ...argv: any[]): boolean;
+        makeUrl?(urlobj: NovelSite.IParseUrl, options?: any, ...argv: any[]): URL;
+        parseUrl?(url: string | URL | number, ...argv: any[]): NovelSite.IParseUrl;
     }
     interface INovelSite {
         download(url: string | URL, options?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
-        makeUrl(urlobj: NovelSite.IParseUrl, options?: any): URL;
-        parseUrl(url: URL | string): NovelSite.IParseUrl;
+        makeUrl(urlobj: NovelSite.IParseUrl, options?: any, ...argv: any[]): URL;
+        parseUrl(url: URL | string | number, ...argv: any[]): NovelSite.IParseUrl;
     }
 }
 export interface Type<T> {

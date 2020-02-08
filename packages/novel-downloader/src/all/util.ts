@@ -1,13 +1,26 @@
 /**
  * Created by user on 2020/2/3.
  */
-import { EnumNovelSiteList, EnumIDKEYList } from './const';
+import { EnumNovelSiteList, EnumIDKEYList, EnumIDKEYToSiteID } from './const';
 
 export function siteID2IDKEY(siteID: EnumNovelSiteList | string | EnumIDKEYList): EnumIDKEYList
 {
 	if (isIDKEY(siteID))
 	{
 		return EnumIDKEYList[siteID]
+	}
+}
+
+export function IDKEY2siteID(input: EnumNovelSiteList | string | EnumIDKEYList): EnumNovelSiteList
+{
+	if (!isIDKEY(input))
+	{
+		input = siteID2IDKEY(input);
+	}
+
+	if (isIDKEY(input))
+	{
+		return EnumIDKEYToSiteID[input as any]
 	}
 }
 

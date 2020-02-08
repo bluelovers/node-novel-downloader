@@ -8,9 +8,11 @@ import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
 export declare class NovelSiteTpl extends NovelSiteBase {
     static readonly IDKEY: string;
-    static check(url: string | URL | _NovelSite.IParseUrl, options?: any): boolean;
-    makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
-    parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
+    static check(url: string | URL | _NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
     _stripContent(text: string): string;
@@ -23,7 +25,7 @@ export declare class NovelSiteTpl extends NovelSiteBase {
         novel: any;
         volume: any;
         chapter: any;
-    }, optionsRuntime?: any): import("jsdom-url/lib/URL").URLCore;
+    }, optionsRuntime?: any): URL;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {
         dom: IJSDOM;
@@ -95,9 +97,9 @@ export declare class NovelSiteTpl extends NovelSiteBase {
         };
         link?: string[];
         url: URL;
-        url_data: _NovelSite.IParseUrl;
+        url_data: import("../../util/url").IParseUrlRuntime;
         url_api: URL;
-        url_data_api: _NovelSite.IParseUrl;
+        url_data_api: import("../../util/url").IParseUrlRuntime;
     }>;
 }
 export default NovelSiteTpl;

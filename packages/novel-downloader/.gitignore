@@ -75,3 +75,5 @@ tsconfig.esm.json.tpl
 .nvmrc
 /.eslintignore
 /docs/
+/test/temp*.*
+

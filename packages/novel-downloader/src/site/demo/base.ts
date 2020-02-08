@@ -3,7 +3,7 @@ import fs = require('fs-extra');
 import path = require('upath2');
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM, packJSDOM } from 'jsdom-extra';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { getFilePath } from '../fs';
 
 import { getOptions } from '../../jsdom';

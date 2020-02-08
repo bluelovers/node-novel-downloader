@@ -2,14 +2,15 @@
  * Created by user on 2019/1/7/007.
  */
 
-import { EnumNovelSiteList, requireNovelSiteClass } from './all';
+import { EnumNovelSiteList, EnumIDKEYToSiteID } from './all/const';
+import { requireNovelSiteClass } from './all';
 import { NovelSite } from './site/index';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
+import createURL from './util/url';
 
 export function getEnumNovelSiteList(): EnumNovelSiteList[]
 {
-	// @ts-ignore
-	return Object.keys(EnumNovelSiteList).filter(v => /^[a-z]/i.test(v));
+	return Object.values(EnumIDKEYToSiteID) as any;
 }
 
 export function searchSiteID(url: string | URL | NovelSite.IParseUrl)
@@ -17,9 +18,7 @@ export function searchSiteID(url: string | URL | NovelSite.IParseUrl)
 	let href: string;
 	try
 	{
-		// @ts-ignore
-		let uo = new URL(url);
-		href = uo.href;
+		href = createURL(url as any).href
 	}
 	catch (e)
 	{

@@ -12,79 +12,41 @@ import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
+import { parseUrl, makeUrl, check } from './util';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteKakuyomu>>()
 export class NovelSiteKakuyomu extends NovelSiteDemo
 {
 	public static readonly IDKEY = 'kakuyomu';
 
-	/**
-	 * https://kakuyomu.jp/works/4852201425154898215/episodes/4852201425154936315
-	 */
-	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
+	static check(url: string | URL | NovelSite.IParseUrl, ...argv): boolean
 	{
-		let pad = (!bool && urlobj.chapter_id) ? '/episodes/' + urlobj.chapter_id : '';
-
-		// @ts-ignore
-		return new URL(`https://kakuyomu.jp/works/${urlobj.novel_id}${pad}`);
+		return check(url, ...argv);
 	}
 
-	parseUrl(url: string | URL): NovelSite.IParseUrl
+	static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
 	{
-		let urlobj = {
-			url,
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-			novel_pid: null,
-			novel_id: null,
-			chapter_id: null,
+	static parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
+	}
 
-		};
+	makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-		//url = url.toString();
-
-		try
-		{
-			// @ts-ignore
-			urlobj.url = new URL(url);
-			// @ts-ignore
-			url = urlobj.url.href;
-		}
-		catch (e)
-		{
-			console.warn(e.toString() + ` "${url}"`);
-		}
-
-		if (typeof url != 'string')
-		{
-			// @ts-ignore
-			throw new TypeError(url);
-		}
-
-		let r: RegExp;
-		let m;
-
-		r = /^(\d{10,})$/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			return urlobj;
-		}
-
-		r = /kakuyomu\.jp\/works\/(\d+)(?:\/(?:episodes\/(\d+)))?/g;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			urlobj.chapter_id = m[2];
-
-			return urlobj;
-		}
-
-		return urlobj;
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	protected _parseChapter<T>(ret, optionsRuntime, cache): string

@@ -3,7 +3,7 @@
  */
 
 import { Tree, ListToTree, Node, TreeToList, ITreeToList } from 'js-tree-list2';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { IChapter, IVolume } from '../site/index';
 import { isUndef, minifyHTML, trim } from '../util';
 import * as shortid from 'shortid';

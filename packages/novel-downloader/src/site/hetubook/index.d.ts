@@ -8,8 +8,11 @@ import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
 export declare class NovelSiteHetubook extends NovelSiteBase {
     static readonly IDKEY: string;
-    makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
-    parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
+    static check(url: string | URL | _NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
     _stripContent(text: string): string;
     session(optionsRuntime: any, url: any): this;

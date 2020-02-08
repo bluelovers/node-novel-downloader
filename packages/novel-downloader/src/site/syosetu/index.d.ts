@@ -24,6 +24,11 @@ export declare type IOptionsRuntime = NovelSiteDemo.IOptionsRuntime & IDownloadO
 export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     static readonly IDKEY = "syosetu";
     constructor(options: IDownloadOptions, ...argv: any[]);
+    static check(url: string | URL | NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
     download(url: string | URL, downloadOptions?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
     protected _parseChapter<T>(ret: any, optionsRuntime: T & IOptionsRuntime, cache: any): Promise<string>;
@@ -37,8 +42,6 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         md: string;
     }>;
     _hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime): URL;
-    makeUrl<T>(urlobj: NovelSite.IParseUrl, bool?: boolean, optionsRuntime?: T & IOptionsRuntime): URL;
-    parseUrl(url: string | URL): NovelSite.IParseUrl;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
         novel: INovel;
     }): PromiseBluebird<NovelSiteDemo.IFetchChapter>;

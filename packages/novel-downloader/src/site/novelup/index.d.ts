@@ -5,9 +5,11 @@ import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime, IFetchChapter
 import NovelSite from '../index';
 export declare class NovelSiteESJZone extends NovelSiteDemo {
     static readonly IDKEY = "novelup";
-    static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
-    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
-    parseUrl(url: string | URL): NovelSite.IParseUrl;
+    static check(url: string | URL | NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     protected _decodeChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): Promise<void>;
     protected _parseChapter<T>(ret: any, optionsRuntime: any, cache: any): Promise<string>;
     getOutputDir<T extends IOptionsRuntime>(options?: T & IOptionsRuntime, novelName?: string): [string, T];

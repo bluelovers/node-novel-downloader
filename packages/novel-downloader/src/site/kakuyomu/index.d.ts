@@ -5,11 +5,11 @@ import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../dem
 import NovelSite from '../index';
 export declare class NovelSiteKakuyomu extends NovelSiteDemo {
     static readonly IDKEY = "kakuyomu";
-    /**
-     * https://kakuyomu.jp/works/4852201425154898215/episodes/4852201425154936315
-     */
-    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
-    parseUrl(url: string | URL): NovelSite.IParseUrl;
+    static check(url: string | URL | NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     protected _parseChapter<T>(ret: any, optionsRuntime: any, cache: any): string;
     /**
      * @todo 需要改良支援三級目錄

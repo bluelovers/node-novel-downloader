@@ -8,7 +8,7 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import * as NovelSiteDemo from '../demo/base';
 import NovelSiteBase from '../demo/base';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
@@ -18,6 +18,7 @@ import novelText from 'novel-text';
 export class NovelSiteWebqxs extends NovelSiteBase
 {
 	public static readonly IDKEY = 'webqxs';
+	static disabled = true;
 
 	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
 	{

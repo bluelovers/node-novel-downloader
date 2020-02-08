@@ -9,7 +9,7 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import * as NovelSiteDemo from '../demo/base';
 import NovelSiteBase from '../demo/base';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
@@ -17,73 +17,36 @@ import novelText from 'novel-text';
 import * as path from "path";
 import * as StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
+import { parseUrl, makeUrl, check } from './util';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteClass>>()
 export class NovelSiteClass extends NovelSiteBase
 {
 	public static readonly IDKEY = path.basename(__dirname);
 
-	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
+	static check(url: string | URL | _NovelSite.IParseUrl, ...argv): boolean
 	{
-		let url: string;
-
-		let cid = (!bool && urlobj.chapter_id) ? `episode\/${urlobj.chapter_id}` : '';
-
-		url = `https://www.alphapolis.co.jp/novel/${urlobj.novel_pid}/${urlobj.novel_id}/${cid}`;
-
-		// @ts-ignore
-		return new URL(url);
+		return check(url, ...argv);
 	}
 
-	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
+	static makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv)
 	{
-		let urlobj = {
-			url: url,
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-			novel_pid: null,
-			novel_id: null,
-			chapter_id: null,
+	static parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
+	}
 
-			chapter_vip: null,
-		};
+	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-		try
-		{
-			// @ts-ignore
-			urlobj.url = new URL(url);
-			// @ts-ignore
-			url = urlobj.url.href;
-		}
-		catch (e)
-		{
-
-		}
-
-		let r = /alphapolis\.co\.jp\/novel\/([^\/]+)\/([^\/]+)(?:\/episode\/([^\/]+))?/;
-
-		let m = r.exec(url as string);
-
-		if (m)
-		{
-			urlobj.novel_pid = m[1];
-			urlobj.novel_id = m[2];
-			urlobj.chapter_id = m[3];
-
-			return urlobj;
-		}
-
-		r = /novel\/([^\/]+)\/([^\/]+)(?:\/episode\/([^\/]+))?/;
-
-		if (m = r.exec(url as string))
-		{
-			urlobj.novel_pid = m[1];
-			urlobj.novel_id = m[2];
-			urlobj.chapter_id = m[3];
-
-			return urlobj;
-		}
-
-		return urlobj;
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)

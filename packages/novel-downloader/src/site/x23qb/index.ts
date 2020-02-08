@@ -12,13 +12,14 @@ import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import { retryRequest } from '../../fetch';
 import { zhRegExp } from 'regexp-cjk';
+import { parseUrl, makeUrl, check } from './util';
 
 /**
  * 铅笔小说
@@ -40,82 +41,31 @@ export class NovelSiteX23qb extends NovelSiteDemo
 	}
 	 */
 
-	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
-	{
-		// @ts-ignore
-		return /esjzone\.cc/i.test(new URL(url).hostname || '');
-	}
-
 	protected _cache_re: RegExp;
 
-	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
+	static check(url: string | URL | NovelSite.IParseUrl, ...argv): boolean
 	{
-		let pad: string;
-
-		if (!bool && urlobj.chapter_id)
-		{
-			pad = `book/${urlobj.novel_id}/${urlobj.chapter_id}.html`
-		}
-		else
-		{
-			pad = `book/${urlobj.novel_id}/`
-		}
-
-		// @ts-ignore
-		return new URL(`https://www.x23qb.com/${pad}`);
+		return check(url, ...argv);
 	}
 
-	parseUrl(url: string | URL): NovelSite.IParseUrl
+	static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
 	{
-		let urlobj = {
-			url,
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-			novel_pid: null,
-			novel_id: null,
-			chapter_id: null,
+	static parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
+	}
 
-		};
+	makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-		//url = url.toString();
-
-		try
-		{
-			// @ts-ignore
-			urlobj.url = new URL(url);
-			// @ts-ignore
-			url = urlobj.url.href;
-		}
-		catch (e)
-		{
-			console.warn(e.toString() + ` "${url}"`);
-		}
-
-		if (typeof url != 'string')
-		{
-			// @ts-ignore
-			throw new TypeError(url);
-		}
-
-		let r: RegExp;
-		let m;
-
-		r = /^(\d+)$/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			return urlobj;
-		}
-
-		r = /book\/(\d+)(?:\/(\d+).html|\/?)/g;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			urlobj.chapter_id = m[2];
-
-			return urlobj;
-		}
-
-		return urlobj;
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	protected async _decodeChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache)
@@ -209,6 +159,7 @@ export class NovelSiteX23qb extends NovelSiteDemo
 		});
 
 		let title = trim(ret.dom.$('mlfy_main_text > h1:eq(0)').text());
+
 
 		if (!this._cache_re)
 		{

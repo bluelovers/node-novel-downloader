@@ -7,6 +7,7 @@ import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
 export declare class NovelSiteWebqxs extends NovelSiteBase {
     static readonly IDKEY = "webqxs";
+    static disabled: boolean;
     makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;

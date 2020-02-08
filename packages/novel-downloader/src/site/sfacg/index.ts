@@ -8,86 +8,41 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import * as NovelSiteDemo from '../demo/base';
 import NovelSiteBase from '../demo/base';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
+import { parseUrl, makeUrl, check } from './util';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteSfacg>>()
 export class NovelSiteSfacg extends NovelSiteBase
 {
 	public static readonly IDKEY = 'sfacg';
 
-	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
+	static check(url: string | URL | _NovelSite.IParseUrl, ...argv): boolean
 	{
-		let url: string;
-
-		if (bool < 0)
-		{
-			url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/`;
-		}
-		else if (urlobj.chapter_vip && urlobj.chapter_id)
-		{
-			url = `http://book.sfacg.com/vip/c/${urlobj.chapter_id}/`;
-		}
-		else
-		{
-			let cid = (!bool && urlobj.chapter_id) ? [urlobj.novel_pid, urlobj.chapter_id].join('/') : 'MainIndex';
-
-			url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/${cid}/`;
-		}
-
-		// @ts-ignore
-		return new URL(url);
+		return check(url, ...argv);
 	}
 
-	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
+	static makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv)
 	{
-		let urlobj = {
-			url: url as any as URL,
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-			novel_pid: null,
-			novel_id: null,
-			chapter_id: null,
+	static parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
+	}
 
-			chapter_vip: null,
-		};
+	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-		// @ts-ignore
-		urlobj.url = new URL(url);
-		url = urlobj.url.href;
-
-		let r = /book\.sfacg\.com\/Novel\/(\d+)\/(?:(\d+)\/(\d+))/;
-
-		let m = r.exec(url);
-		if (m)
-		{
-			urlobj.novel_pid = m[2];
-			urlobj.novel_id = m[1];
-			urlobj.chapter_id = m[3];
-
-			return urlobj;
-		}
-
-		r = /book\.sfacg\.com\/Novel\/(\d+)\/(?:MainIndex)?/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-
-			return urlobj;
-		}
-
-		r = /book\.sfacg\.com\/vip\/c\/(\d+)/;
-		if (m = r.exec(url))
-		{
-			urlobj.chapter_id = m[1];
-			urlobj.chapter_vip = true;
-
-			return urlobj;
-		}
-
-		return urlobj;
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)

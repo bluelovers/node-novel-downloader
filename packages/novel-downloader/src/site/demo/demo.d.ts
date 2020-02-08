@@ -7,8 +7,8 @@ import { IFetchChapter, IOptionsRuntime } from './base';
 import NovelSiteBase from './base';
 export declare class NovelSiteDemo extends NovelSiteBase {
     static readonly IDKEY = "";
-    makeUrl(urlobj: _NovelSite.IParseUrl, options?: any): URL;
-    parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
+    makeUrl(urlobj: _NovelSite.IParseUrl, ...argv: any[]): URL;
+    parseUrl(url: URL | string | number, ...argv: any[]): _NovelSite.IParseUrl;
     protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, _cache_: {
         novel: INovel;
     }): string;

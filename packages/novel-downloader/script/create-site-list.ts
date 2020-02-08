@@ -56,6 +56,18 @@ fg.async<string>([
 	.then(async (ls) => {
 		//console.log(ls);
 
+		ls = await Bluebird.resolve(ls)
+			.filter(async ([k, v]) =>
+			{
+				let m = await import(`../src/site/${v}`)
+					.then(m => m.default)
+					.catch(e => null)
+				;
+
+				return typeof m === 'function' && m.prototype
+			})
+		;
+
 		let ret: string[] = [''];
 
 		let s: string;
@@ -75,8 +87,9 @@ fg.async<string>([
 
 		s = ``;
 
-		await Bluebird.resolve(ls)
-			.reduce(async (a, [k, v]) => {
+		let ls2 = await Bluebird.resolve(ls)
+			.reduce(async (a, [k, v]) =>
+			{
 
 				let IDKEY = await import(`../src/site/${v}`)
 					.then(m => m.default.IDKEY)
@@ -85,16 +98,30 @@ fg.async<string>([
 
 				if (IDKEY)
 				{
-					a[0].push(`${k} = '${IDKEY}',`);
-					a[1].push(`'${v}' = '${IDKEY}',`);
-					a[1].push(`'${IDKEY}' = '${IDKEY}',`);
-					a[2].push(`'./site/${v}' = '${IDKEY}',`);
-
-					a[3].push(IDKEY);
+					a.push([k, v, IDKEY])
 				}
 
 				return a
-			}, [[], [], [], []])
+			}, [] as [string, string, string][])
+		;
+
+		await Bluebird.resolve(ls2)
+			.reduce(async (a, [k, v, IDKEY]) => {
+
+				a[0].push(`${k} = '${IDKEY}',`);
+				a[1].push(`'${v}' = '${IDKEY}',`);
+				a[1].push(`'${IDKEY}' = '${IDKEY}',`);
+				a[2].push(`'./site/${v}' = '${IDKEY}',`);
+
+				a[3].push(IDKEY);
+
+				if (v !== 'dmzj')
+				{
+					a[4][v] = IDKEY;
+				}
+
+				return a
+			}, [[], [], [], [], {}] as [string[], string[], string[], string[], Record<string, string>])
 			.then(a => {
 
 				array_unique_overwrite(a[0]);
@@ -111,6 +138,19 @@ fg.async<string>([
 				ret.push(s);
 
 				s = `export type EnumIDKEYListString = '${array_unique(a[3]).join('\' | \'')}';`;
+
+				ret.push(s);
+
+				let o = Object.entries(a[4])
+					.map(([siteID, IDKEY]) => {
+						return `'${IDKEY}' = '${siteID}',`
+					})
+				;
+
+				s = `export enum EnumIDKEYToSiteID
+{
+	${o.join('\n\t')}
+}`;
 
 				ret.push(s);
 

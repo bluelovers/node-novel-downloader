@@ -12,7 +12,7 @@ import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
@@ -21,6 +21,8 @@ import { retryRequest } from '../../fetch';
 import { dotSetValue, dotGetValue } from '../../util/value';
 import { zhRegExp } from '../../util/regex';
 import { _keepImageInContext } from '../../util/html';
+import { parseUrl, makeUrl, check } from './util';
+import createURL from '../../util/url';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
 export class NovelSiteESJZone extends NovelSiteDemo
@@ -45,92 +47,33 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		// @ts-ignore
 		super._constructor(...argv);
 
-		this._reContext = new zhRegExp(/^(?:由於百度\s*\d+\s*年以前的貼文都刪了|所以不清楚是由哪位大佬翻譯|若轉載的動作冒犯了您，先跟您說聲抱歉！|也麻煩留言告知，我們會將此文下架|已?由?譯者授權轉載！?|原文網址：[^\n]+|轉載自貼吧|ESJ輕小說(\s*(?:https:\/\/)?www\.esjzone\.cc\/?)?|僅供個人學習交流使用，禁作商業用途|下載后請在24小時內刪除，[^\n]*不負擔任何責任|請尊重翻譯、掃圖、錄入、校對的辛勤勞動，轉載請保留信息)$/uigm);
+		this._reContext = new zhRegExp(/^(?:由於百度\s*\d+\s*年以前的貼文都刪了|所以不清楚是由哪位大佬翻譯|若轉載的動作冒犯了您，先跟您說聲抱歉！|也麻煩留言告知，我們會將此文下架|已?由?譯者授權轉載！?|原文網址：[^\n]+|轉載自貼吧|ESJ輕小說(\s*(?:https:\/\/)?www\.esjzone\.cc\/?)?|僅供個人學習交流使用，禁作商業用途|下載后請在24小時內刪除，[^\n]*不負擔任何責任|請尊重翻譯、掃圖、錄入、校對的辛勤勞動，轉載請保留信息|轉載自真白)$/uigm);
 
 	}
 
-	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
+	static check(url: string | URL | NovelSite.IParseUrl, ...argv): boolean
 	{
-		// @ts-ignore
-		return /esjzone\.cc/i.test(new URL(url).hostname || '');
+		return check(url, ...argv);
 	}
 
-	makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean): URL
+	static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
 	{
-		let pad: string;
-
-		if (!bool && urlobj.chapter_id)
-		{
-			pad = `forum/${urlobj.novel_id}/${urlobj.chapter_id}.html`
-		}
-		else
-		{
-			pad = `detail/${urlobj.novel_id}.html`
-		}
-
-		// @ts-ignore
-		return new URL(`https://www.esjzone.cc/${pad}`);
+		return makeUrl(urlobj, bool, ...argv)
 	}
 
-	parseUrl(url: string | URL): NovelSite.IParseUrl
+	static parseUrl(url: string | URL | number, ...argv)
 	{
-		let urlobj = {
-			url,
+		return parseUrl(url, ...argv);
+	}
 
-			novel_pid: null,
-			novel_id: null,
-			chapter_id: null,
+	makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-		};
-
-		//url = url.toString();
-
-		try
-		{
-			// @ts-ignore
-			urlobj.url = new URL(url);
-			// @ts-ignore
-			url = urlobj.url.href;
-		}
-		catch (e)
-		{
-			console.warn(e.toString() + ` "${url}"`);
-		}
-
-		if (typeof url != 'string')
-		{
-			// @ts-ignore
-			throw new TypeError(url);
-		}
-
-		let r: RegExp;
-		let m;
-
-		r = /^(\d{6,})$/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			return urlobj;
-		}
-
-		r = /esjzone\.cc\/forum\/(\d+)(?:\.html|\/(\d+).html)/g;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			urlobj.chapter_id = m[2];
-
-			return urlobj;
-		}
-
-		r = /esjzone\.cc\/detail\/(\d+)(?:\.html)?/g;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-
-			return urlobj;
-		}
-
-		return urlobj;
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	protected async _decodeChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache)

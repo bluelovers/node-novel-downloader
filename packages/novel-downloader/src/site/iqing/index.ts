@@ -8,7 +8,7 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import * as NovelSiteDemo from '../demo/base';
 import NovelSiteBase from '../demo/base';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
@@ -32,6 +32,7 @@ export type ISessionData = {
 export class NovelSiteIqing extends NovelSiteBase
 {
 	public static readonly IDKEY = 'iqing';
+	static disabled = true;
 
 	checkSessionData<T = ISessionData>(data: T & ISessionData, optionsRuntime: IOptionsRuntime = {}): T
 	{

@@ -9,7 +9,7 @@ import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 // @ts-ignore
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { getFilePath, getVolumePath } from '../fs';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
@@ -23,6 +23,7 @@ import { console, consoleDebug } from '../../util/log';
 import { _keepImageInContext, keepFormatTag } from '../../util/html';
 import { hashSum } from '../../util/hash';
 import { parseAsync } from 'mitemin';
+import { parseUrl, makeUrl, check } from './util';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -57,6 +58,31 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		super(options, ...argv);
 
 		this.optionsInit.retryDelay = this.optionsInit.retryDelay || 25000;
+	}
+
+	static check(url: string | URL | NovelSite.IParseUrl, ...argv): boolean
+	{
+		return check(url, ...argv);
+	}
+
+	static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
+
+	static parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
+	}
+
+	makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
+
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)
@@ -238,90 +264,6 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		}
 
 		return obj
-	}
-
-	makeUrl<T>(urlobj: NovelSite.IParseUrl, bool ?: boolean, optionsRuntime?: T & IOptionsRuntime): URL
-	{
-		let subdomain = urlobj.novel_r18 ? 'novel18' : 'ncode';
-
-		if (urlobj.novel_pid && urlobj.chapter_id)
-		{
-			// @ts-ignore
-			return new URL(`https://${subdomain}.syosetu.com/txtdownload/dlstart/ncode/${urlobj.novel_pid}/?no=${urlobj.chapter_id}&hankaku=0&code=utf-8&kaigyo=crlf`);
-		}
-
-		let pad = (!bool && urlobj.chapter_id) ? urlobj.chapter_id : '';
-
-		// @ts-ignore
-		return new URL(`http://${subdomain}.syosetu.com/${urlobj.novel_id}/${pad}`);
-	}
-
-	parseUrl(url: string | URL): NovelSite.IParseUrl
-	{
-		let urlobj = {
-			url,
-
-			novel_pid: null,
-			novel_id: null,
-			chapter_id: null,
-
-			novel_r18: null,
-		};
-
-		//url = url.toString();
-
-		try
-		{
-			// @ts-ignore
-			urlobj.url = new URL(url);
-			// @ts-ignore
-			url = urlobj.url.href;
-		}
-		catch (e)
-		{
-			console.warn(e.toString() + ` "${url}"`);
-		}
-
-		if (typeof url != 'string')
-		{
-			// @ts-ignore
-			throw new TypeError(url);
-		}
-
-		let r: RegExp;
-		let m;
-
-		r = /^(n[\w]{5,6})$/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			return urlobj;
-		}
-
-		r = /(novel18)\.syosetu\.com/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_r18 = m[1];
-		}
-
-		r = /txtdownload\/dlstart\/ncode\/(\d+)/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_pid = m[1];
-
-			return urlobj;
-		}
-
-		r = /\.syosetu\.com\/(n\w+)(?:\/?(\d+))?/;
-		if (m = r.exec(url))
-		{
-			urlobj.novel_id = m[1];
-			urlobj.chapter_id = m[2];
-
-			return urlobj;
-		}
-
-		return urlobj;
 	}
 
 	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {

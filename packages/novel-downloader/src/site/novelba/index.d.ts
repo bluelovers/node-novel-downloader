@@ -5,9 +5,11 @@ import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime } from '../dem
 import NovelSite from '../index';
 export declare class NovelSiteNovelba extends NovelSiteDemo {
     static readonly IDKEY = "novelba";
-    static check(url: string | URL | NovelSite.IParseUrl, options?: any): boolean;
-    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean): URL;
-    parseUrl(url: string | URL): NovelSite.IParseUrl;
+    static check(url: string | URL | NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     protected _parseChapter<T>(ret: any, optionsRuntime: any, cache: any): string;
     get_volume_list<T extends IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }

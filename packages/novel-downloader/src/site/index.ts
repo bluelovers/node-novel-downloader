@@ -6,7 +6,7 @@ import bluebirdDecorator from '../decorator/bluebird';
 //import bluebirdDecorator from 'bluebird-decorator';
 
 import PromiseBluebird = require('bluebird');
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import path = require('upath2');
 
 import rootPath from "../../_root";
@@ -642,6 +642,7 @@ export namespace NovelSite
 		novel_pid?,
 		novel_id?,
 		chapter_id?,
+		volume_id?,
 
 		novel_r18?,
 
@@ -696,16 +697,24 @@ export namespace NovelSite
 
 	export interface INovelSiteStatic<T> extends Type<T & NovelSite.INovelSite>
 	{
-		IDKEY: string,
+		readonly IDKEY: string,
+		readonly disabled?: boolean,
+
+		check?(url: string | URL | NovelSite.IParseUrl | number, options?, ...argv): boolean;
+
+		makeUrl?(urlobj: NovelSite.IParseUrl, options?, ...argv): URL;
+
+		parseUrl?(url: string | URL | number, ...argv): NovelSite.IParseUrl;
+
 	}
 
 	export interface INovelSite
 	{
 		download(url: string | URL, options?: IDownloadOptions): PromiseBluebird<NovelSite.INovel>;
 
-		makeUrl(urlobj: NovelSite.IParseUrl, options?): URL;
+		makeUrl(urlobj: NovelSite.IParseUrl, options?, ...argv): URL;
 
-		parseUrl(url: URL | string): NovelSite.IParseUrl;
+		parseUrl(url: URL | string | number, ...argv): NovelSite.IParseUrl;
 	}
 }
 

@@ -7,7 +7,7 @@ import { IDownloadOptions, INovel } from './base';
 import { IFetchChapter, IOptionsRuntime } from './base';
 import * as _NovelSiteBase from './base';
 import NovelSiteBase from './base';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
@@ -17,12 +17,12 @@ export class NovelSiteDemo extends NovelSiteBase
 {
 	public static readonly IDKEY = '';
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, options?): URL
+	makeUrl(urlobj: _NovelSite.IParseUrl, ...argv): URL
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
+	parseUrl(url: URL | string | number, ...argv): _NovelSite.IParseUrl
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}

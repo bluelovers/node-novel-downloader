@@ -9,7 +9,7 @@ import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 // @ts-ignore
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { download_image } from '../image';
 
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
@@ -26,6 +26,8 @@ import { createOptionsJSDOM } from '../../jsdom';
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteDmzj>>()
 export class NovelSiteDmzj extends NovelSite
 {
+	static disabled = true;
+
 	static IDKEY = 'dmzj';
 
 	_makeUrl(urlobj: NovelSite.IParseUrl, page?)

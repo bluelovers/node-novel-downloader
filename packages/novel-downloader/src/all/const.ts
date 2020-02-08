@@ -117,6 +117,25 @@ export enum EnumIDKEYList
 
 export type EnumIDKEYListString = 'alphapolis' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
 
+export enum EnumIDKEYToSiteID
+{
+	'alphapolis' = 'alphapolis',
+	'dmzj' = 'dmzj/api',
+	'esjzone' = 'esjzone',
+	'hetubook' = 'hetubook',
+	'iqing' = 'iqing',
+	'kakuyomu' = 'kakuyomu',
+	'millionbook' = 'millionbook',
+	'novelba' = 'novelba',
+	'novelup' = 'novelup',
+	'sfacg' = 'sfacg',
+	'syosetu' = 'syosetu',
+	'uukanshu' = 'uukanshu',
+	'webqxs' = 'webqxs',
+	'wenku8' = 'wenku8',
+	'x23qb' = 'x23qb',
+}
+
 export interface INovelSiteList
 {
 	NovelSiteAlphapolis: typeof import('../site/alphapolis').default

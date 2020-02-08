@@ -10,7 +10,7 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import * as NovelSiteDemo from '../demo/base';
 import NovelSiteBase from '../demo/base';
-import { URL } from 'jsdom-url';
+//import { URL } from 'jsdom-url';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
@@ -20,6 +20,8 @@ import * as StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { requestToJSDOM, packJSDOM, createJSDOM } from 'jsdom-extra';
 import { _keepImageInContext } from '../../util/html';
+import createURL from '../../util/url';
+import { parseUrl, makeUrl, check } from './util';
 
 //import escapeStringRegexp = require('escape-string-regexp');
 
@@ -28,106 +30,29 @@ export class NovelSiteTpl extends NovelSiteBase
 {
 	public static readonly IDKEY = path.basename(__dirname);
 
-	static check(url: string | URL | _NovelSite.IParseUrl, options?): boolean
+	static check(url: string | URL | _NovelSite.IParseUrl, ...argv): boolean
 	{
-		// @ts-ignore
-		return /dmzj\.com/i.test(new URL(url).hostname || '');
+		return check(url, ...argv);
 	}
 
-	makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL
+	static makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv)
 	{
-		let url: string;
-
-		if (bool === 2 && urlobj.novel_id)
-		{
-			url = `http://q.dmzj.com/${urlobj.novel_id}/index.shtml`;
-		}
-		else if (!bool && urlobj.volume_id && urlobj.chapter_id)
-		{
-			url = `http://v2.api.dmzj.com/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
-		}
-		else if (bool === true && urlobj.novel_id)
-		{
-			url = `http://v2.api.dmzj.com/novel/chapter/${urlobj.novel_id}.json`;
-		}
-		else
-		{
-			url = `http://v2.api.dmzj.com/novel/${urlobj.novel_id}.json`;
-		}
-
-		// @ts-ignore
-		return new URL(url);
+		return makeUrl(urlobj, bool, ...argv)
 	}
 
-	parseUrl(url: URL | string, options?): _NovelSite.IParseUrl
+	static parseUrl(url: string | URL | number, ...argv)
 	{
-		let urlobj = {
-			url: url,
+		return parseUrl(url, ...argv);
+	}
 
-			novel_id: null,
-			chapter_id: null,
+	makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv)
+	{
+		return makeUrl(urlobj, bool, ...argv)
+	}
 
-			volume_id: null,
-		};
-
-		try
-		{
-			// @ts-ignore
-			urlobj.url = new URL(url);
-			// @ts-ignore
-			url = urlobj.url.href;
-		}
-		catch (e)
-		{
-			console.warn(e.toString() + ` "${url}"`);
-		}
-
-		let r = /api\.dmzj\.com\/novel\/(\d+).json/;
-
-		let m = r.exec(url as string);
-		if (m)
-		{
-			urlobj.novel_id = m[1];
-
-			return urlobj;
-		}
-
-		r = /^(\d+)$/;
-		if (m = r.exec(url as string))
-		{
-			urlobj.novel_id = m[1];
-
-			return urlobj;
-		}
-
-		r = /api\.dmzj\.com\/novel\/chapter\/(\d+).json/;
-		if (m = r.exec(url as string))
-		{
-			urlobj.novel_id = m[1];
-
-			return urlobj;
-		}
-
-		r = /api\.dmzj\.com\/novel\/download\/(\d+)_(\d+)_(\d+).txt/;
-		if (m = r.exec(url as string))
-		{
-			urlobj.novel_id = m[1];
-			urlobj.volume_id = m[2];
-			urlobj.chapter_id = m[3];
-
-			return urlobj;
-		}
-
-		// 手機版網址
-		r = /(?:q\.dmzj\.com\/|^\/)(?:(\d+)\/(?:(\d+)\/(?:(\d+)[\._])?)?)/;
-		if (m = r.exec(url as string))
-		{
-			urlobj.novel_id = m[1];
-			urlobj.volume_id = m[2];
-			urlobj.chapter_id = m[3];
-		}
-
-		return urlobj;
+	parseUrl(url: string | URL | number, ...argv)
+	{
+		return parseUrl(url, ...argv);
 	}
 
 	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL)

@@ -16,6 +16,7 @@ export declare type ISessionData = {
 };
 export declare class NovelSiteIqing extends NovelSiteBase {
     static readonly IDKEY = "iqing";
+    static disabled: boolean;
     checkSessionData<T = ISessionData>(data: T & ISessionData, optionsRuntime?: IOptionsRuntime): T;
     makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
     parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;

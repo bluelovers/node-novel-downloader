@@ -8,6 +8,7 @@ import { PromiseBluebird } from '../index';
  * @deprecated
  */
 export declare class NovelSiteDmzj extends NovelSite {
+    static disabled: boolean;
     static IDKEY: string;
     _makeUrl(urlobj: NovelSite.IParseUrl, page?: any): string;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: number): URL;

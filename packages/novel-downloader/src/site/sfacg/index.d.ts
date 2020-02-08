@@ -7,8 +7,11 @@ import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
 export declare class NovelSiteSfacg extends NovelSiteBase {
     static readonly IDKEY = "sfacg";
-    makeUrl<T>(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, optionsRuntime?: T & IOptionsRuntime): URL;
-    parseUrl(url: URL | string, options?: any): _NovelSite.IParseUrl;
+    static check(url: string | URL | _NovelSite.IParseUrl, ...argv: any[]): boolean;
+    static makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
+    makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
+    parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
     protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): string;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
@@ -76,7 +79,7 @@ export declare class NovelSiteSfacg extends NovelSiteBase {
         };
         link?: string[];
         url: URL;
-        url_data: _NovelSite.IParseUrl;
+        url_data: import("../../util/url").IParseUrlRuntime;
     }>;
 }
 export default NovelSiteSfacg;
