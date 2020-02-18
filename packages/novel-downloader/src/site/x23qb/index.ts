@@ -20,6 +20,7 @@ import { moment } from '../index';
 import { retryRequest } from '../../fetch';
 import { zhRegExp } from 'regexp-cjk';
 import { parseUrl, makeUrl, check } from './util';
+import { _p_2_br } from '../esjzone/util';
 
 /**
  * 铅笔小说
@@ -336,27 +337,3 @@ export class NovelSiteX23qb extends NovelSiteDemo
 }
 
 export default NovelSiteX23qb;
-
-function _p_2_br(target, $)
-{
-	return $(target)
-		.each(function (i, elem)
-		{
-			let _this = $(elem);
-
-			let _html = _this
-				.html()
-				.replace(/(?:&nbsp;?)/g, ' ')
-				.replace(/[\xA0\s]+$/g, '')
-			;
-
-			if (_html == '<br/>' || _html == '<br>')
-			{
-				_html = '';
-			}
-
-			_this.after(`${_html}<br/>`);
-			_this.remove()
-		})
-		;
-}

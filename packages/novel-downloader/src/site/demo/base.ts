@@ -645,7 +645,7 @@ export class NovelSiteDemo extends _NovelSite
 							{
 								_do = true;
 								doRetry = e.doRetry | 0;
-								let delay = 5000 + doRetry * 1000;
+								let delay = 5000 + doRetry * 1000 + (argv.volume.volume_index as any | 0 +  argv.chapter.chapter_index as any | 0) * 10;
 
 								console.warn(e.message, doRetry, delay);
 

@@ -4,25 +4,17 @@
 
 import { minifyHTML, trim } from '../../util';
 import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime, IFetchChapter } from '../demo/tree';
-import { IRowVolume, TreeNode } from '../../tree/index';
-
-import fs = require('fs-extra');
-import { trimFilename } from 'fs-iconv/util';
-import * as path from 'upath2';
-import novelInfo, { IMdconfMeta } from 'node-novel-info';
-import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
-
-//import { URL } from 'jsdom-url';
-
-import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
-import { PromiseBluebird, bluebirdDecorator } from '../index';
-import { moment } from '../index';
+import { IRowVolume, TreeNode, IRowChapter } from '../../tree/index';
+import { IMdconfMeta } from 'node-novel-info';
+import { fromURL, IJSDOM } from 'jsdom-extra';
+import NovelSite, { staticImplements, moment } from '../index';
 import { retryRequest } from '../../fetch';
 import { dotSetValue, dotGetValue } from '../../util/value';
 import { zhRegExp } from '../../util/regex';
 import { _keepImageInContext } from '../../util/html';
-import { parseUrl, makeUrl, check } from './util';
-import createURL from '../../util/url';
+import { parseUrl, makeUrl, check, _p_2_br } from './util';
+
+//import { URL } from 'jsdom-url';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteESJZone>>()
 export class NovelSiteESJZone extends NovelSiteDemo
@@ -294,7 +286,8 @@ export class NovelSiteESJZone extends NovelSiteDemo
 				const novelTree = optionsRuntime.novelTree;
 				let currentVolume: TreeNode<IRowVolume>;
 
-				let table = dom.$('.product-detail .tabbable .tab-content.show-desc').find('a');
+				let _content = $('.product-detail:eq(0)');
+				let table = _content.find('#tab1 a[href], #tab1  .non');
 
 				let _cache_dates = [];
 
@@ -312,17 +305,36 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					});
 				}
 
-				dom.$('p[class]:has(> script[src*=google]), div[class]:has(> script[src*=google]), .adsbygoogle').remove();
+				//console.dir(table.length)
 
 				table
 					.each(function (index, elem)
 					{
-						let tr = dom.$(elem);
+						let tr = $(elem);
+						let _this = tr;
 
-						if (1)
+						if (_this.is('.non'))
+						{
+							let volume_title = trim(_this.text());
+
+							if (volume_title)
+							{
+								currentVolume = novelTree.addVolume({
+									volume_title,
+									volume_index: novelTree.root().size(),
+									total_idx: total_idx++,
+								});
+
+								return;
+							}
+						}
+
+						if (tr.is('a'))
 						{
 							let a = tr;
 							let chapter_title = trim(a.text(), true);
+
+							//console.log(chapter_title)
 
 							let href = a.prop('href');
 
@@ -339,7 +351,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 								data.url = href;
 							}
 
-							let chapter = {
+							let chapter: IRowChapter = {
 								chapter_title,
 								chapter_id: data.chapter_id,
 								chapter_url: href,
@@ -353,13 +365,51 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					})
 				;
 
+				dom.$('p[class]:has(> script[src*=google]), div[class]:has(> script[src*=google]), .adsbygoogle').remove();
+
 				let data_meta: IMdconfMeta = {
 					novel: {
 
 					},
 				};
 
-				data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image').prop('src');
+				$('.product-detail .well ')
+					.find('.row a[href]')
+					.not('.btn, .form-group *')
+					.each((i, elem) =>
+					{
+
+						let _this = $(elem);
+
+						let name = trim(_this.text());
+						let href = _this.prop('href') as string;
+
+						if (name === href)
+						{
+							name = undefined;
+						}
+
+						data_meta.link = data_meta.link || [];
+						data_meta.link.push(href);
+
+					})
+				;
+
+				$('.show-tag a[href*="tag"]')
+					.each((i, elem) =>
+					{
+						let _this = $(elem);
+						let name = trim(_this.text());
+
+						if (name)
+						{
+							data_meta.novel.tags = data_meta.novel.tags || [];
+							data_meta.novel.tags.push(name);
+						}
+					})
+				;
+
+				data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image:not([src*="empty.jpg"])').prop('src');
 
 				let novel_desc = trim($('.product-detail:eq(0)').find('.book_description').text() || '');
 
@@ -393,26 +443,3 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 export default NovelSiteESJZone;
 
-function _p_2_br(target, $)
-{
-	return $(target)
-		.each(function (i, elem)
-		{
-			let _this = $(elem);
-
-			let _html = _this
-				.html()
-				.replace(/(?:&nbsp;?)/g, ' ')
-				.replace(/[\xA0\s]+$/g, '')
-			;
-
-			if (_html == '<br/>' || _html == '<br>')
-			{
-				_html = '';
-			}
-
-			_this.after(`${_html}<br/>`);
-			_this.remove()
-		})
-		;
-}

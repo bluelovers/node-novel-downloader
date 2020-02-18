@@ -89,10 +89,6 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 		}
 
-		//await this._decodeChapter(ret, optionsRuntime, cache);
-
-		//_p_2_br(section_episode.find('.content > p'), ret.dom.$);
-
 		let elem = section_episode.find('.content > p');
 
 		let txt: string = (await elem
@@ -283,27 +279,3 @@ export class NovelSiteESJZone extends NovelSiteDemo
 }
 
 export default NovelSiteESJZone;
-
-function _p_2_br(target, $)
-{
-	return $(target)
-		.each(function (i, elem)
-		{
-			let _this = $(elem);
-
-			let _html = _this
-				.html()
-				.replace(/(?:&nbsp;?)/g, ' ')
-				.replace(/[\xA0\s]+$/g, '')
-			;
-
-			if (_html == '<br/>' || _html == '<br>')
-			{
-				_html = '';
-			}
-
-			_this.after(`${_html}<br/>`);
-			_this.remove()
-		})
-		;
-}

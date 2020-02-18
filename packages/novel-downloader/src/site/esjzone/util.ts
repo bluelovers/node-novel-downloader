@@ -1,5 +1,5 @@
-import type NovelSite from '../index';
-import createURL, { _handleParseURL, IParseUrlRuntime } from '../../util/url';
+import NovelSite from '../index';
+import createURL, { _handleParseURL } from '../../util/url';
 
 export function check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 {
@@ -54,4 +54,28 @@ export function parseUrl(_url: string | URL | number, ...argv)
 	}
 
 	return urlobj;
+}
+
+export function _p_2_br(target, $)
+{
+	return $(target)
+		.each(function (i, elem)
+		{
+			let _this = $(elem);
+
+			let _html = _this
+				.html()
+				.replace(/(?:&nbsp;?)/g, ' ')
+				.replace(/[\xA0\s]+$/g, '')
+			;
+
+			if (_html == '<br/>' || _html == '<br>')
+			{
+				_html = '';
+			}
+
+			_this.after(`${_html}<br/>`);
+			_this.remove()
+		})
+		;
 }
