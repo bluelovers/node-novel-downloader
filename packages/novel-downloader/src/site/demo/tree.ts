@@ -2,7 +2,6 @@
  * Created by user on 2018/4/4/004.
  */
 
-export * from './base';
 import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, INovel as _INovel } from './base';
 
 import { getFilePath, getVolumePath } from '../fs';
@@ -343,3 +342,4 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 export const NovelSite = NovelSiteDemo as typeof NovelSiteDemo;
 export default NovelSiteDemo;
+export * from './base';

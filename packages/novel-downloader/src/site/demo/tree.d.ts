@@ -1,7 +1,6 @@
 /**
  * Created by user on 2018/4/4/004.
  */
-export * from './base';
 import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, INovel as _INovel } from './base';
 import { IRowChapter, IRowVolume, NovelTree } from '../../tree/index';
 export { NovelTree };
@@ -17,7 +16,7 @@ export declare class NovelSiteDemo extends _NovelSiteBase {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
-        content: IRowVolume<{}> | import("../../tree").IRowRoot<{}> | IRowChapter<{}>;
+        content: import("../../tree").IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
     }[]>;
     _processNovel<T>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;
@@ -30,3 +29,4 @@ export declare class NovelSiteDemo extends _NovelSiteBase {
 }
 export declare const NovelSite: typeof NovelSiteDemo;
 export default NovelSiteDemo;
+export * from './base';

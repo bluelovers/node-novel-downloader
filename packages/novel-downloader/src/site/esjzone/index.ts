@@ -186,7 +186,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 		let contribute: string[] = dotGetValue(cache, 'novel.contribute', { default: [] });
 
-		txt = txt.replace(/^翻譯：([^\n]+)\n/, (s, v) => {
+		txt = txt.replace(new zhRegExp(/^翻譯：([^\n]+)\n/), (s, v) => {
 
 			v = v.replace(/^[\s　\xA0]+|[\s　\xA0]+$/g, '');
 
@@ -215,6 +215,10 @@ export class NovelSiteESJZone extends NovelSiteDemo
 //		console.dir(txt);
 
 //		process.exit();
+
+		txt = txt
+			.replace(/^\n{2,}/g, '\n')
+		;
 
 		return txt as string
 	}

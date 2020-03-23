@@ -7,7 +7,7 @@ import { Arguments } from 'yargs';
 import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downloader"
 import console from '../lib/log';
 import PACKAGE_JSON = require('../package.json');
-import updateNotifier = require('update-notifier');
+import { updateNotifier } from '@yarn-tool/update-notifier';
 import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
 import { isNpx } from '@yarn-tool/is-npx';
 import { ITSPartialPick } from 'ts-type';
@@ -116,12 +116,7 @@ interface ICliArgv extends ITSPartialPick<IOptionsPlusNovelSiteSyosetu, 'disable
 
 let url: string = cli._[0];
 
-if (!isNpx({
-	__dirname
-}))
-{
-	checkUpdateSelf().notify();
-}
+updateNotifier([__dirname, '..']);
 
 if (!url)
 {
@@ -196,13 +191,4 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	siteOptions.outputDir = cli.outputDir;
 
 	return { cli, downloadOptions, siteOptions };
-}
-
-function checkUpdateSelf()
-{
-	let data = updateNotifier({
-		pkg: PACKAGE_JSON,
-	});
-
-	return data;
 }
