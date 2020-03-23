@@ -75,7 +75,7 @@ export class NovelTree
 		this.tree = new Tree(initData as IRowRoot);
 	}
 
-	root()
+	root(): Node<IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>>
 	{
 		return this.tree.root();
 	}

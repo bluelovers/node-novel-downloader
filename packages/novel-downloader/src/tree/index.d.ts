@@ -42,7 +42,7 @@ export declare class NovelTree {
         depth?: number;
     };
     constructor(initData?: Partial<IRowRoot>);
-    root(): Node<IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>>;
+    root(): Node<IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>>;
     addVolume<U extends IRowVolume>(value: U, root?: Node): Node<U>;
     addChapter<U extends IRowChapter>(value: U, root?: Node): Node<U>;
     static isVolume(node: Node): node is Node<IRowVolume>;
