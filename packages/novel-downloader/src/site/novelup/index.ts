@@ -6,7 +6,7 @@ import { minifyHTML, trim } from '../../util';
 import NovelSiteDemo, { IDownloadOptions, INovel, IOptionsRuntime, IFetchChapter } from '../demo/tree';
 import { IRowVolume, TreeNode } from '../../tree/index';
 
-import fs = require('fs-extra');
+import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
 import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';

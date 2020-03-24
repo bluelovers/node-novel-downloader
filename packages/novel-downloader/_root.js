@@ -4,16 +4,20 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.tempPath = exports.testPath = exports.disablePaths = exports.rootModule = void 0;
-const path = require("path");
-exports.rootModule = path.join(__dirname, '');
+const path_1 = require("path");
+exports.rootModule = path_1.join(__dirname, '');
 exports.disablePaths = [
-    path.join(exports.rootModule, 'src'),
-    path.join(exports.rootModule, 'node_modules'),
-    path.join(exports.rootModule, '.idea'),
-    path.join(exports.rootModule, '.git'),
+    path_1.join(exports.rootModule, 'src'),
+    path_1.join(exports.rootModule, 'node_modules'),
+    path_1.join(exports.rootModule, '.idea'),
+    path_1.join(exports.rootModule, '.git'),
 ];
-exports.testPath = path.join(exports.rootModule, 'test');
-exports.tempPath = path.join(exports.testPath, 'temp');
-exports.default = exports;
-;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiX3Jvb3QuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJfcm9vdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUE7O0dBRUc7OztBQUVILDZCQUE4QjtBQUVqQixRQUFBLFVBQVUsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRSxFQUFFLENBQUMsQ0FBQztBQUV0QyxRQUFBLFlBQVksR0FBRztJQUMzQixJQUFJLENBQUMsSUFBSSxDQUFDLGtCQUFVLEVBQUUsS0FBSyxDQUFDO0lBQzVCLElBQUksQ0FBQyxJQUFJLENBQUMsa0JBQVUsRUFBRSxjQUFjLENBQUM7SUFDckMsSUFBSSxDQUFDLElBQUksQ0FBQyxrQkFBVSxFQUFFLE9BQU8sQ0FBQztJQUM5QixJQUFJLENBQUMsSUFBSSxDQUFDLGtCQUFVLEVBQUUsTUFBTSxDQUFDO0NBQzdCLENBQUM7QUFFVyxRQUFBLFFBQVEsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLGtCQUFVLEVBQUUsTUFBTSxDQUFDLENBQUM7QUFDekMsUUFBQSxRQUFRLEdBQUcsSUFBSSxDQUFDLElBQUksQ0FBQyxnQkFBUSxFQUFFLE1BQU0sQ0FBQyxDQUFDO0FBRXBELGtCQUFlLE9BQW1DLENBQUM7QUFBQSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBDcmVhdGVkIGJ5IHVzZXIgb24gMjAxOC8yLzEzLzAxMy5cbiAqL1xuXG5pbXBvcnQgcGF0aCA9IHJlcXVpcmUoXCJwYXRoXCIpO1xuXG5leHBvcnQgY29uc3Qgcm9vdE1vZHVsZSA9IHBhdGguam9pbihfX2Rpcm5hbWUsICcnKTtcblxuZXhwb3J0IGNvbnN0IGRpc2FibGVQYXRocyA9IFtcblx0cGF0aC5qb2luKHJvb3RNb2R1bGUsICdzcmMnKSxcblx0cGF0aC5qb2luKHJvb3RNb2R1bGUsICdub2RlX21vZHVsZXMnKSxcblx0cGF0aC5qb2luKHJvb3RNb2R1bGUsICcuaWRlYScpLFxuXHRwYXRoLmpvaW4ocm9vdE1vZHVsZSwgJy5naXQnKSxcbl07XG5cbmV4cG9ydCBjb25zdCB0ZXN0UGF0aCA9IHBhdGguam9pbihyb290TW9kdWxlLCAndGVzdCcpO1xuZXhwb3J0IGNvbnN0IHRlbXBQYXRoID0gcGF0aC5qb2luKHRlc3RQYXRoLCAndGVtcCcpO1xuXG5leHBvcnQgZGVmYXVsdCBleHBvcnRzIGFzIHR5cGVvZiBpbXBvcnQoJy4vX3Jvb3QnKTs7XG4iXX0=
+exports.testPath = path_1.join(exports.rootModule, 'test');
+exports.tempPath = path_1.join(exports.testPath, 'temp');
+exports.default = {
+    rootModule: exports.rootModule,
+    disablePaths: exports.disablePaths,
+    testPath: exports.testPath,
+    tempPath: exports.tempPath,
+};
+//# sourceMappingURL=_root.js.map

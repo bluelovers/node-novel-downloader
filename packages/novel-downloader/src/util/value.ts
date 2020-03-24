@@ -2,8 +2,8 @@
  * Created by user on 2020/1/1.
  */
 
-import dotSetValue = require('set-value');
-import dotGetValue = require('get-value');
+import dotSetValue from 'set-value';
+import dotGetValue from 'get-value';
 
 export {
 	dotSetValue,

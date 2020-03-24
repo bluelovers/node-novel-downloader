@@ -2,11 +2,11 @@
  * Created by user on 2018/3/18/018.
  */
 
-import fs = require('fs-extra');
+import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
 import { isUndef } from '../util';
 import NovelSite, { IOptionsRuntime } from './index';
-import path = require('upath2');
+import path from 'upath2';
 
 export function padStart(id, pad = '0', len = 4): string
 {
@@ -163,5 +163,3 @@ function _createError<T>(msg: string, _data?: T): RangeError & {
 	// @ts-ignore
 	return e;
 }
-
-export default exports as typeof import('./fs');

@@ -5,8 +5,8 @@
 // @ts-ignore
 import * as pkg from '../package.json';
 // @ts-ignore
-import dts = require('dts-bundle');
-import path = require('path');
+import dts from 'dts-bundle';
+import path from 'path';
 
 dts.bundle({
 	name: pkg.name,

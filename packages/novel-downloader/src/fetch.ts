@@ -2,8 +2,8 @@
  * Created by user on 2018/2/9/009.
  */
 
-import request = require('request-promise');
-import Promise = require('bluebird');
+import request from 'request-promise';
+import Bluebird from 'bluebird';
 import { console } from './util/log';
 import { IRequestPromise } from './util/request/create';
 
@@ -49,17 +49,17 @@ export function retryRequest(url, options: IOptions = {})
 				{
 					console.warn(`fetch fail(${tries}), will wait ${options.delay}ms, for try again\n${url}`);
 
-					return Promise.delay(options.delay).then(fn);
+					return Bluebird.delay(options.delay).then(fn);
 				}
 
 				err.tries = tries;
 
-				return Promise.reject(err);
+				return Bluebird.reject(err);
 			})
 			;
 	}
 
-	return Promise.resolve().then(function ()
+	return Bluebird.resolve().then(function ()
 	{
 		return fn();
 	}).tapCatch(function (err)
@@ -77,7 +77,7 @@ export function manyRequest(url_arr: any[], options: IOptions = {})
 
 	let libRequest = options.libRequest || request;
 
-	return Promise
+	return Bluebird
 		.mapSeries(url_arr, function (url)
 		{
 			if (url.href)

@@ -2,13 +2,13 @@
  * Created by user on 2019/4/28.
  */
 
-import _request = require('request');
+import _request from 'request';
 import { getNewLibraryCopy } from 'bluebird';
-import BluebirdPromise = require('bluebird');
-import _createCachedRequest = require('cached-request');
-import RequestPromise = require('request-promise');
-import configure = require('request-promise-core/configure/request2');
-import stealthyRequire = require('stealthy-require');
+import BluebirdPromise from 'bluebird';
+import _createCachedRequest from 'cached-request';
+import RequestPromise from 'request-promise';
+import configure from 'request-promise-core/configure/request2';
+import stealthyRequire from 'stealthy-require';
 
 export type IRequest = typeof _request;
 export type IRequestPromise = typeof RequestPromise;

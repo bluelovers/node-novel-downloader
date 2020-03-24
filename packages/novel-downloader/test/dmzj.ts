@@ -3,7 +3,7 @@
  */
 
 import NovelSite from '../src/site/dmzj/index';
-import * as Promise from 'bluebird';
+import Promise from 'bluebird'
 
 (async () =>
 {

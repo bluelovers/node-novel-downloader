@@ -1,9 +1,9 @@
 /**
  * Created by user on 2019/4/28.
  */
-import _request = require('request');
-import BluebirdPromise = require('bluebird');
-import RequestPromise = require('request-promise');
+import _request from 'request';
+import BluebirdPromise from 'bluebird';
+import RequestPromise from 'request-promise';
 export declare type IRequest = typeof _request;
 export declare type IRequestPromise = typeof RequestPromise;
 export declare type IBluebirdPromise = typeof BluebirdPromise;

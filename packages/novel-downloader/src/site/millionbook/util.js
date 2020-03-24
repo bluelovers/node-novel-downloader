@@ -1,7 +1,26 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.makeUrl = exports.check = void 0;
-const url_1 = require("../../util/url");
+const url_1 = __importStar(require("../../util/url"));
 function check(url, options) {
     return /millionbook/i.test(url_1.default(url).hostname || '');
 }
@@ -28,4 +47,4 @@ function parseUrl(_url, ...argv) {
     return urlobj;
 }
 exports.parseUrl = parseUrl;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidXRpbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInV0aWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQ0Esd0NBQThFO0FBRTlFLFNBQWdCLEtBQUssQ0FBQyxHQUF1QyxFQUFFLE9BQVE7SUFFdEUsT0FBTyxjQUFjLENBQUMsSUFBSSxDQUFDLGFBQVMsQ0FBQyxHQUFVLENBQUMsQ0FBQyxRQUFRLElBQUksRUFBRSxDQUFDLENBQUM7QUFDbEUsQ0FBQztBQUhELHNCQUdDO0FBRUQsU0FBZ0IsT0FBTyxDQUFDLE1BQTJCLEVBQUUsSUFBd0IsRUFBRSxHQUFHLElBQUk7SUFFckYsSUFBSSxHQUFXLENBQUM7SUFFaEIsSUFBSSxHQUFHLEdBQUcsQ0FBQyxDQUFDLElBQUksSUFBSSxNQUFNLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQyxDQUFDLEdBQUcsTUFBTSxDQUFDLFVBQVUsTUFBTSxDQUFDLENBQUMsQ0FBQyxZQUFZLENBQUM7SUFFbkYsR0FBRyxHQUFHLDhCQUE4QixNQUFNLENBQUMsU0FBUyxJQUFJLE1BQU0sQ0FBQyxRQUFRLElBQUksR0FBRyxFQUFFLENBQUM7SUFFakYsT0FBTyxhQUFTLENBQUMsR0FBRyxDQUFDLENBQUM7QUFDdkIsQ0FBQztBQVRELDBCQVNDO0FBRUQsU0FBZ0IsUUFBUSxDQUFDLElBQTJCLEVBQUUsR0FBRyxJQUFJO0lBRTVELE1BQU0sRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLEdBQUcscUJBQWUsQ0FBQyxJQUFJLEVBQUUsR0FBRyxJQUFJLENBQUMsQ0FBQztJQUV2RCxJQUFJLENBQVMsQ0FBQztJQUNkLElBQUksQ0FBa0IsQ0FBQztJQUV2QixDQUFDLEdBQUcsaUVBQWlFLENBQUM7SUFDdEUsQ0FBQyxHQUFHLENBQUMsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUM7SUFFaEIsSUFBSSxDQUFDLEVBQ0w7UUFDQyxNQUFNLENBQUMsU0FBUyxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUN4QixNQUFNLENBQUMsUUFBUSxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUN2QixNQUFNLENBQUMsVUFBVSxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUV6QixPQUFPLE1BQU0sQ0FBQztLQUNkO0lBRUQsT0FBTyxNQUFNLENBQUM7QUFDZixDQUFDO0FBcEJELDRCQW9CQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB0eXBlIE5vdmVsU2l0ZSBmcm9tICcuLi9pbmRleCc7XG5pbXBvcnQgY3JlYXRlVVJMLCB7IF9oYW5kbGVQYXJzZVVSTCwgSVBhcnNlVXJsUnVudGltZSB9IGZyb20gJy4uLy4uL3V0aWwvdXJsJztcblxuZXhwb3J0IGZ1bmN0aW9uIGNoZWNrKHVybDogc3RyaW5nIHwgVVJMIHwgTm92ZWxTaXRlLklQYXJzZVVybCwgb3B0aW9ucz8pOiBib29sZWFuXG57XG5cdHJldHVybiAvbWlsbGlvbmJvb2svaS50ZXN0KGNyZWF0ZVVSTCh1cmwgYXMgYW55KS5ob3N0bmFtZSB8fCAnJyk7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBtYWtlVXJsKHVybG9iajogTm92ZWxTaXRlLklQYXJzZVVybCwgYm9vbCA/OiBib29sZWFuIHwgbnVtYmVyLCAuLi5hcmd2KVxue1xuXHRsZXQgdXJsOiBzdHJpbmc7XG5cblx0bGV0IGNpZCA9ICghYm9vbCAmJiB1cmxvYmouY2hhcHRlcl9pZCkgPyBgJHt1cmxvYmouY2hhcHRlcl9pZH0uaHRtYCA6ICdpbmRleC5odG1sJztcblxuXHR1cmwgPSBgaHR0cDovL3d3dy5taWxsaW9uYm9vay5uZXQvJHt1cmxvYmoubm92ZWxfcGlkfS8ke3VybG9iai5ub3ZlbF9pZH0vJHtjaWR9YDtcblxuXHRyZXR1cm4gY3JlYXRlVVJMKHVybCk7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBwYXJzZVVybChfdXJsOiBzdHJpbmcgfCBVUkwgfCBudW1iZXIsIC4uLmFyZ3YpXG57XG5cdGNvbnN0IHsgdXJsb2JqLCB1cmwgfSA9IF9oYW5kbGVQYXJzZVVSTChfdXJsLCAuLi5hcmd2KTtcblxuXHRsZXQgcjogUmVnRXhwO1xuXHRsZXQgbTogUmVnRXhwRXhlY0FycmF5O1xuXG5cdHIgPSAvd3d3XFwubWlsbGlvbmJvb2tcXC5uZXRcXC8oW1xcd1xcL10rKVxcLyhcXHcrKVxcLyg/OihcXGQrKXxpbmRleClcXC5odG1sPy87XG5cdG0gPSByLmV4ZWModXJsKTtcblxuXHRpZiAobSlcblx0e1xuXHRcdHVybG9iai5ub3ZlbF9waWQgPSBtWzFdO1xuXHRcdHVybG9iai5ub3ZlbF9pZCA9IG1bMl07XG5cdFx0dXJsb2JqLmNoYXB0ZXJfaWQgPSBtWzNdO1xuXG5cdFx0cmV0dXJuIHVybG9iajtcblx0fVxuXG5cdHJldHVybiB1cmxvYmo7XG59XG4iXX0=
+//# sourceMappingURL=util.js.map

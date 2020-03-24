@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import { download } from '..';
-import yargs = require("yargs");
-import path = require("path");
+import yargs from "yargs";
+import path from "path";
 import { Arguments } from 'yargs';
 import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downloader"
 import console from '../lib/log';
-import PACKAGE_JSON = require('../package.json');
+import PACKAGE_JSON from '../package.json';
 import { updateNotifier } from '@yarn-tool/update-notifier';
 import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
 import { isNpx } from '@yarn-tool/is-npx';

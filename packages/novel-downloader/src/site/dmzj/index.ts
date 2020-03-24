@@ -2,7 +2,7 @@
  * Created by user on 2017/12/6/006.
  */
 
-import fs = require('fs-extra');
+import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
 import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';

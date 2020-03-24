@@ -23,7 +23,7 @@ import { _keepImageInContext } from '../../util/html';
 import createURL from '../../util/url';
 import { parseUrl, makeUrl, check } from './util';
 
-//import escapeStringRegexp = require('escape-string-regexp');
+//import escapeStringRegexp from 'escape-string-regexp';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteTpl>>()
 export class NovelSiteTpl extends NovelSiteBase

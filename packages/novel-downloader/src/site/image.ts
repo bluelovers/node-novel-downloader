@@ -2,13 +2,13 @@
  * Created by user on 2018/1/17/017.
  */
 
-import fs = require('fs-iconv');
+import fs from 'fs-iconv';
 import { trimFilename } from 'fs-iconv/util';
-import request = require('request-promise');
+import request from 'request-promise';
 import { URL } from 'jsdom-extra';
-import Promise = require("bluebird");
+import Bluebird from "bluebird";
 
-import path = require('upath2');
+import path from 'upath2';
 
 export function download_image(img: string | URL, options: {
 	name?: string,
@@ -17,7 +17,7 @@ export function download_image(img: string | URL, options: {
 	fromfile?: string,
 
 	prefix?: string,
-}): Promise<{
+}): Bluebird<{
 	body: Buffer;
 	url: URL;
 	dirname: string;
@@ -67,7 +67,7 @@ export function download_image(img: string | URL, options: {
 	;
 
 	// @ts-ignore
-	return Promise.resolve(ret);
+	return Bluebird.resolve(ret);
 }
 
 export default download_image;

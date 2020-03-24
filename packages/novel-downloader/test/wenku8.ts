@@ -2,7 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird'
 import NovelSite from '../src/site/wenku8/index';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');

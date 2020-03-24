@@ -1,6 +1,6 @@
 import { retryRequest } from '../../fetch';
-import fs = require('fs-extra');
-import path = require('upath2');
+import fs from 'fs-extra';
+import path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM, requestToJSDOM, packJSDOM } from 'jsdom-extra';
 //import { URL } from 'jsdom-url';
@@ -22,7 +22,7 @@ import { ITSPartialPick } from 'ts-type';
 import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird } from '../index';
 
-import parseContentType = require('content-type-parser');
+import parseContentType from 'content-type-parser';
 import novelText from 'novel-text';
 
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';

@@ -3,7 +3,7 @@
  */
 
 
-import Bluebird = require("bluebird");
+import Bluebird from "bluebird";
 import NovelSite from "./src/site"
 
 import requireNovelSiteClass from "./src/all"

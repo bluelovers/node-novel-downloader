@@ -5,9 +5,9 @@
 import bluebirdDecorator from '../decorator/bluebird';
 //import bluebirdDecorator from 'bluebird-decorator';
 
-import PromiseBluebird = require('bluebird');
+import PromiseBluebird from 'bluebird';
 //import { URL } from 'jsdom-url';
-import path = require('upath2');
+import path from 'upath2';
 
 import rootPath from "../../_root";
 import { retryRequest } from '../fetch';
@@ -20,20 +20,20 @@ import novelInfo, { IMdconfMeta, _handleDataForStringify } from 'node-novel-info
 export { IMdconfMeta }
 import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 
-import fs = require('fs-extra');
+import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
 import { crlf, CRLF, R_CRLF } from 'crlf-normalize';
-import StrUtil = require('str-util');
+import StrUtil from 'str-util';
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { INovel } from './syosetu';
 import { consoleDebug } from '../util/log';
 import createURL from '../util/url';
 
 //import * as moment from 'moment';
-import moment = require('moment-timezone');
+import moment from 'moment-timezone';
 import { _fixVolumeChapterName, isUndef } from '../util';
 
-import EventEmitter = require('events');
+import EventEmitter from 'events';
 import { IDownloadOptions } from './demo/base';
 
 moment.fn.toJSON = function () { return this.format(); };

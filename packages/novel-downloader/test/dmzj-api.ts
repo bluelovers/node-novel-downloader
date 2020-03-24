@@ -2,7 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird'
 import NovelSiteClass from '../src/site/dmzj/api';
 import ProjectConfig from '../_root';
 

@@ -6,6 +6,7 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
+import { moment } from '../index';
 export declare class NovelSiteTpl extends NovelSiteBase {
     static readonly IDKEY: string;
     static check(url: string | URL | _NovelSite.IParseUrl, ...argv: any[]): boolean;
@@ -31,7 +32,7 @@ export declare class NovelSiteTpl extends NovelSiteBase {
         novel_cover: any;
         novel_author: any;
         novel_desc: any;
-        novel_date: any;
+        novel_date: moment.Moment;
         dmzj_api_json: any;
         novel?: {
             title?: string;

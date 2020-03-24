@@ -33,7 +33,7 @@
     "url": "git+https://github.com/bluelovers/node-novel-downloader.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "bluelovers",
   "main": "index.js",
   "directories": {
     "doc": "docs",
@@ -51,14 +51,17 @@
     "ncu": "npx yarn-tool ncu -u",
     "npm:publish": "npm publish",
     "postpublish_": "git commit -m \"publish new version\" .",
+    "prepublish:lockfile": "npx sync-lockfile .",
     "prepublishOnly": "yarn run check-updates && yarn run sort-package-json",
+    "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
     "sort-package-json": "npx yarn-tool sort",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
     "tsc:default": "tsc -p tsconfig.json",
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
   "resolutions": {
-    "tough-cookie": "^3"
+    "tough-cookie": "^4"
   },
   "dependencies": {
     "@node-novel/layout-reporter": "^1.0.3",
@@ -82,7 +85,7 @@
     "mitemin": "^1.0.3",
     "moment-timezone": "^0.5.28",
     "node-novel-globby": "^2.0.9",
-    "node-novel-info": "^3.0.0",
+    "node-novel-info": "^3.0.1",
     "novel-text": "^1.1.25",
     "regexp-cjk": "^3.3.11",
     "regexp-cjk-plugin-escape-unicode-property": "^1.0.1",
@@ -104,9 +107,13 @@
     "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
     "@types/jquery": "^3.3.33",
-    "@types/jsdom": "^16.1.0",
+    "@types/jsdom": "^16.1.1",
+    "@types/moment-timezone": "^0.5.13",
+    "@types/request": "^2.48.4",
     "@types/request-promise": "^4",
     "@types/set-value": "^2.0.0",
+    "@types/shortid": "^0.0.29",
+    "@types/tough-cookie": "^2.3.6",
     "bluebird-decorator": "^1"
   },
   "_types": "novel-downloader.d.ts"

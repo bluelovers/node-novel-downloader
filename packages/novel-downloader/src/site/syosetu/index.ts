@@ -2,7 +2,7 @@
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { retryRequest } from '../../fetch';
 
-import fs = require('fs-extra');
+import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
 import * as path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
@@ -16,7 +16,7 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-import NovelSiteDemo = require('../demo/base');
+import NovelSiteDemo from '../demo/base';
 import novelText from 'novel-text';
 
 import { console, consoleDebug } from '../../util/log';

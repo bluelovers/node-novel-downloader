@@ -2,7 +2,7 @@
  * Created by user on 2018/4/28/028.
  */
 
-import StrUtil = require('str-util');
+import { toFullWidth } from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { array_unique } from './util';
 
@@ -92,7 +92,7 @@ function char_autoFH(text: string)
 
 			a.forEach(function (v)
 			{
-				a.push(StrUtil.toFullWidth(v));
+				a.push(toFullWidth(v));
 			});
 
 			return '[' + array_unique(a).join('') + ']+';

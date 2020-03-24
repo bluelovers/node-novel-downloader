@@ -2,7 +2,7 @@
  * Created by user on 2017/12/29/029.
  */
 
-import * as Promise from 'bluebird';
+import Promise from 'bluebird'
 import NovelSiteSyosetu, { EnumProtocolMode } from '../src/site/syosetu/index';
 import ProjectConfig from '../_root';
 import * as path from 'path';
