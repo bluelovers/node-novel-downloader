@@ -415,7 +415,7 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 				data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image:not([src*="empty.jpg"])').prop('src');
 
-				let novel_desc = trim($('.product-detail:eq(0)').find('.book_description').text() || '');
+				let novel_desc = trim($('.product-detail .book_description').text() || $('meta[name="description"]').attr('content') || '');
 
 				return {
 
