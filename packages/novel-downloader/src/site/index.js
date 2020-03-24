@@ -45,7 +45,7 @@ const str_util_1 = __importDefault(require("str-util"));
 const const_1 = require("node-novel-info/lib/const");
 const log_1 = require("../util/log");
 const url_1 = __importDefault(require("../util/url"));
-//import * as moment from 'moment';
+//import moment from 'moment';
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 exports.moment = moment_timezone_1.default;
 const util_2 = require("../util");

@@ -4,7 +4,7 @@
 
 import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
-import * as path from 'upath2';
+import path from 'upath2';
 import novelInfo, { IMdconfMeta } from 'node-novel-info';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 // @ts-ignore
@@ -15,7 +15,7 @@ import { download_image } from '../image';
 import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '../index';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
-import * as shortid from 'shortid';
+import shortid from 'shortid';
 import { manyRequest } from '../../fetch';
 import { createOptionsJSDOM } from '../../jsdom';
 

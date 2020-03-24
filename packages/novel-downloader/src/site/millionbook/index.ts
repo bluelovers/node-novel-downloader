@@ -14,8 +14,8 @@ import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from 'novel-text';
-import * as path from "path";
-import * as StrUtil from 'str-util';
+import path from "path";
+import StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { parseUrl, makeUrl, check } from './util';
 

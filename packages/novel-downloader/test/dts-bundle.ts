@@ -3,12 +3,12 @@
  */
 
 // @ts-ignore
-import * as pkg from '../package.json';
+import { name } from '../package.json';
 // @ts-ignore
 import dts from 'dts-bundle';
 import path from 'path';
 
 dts.bundle({
-	name: pkg.name,
+	name,
 	main: path.join(__dirname, '../index.d.ts')
 });

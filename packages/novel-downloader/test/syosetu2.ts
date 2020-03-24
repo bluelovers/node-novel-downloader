@@ -5,7 +5,7 @@
 import Promise from 'bluebird'
 import NovelSiteSyosetu, { EnumProtocolMode } from '../src/site/syosetu/index';
 import ProjectConfig from '../_root';
-import * as path from 'path';
+import path from 'path';
 
 //download('http://www.wenku8.com/modules/article/articleinfo.php?id=1596');
 

@@ -29,7 +29,7 @@ import { INovel } from './syosetu';
 import { consoleDebug } from '../util/log';
 import createURL from '../util/url';
 
-//import * as moment from 'moment';
+//import moment from 'moment';
 import moment from 'moment-timezone';
 import { _fixVolumeChapterName, isUndef } from '../util';
 

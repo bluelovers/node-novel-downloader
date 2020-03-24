@@ -34,13 +34,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteDmzj = void 0;
 const fs_extra_1 = __importDefault(require("fs-extra"));
 const util_1 = require("fs-iconv/util");
-const path = __importStar(require("upath2"));
+const upath2_1 = __importDefault(require("upath2"));
 const node_novel_info_1 = __importDefault(require("node-novel-info"));
 const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = __importStar(require("../index"));
 const index_2 = require("../index");
 const index_3 = require("../index");
-const shortid = __importStar(require("shortid"));
+const shortid_1 = __importDefault(require("shortid"));
 const fetch_1 = require("../../fetch");
 const jsdom_1 = require("../../jsdom");
 /**
@@ -101,7 +101,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                 .bind(self)
                 .then(async function () {
                 let _data = await self._download_info(url, optionsRuntime);
-                path_main = path.join(self.PATH_NOVEL_MAIN, util_1.trimFilename(`${_data.data.g_lnovel_name}_(${_data.data.g_lnovel_id})`));
+                path_main = upath2_1.default.join(self.PATH_NOVEL_MAIN, util_1.trimFilename(`${_data.data.g_lnovel_name}_(${_data.data.g_lnovel_id})`));
                 let _a = _data.value.reduce(function (a, b) {
                     return a.concat(b.chapter);
                 }, []);
@@ -115,7 +115,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                     // @ts-ignore
                     return self._downloadChapter(a.url, optionsRuntime)
                         .then(async function (data) {
-                        let _file = path.join(path_main, 
+                        let _file = upath2_1.default.join(path_main, 
                         // @ts-ignore
                         util_1.trimFilename(`${a.index_volume.toString()
                             .padStart(pad_len, '0')} ${volume_name}_(${data.data.g_volume_id})`), 
@@ -126,7 +126,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                             spaces: "\t",
                         });
                         await fs_extra_1.default.outputFile(_file + '.txt', data.value);
-                        return path.relative(self.PATH_NOVEL_MAIN, _file);
+                        return upath2_1.default.relative(self.PATH_NOVEL_MAIN, _file);
                     })
                         .then(function (file) {
                         console.log('done', file);
@@ -144,7 +144,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                 return _data;
             })
                 .tap(async function (novel) {
-                await fs_extra_1.default.outputJson(path.join(path_main, util_1.trimFilename(`${novel.data.g_lnovel_name}.${novel.data.g_lnovel_id}`)) + '.json', novel, {
+                await fs_extra_1.default.outputJson(upath2_1.default.join(path_main, util_1.trimFilename(`${novel.data.g_lnovel_name}.${novel.data.g_lnovel_id}`)) + '.json', novel, {
                     spaces: "\t",
                 });
                 let options = {};
@@ -171,7 +171,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                         }
                     },
                 });
-                let file = path.join(path_main, `README.md`);
+                let file = upath2_1.default.join(path_main, `README.md`);
                 await fs_extra_1.default.outputFile(file, md);
             });
         }
@@ -342,7 +342,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                             // @ts-ignore
                             let _this = $(this);
                             if (_this.prop('src')) {
-                                let id = shortid();
+                                let id = shortid_1.default();
                                 _c[id] = _this.prop('src');
                                 _data.imgs.push(_c[id]);
                                 // @ts-ignore
