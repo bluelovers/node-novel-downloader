@@ -6,7 +6,7 @@ import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, 
 
 import { getFilePath, getVolumePath } from '../fs';
 import _NovelSite, { IChapter, PromiseBluebird, staticImplements, SYMBOL_CACHE } from '../index';
-import * as path from 'upath2';
+import path from 'upath2';
 
 import { normalize_val } from 'node-novel-globby/lib/helper';
 import { defaultSortCallback } from 'node-novel-globby/lib/sort';

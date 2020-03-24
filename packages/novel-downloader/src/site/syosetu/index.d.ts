@@ -3,7 +3,7 @@ import { IMdconfMeta } from 'node-novel-info';
 import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
-import NovelSiteDemo = require('../demo/base');
+import * as NovelSiteDemo from '../demo/base';
 export declare type INovel = NovelSiteDemo.INovel & {
     novel_syosetu_id: string;
 };

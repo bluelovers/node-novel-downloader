@@ -16,7 +16,7 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
-import NovelSiteDemo from '../demo/base';
+import * as NovelSiteDemo from '../demo/base';
 import novelText from 'novel-text';
 
 import { console, consoleDebug } from '../../util/log';

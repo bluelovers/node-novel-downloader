@@ -9,23 +9,11 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
 };
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (!exports.hasOwnProperty(p)) __createBinding(exports, m, p);
@@ -38,7 +26,7 @@ exports.NovelSite = exports.NovelSiteDemo = exports.NovelTree = void 0;
 const base_1 = __importDefault(require("./base"));
 const fs_1 = require("../fs");
 const index_1 = require("../index");
-const path = __importStar(require("upath2"));
+const upath2_1 = __importDefault(require("upath2"));
 const helper_1 = require("node-novel-globby/lib/helper");
 const sort_1 = require("node-novel-globby/lib/sort");
 //import { URL } from 'jsdom-url';
@@ -160,9 +148,9 @@ let NovelSiteDemo = /** @class */ (() => {
                             dirname: '~temp',
                             volume, vid,
                         }, optionsRuntime);
-                        name = path.relative('~temp', name);
+                        name = upath2_1.default.relative('~temp', name);
                         let ps = pnode.parent.get('dirname');
-                        dirname = path.join(ps, name);
+                        dirname = upath2_1.default.join(ps, name);
                         pnode.set('dirname', dirname);
                     }
                     //console.log(dirname);
@@ -204,7 +192,7 @@ let NovelSiteDemo = /** @class */ (() => {
                     volume, vid,
                 }, optionsRuntime);
                 chapter.path = file;
-                file = path.join(path_novel, file);
+                file = upath2_1.default.join(path_novel, file);
                 if (self._checkExists(optionsRuntime, file)) {
                     return file;
                 }
