@@ -7,7 +7,6 @@ export declare class NovelSiteESJZone extends NovelSiteDemo {
     static readonly IDKEY = "esjzone";
     protected _reContext: RegExp;
     _constructor(...argv: any[]): void;
-    session<T = NovelSite.IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL): this;
     static check(url: string | URL | NovelSite.IParseUrl, ...argv: any[]): boolean;
     static makeUrl(urlobj: NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
     static parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
