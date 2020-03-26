@@ -79,3 +79,8 @@ export function _p_2_br(target, $)
 		})
 		;
 }
+
+export function _remove_ad($: JQueryStatic)
+{
+	$('p[class]:has(> script), script[src*=google], > .adsbygoogle').remove();
+}

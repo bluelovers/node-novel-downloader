@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._p_2_br = exports.parseUrl = exports.makeUrl = exports.check = void 0;
+exports._remove_ad = exports._p_2_br = exports.parseUrl = exports.makeUrl = exports.check = void 0;
 const url_1 = __importStar(require("../../util/url"));
 function check(url, options) {
     return /esjzone\.cc/i.test(url_1.default(url).hostname || '');
@@ -75,4 +75,8 @@ function _p_2_br(target, $) {
     });
 }
 exports._p_2_br = _p_2_br;
+function _remove_ad($) {
+    $('p[class]:has(> script), script[src*=google], > .adsbygoogle').remove();
+}
+exports._remove_ad = _remove_ad;
 //# sourceMappingURL=util.js.map
