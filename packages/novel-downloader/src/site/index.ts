@@ -669,6 +669,8 @@ export namespace NovelSite
 		volume_title: string,
 		chapter_list?: IChapter[],
 
+		imgs?: string[],
+
 		[key: string]: any,
 	}
 

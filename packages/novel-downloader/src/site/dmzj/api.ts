@@ -19,7 +19,7 @@ import path from "path";
 import StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { requestToJSDOM, packJSDOM, createJSDOM } from 'jsdom-extra';
-import { _keepImageInContext } from '../../util/html';
+import { _keepImageInContext, _saveImageToAttach } from '../../util/html';
 import createURL from '../../util/url';
 import { parseUrl, makeUrl, check } from './util';
 
@@ -156,6 +156,7 @@ export class NovelSiteTpl extends NovelSiteBase
 
 		if (ret.dom.$('img').length)
 		{
+			/*
 			cache.chapter.imgs = cache.chapter.imgs || [];
 
 			ret.dom.$('img[src]').each(function ()
@@ -165,6 +166,9 @@ export class NovelSiteTpl extends NovelSiteBase
 				// @ts-ignore
 				cache.novel.imgs.push(ret.dom.$(this).prop('src'));
 			});
+			 */
+
+			_saveImageToAttach(ret.dom.$, ret.dom.$('img[src]'), cache);
 
 			if (optionsRuntime.keepImage)
 			{

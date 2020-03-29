@@ -43,6 +43,39 @@ export function keepFormatTag<O = NovelSite.IOptionsRuntime, E extends unknown |
 	return _target
 }
 
+export function _saveImageToAttach($: JQueryStatic, _imgs: JQuery, cache: {
+	novel: NovelSite.INovel,
+	volume: NovelSite.IVolume,
+	chapter: NovelSite.IChapter,
+}, cb?: (elem: HTMLElement | HTMLImageElement, i: number) => any)
+{
+	if (_imgs.length)
+	{
+		cache.chapter.imgs = cache.chapter.imgs || [];
+		cache.novel.imgs = cache.novel.imgs || [];
+		cache.volume.imgs = cache.volume.imgs || [];
+
+		return _imgs.each((i, elem) =>
+		{
+			if (cb != null)
+			{
+				return cb(elem, i)
+			}
+
+			let src = $(elem).prop('src')?.trim();
+
+			if (src)
+			{
+				cache.chapter.imgs = cache.chapter.imgs || [];
+
+				cache.chapter.imgs.push(src);
+				cache.novel.imgs.push(src);
+				cache.volume.imgs.push(src);
+			}
+		});
+	}
+}
+
 export function _keepImageInContext(_imgs: JQuery, $: JQueryStatic, {
 	prefix = '插圖',
 	append = '',

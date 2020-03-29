@@ -11,7 +11,7 @@ import NovelSite, { staticImplements, moment } from '../index';
 import { retryRequest } from '../../fetch';
 import { dotSetValue, dotGetValue } from '../../util/value';
 import { zhRegExp } from '../../util/regex';
-import { _keepImageInContext } from '../../util/html';
+import { _keepImageInContext, _saveImageToAttach } from '../../util/html';
 import { parseUrl, makeUrl, check, _p_2_br, _remove_ad } from './util';
 import { SYMBOL_RAW } from 'jsdom-extra/lib/const';
 
@@ -174,6 +174,8 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		});
 
 		let title = trim(ret.dom.$('.container .row > div > h3').text());
+
+		_saveImageToAttach(ret.dom.$, elem.find('img[src]'), cache);
 
 		if (optionsRuntime.keepImage)
 		{

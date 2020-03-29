@@ -30,6 +30,7 @@ import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import { toughCookie } from 'jsdom-extra';
 
 import { stringify as mdconf_stringify, parse as mdconf_parse } from 'mdconf2';
+import { SYMBOL_NODE } from 'js-tree-list2/src/utils';
 
 export type IOptionsPlus = {}
 
@@ -42,6 +43,9 @@ import { ResponseRequest } from 'request';
 
 import { chalkByConsole, console, consoleDebug } from '../../util/log';
 import { hashSum } from '../../util/hash';
+import { NovelTree, TreeNode, IRowChapter, IRowVolume } from '../../tree';
+import { array_unique } from '../../util';
+import { array_unique_overwrite } from 'array-hyper-unique';
 
 export type IFetchChapter = {
 	body?: any;
@@ -272,11 +276,90 @@ export class NovelSiteDemo extends _NovelSite
 	{
 		const self = this;
 		const { url, path_novel } = _cache_;
+		const { keepImage = false } = optionsRuntime;
 
-		if (novel.volume_list)
+		if (novel.novelTree)
 		{
-			const { keepImage = false } = optionsRuntime;
+			let treeList = NovelTree.treeToList(novel.novelTree, true);
 
+			return PromiseBluebird
+				.each(treeList.slice(1), async (listRow) =>
+				{
+					let volume = listRow.content as IRowVolume;
+
+					if (volume.type !== 'volume')
+					{
+						return;
+					}
+
+					let dirname = path.join(path_novel, volume.dirname);
+
+					if (!volume.imgs?.length)
+					{
+						return;
+					}
+
+					const imgs = array_unique_overwrite(volume.imgs);
+
+					let file = path.join(dirname, 'ATTACH.md');
+
+					let md_data = {
+						attach: {
+							images: {} as Record<string, string>,
+						},
+					};
+
+					if (keepImage || 1)
+					{
+						await fs.readFile(file)
+							.then(v => mdconf_parse(v))
+							// @ts-ignore
+							.then((data: typeof md_data) =>
+							{
+								data.attach = data.attach || {} as any;
+								data.attach.images = data.attach.images || {};
+
+								md_data = data;
+
+								consoleDebug.debug(`Load data from exists ATTACH.md`)
+							})
+							.catch(e => null)
+					}
+
+					md_data.attach.images = Object
+						.entries(imgs as string[])
+						.reduce((a, [k, v]) =>
+						{
+
+							if (keepImage)
+							{
+								a[hashSum(v)] = v;
+							}
+							else
+							{
+								a[k.toString().padStart(3, '0')] = v;
+							}
+
+							return a
+						}, md_data.attach.images);
+
+					let md = mdconf_stringify(md_data);
+
+					return fs.outputFile(file, md)
+						.then(r =>
+						{
+
+							consoleDebug.success(`[ATTACH]`, `[SAVE]`, `${path.relative(path_novel, file)}`);
+
+							return r;
+						})
+						;
+
+				})
+
+		}
+		else if (novel.volume_list)
+		{
 			consoleDebug.info(`檢查 ATTACH 資料`);
 
 			return PromiseBluebird
