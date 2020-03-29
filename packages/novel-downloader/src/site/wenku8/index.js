@@ -67,15 +67,22 @@ let NovelSiteWenku8 = /** @class */ (() => {
             }
             catch (e) {
             }
-            ret.dom.$('#content img[src]').each(function () {
+            /*
+            ret.dom.$('#content img[src]').each(function ()
+            {
                 // @ts-ignore
                 let src = ret.dom.$(this).prop('src').trim();
-                if (src) {
+    
+                if (src)
+                {
                     cache.chapter.imgs = cache.chapter.imgs || [];
+    
                     cache.chapter.imgs.push(src);
                     cache.novel.imgs.push(src);
                 }
             });
+             */
+            html_1._saveImageToAttach(ret.dom.$, ret.dom.$('#content img[src]'), cache);
             if (optionsRuntime.keepImage) {
                 await html_1._keepImageInContext(ret.dom.$('#content img[src]'), $, {
                     append: '\n',

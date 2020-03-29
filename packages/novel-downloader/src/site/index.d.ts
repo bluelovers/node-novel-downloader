@@ -163,6 +163,7 @@ export declare namespace NovelSite {
         volume_index?: any;
         volume_title: string;
         chapter_list?: IChapter[];
+        imgs?: string[];
         [key: string]: any;
     }
     interface INovel {

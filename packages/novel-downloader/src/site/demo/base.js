@@ -49,9 +49,10 @@ const content_type_parser_1 = __importDefault(require("content-type-parser"));
 const novel_text_1 = __importDefault(require("novel-text"));
 const jsdom_extra_2 = require("jsdom-extra");
 const jsdom_extra_3 = require("jsdom-extra");
-const mdconf2_1 = require("mdconf2");
 const log_1 = require("../../util/log");
-const hash_1 = require("../../util/hash");
+const tree_1 = require("../../tree");
+const array_hyper_unique_1 = require("array-hyper-unique");
+const outputNovelToAttach_1 = __importDefault(require("../../util/outputNovelToAttach"));
 let NovelSiteDemo = /** @class */ (() => {
     let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
         constructor(options, ...argv) {
@@ -189,8 +190,28 @@ let NovelSiteDemo = /** @class */ (() => {
         async _outputAttach(novel, optionsRuntime, _cache_, ...argv) {
             const self = this;
             const { url, path_novel } = _cache_;
-            if (novel.volume_list) {
-                const { keepImage = false } = optionsRuntime;
+            const { keepImage = false } = optionsRuntime;
+            if (novel.novelTree) {
+                let treeList = tree_1.NovelTree.treeToList(novel.novelTree, true);
+                return index_2.PromiseBluebird
+                    .each(treeList.slice(1), async (listRow) => {
+                    var _a;
+                    let volume = listRow.content;
+                    if (volume.type !== 'volume' || !((_a = volume.imgs) === null || _a === void 0 ? void 0 : _a.length)) {
+                        return;
+                    }
+                    const dirname = upath2_1.default.join(path_novel, volume.dirname);
+                    const imgs = array_hyper_unique_1.array_unique_overwrite(volume.imgs).filter(v => v);
+                    volume.imgs = imgs;
+                    return outputNovelToAttach_1.default({
+                        imgs,
+                        dirname,
+                        keepImage,
+                        path_novel,
+                    });
+                });
+            }
+            else if (novel.volume_list) {
                 log_1.consoleDebug.info(`檢查 ATTACH 資料`);
                 return index_2.PromiseBluebird
                     .resolve(novel.volume_list)
@@ -216,40 +237,11 @@ let NovelSiteDemo = /** @class */ (() => {
                         imgs = imgs.filter(v => v);
                         log_1.consoleDebug.debug(`[ATTACH]`, `${upath2_1.default.relative(path_novel, dirname)}`, imgs.length);
                         if (imgs.length) {
-                            let file = upath2_1.default.join(dirname, 'ATTACH.md');
-                            let md_data = {
-                                attach: {
-                                    images: {},
-                                },
-                            };
-                            if (keepImage || 1) {
-                                await fs_extra_1.default.readFile(file)
-                                    .then(v => mdconf2_1.parse(v))
-                                    // @ts-ignore
-                                    .then((data) => {
-                                    data.attach = data.attach || {};
-                                    data.attach.images = data.attach.images || {};
-                                    md_data = data;
-                                    log_1.consoleDebug.debug(`Load data from exists ATTACH.md`);
-                                })
-                                    .catch(e => null);
-                            }
-                            md_data.attach.images = Object
-                                .entries(imgs)
-                                .reduce((a, [k, v]) => {
-                                if (keepImage) {
-                                    a[hash_1.hashSum(v)] = v;
-                                }
-                                else {
-                                    a[k.toString().padStart(3, '0')] = v;
-                                }
-                                return a;
-                            }, md_data.attach.images);
-                            let md = mdconf2_1.stringify(md_data);
-                            return fs_extra_1.default.outputFile(file, md)
-                                .then(r => {
-                                log_1.consoleDebug.success(`[ATTACH]`, `[SAVE]`, `${upath2_1.default.relative(path_novel, file)}`);
-                                return r;
+                            return outputNovelToAttach_1.default({
+                                imgs,
+                                dirname,
+                                keepImage,
+                                path_novel,
                             });
                         }
                     });

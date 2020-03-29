@@ -1,7 +1,7 @@
 "use strict";
 /// <reference types="jquery" />
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._tagToFormat = exports._keepImageInContext = exports.keepFormatTag = void 0;
+exports._tagToFormat = exports._keepImageInContext = exports._saveImageToAttach = exports.keepFormatTag = void 0;
 const hash_1 = require("./hash");
 function keepFormatTag(target, opts) {
     let { optionsRuntime, $ } = opts;
@@ -29,6 +29,27 @@ function keepFormatTag(target, opts) {
     return _target;
 }
 exports.keepFormatTag = keepFormatTag;
+function _saveImageToAttach($, _imgs, cache, cb) {
+    if (_imgs.length) {
+        cache.chapter.imgs = cache.chapter.imgs || [];
+        cache.novel.imgs = cache.novel.imgs || [];
+        cache.volume.imgs = cache.volume.imgs || [];
+        return _imgs.each((i, elem) => {
+            var _a;
+            if (cb != null) {
+                return cb(elem, i);
+            }
+            let src = (_a = $(elem).prop('src')) === null || _a === void 0 ? void 0 : _a.trim();
+            if (src) {
+                cache.chapter.imgs = cache.chapter.imgs || [];
+                cache.chapter.imgs.push(src);
+                cache.novel.imgs.push(src);
+                cache.volume.imgs.push(src);
+            }
+        });
+    }
+}
+exports._saveImageToAttach = _saveImageToAttach;
 function _keepImageInContext(_imgs, $, { prefix = '插圖', append = '', } = {}) {
     _imgs.each((i, elem) => {
         let img = $(elem);

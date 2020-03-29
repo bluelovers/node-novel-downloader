@@ -107,6 +107,7 @@
     "@types/fs-extra": "^8.1.0",
     "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
+    "@types/jest": "^25.1.4",
     "@types/jquery": "^3.3.33",
     "@types/jsdom": "^16.1.1",
     "@types/moment-timezone": "^0.5.13",
@@ -115,7 +116,9 @@
     "@types/set-value": "^2.0.0",
     "@types/shortid": "^0.0.29",
     "@types/tough-cookie": "^2.3.6",
-    "bluebird-decorator": "^1"
+    "bluebird-decorator": "^1",
+    "jest": "^25.2.4",
+    "ts-jest": "^25.2.1"
   },
   "gitHead": "2cae1343b29979515aed7e759559b6d77d8182da",
   "_types": "novel-downloader.d.ts"

@@ -117,6 +117,7 @@ let NovelSiteESJZone = /** @class */ (() => {
                     .replace(/(?<=\<br\>)(?=[^\n])/g, '\n');
             });
             let title = util_1.trim(ret.dom.$('.container .row > div > h3').text());
+            html_1._saveImageToAttach(ret.dom.$, elem.find('img[src]'), cache);
             if (optionsRuntime.keepImage) {
                 await html_1._keepImageInContext(elem.find('img[src]'), $);
             }

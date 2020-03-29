@@ -105,13 +105,18 @@ let NovelSiteTpl = /** @class */ (() => {
             }
             const $ = ret.dom.$;
             if (ret.dom.$('img').length) {
+                /*
                 cache.chapter.imgs = cache.chapter.imgs || [];
-                ret.dom.$('img[src]').each(function () {
+    
+                ret.dom.$('img[src]').each(function ()
+                {
                     // @ts-ignore
                     cache.chapter.imgs.push(ret.dom.$(this).prop('src'));
                     // @ts-ignore
                     cache.novel.imgs.push(ret.dom.$(this).prop('src'));
                 });
+                 */
+                html_1._saveImageToAttach(ret.dom.$, ret.dom.$('img[src]'), cache);
                 if (optionsRuntime.keepImage) {
                     await html_1._keepImageInContext(ret.dom.$('img[src]'), ret.dom.$);
                 }

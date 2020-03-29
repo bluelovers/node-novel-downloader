@@ -4,6 +4,11 @@ export declare function keepFormatTag<O = NovelSite.IOptionsRuntime, E extends u
     $: JQueryStatic;
     optionsRuntime: O & NovelSite.IOptionsRuntime;
 }): JQuery<HTMLElement>;
+export declare function _saveImageToAttach($: JQueryStatic, _imgs: JQuery, cache: {
+    novel: NovelSite.INovel;
+    volume: NovelSite.IVolume;
+    chapter: NovelSite.IChapter;
+}, cb?: (elem: HTMLElement | HTMLImageElement, i: number) => any): JQuery<HTMLElement>;
 export declare function _keepImageInContext(_imgs: JQuery, $: JQueryStatic, { prefix, append, }?: {
     prefix?: string;
     append?: string;
