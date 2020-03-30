@@ -6,7 +6,7 @@ import _request from 'request';
 import { getNewLibraryCopy } from 'bluebird';
 import BluebirdPromise from 'bluebird';
 import _createCachedRequest from 'cached-request';
-import RequestPromise from 'request-promise';
+import RequestPromise from '@bluelovers/request-promise';
 import configure from 'request-promise-core/configure/request2';
 import stealthyRequire from 'stealthy-require';
 

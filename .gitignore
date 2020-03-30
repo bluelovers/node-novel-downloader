@@ -49,3 +49,4 @@ package.d.ts
 tsconfig.esm.json.tpl
 tsconfig.json.tpl
 tsconfig.tsbuildinfo
+/lerna-debug.log

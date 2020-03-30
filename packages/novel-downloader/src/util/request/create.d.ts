@@ -3,7 +3,7 @@
  */
 import _request from 'request';
 import BluebirdPromise from 'bluebird';
-import RequestPromise from 'request-promise';
+import RequestPromise from '@bluelovers/request-promise';
 export declare type IRequest = typeof _request;
 export declare type IRequestPromise = typeof RequestPromise;
 export declare type IBluebirdPromise = typeof BluebirdPromise;

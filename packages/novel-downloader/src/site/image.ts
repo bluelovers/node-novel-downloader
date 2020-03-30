@@ -4,7 +4,7 @@
 
 import fs from 'fs-iconv';
 import { trimFilename } from 'fs-iconv/util';
-import request from 'request-promise';
+import request from '@bluelovers/request-promise';
 import { URL } from 'jsdom-extra';
 import Bluebird from "bluebird";
 

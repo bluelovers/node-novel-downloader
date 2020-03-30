@@ -7,7 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.manyRequest = exports.retryRequest = void 0;
-const request_promise_1 = __importDefault(require("request-promise"));
+const request_promise_1 = __importDefault(require("@bluelovers/request-promise"));
 const bluebird_1 = __importDefault(require("bluebird"));
 const log_1 = require("./util/log");
 function retryRequest(url, options = {}) {

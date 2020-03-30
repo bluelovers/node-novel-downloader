@@ -1,7 +1,7 @@
 /**
  * Created by user on 2018/2/9/009.
  */
-import request from 'request-promise';
+import request from '@bluelovers/request-promise';
 import Bluebird from 'bluebird';
 import { IRequestPromise } from './util/request/create';
 export interface IOptions extends request.RequestPromiseOptions {

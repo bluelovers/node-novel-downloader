@@ -2,7 +2,7 @@
  * Created by user on 2018/2/9/009.
  */
 
-import request from 'request-promise';
+import request from '@bluelovers/request-promise';
 import Bluebird from 'bluebird';
 import { console } from './util/log';
 import { IRequestPromise } from './util/request/create';

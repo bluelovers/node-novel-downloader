@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.download_image = void 0;
 const fs_iconv_1 = __importDefault(require("fs-iconv"));
 const util_1 = require("fs-iconv/util");
-const request_promise_1 = __importDefault(require("request-promise"));
+const request_promise_1 = __importDefault(require("@bluelovers/request-promise"));
 const jsdom_extra_1 = require("jsdom-extra");
 const bluebird_1 = __importDefault(require("bluebird"));
 const upath2_1 = __importDefault(require("upath2"));
