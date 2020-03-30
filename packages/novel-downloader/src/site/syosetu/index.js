@@ -235,7 +235,19 @@ let NovelSiteSyosetu = /** @class */ (() => {
             if (!$('#novel_contents').length || $('#modal .yes #yes18').length) {
                 //console.log(dom.url, dom._options);
                 $('#modal .yes #yes18').click();
-                dom._options.requestOptions.jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+                let jar = dom._options.requestOptions.jar;
+                try {
+                    // @ts-ignore
+                    jar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+                }
+                catch (e) {
+                    try {
+                        jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+                    }
+                    catch (e) {
+                        log_1.console.error(`setCookie 失敗`, e);
+                    }
+                }
                 //console.log(dom.serialize());
                 return jsdom_extra_1.fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {
                 //cookieJar: dom._options.requestOptions.jar._jar,

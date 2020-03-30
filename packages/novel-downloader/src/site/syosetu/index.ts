@@ -343,7 +343,24 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 			$('#modal .yes #yes18').click();
 
-			dom._options.requestOptions.jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+			let jar = dom._options.requestOptions.jar;
+
+			try
+			{
+				// @ts-ignore
+				jar.setCookieSync('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+			}
+			catch (e)
+			{
+				try
+				{
+					jar.setCookie('over18=yes; Domain=.syosetu.com; Path=/; hostOnly=false', url);
+				}
+				catch (e)
+				{
+					console.error(`setCookie 失敗`, e)
+				}
+			}
 
 			//console.log(dom.serialize());
 

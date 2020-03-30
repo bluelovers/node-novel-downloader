@@ -78,7 +78,7 @@
     "hash-sum": "^2.0.0",
     "jquery": "^3.4.1",
     "js-tree-list2": "^1.1.19",
-    "jsdom-extra": "^3.0.0",
+    "jsdom-extra": "^3.0.2",
     "jsdom-url": "^3.0.1",
     "mitemin": "^1.0.5",
     "moment-timezone": "^0.5.28",
