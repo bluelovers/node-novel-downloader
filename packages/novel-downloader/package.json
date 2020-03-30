@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@bluelovers/request-promise": "^4.2.5",
+    "request-promise": "npm:@bluelovers/request-promise",
     "@node-novel/layout-reporter": "^1.0.3",
     "array-hyper-unique": "^1.1.0",
     "bluebird": "^3.7.2",
