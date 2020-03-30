@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -62,7 +62,6 @@
   },
   "dependencies": {
     "@bluelovers/request-promise": "^4.2.5",
-    "request-promise": "npm:@bluelovers/request-promise",
     "@node-novel/layout-reporter": "^1.0.3",
     "array-hyper-unique": "^1.1.0",
     "bluebird": "^3.7.2",
@@ -90,6 +89,7 @@
     "regexp-cjk-plugin-escape-unicode-property": "^1.0.1",
     "regexp-cjk-plugin-extra": "^1.0.5",
     "request": "^2.88.2",
+    "request-promise": "npm:@bluelovers/request-promise",
     "set-value": "^3.0.1",
     "shortid": "^2.2.15",
     "str-util": "^2.3.21",
