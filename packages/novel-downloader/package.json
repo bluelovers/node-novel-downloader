@@ -78,11 +78,11 @@
     "hash-sum": "^2.0.0",
     "jquery": "^3.4.1",
     "js-tree-list2": "^1.1.19",
-    "jsdom-extra": "^2.0.0",
+    "jsdom-extra": "^3.0.0",
     "jsdom-url": "^3.0.1",
     "mitemin": "^1.0.5",
     "moment-timezone": "^0.5.28",
-    "node-novel-globby": "^2.0.9",
+    "node-novel-globby": "^2.0.11",
     "node-novel-info": "^3.0.1",
     "novel-text": "^1.1.25",
     "regexp-cjk": "^3.3.11",
@@ -105,8 +105,8 @@
     "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
     "@types/jest": "^25.1.4",
-    "@types/jquery": "^3.3.33",
-    "@types/jsdom": "^16.1.1",
+    "@types/jquery": "^3.3.34",
+    "@types/jsdom": "^16.2.0",
     "@types/moment-timezone": "^0.5.13",
     "@types/request": "^2.48.4",
     "@types/request-promise": "^4",
@@ -115,7 +115,7 @@
     "@types/tough-cookie": "^2.3.6",
     "bluebird-decorator": "^1",
     "jest": "^25.2.4",
-    "ts-jest": "^25.2.1"
+    "ts-jest": "^25.3.0"
   },
   "gitHead": "2cae1343b29979515aed7e759559b6d77d8182da",
   "_types": "novel-downloader.d.ts"
