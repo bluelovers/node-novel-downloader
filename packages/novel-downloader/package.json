@@ -60,9 +60,6 @@
     "tsc:default": "tsc -p tsconfig.json",
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
-  "resolutions": {
-    "tough-cookie": "^3"
-  },
   "dependencies": {
     "@node-novel/layout-reporter": "^1.0.3",
     "array-hyper-unique": "^1.1.0",
@@ -96,7 +93,6 @@
     "shortid": "^2.2.15",
     "str-util": "^2.3.21",
     "symbol.inspect": "^1.0.1",
-    "tough-cookie": "^3.0.1",
     "ts-type": "^1.2.13",
     "upath2": "^2.1.3"
   },

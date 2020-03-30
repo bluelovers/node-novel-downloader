@@ -18,6 +18,8 @@
     "do-install": "npx yarn-tool install",
     "do-init": "npm run check-updates && npm run do-install",
     "sort-package-json": "oao run-script \"sort-package-json2\"",
+    "prepublishOnly": "yarn run prepublish:lockfile",
+    "prepublish:lockfile": "ynpx sync-lockfile -- . & yt ws exec yarn-tool -- lockfile --npm --overwrite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
