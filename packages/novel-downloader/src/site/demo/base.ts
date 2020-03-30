@@ -138,7 +138,7 @@ export class NovelSiteDemo extends _NovelSite
 						}
 
 						optionsRuntime.optionsJSDOM.cookieJar
-							.setCookieSync(c, url.href)
+							.setCookieSync(c.toString(), url.href)
 						;
 
 						if (typeof c == 'object' && !c.domain)

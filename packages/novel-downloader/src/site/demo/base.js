@@ -103,7 +103,7 @@ let NovelSiteDemo = /** @class */ (() => {
                             c = new jsdom_extra_3.toughCookie.Cookie(c);
                         }
                         optionsRuntime.optionsJSDOM.cookieJar
-                            .setCookieSync(c, url.href);
+                            .setCookieSync(c.toString(), url.href);
                         if (typeof c == 'object' && !c.domain) {
                             if (domain) {
                                 c.domain = domain;
