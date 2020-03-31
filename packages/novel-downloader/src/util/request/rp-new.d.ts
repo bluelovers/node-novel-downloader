@@ -1,3 +1,2 @@
-/// <reference types="request-promise" />
-export declare const request: import("request-promise").RequestPromiseAPI<any>;
+export declare const request: any;
 export default request;

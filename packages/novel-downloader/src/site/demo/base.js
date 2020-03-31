@@ -47,8 +47,8 @@ const index_1 = __importStar(require("../index"));
 const index_2 = require("../index");
 const content_type_parser_1 = __importDefault(require("content-type-parser"));
 const novel_text_1 = __importDefault(require("novel-text"));
+const lazy_cookies_1 = require("lazy-cookies");
 const jsdom_extra_2 = require("jsdom-extra");
-const jsdom_extra_3 = require("jsdom-extra");
 const log_1 = require("../../util/log");
 const tree_1 = require("../../tree");
 const array_hyper_unique_1 = require("array-hyper-unique");
@@ -98,9 +98,10 @@ let NovelSiteDemo = /** @class */ (() => {
                                 c.hostOnly = false;
                             }
                         }
-                        if (!(typeof c === 'string' || c instanceof jsdom_extra_2.LazyCookie || c instanceof jsdom_extra_3.toughCookie.Cookie)) {
+                        // @ts-ignore
+                        if (!(typeof c === 'string' || c instanceof lazy_cookies_1.LazyCookie || c instanceof jsdom_extra_2.toughCookie.Cookie)) {
                             // @ts-ignore
-                            c = new jsdom_extra_3.toughCookie.Cookie(c);
+                            c = new jsdom_extra_2.toughCookie.Cookie(c);
                         }
                         optionsRuntime.optionsJSDOM.cookieJar
                             .setCookieSync(c.toString(), url.href);

@@ -390,6 +390,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		};
 
 		optionsJSDOM.requestOptions = optionsJSDOM.requestOptions || {};
+		// @ts-ignore
 		optionsJSDOM.requestOptions.followRedirect = true;
 
 		let _domain = 1 ? 'nar.jp' : 'dip.jp';

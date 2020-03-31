@@ -22,6 +22,9 @@ const value_1 = require("../../util/value");
 const regex_1 = require("../../util/regex");
 const html_1 = require("../../util/html");
 const util_2 = require("./util");
+const site_1 = require("esjzone-api/lib/util/site");
+const volNovelTree_1 = __importDefault(require("./util/volNovelTree"));
+const html_2 = require("restful-decorator-plugin-jsdom/lib/html");
 //import { URL } from 'jsdom-url';
 let NovelSiteESJZone = /** @class */ (() => {
     let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
@@ -99,29 +102,35 @@ let NovelSiteESJZone = /** @class */ (() => {
             }
             const $ = ret.dom.$;
             try {
-                let html = util_1.minifyHTML(ret.dom.$('.container .row:has(.forum-content)').html());
-                ret.dom.$('.container .row:has(.forum-content)').html(html);
+                let target = ret.dom.$('.container .row:has(.forum-content)');
+                let html = util_1.minifyHTML(target.html());
+                target.html(html);
             }
             catch (e) {
             }
-            if (!ret.dom.$('.container .row:has(.forum-content)').html()) {
+            const $content = site_1._getChapterDomContent($);
+            if (!$content.html()) {
                 throw this._fetchChapterRetryError(`發現防爬蟲機制，將稍後再試圖下載`, ret, optionsRuntime, cache);
             }
             util_2._remove_ad($);
-            await this._decodeChapter(ret, optionsRuntime, cache);
-            util_2._p_2_br('.forum-content > p', ret.dom.$);
+            //await this._decodeChapter(ret, optionsRuntime, cache);
+            util_2._p_2_br($content.find('> p'), ret.dom.$);
+            /*
             let elem = ret.dom.$('.container .forum-content');
-            elem.html(function (i, old) {
+    
+            elem.html(function (i, old: string)
+            {
                 return old
                     .replace(/(\<br\>){3,4}/g, '$1')
-                    .replace(/(?<=\<br\>)(?=[^\n])/g, '\n');
+                    .replace(/(?<=\<br\>)(?=[^\n])/g, '\n')
             });
-            let title = util_1.trim(ret.dom.$('.container .row > div > h3').text());
-            html_1._saveImageToAttach(ret.dom.$, elem.find('img[src]'), cache);
+             */
+            let title = util_1.trim($('.container .row .single-post-meta + h2').text());
+            html_1._saveImageToAttach(ret.dom.$, $content.find('img[src]'), cache);
             if (optionsRuntime.keepImage) {
-                await html_1._keepImageInContext(elem.find('img[src]'), $);
+                await html_1._keepImageInContext($content.find('img[src]'), $);
             }
-            let txt = elem
+            let txt = $content
                 .text()
                 .replace(this._reContext, '')
                 .replace(/^\s+|\s+$/g, '');
@@ -137,6 +146,10 @@ let NovelSiteESJZone = /** @class */ (() => {
                 }
                 return '';
             });
+            let v = site_1._getChapterData($).author;
+            if (v && !contribute.includes(v)) {
+                contribute.push(v);
+            }
             if (contribute.length) {
                 value_1.dotSetValue(cache, 'novel.contribute', contribute);
             }
@@ -161,44 +174,33 @@ let NovelSiteESJZone = /** @class */ (() => {
             return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
                 .then(async function (dom) {
                 const $ = dom.$;
-                try {
-                    let html = util_1.minifyHTML(dom.$('.product-detail').html());
-                    dom.$('.product-detail').html(html);
+                let _data = {};
+                let { name: novel_title, authors: novel_author } = site_1._getBookInfo($, _data);
+                let novel_date;
+                if (_data.last_update_time) {
+                    novel_date = index_1.moment.unix(_data.last_update_time);
                 }
-                catch (e) {
-                }
-                let novel_title = dom.$('.container .row > div > h3').text();
                 let novel_publisher = self.IDKEY;
                 let url_data = self.parseUrl(dom.url.href);
-                let novel_author;
-                let novel_date;
-                $('.product-detail .well .nav-list > li')
-                    .each(function (i, elem) {
-                    let _this = $(this);
-                    let _text = util_1.trim(_this.text());
-                    let _m;
-                    if (_m = _text.match(/作者\s*[：:]\s*([^\n]+)/)) {
-                        novel_author = util_1.trim(_m[1]);
-                    }
-                    else if (_m = _text.match(/\b(\d{4}\-\d{1,2}\-\d{1,2})\b/)) {
-                        try {
-                            let last_update_time = index_1.moment(_m[1]);
-                            novel_date = last_update_time;
-                        }
-                        catch (e) {
-                        }
-                    }
-                });
                 let volume_list = [];
-                const novelTree = optionsRuntime.novelTree;
-                let currentVolume;
+                //const novelTree = optionsRuntime.novelTree;
+                const novelTree = volNovelTree_1.default($, {
+                    novelTree: optionsRuntime.novelTree,
+                }, self).novelTree;
+                /*
+                let currentVolume: TreeNode<IRowVolume>;
+
                 let _content = $('.product-detail:eq(0)');
                 let table = _content.find('#tab1 a[href], #tab1  .non');
+
                 let _cache_dates = [];
+
                 let total_idx = 0;
+
                 {
                     let volume_title = 'null';
                     let volume_level = null;
+
                     currentVolume = novelTree.addVolume({
                         volume_title,
                         volume_level,
@@ -206,74 +208,94 @@ let NovelSiteESJZone = /** @class */ (() => {
                         total_idx: total_idx++,
                     });
                 }
+
                 //console.dir(table.length)
+
                 table
-                    .each(function (index, elem) {
-                    let tr = $(elem);
-                    let _this = tr;
-                    if (_this.is('.non')) {
-                        let volume_title = util_1.trim(_this.text());
-                        if (volume_title) {
-                            currentVolume = novelTree.addVolume({
-                                volume_title,
-                                volume_index: novelTree.root().size(),
+                    .each(function (index, elem)
+                    {
+                        let tr = $(elem);
+                        let _this = tr;
+
+                        if (_this.is('.non'))
+                        {
+                            let volume_title = trim(_this.text());
+
+                            if (volume_title)
+                            {
+                                currentVolume = novelTree.addVolume({
+                                    volume_title,
+                                    volume_index: novelTree.root().size(),
+                                    total_idx: total_idx++,
+                                });
+
+                                return;
+                            }
+                        }
+
+                        if (tr.is('a'))
+                        {
+                            let a = tr;
+                            let chapter_title = trim(a.text(), true);
+
+                            //console.log(chapter_title)
+
+                            let href = a.prop('href');
+
+                            let data = self.parseUrl(href);
+
+                            if (!data.chapter_id)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                href = self.makeUrl(data);
+
+                                data.url = href;
+                            }
+
+                            let chapter: IRowChapter = {
+                                chapter_title,
+                                chapter_id: data.chapter_id,
+                                chapter_url: href,
+                                chapter_url_data: data,
+                                chapter_index: currentVolume.size(),
                                 total_idx: total_idx++,
-                            });
-                            return;
+                            };
+
+                            novelTree.addChapter(chapter, currentVolume)
                         }
-                    }
-                    if (tr.is('a')) {
-                        let a = tr;
-                        let chapter_title = util_1.trim(a.text(), true);
-                        //console.log(chapter_title)
-                        let href = a.prop('href');
-                        let data = self.parseUrl(href);
-                        if (!data.chapter_id) {
-                            return;
-                        }
-                        else {
-                            href = self.makeUrl(data);
-                            data.url = href;
-                        }
-                        let chapter = {
-                            chapter_title,
-                            chapter_id: data.chapter_id,
-                            chapter_url: href,
-                            chapter_url_data: data,
-                            chapter_index: currentVolume.size(),
-                            total_idx: total_idx++,
-                        };
-                        novelTree.addChapter(chapter, currentVolume);
-                    }
-                });
-                util_2._remove_ad(dom.$);
+                    })
+                ;
+
+                 */
+                //_remove_ad(dom.$);
                 let data_meta = {
                     novel: {},
                 };
-                $('.product-detail .well ')
-                    .find('.row a[href]')
-                    .not('.btn, .form-group *')
-                    .each((i, elem) => {
-                    let _this = $(elem);
-                    let name = util_1.trim(_this.text());
-                    let href = _this.prop('href');
-                    if (name === href) {
-                        name = undefined;
-                    }
+                site_1._getBookLinks($)
+                    .forEach(item => {
                     data_meta.link = data_meta.link || [];
-                    data_meta.link.push(href);
+                    data_meta.link.push(item.href);
                 });
-                $('.show-tag a[href*="tag"]')
-                    .each((i, elem) => {
-                    let _this = $(elem);
-                    let name = util_1.trim(_this.text());
-                    if (name) {
-                        data_meta.novel.tags = data_meta.novel.tags || [];
-                        data_meta.novel.tags.push(name);
-                    }
+                site_1._getBookTags($)
+                    .forEach(name => {
+                    data_meta.novel.tags = data_meta.novel.tags || [];
+                    data_meta.novel.tags.push(name);
                 });
-                data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image:not([src*="empty.jpg"])').prop('src');
-                let novel_desc = util_1.trim($('.product-detail .book_description').text() || $('.book_description:eq(0)').text() || $('meta[name="description"]').attr('content') || '');
+                data_meta.novel.cover = site_1._getBookCover($);
+                let $desc = html_2.tryMinifyHTMLOfElem(site_1._getBookElemDesc($));
+                util_2._p_2_br($desc.find('p'), $, true);
+                let novel_desc = util_1.trim($desc.text());
+                /*
+                console.dir({
+                    html: $desc.html(),
+                    novel_desc,
+                })
+
+                process.exit();
+                 */
                 //console.dir(dom.serialize())
                 return {
                     ...data_meta,

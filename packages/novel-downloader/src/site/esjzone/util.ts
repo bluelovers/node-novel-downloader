@@ -1,5 +1,7 @@
 import NovelSite from '../index';
 import createURL, { _handleParseURL } from '../../util/url';
+export { _remove_ad } from 'esjzone-api/lib/util/site';
+export { _p_2_br } from 'restful-decorator-plugin-jsdom/lib/jquery';
 
 export function check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 {
@@ -56,6 +58,7 @@ export function parseUrl(_url: string | URL | number, ...argv)
 	return urlobj;
 }
 
+/*
 export function _p_2_br(target, $)
 {
 	return $(target)
@@ -74,13 +77,16 @@ export function _p_2_br(target, $)
 				_html = '';
 			}
 
-			_this.after(`${_html}<br/>`);
+			_this.after(`${_html}<br/>\n`);
 			_this.remove()
 		})
 		;
 }
+*/
 
+/*
 export function _remove_ad($: JQueryStatic)
 {
 	$('p[class]:has(> script), script[src*=google], > .adsbygoogle').remove();
 }
+*/

@@ -446,6 +446,7 @@ export class NovelSiteDmzj extends NovelSite
 					;
 
 					await manyRequest(ua, {
+						// @ts-ignore
 						encoding: null,
 						resolveWithFullResponse: true,
 					})

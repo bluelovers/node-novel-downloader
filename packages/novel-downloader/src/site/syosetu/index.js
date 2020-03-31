@@ -265,6 +265,7 @@ let NovelSiteSyosetu = /** @class */ (() => {
                 },
             };
             optionsJSDOM.requestOptions = optionsJSDOM.requestOptions || {};
+            // @ts-ignore
             optionsJSDOM.requestOptions.followRedirect = true;
             let _domain = 1 ? 'nar.jp' : 'dip.jp';
             let _url = `https://${url_data.novel_r18

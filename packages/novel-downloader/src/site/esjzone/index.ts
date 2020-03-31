@@ -14,6 +14,11 @@ import { zhRegExp } from '../../util/regex';
 import { _keepImageInContext, _saveImageToAttach } from '../../util/html';
 import { parseUrl, makeUrl, check, _p_2_br, _remove_ad } from './util';
 import { SYMBOL_RAW } from 'jsdom-extra/lib/const';
+import { _getBookInfo, _getBookLinks, _getBookTags, _getBookCover, _getBookElemDesc, _getChapterDomContent, _getChapterData } from 'esjzone-api/lib/util/site';
+import { IESJzoneRecentUpdateRowBook } from 'esjzone-api/lib/types';
+import tryMinifyHTML from 'restful-decorator-plugin-jsdom/lib/html';
+import volNovelTree from './util/volNovelTree';
+import { tryMinifyHTMLOfElem } from 'restful-decorator-plugin-jsdom/lib/html';
 
 //import { URL } from 'jsdom-url';
 
@@ -144,26 +149,31 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 		try
 		{
-			let html = minifyHTML(ret.dom.$('.container .row:has(.forum-content)').html());
+			let target = ret.dom.$('.container .row:has(.forum-content)');
 
-			ret.dom.$('.container .row:has(.forum-content)').html(html);
+			let html = minifyHTML(target.html());
+
+			target.html(html);
 		}
 		catch (e)
 		{
 
 		}
 
-		if (!ret.dom.$('.container .row:has(.forum-content)').html())
+		const $content = _getChapterDomContent($);
+
+		if (!$content.html())
 		{
 			throw this._fetchChapterRetryError(`發現防爬蟲機制，將稍後再試圖下載`, ret, optionsRuntime, cache);
 		}
 
 		_remove_ad($);
 
-		await this._decodeChapter(ret, optionsRuntime, cache);
+		//await this._decodeChapter(ret, optionsRuntime, cache);
 
-		_p_2_br('.forum-content > p', ret.dom.$);
+		_p_2_br($content.find('> p'), ret.dom.$);
 
+		/*
 		let elem = ret.dom.$('.container .forum-content');
 
 		elem.html(function (i, old: string)
@@ -172,17 +182,18 @@ export class NovelSiteESJZone extends NovelSiteDemo
 				.replace(/(\<br\>){3,4}/g, '$1')
 				.replace(/(?<=\<br\>)(?=[^\n])/g, '\n')
 		});
+		 */
 
-		let title = trim(ret.dom.$('.container .row > div > h3').text());
+		let title = trim($('.container .row .single-post-meta + h2').text());
 
-		_saveImageToAttach(ret.dom.$, elem.find('img[src]'), cache);
+		_saveImageToAttach(ret.dom.$, $content.find('img[src]'), cache);
 
 		if (optionsRuntime.keepImage)
 		{
-			await _keepImageInContext(elem.find('img[src]'), $);
+			await _keepImageInContext($content.find('img[src]'), $);
 		}
 
-		let txt: string = elem
+		let txt: string = $content
 			.text()
 			.replace(this._reContext, '')
 			.replace(/^\s+|\s+$/g, '')
@@ -208,6 +219,12 @@ export class NovelSiteESJZone extends NovelSiteDemo
 
 			return ''
 		});
+
+		let v = _getChapterData($).author;
+		if (v && !contribute.includes(v))
+		{
+			contribute.push(v);
+		}
 
 		if (contribute.length)
 		{
@@ -249,58 +266,28 @@ export class NovelSiteESJZone extends NovelSiteDemo
 			{
 				const $ = dom.$;
 
-				try
+				let _data: IESJzoneRecentUpdateRowBook = {} as any;
+
+				let { name: novel_title, authors: novel_author } = _getBookInfo($, _data);
+
+				let novel_date: moment.Moment;
+				if (_data.last_update_time)
 				{
-					let html = minifyHTML(dom.$('.product-detail').html());
-
-					dom.$('.product-detail').html(html);
+					novel_date = moment.unix(_data.last_update_time)
 				}
-				catch (e)
-				{
-
-				}
-
-				let novel_title = dom.$('.container .row > div > h3').text();
 
 				let novel_publisher = self.IDKEY;
 
 				let url_data = self.parseUrl(dom.url.href);
 
-				let novel_author: string;
-				let novel_date;
-
-				$('.product-detail .well .nav-list > li')
-					.each(function (i, elem)
-					{
-						let _this = $(this);
-
-						let _text = trim(_this.text());
-
-						let _m: RegExpMatchArray;
-
-						if (_m = _text.match(/作者\s*[：:]\s*([^\n]+)/))
-						{
-							novel_author = trim(_m[1])
-						}
-						else if (_m = _text.match(/\b(\d{4}\-\d{1,2}\-\d{1,2})\b/))
-						{
-							try
-							{
-								let last_update_time = moment(_m[1]);
-								novel_date = last_update_time;
-							}
-							catch (e)
-							{
-
-							}
-						}
-
-					})
-				;
-
 				let volume_list = [] as NovelSite.IVolume[];
 
-				const novelTree = optionsRuntime.novelTree;
+				//const novelTree = optionsRuntime.novelTree;
+				const novelTree = volNovelTree($, {
+					novelTree: optionsRuntime.novelTree,
+				}, self).novelTree;
+
+				/*
 				let currentVolume: TreeNode<IRowVolume>;
 
 				let _content = $('.product-detail:eq(0)');
@@ -382,7 +369,9 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					})
 				;
 
-				_remove_ad(dom.$);
+				 */
+
+				//_remove_ad(dom.$);
 
 				let data_meta: IMdconfMeta = {
 					novel: {
@@ -390,45 +379,36 @@ export class NovelSiteESJZone extends NovelSiteDemo
 					},
 				};
 
-				$('.product-detail .well ')
-					.find('.row a[href]')
-					.not('.btn, .form-group *')
-					.each((i, elem) =>
-					{
-
-						let _this = $(elem);
-
-						let name = trim(_this.text());
-						let href = _this.prop('href') as string;
-
-						if (name === href)
-						{
-							name = undefined;
-						}
-
+				_getBookLinks($)
+					.forEach(item => {
 						data_meta.link = data_meta.link || [];
-						data_meta.link.push(href);
-
+						data_meta.link.push(item.href);
 					})
 				;
 
-				$('.show-tag a[href*="tag"]')
-					.each((i, elem) =>
-					{
-						let _this = $(elem);
-						let name = trim(_this.text());
-
-						if (name)
-						{
-							data_meta.novel.tags = data_meta.novel.tags || [];
-							data_meta.novel.tags.push(name);
-						}
+				_getBookTags($)
+					.forEach(name => {
+						data_meta.novel.tags = data_meta.novel.tags || [];
+						data_meta.novel.tags.push(name);
 					})
 				;
 
-				data_meta.novel.cover = $('.product-detail:eq(0)').find('img.product-image:not([src*="empty.jpg"])').prop('src');
+				data_meta.novel.cover = _getBookCover($);
 
-				let novel_desc = trim($('.product-detail .book_description').text() || $('.book_description:eq(0)').text() || $('meta[name="description"]').attr('content') || '');
+				let $desc = tryMinifyHTMLOfElem(_getBookElemDesc($));
+
+				_p_2_br($desc.find('p'), $, true);
+
+				let novel_desc = trim($desc.text());
+
+				/*
+				console.dir({
+					html: $desc.html(),
+					novel_desc,
+				})
+
+				process.exit();
+				 */
 
 				//console.dir(dom.serialize())
 

@@ -19,8 +19,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._remove_ad = exports._p_2_br = exports.parseUrl = exports.makeUrl = exports.check = void 0;
+exports.parseUrl = exports.makeUrl = exports.check = void 0;
 const url_1 = __importStar(require("../../util/url"));
+var site_1 = require("esjzone-api/lib/util/site");
+Object.defineProperty(exports, "_remove_ad", { enumerable: true, get: function () { return site_1._remove_ad; } });
+var jquery_1 = require("restful-decorator-plugin-jsdom/lib/jquery");
+Object.defineProperty(exports, "_p_2_br", { enumerable: true, get: function () { return jquery_1._p_2_br; } });
 function check(url, options) {
     return /esjzone\.cc/i.test(url_1.default(url).hostname || '');
 }
@@ -59,24 +63,35 @@ function parseUrl(_url, ...argv) {
     return urlobj;
 }
 exports.parseUrl = parseUrl;
-function _p_2_br(target, $) {
+/*
+export function _p_2_br(target, $)
+{
     return $(target)
-        .each(function (i, elem) {
-        let _this = $(elem);
-        let _html = _this
-            .html()
-            .replace(/(?:&nbsp;?)/g, ' ')
-            .replace(/[\xA0\s]+$/g, '');
-        if (_html == '<br/>' || _html == '<br>') {
-            _html = '';
-        }
-        _this.after(`${_html}<br/>`);
-        _this.remove();
-    });
+        .each(function (i, elem)
+        {
+            let _this = $(elem);
+
+            let _html = _this
+                .html()
+                .replace(/(?:&nbsp;?)/g, ' ')
+                .replace(/[\xA0\s]+$/g, '')
+            ;
+
+            if (_html == '<br/>' || _html == '<br>')
+            {
+                _html = '';
+            }
+
+            _this.after(`${_html}<br/>\n`);
+            _this.remove()
+        })
+        ;
 }
-exports._p_2_br = _p_2_br;
-function _remove_ad($) {
+*/
+/*
+export function _remove_ad($: JQueryStatic)
+{
     $('p[class]:has(> script), script[src*=google], > .adsbygoogle').remove();
 }
-exports._remove_ad = _remove_ad;
+*/
 //# sourceMappingURL=util.js.map

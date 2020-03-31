@@ -24,9 +24,8 @@ import { PromiseBluebird } from '../index';
 
 import parseContentType from 'content-type-parser';
 import novelText from 'novel-text';
-
-import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
-
+import { LazyCookieJar } from 'jsdom-extra/lib/cookies';
+import { LazyCookie } from 'lazy-cookies';
 import { toughCookie } from 'jsdom-extra';
 
 import { stringify as mdconf_stringify, parse as mdconf_parse } from 'mdconf2';
@@ -94,7 +93,7 @@ export class NovelSiteDemo extends _NovelSite
 			Object.entries(optionsRuntime.sessionData)
 				.forEach(function (data)
 				{
-					let c: LazyCookie.Properties;
+					let c: Partial<LazyCookie>;
 					let typec = typeof data[1];
 
 					if (data[1] && typec == 'object')
@@ -131,6 +130,7 @@ export class NovelSiteDemo extends _NovelSite
 							}
 						}
 
+						// @ts-ignore
 						if (!(typeof c === 'string' || c instanceof LazyCookie || c instanceof toughCookie.Cookie))
 						{
 							// @ts-ignore
@@ -155,7 +155,7 @@ export class NovelSiteDemo extends _NovelSite
 							try
 							{
 								optionsRuntime.optionsJSDOM.cookieJar
-									.setCookieSync(c, url.href)
+									.setCookieSync(c as any, url.href)
 								;
 							}
 							catch (e)

@@ -317,6 +317,7 @@ let NovelSiteDmzj = /** @class */ (() => {
                         return value;
                     });
                     await fetch_1.manyRequest(ua, {
+                        // @ts-ignore
                         encoding: null,
                         resolveWithFullResponse: true,
                     })
