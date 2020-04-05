@@ -680,6 +680,7 @@ export namespace NovelSite
 		url_data: IParseUrl,
 
 		novel_title: string,
+		novel_cover?: string,
 		novel_author?: string,
 
 		novel_desc?: string,

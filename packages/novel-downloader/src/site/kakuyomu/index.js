@@ -256,11 +256,13 @@ let NovelSiteKakuyomu = /** @class */ (() => {
                         data_meta.novel.status = $(this).text().replace(/^\s+|\s+$/g, '');
                     });
                 }
+                let novel_cover = `https://cdn-static.kakuyomu.jp/works/${url_data.novel_id}/ogimage.png`;
                 return {
                     ...data_meta,
                     url: dom.url,
                     url_data,
                     novel_title,
+                    novel_cover,
                     novel_author,
                     novel_desc,
                     novel_date,

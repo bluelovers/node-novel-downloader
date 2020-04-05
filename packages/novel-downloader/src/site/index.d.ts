@@ -170,6 +170,7 @@ export declare namespace NovelSite {
         url: URL | string;
         url_data: IParseUrl;
         novel_title: string;
+        novel_cover?: string;
         novel_author?: string;
         novel_desc?: string;
         novel_date?: moment.Moment;

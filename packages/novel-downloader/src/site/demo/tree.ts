@@ -5,7 +5,7 @@
 import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, INovel as _INovel } from './base';
 
 import { getFilePath, getVolumePath } from '../fs';
-import _NovelSite, { IChapter, PromiseBluebird, staticImplements, SYMBOL_CACHE } from '../index';
+import _NovelSite, { IChapter, PromiseBluebird, staticImplements, SYMBOL_CACHE, IVolume } from '../index';
 import path from 'upath2';
 
 import { normalize_val } from 'node-novel-globby/lib/helper';
@@ -27,7 +27,8 @@ export type IOptionsRuntime = _IOptionsRuntime & {
 }
 
 export type INovel = _INovel & {
-	novelTree?: NovelTree,
+	volume_list?: never,
+	novelTree: NovelTree,
 }
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()

@@ -51,7 +51,7 @@ export declare class NovelTree {
     static isChapter(node: IRowChapter): node is IRowChapter;
     protected _fixRow<U extends Node<IRowVolume | IRowChapter>>(node: U): U;
     protected _getRoot<U extends Node<IRowRoot | IRowVolume | IRowChapter>>(root: U): U;
-    toJSON(): Node<IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>> & {
+    toJSON(): Node<IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>> & {
         parent: string | number;
         children: any[];
     };
@@ -59,7 +59,7 @@ export declare class NovelTree {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
-        content: IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
+        content: IRowVolume<{}> | IRowRoot<{}> | IRowChapter<{}>;
     }[];
 }
 export default NovelTree;

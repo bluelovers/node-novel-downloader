@@ -367,6 +367,8 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 					;
 				}
 
+				let novel_cover = `https://cdn-static.kakuyomu.jp/works/${url_data.novel_id}/ogimage.png`;
+
 				return {
 
 					...data_meta,
@@ -375,6 +377,7 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 					url_data,
 
 					novel_title,
+					novel_cover,
 					novel_author,
 
 					novel_desc,

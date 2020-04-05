@@ -8,7 +8,8 @@ export declare type IOptionsRuntime = _IOptionsRuntime & {
     novelTree?: NovelTree;
 };
 export declare type INovel = _INovel & {
-    novelTree?: NovelTree;
+    volume_list?: never;
+    novelTree: NovelTree;
 };
 export declare class NovelSiteDemo extends _NovelSiteBase {
     getOutputDir<T extends IOptionsRuntime & IDownloadOptions>(options: T, novelName?: string): [string, T];
