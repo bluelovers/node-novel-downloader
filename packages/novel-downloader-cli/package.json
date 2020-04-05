@@ -54,8 +54,8 @@
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
   "dependencies": {
-    "@yarn-tool/is-npx": "^1.0.2",
-    "@yarn-tool/update-notifier": "^1.0.9",
+    "@yarn-tool/is-npx": "^1.0.3",
+    "@yarn-tool/update-notifier": "^1.0.10",
     "array-hyper-unique": "^1.1.0",
     "bluebird": "^3.7.2",
     "cross-spawn-extra": "^2.0.0",
@@ -65,15 +65,18 @@
     "node-alias": "^1.0.4",
     "node-novel-info": "^3.0.1",
     "novel-downloader": "^2.0.13",
-    "ts-type": "^1.2.13",
+    "ts-type": "^1.2.15",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.30",
     "@types/diff": "^4.0.2",
-    "@types/node": "^13.9.3",
+    "@types/node": "^13.11.0",
     "@types/update-notifier": "^4.1.0",
     "@types/yargs": "^15.0.4"
+  },
+  "engines": {
+    "node": ">= 13"
   },
   "gitHead": "2cae1343b29979515aed7e759559b6d77d8182da"
 }

@@ -23,7 +23,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@bluelovers/tsconfig": "^1.0.17"
+    "@bluelovers/tsconfig": "^1.0.19"
   },
   "devDependencies": {
     "@types/benchmark": "^1",
