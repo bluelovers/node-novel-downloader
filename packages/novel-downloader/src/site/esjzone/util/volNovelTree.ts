@@ -30,7 +30,7 @@ export function volNovelTree($: JQueryStatic, optionsRuntime: {
 						if (bool)
 						{
 							currentVolume = novelTree.addVolume({
-								volume_title: volume.volume_name,
+								volume_title: String(volume.volume_name),
 								volume_index: novelTree.root().size(),
 								total_idx: total_idx++,
 							});
