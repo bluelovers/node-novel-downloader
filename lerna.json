@@ -4,8 +4,27 @@
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["test", "**/test/**/*", "**/test/**", "**/test", "node_modules", "packages/novel-downloader/test", "packages/novel-downloader/test/**/*", "**/test/**/*.ts"],
-      "message": "chore(release): publish"
+      "ignoreChanges": [
+        "**/node_modules/**",
+        "**/__snapshots__/**",
+        "**/__fixtures__/**",
+        "**/test/**",
+        "**/__tests__/**",
+        "*.map",
+        "*.spec.*",
+        "*.test.*",
+        ".gitrepo"
+      ],
+      "message": "chore(release): publish",
+      "bump": "patch",
+      "conventionalCommits": true,
+      "conventionalGraduate": true
+    },
+    "run": {
+      "stream": true
+    },
+    "exec": {
+      "stream": true
     }
   },
   "npmClient": "yarn",
