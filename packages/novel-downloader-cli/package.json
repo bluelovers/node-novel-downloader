@@ -71,7 +71,7 @@
   "devDependencies": {
     "@types/bluebird": "^3.5.30",
     "@types/diff": "^4.0.2",
-    "@types/node": "^13.11.0",
+    "@types/node": "^13.13.4",
     "@types/update-notifier": "^4.1.0",
     "@types/yargs": "^15.0.4"
   },

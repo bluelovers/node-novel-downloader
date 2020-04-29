@@ -177,7 +177,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 		if (optionsRuntime.keepImage)
 		{
-			await _keepImageInContext(_imgs, $, {
+			await _keepImageInContext(_imgs as any, $, {
 				prefix: '挿絵',
 			});
 		}

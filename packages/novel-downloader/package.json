@@ -71,13 +71,13 @@
     "debug-color2": "^1.1.7",
     "decorator-utils": "^2.0.0",
     "env-bool": "^1.0.3",
-    "escape-string-regexp": "^2.0.0",
-    "esjzone-api": "^1.0.20",
+    "escape-string-regexp": "^4.0.0",
+    "esjzone-api": "^1.0.25",
     "fs-extra": "^9.0.0",
     "fs-iconv": "^2.0.10",
     "get-value": "^3.0.1",
     "hash-sum": "^2.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-tree-list2": "^1.1.19",
     "jsdom-extra": "^3.0.2",
     "jsdom-url": "^3.0.1",
@@ -106,8 +106,8 @@
     "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
     "@types/jest": "^25.2.1",
-    "@types/jquery": "^3.3.34",
-    "@types/jsdom": "^16.2.0",
+    "@types/jquery": "^3.3.36",
+    "@types/jsdom": "^16.2.1",
     "@types/moment-timezone": "^0.5.13",
     "@types/request": "^2.48.4",
     "@types/request-promise": "^4",
@@ -115,8 +115,8 @@
     "@types/shortid": "^0.0.29",
     "@types/tough-cookie": "^4.0.0",
     "bluebird-decorator": "^1",
-    "jest": "^25.2.7",
-    "ts-jest": "^25.3.1"
+    "jest": "^25.5.1",
+    "ts-jest": "^25.4.0"
   },
   "peerDependencies": {
     "request": "^2.88.2"
