@@ -92,3 +92,4 @@ jest.config.js.map
 *.spec.d.ts
 *.spec.js
 .nowignore
+/test/syosetu/
