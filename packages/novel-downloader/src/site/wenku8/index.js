@@ -19,7 +19,7 @@ const base_1 = __importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 const const_1 = require("node-novel-info/lib/const");
 const html_1 = require("../../util/html");
 const util_2 = require("./util");
@@ -176,7 +176,7 @@ let NovelSiteWenku8 = class NovelSiteWenku8 extends base_1.default {
                 .trim();
             let _content = dom.$('#content > div > table:eq(1)');
             let novel_cover = _content.find('img:eq(0)').prop('src');
-            let novel_desc = novel_text_1.default.trim(_content.find('.hottext + br + span:eq(-1)').text() || '', {
+            let novel_desc = layout_1.default.trim(_content.find('.hottext + br + span:eq(-1)').text() || '', {
                 trim: true,
             });
             let novel_status;

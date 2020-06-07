@@ -13,7 +13,7 @@ import { defaultSortCallback } from 'node-novel-globby/lib/sort';
 
 import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
-import novelText from 'novel-text';
+import novelText from '@node-novel/layout';
 //import { URL } from 'jsdom-url';
 
 import { SYMBOL_NODE } from 'js-tree-list2/src/utils';

@@ -19,7 +19,7 @@ const base_1 = __importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 let NovelSiteWebqxs = class NovelSiteWebqxs extends base_1.default {
     makeUrl(urlobj, bool, optionsRuntime) {
         let url;
@@ -101,7 +101,7 @@ let NovelSiteWebqxs = class NovelSiteWebqxs extends base_1.default {
                 if (tr.is('div.volume-z')) {
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
-                        volume_title: novel_text_1.default.trim(tr.text()),
+                        volume_title: layout_1.default.trim(tr.text()),
                         chapter_list: [],
                     };
                 }

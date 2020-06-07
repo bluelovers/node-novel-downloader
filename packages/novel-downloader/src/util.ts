@@ -3,7 +3,7 @@
  */
 
 import { toFullWidth } from 'str-util';
-import novelText from 'novel-text';
+import novelText from '@node-novel/layout';
 // @ts-ignore
 import { minifyHTML } from 'jsdom-extra/lib/html';
 import { array_unique } from 'array-hyper-unique';

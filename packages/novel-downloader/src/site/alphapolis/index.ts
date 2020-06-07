@@ -13,7 +13,7 @@ import NovelSiteBase from '../demo/base';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
-import novelText from 'novel-text';
+import novelText from '@node-novel/layout';
 import path from "path";
 import StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';

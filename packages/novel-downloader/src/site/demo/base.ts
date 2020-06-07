@@ -23,7 +23,7 @@ import _NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from 
 import { PromiseBluebird } from '../index';
 
 import parseContentType from 'content-type-parser';
-import novelText from 'novel-text';
+import novelText from '@node-novel/layout';
 import { LazyCookieJar } from 'jsdom-extra/lib/cookies';
 import { LazyCookie } from 'lazy-cookies';
 import { toughCookie } from 'jsdom-extra';

@@ -8,7 +8,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports._fixVolumeChapterName = exports.escapeRegexp = exports.trim = exports.isUndef = exports.array_unique = exports.minifyHTML = void 0;
 const str_util_1 = require("str-util");
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 // @ts-ignore
 const html_1 = require("jsdom-extra/lib/html");
 Object.defineProperty(exports, "minifyHTML", { enumerable: true, get: function () { return html_1.minifyHTML; } });
@@ -29,7 +29,7 @@ function isUndef(v, opts = null, strict) {
 }
 exports.isUndef = isUndef;
 function trim(str, bool) {
-    let t = novel_text_1.default.trim(str, {
+    let t = layout_1.default.trim(str, {
         trim: '　',
     });
     if (bool) {

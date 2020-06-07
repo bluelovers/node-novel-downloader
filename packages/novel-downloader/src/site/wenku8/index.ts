@@ -12,7 +12,7 @@ import NovelSiteBase from '../demo/base';
 import { fromURL, IFromUrlOptions, IJSDOM } from 'jsdom-extra';
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
-import novelText from 'novel-text';
+import novelText from '@node-novel/layout';
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { _keepImageInContext, _saveImageToAttach } from '../../util/html';
 import { parseUrl, makeUrl, check } from './util';

@@ -17,7 +17,7 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
 import * as NovelSiteDemo from '../demo/base';
-import novelText from 'novel-text';
+import novelText from '@node-novel/layout';
 
 import { console, consoleDebug } from '../../util/log';
 import { _keepImageInContext, keepFormatTag } from '../../util/html';

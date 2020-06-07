@@ -19,7 +19,7 @@ const util_1 = require("../../util");
 const index_1 = require("../index");
 const base_1 = __importDefault(require("../demo/base"));
 const index_2 = require("../index");
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 const path_1 = __importDefault(require("path"));
 const regexp_cjk_1 = require("regexp-cjk");
 const jsdom_extra_1 = require("jsdom-extra");
@@ -147,7 +147,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             table.forEach(function (volumeData) {
                 currentVolume = volume_list[volume_list.length] = {
                     volume_index: volume_list.length,
-                    volume_title: novel_text_1.default.trim(volumeData.volume_name),
+                    volume_title: layout_1.default.trim(volumeData.volume_name),
                     volume_is: volumeData.volume_id,
                     volume_order: volumeData.volume_order,
                     chapter_list: [],
@@ -163,7 +163,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
                         .chapter_list
                         .push({
                         chapter_index: currentVolume.chapter_list.length,
-                        chapter_title: novel_text_1.default.trim(chapterData.chapter_name),
+                        chapter_title: layout_1.default.trim(chapterData.chapter_name),
                         chapter_id: chapterData.chapter_id,
                         chapter_order: chapterData.chapter_order,
                         chapter_url,

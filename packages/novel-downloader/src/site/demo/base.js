@@ -46,7 +46,7 @@ const md_1 = require("@node-novel/layout-reporter/lib/md");
 const index_1 = __importStar(require("../index"));
 const index_2 = require("../index");
 const content_type_parser_1 = __importDefault(require("content-type-parser"));
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 const lazy_cookies_1 = require("lazy-cookies");
 const jsdom_extra_2 = require("jsdom-extra");
 const log_1 = require("../../util/log");
@@ -416,7 +416,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
         })
             .then(function (text) {
             if (typeof text == 'string') {
-                return novel_text_1.default.toStr(text);
+                return layout_1.default.toStr(text);
             }
             return text;
         });

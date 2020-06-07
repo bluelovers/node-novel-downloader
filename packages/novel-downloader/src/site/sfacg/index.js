@@ -19,7 +19,7 @@ const base_1 = __importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 const util_2 = require("./util");
 let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
     static check(url, ...argv) {
@@ -112,7 +112,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                 if (tr.is('.catalog-hd')) {
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
-                        volume_title: novel_text_1.default.trim(tr.find('.catalog-title').text()),
+                        volume_title: layout_1.default.trim(tr.find('.catalog-title').text()),
                         chapter_list: [],
                     };
                 }

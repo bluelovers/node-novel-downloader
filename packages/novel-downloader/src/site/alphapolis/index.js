@@ -19,7 +19,7 @@ const base_1 = __importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 const path_1 = __importDefault(require("path"));
 const util_2 = require("./util");
 let NovelSiteClass = class NovelSiteClass extends base_1.default {
@@ -81,7 +81,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                 // @ts-ignore
                 let tr = dom.$(this);
                 if (tr.is('h3')) {
-                    let title = novel_text_1.default.trim(util_1.trim(tr.text())) || 'null';
+                    let title = layout_1.default.trim(util_1.trim(tr.text())) || 'null';
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
                         volume_title: title,
@@ -89,7 +89,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                     };
                 }
                 else if (tr.is('.chapter-rental')) {
-                    let title = novel_text_1.default.trim(util_1.trim(tr.find('h3').text())) || 'null';
+                    let title = layout_1.default.trim(util_1.trim(tr.find('h3').text())) || 'null';
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
                         volume_title: title,

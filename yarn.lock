@@ -666,6 +666,17 @@
     string-natural-compare "^3.0.1"
     ts-type "^1.2.17"
 
+"@node-novel/layout@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/@node-novel/layout/-/layout-2.0.8.tgz#b49caf68d231995706d41969dc59d14b94f5ccbe"
+  integrity sha512-hEzkRSbOa/R8KkbCPo2nKybOR6IR+u+kNGwmM9q0+8SvsafRhxZWoIhDgIAu1FsW9KxA/78qvMfkXm1TSchmlg==
+  dependencies:
+    array-hyper-unique "^1.1.0"
+    blank-line "^1.0.1"
+    crlf-normalize "^1.0.3"
+    env-bool "^1.0.3"
+    str-util "^2.3.21"
+
 "@node-novel/normalize@^1.0.11":
   version "1.0.16"
   resolved "https://registry.npmjs.org/@node-novel/normalize/-/normalize-1.0.16.tgz#be22f9772ec18a515220d3d123d45c46cb68a62c"
@@ -4000,18 +4011,6 @@ normalize-url@^4.1.0:
   resolved "https://registry.npmjs.org/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
 
-novel-text@^1.1.27:
-  version "1.1.27"
-  resolved "https://registry.npmjs.org/novel-text/-/novel-text-1.1.27.tgz#16ee87e1ac6dda93c0459286d53c63b03c510697"
-  integrity sha512-7XmHMSr9DgLxmvbKzznGbfosKHqBMPbYJ5tU+P2EtVkyhfDXc+fMEBXAK1PEwFUL/kxdI2jXfAWqHdIW4t93nA==
-  dependencies:
-    "@lazy-cjk/novel-filename" "^1.0.9"
-    blank-line "^1.0.1"
-    crlf-normalize "^1.0.3"
-    env-bool "^1.0.3"
-    str-util "^2.3.21"
-    tieba-harmony "^2.0.2"
-
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "https://registry.npmjs.org/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
@@ -5143,16 +5142,6 @@ throat@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/throat/-/throat-5.0.0.tgz#c5199235803aad18754a667d659b5e72ce16764b"
   integrity sha512-fcwX4mndzpLQKBS1DVYhGAcYaYt7vsHNIvQV+WXMvnow5cgjPphq5CaayLaGsjRdSCKZFNGt7/GYAuXaNOiYCA==
-
-tieba-harmony@^2.0.2:
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/tieba-harmony/-/tieba-harmony-2.0.7.tgz#8fd23e6866f1f5744e97f8abc19a6c8b27663ea3"
-  integrity sha512-eyxMbWpheSlD5J5KCKtyOcSREDlSVAytMWTXu6lopXAhPMVdrq3/gy4wO2Xwe6cXtutq03lmFAOcDHSm4j4HTQ==
-  dependencies:
-    "@lazy-cjk/zh-table-list" "^1.0.20"
-    array-hyper-unique "^1.1.2"
-    regexp-cjk "^3.3.46"
-    uni-string "^1.1.7"
 
 tmpl@1.0.x:
   version "1.0.4"

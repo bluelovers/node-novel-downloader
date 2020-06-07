@@ -39,7 +39,7 @@ const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
 const NovelSiteDemo = __importStar(require("../demo/base"));
-const novel_text_1 = __importDefault(require("novel-text"));
+const layout_1 = __importDefault(require("@node-novel/layout"));
 const log_1 = require("../../util/log");
 const html_1 = require("../../util/html");
 const mitemin_1 = require("mitemin");
@@ -348,7 +348,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             .then(async function (dom) {
             log_1.consoleDebug.info(`開始處理小說資訊以及章節列表`);
             let novel_title = dom.$('.novel_title').text();
-            let novel_author = novel_text_1.default.trim(dom
+            let novel_author = layout_1.default.trim(dom
                 .$('.novel_writername a, .novel_writername')
                 .eq(-1)
                 .text())
