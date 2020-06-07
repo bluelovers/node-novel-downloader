@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.20](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.19...novel-downloader@2.0.20) (2020-06-07)
+
+
+### Features
+
+* replace `novel-text` to ``@node-novel/layout` ([de6681d](https://github.com/bluelovers/node-novel-downloader/commit/de6681d867dcf0918591b16286df1165bbb63b28))
+
+
+
+
+
 ## [2.0.19](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.17...novel-downloader@2.0.19) (2020-06-07)
 
 

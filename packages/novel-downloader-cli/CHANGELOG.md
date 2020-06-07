@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.49](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader-cli@1.0.48...novel-downloader-cli@1.0.49) (2020-06-07)
+
+**Note:** Version bump only for package novel-downloader-cli
+
+
+
+
+
 ## [1.0.48](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader-cli@1.0.46...novel-downloader-cli@1.0.48) (2020-06-07)
 
 
