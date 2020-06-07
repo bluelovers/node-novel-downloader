@@ -15,30 +15,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteDemo = void 0;
 const index_1 = require("../index");
 const base_1 = __importDefault(require("./base"));
-let NovelSiteDemo = /** @class */ (() => {
-    let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
-        makeUrl(urlobj, ...argv) {
-            throw new SyntaxError(`Function not implemented`);
+let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
+    makeUrl(urlobj, ...argv) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    parseUrl(url, ...argv) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+    _parseChapter(ret, optionsRuntime, _cache_) {
+        if (!ret) {
+            return '';
         }
-        parseUrl(url, ...argv) {
-            throw new SyntaxError(`Function not implemented`);
-        }
-        _parseChapter(ret, optionsRuntime, _cache_) {
-            if (!ret) {
-                return '';
-            }
-            throw new SyntaxError(`Function not implemented`);
-        }
-        async get_volume_list(url, optionsRuntime = {}) {
-            throw new SyntaxError(`Function not implemented`);
-        }
-    };
-    NovelSiteDemo.IDKEY = '';
-    NovelSiteDemo = __decorate([
-        index_1.staticImplements()
-    ], NovelSiteDemo);
-    return NovelSiteDemo;
-})();
+        throw new SyntaxError(`Function not implemented`);
+    }
+    async get_volume_list(url, optionsRuntime = {}) {
+        throw new SyntaxError(`Function not implemented`);
+    }
+};
+NovelSiteDemo.IDKEY = '';
+NovelSiteDemo = __decorate([
+    index_1.staticImplements()
+], NovelSiteDemo);
 exports.NovelSiteDemo = NovelSiteDemo;
 exports.default = NovelSiteDemo;
 //# sourceMappingURL=demo.js.map

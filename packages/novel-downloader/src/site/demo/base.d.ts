@@ -37,12 +37,12 @@ export declare class NovelSiteDemo extends _NovelSite {
     protected _outputAttach<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;
         path_novel: string;
-    }, ...argv: any[]): Promise<void | _NovelSite.IVolume[] | {
+    }, ...argv: any[]): Promise<void | {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
         content: import("../../tree").IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
-    }[]>;
+    }[] | _NovelSite.IVolume[]>;
     protected _processNovel<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;
         path_novel: string;
