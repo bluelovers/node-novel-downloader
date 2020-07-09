@@ -56,17 +56,17 @@
   "dependencies": {
     "@yarn-tool/is-npx": "^1.0.4",
     "@yarn-tool/update-notifier": "^1.0.13",
-    "array-hyper-unique": "^1.1.8",
+    "array-hyper-unique": "^1.1.9",
     "bluebird": "^3.7.2",
     "cross-spawn-extra": "^2.1.0",
     "debug-color2": "^1.2.3",
     "diff": "^4.0.2",
     "moment": "^2.27.0",
     "node-alias": "^1.0.4",
-    "node-novel-info": "^3.0.7",
+    "node-novel-info": "^3.0.9",
     "novel-downloader": "^2.0.23",
-    "ts-type": "^1.2.23",
-    "yargs": "^15.3.1"
+    "ts-type": "^1.2.24",
+    "yargs": "^15.4.0"
   },
   "engines": {
     "node": ">= 13"
