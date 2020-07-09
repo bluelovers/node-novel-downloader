@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.24](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.23...novel-downloader@2.0.24) (2020-07-09)
+
+
+### ♻️　Chores
+
+* update deps ([b30fe9b](https://github.com/bluelovers/node-novel-downloader/commit/b30fe9b490f4e97ebdf7decbe11ae99bf33270f8))
+
+
+
+
+
 ## [2.0.23](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.22...novel-downloader@2.0.23) (2020-06-24)
 
 
