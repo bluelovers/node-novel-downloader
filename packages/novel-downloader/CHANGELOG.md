@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.26](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.25...novel-downloader@2.0.26) (2020-08-13)
+
+
+### 🔖　Miscellaneous
+
+* . ([f385979](https://github.com/bluelovers/node-novel-downloader/commit/f3859790107781b88a6779fc532b6dfd87235cd0))
+* . ([e4c4fe8](https://github.com/bluelovers/node-novel-downloader/commit/e4c4fe85aef758c728b8c27a4475f528b22db0ee))
+
+
+
+
+
 ## [2.0.25](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.24...novel-downloader@2.0.25) (2020-08-03)
 
 
