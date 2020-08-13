@@ -15,11 +15,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lerna:publish": "lerna publish --yes --cd-version patch",
+    "preversion": "yarn run prepublish:lockfile",
     "prepublish:lockfile": "ynpx sync-lockfile",
-    "prepublishOnly": "yarn run prepublish:lockfile",
     "check-updates": "npx yarn-tool ncu -u",
-    "do-init": "npm run check-updates && npm run do-install",
     "do-install": "npx yarn-tool install",
+    "do-init": "npm run check-updates && npm run do-install",
     "ncu": "npx yarn-tool ncu -u && npx yarn-tool ws exec yarn-tool ncu -- -u",
     "sort-package-json": "npx yarn-tool sort && npx yarn-tool ws exec yarn-tool sort"
   },
@@ -40,20 +40,20 @@
     "@types/fs-extra": "^9.0.1",
     "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
-    "@types/jest": "^26.0.8",
+    "@types/jest": "^26.0.9",
     "@types/jquery": "^3.5.1",
     "@types/jsdom": "^16.2.3",
     "@types/mocha": "^8",
-    "@types/moment-timezone": "^0.5.13",
+    "@types/moment-timezone": "^0.5.30",
     "@types/node": "^14.0.27",
     "@types/request": "^2.48.5",
     "@types/request-promise": "^4",
     "@types/set-value": "^2.0.0",
     "@types/shortid": "^0.0.29",
     "@types/tough-cookie": "^4.0.0",
-    "@types/update-notifier": "^4.1.0",
+    "@types/update-notifier": "^4.1.1",
     "@types/yargs": "^15.0.5",
-    "jest": "^26.2.2",
-    "ts-jest": "^26.1.4"
+    "jest": "^26.4.0",
+    "ts-jest": "^26.2.0"
   }
 }
