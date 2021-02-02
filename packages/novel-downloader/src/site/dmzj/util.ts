@@ -10,21 +10,24 @@ export function makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean | number, .
 {
 	let url: string;
 
+	//const api_url = 'http://v2.api.dmzj.com';
+	const api_url = 'http://nnv3api.dmzj1.com';
+
 	if (bool === 2 && urlobj.novel_id)
 	{
 		url = `http://q.dmzj.com/${urlobj.novel_id}/index.shtml`;
 	}
 	else if (!bool && urlobj.volume_id && urlobj.chapter_id)
 	{
-		url = `http://v2.api.dmzj.com/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
+		url = `${api_url}/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
 	}
 	else if (bool === true && urlobj.novel_id)
 	{
-		url = `http://v2.api.dmzj.com/novel/chapter/${urlobj.novel_id}.json`;
+		url = `${api_url}/novel/chapter/${urlobj.novel_id}.json`;
 	}
 	else
 	{
-		url = `http://v2.api.dmzj.com/novel/${urlobj.novel_id}.json`;
+		url = `${api_url}/novel/${urlobj.novel_id}.json`;
 	}
 
 	return createURL(url);
@@ -37,7 +40,7 @@ export function parseUrl(_url: string | URL | number, ...argv)
 	let r: RegExp;
 	let m: RegExpExecArray;
 
-	r = /api\.dmzj\.com\/novel\/(\d+).json/;
+	r = /(?:api\.dmzj\.com|nnv3api\.dmzj\d\.com)\/novel\/(\d+).json/;
 	if (m = r.exec(url))
 	{
 		urlobj.novel_id = m[1];
@@ -53,7 +56,7 @@ export function parseUrl(_url: string | URL | number, ...argv)
 		return urlobj;
 	}
 
-	r = /api\.dmzj\.com\/novel\/chapter\/(\d+).json/;
+	r = /(?:api\.dmzj\.com|nnv3api\.dmzj\d\.com)\/novel\/chapter\/(\d+).json/;
 	if (m = r.exec(url as string))
 	{
 		urlobj.novel_id = m[1];
@@ -61,7 +64,7 @@ export function parseUrl(_url: string | URL | number, ...argv)
 		return urlobj;
 	}
 
-	r = /api\.dmzj\.com\/novel\/download\/(\d+)_(\d+)_(\d+).txt/;
+	r = /(?:api\.dmzj\.com|nnv3api\.dmzj\d\.com)\/novel\/download\/(\d+)_(\d+)_(\d+).txt/;
 	if (m = r.exec(url as string))
 	{
 		urlobj.novel_id = m[1];
