@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.27](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.26...novel-downloader@2.0.27) (2021-02-04)
+
+
+### 🐛　Bug Fixes
+
+* {v2.api.dmzj.com -> nnv3api.dmzj1.com} by [@copyliu](https://github.com/copyliu) ([dfce9b5](https://github.com/bluelovers/node-novel-downloader/commit/dfce9b577bdf4bea3dc793b515d19684762de38c))
+
+
+### ♻️　Chores
+
+* **deps:** update deps ([a902057](https://github.com/bluelovers/node-novel-downloader/commit/a90205702228ae45cd7a4bfe3ae19544ad023ee8))
+
+
+
+
+
 ## [2.0.26](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.25...novel-downloader@2.0.26) (2020-08-13)
 
 
