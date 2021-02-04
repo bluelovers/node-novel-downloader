@@ -27,17 +27,19 @@ function check(url, options) {
 exports.check = check;
 function makeUrl(urlobj, bool, ...argv) {
     let url;
+    //const api_url = 'http://v2.api.dmzj.com';
+    const api_url = 'http://nnv3api.dmzj1.com';
     if (bool === 2 && urlobj.novel_id) {
         url = `http://q.dmzj.com/${urlobj.novel_id}/index.shtml`;
     }
     else if (!bool && urlobj.volume_id && urlobj.chapter_id) {
-        url = `http://v2.api.dmzj.com/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
+        url = `${api_url}/novel/download/${urlobj.novel_id}_${urlobj.volume_id}_${urlobj.chapter_id}.txt`;
     }
     else if (bool === true && urlobj.novel_id) {
-        url = `http://v2.api.dmzj.com/novel/chapter/${urlobj.novel_id}.json`;
+        url = `${api_url}/novel/chapter/${urlobj.novel_id}.json`;
     }
     else {
-        url = `http://v2.api.dmzj.com/novel/${urlobj.novel_id}.json`;
+        url = `${api_url}/novel/${urlobj.novel_id}.json`;
     }
     return url_1.default(url);
 }
@@ -46,7 +48,7 @@ function parseUrl(_url, ...argv) {
     const { urlobj, url } = url_1._handleParseURL(_url, ...argv);
     let r;
     let m;
-    r = /api\.dmzj\.com\/novel\/(\d+).json/;
+    r = /(?:api\.dmzj\.com|nnv3api\.dmzj\d\.com)\/novel\/(\d+).json/;
     if (m = r.exec(url)) {
         urlobj.novel_id = m[1];
         return urlobj;
@@ -56,12 +58,12 @@ function parseUrl(_url, ...argv) {
         urlobj.novel_id = m[1];
         return urlobj;
     }
-    r = /api\.dmzj\.com\/novel\/chapter\/(\d+).json/;
+    r = /(?:api\.dmzj\.com|nnv3api\.dmzj\d\.com)\/novel\/chapter\/(\d+).json/;
     if (m = r.exec(url)) {
         urlobj.novel_id = m[1];
         return urlobj;
     }
-    r = /api\.dmzj\.com\/novel\/download\/(\d+)_(\d+)_(\d+).txt/;
+    r = /(?:api\.dmzj\.com|nnv3api\.dmzj\d\.com)\/novel\/download\/(\d+)_(\d+)_(\d+).txt/;
     if (m = r.exec(url)) {
         urlobj.novel_id = m[1];
         urlobj.volume_id = m[2];

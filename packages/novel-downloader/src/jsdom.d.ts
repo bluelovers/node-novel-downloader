@@ -13,7 +13,9 @@ export declare type INovelOptionsJSDOM = IFromUrlOptions & IOptionsJSDOM;
 export declare const defaultJSDOMOptions: IFromUrlOptions;
 export declare function createOptionsJSDOM<T = INovelOptionsJSDOM>(options?: Partial<T & INovelOptionsJSDOM>, ...opts: INovelOptionsJSDOM[]): Partial<T & INovelOptionsJSDOM>;
 export declare function getOptions(options: any): {
-    options: Partial<IOptionsJSDOM>;
+    options: Partial<IOptionsCreateQuery<Partial<JQueryStatic>, any, _jsdom> & IOptions & {
+        minifyHTML?: boolean;
+    } & import("@jsdom-extra/resource-loader").IOptionsWithWindowOptionsWithResourceLoader>;
     fromURLOptions: Partial<IOptionsCreateQuery<Partial<JQueryStatic>, any, _jsdom> & IOptions & {
         minifyHTML?: boolean;
     } & import("@jsdom-extra/resource-loader").IOptionsWithWindowOptionsWithResourceLoader & IFromUrlOptions>;

@@ -10,7 +10,7 @@ import { PromiseBluebird } from '../index';
 export declare class NovelSiteDmzj extends NovelSite {
     static disabled: boolean;
     static IDKEY: string;
-    _makeUrl(urlobj: NovelSite.IParseUrl, page?: any): string;
+    _makeUrl(urlobj: NovelSite.IParseUrl, page?: any): `http://q.dmzj.com/${any}/index.shtml` | `http://q.dmzj.com/${any}/${any}/${any}.txt` | `http://q.dmzj.com/${any}/${any}/${any}${string}.shtml`;
     makeUrl(urlobj: NovelSite.IParseUrl, bool?: number): URL;
     parseUrl(url: string | URL): NovelSite.IParseUrl;
     download(url: string | URL, downloadOptions?: NovelSite.IDownloadOptions): PromiseBluebird<{

@@ -24,7 +24,7 @@
     "sort-package-json": "npx yarn-tool sort && npx yarn-tool ws exec yarn-tool sort"
   },
   "resolutions": {
-    "@types/node": "^12",
+    "@types/node": "^14",
     "tough-cookie": "^3"
   },
   "dependencies": {
@@ -32,28 +32,28 @@
   },
   "devDependencies": {
     "@bluelovers/fast-glob": "^3.0.4",
-    "@types/benchmark": "^1",
-    "@types/bluebird": "^3.5.32",
+    "@types/benchmark": "^2",
+    "@types/bluebird": "^3.5.33",
     "@types/chai": "^4",
     "@types/cross-spawn": "^6",
-    "@types/diff": "^4.0.2",
-    "@types/fs-extra": "^9.0.1",
+    "@types/diff": "^5.0.0",
+    "@types/fs-extra": "^9.0.6",
     "@types/get-value": "^3.0.1",
     "@types/hash-sum": "^1.0.0",
-    "@types/jest": "^26.0.9",
-    "@types/jquery": "^3.5.1",
-    "@types/jsdom": "^16.2.3",
+    "@types/jest": "^26.0.20",
+    "@types/jquery": "^3.5.5",
+    "@types/jsdom": "^16.2.6",
     "@types/mocha": "^8",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^14.0.27",
+    "@types/node": "^14.14.25",
     "@types/request": "^2.48.5",
     "@types/request-promise": "^4",
     "@types/set-value": "^2.0.0",
     "@types/shortid": "^0.0.29",
     "@types/tough-cookie": "^4.0.0",
-    "@types/update-notifier": "^4.1.1",
-    "@types/yargs": "^15.0.5",
-    "jest": "^26.4.0",
-    "ts-jest": "^26.2.0"
+    "@types/update-notifier": "^5.0.0",
+    "@types/yargs": "^16.0.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.0"
   }
 }

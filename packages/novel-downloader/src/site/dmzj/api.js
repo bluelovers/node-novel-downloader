@@ -189,6 +189,7 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             .tap(function (novel) {
             console.dir(novel, {
                 colors: true,
+                //depth: 3,
             });
         });
     }

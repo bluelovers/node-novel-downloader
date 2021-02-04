@@ -66,7 +66,7 @@ export declare class NovelSiteClass extends NovelSiteBase {
             wenku8?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
             webqxs?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
             syosetu?: import("node-novel-info").IMdconfMetaOptionsNovelSite & {
-                txtdownload_id: string | number;
+                txtdownload_id: import("node-novel-info").INumber;
             };
             novel?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
                 pattern?: string;

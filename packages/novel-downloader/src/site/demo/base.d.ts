@@ -52,7 +52,7 @@ export declare class NovelSiteDemo extends _NovelSite {
         path_novel: string;
     }, ...argv: any[]): PromiseBluebird<{
         novel: _NovelSite.INovel;
-        optionsRuntime: _NovelSite.IOptionsRuntime;
+        optionsRuntime: IOptionsRuntime;
         _cache_: {
             url: URL;
             path_novel: string;
