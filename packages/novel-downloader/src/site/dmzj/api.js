@@ -2,11 +2,30 @@
 /**
  * Created by user on 2018/3/25/025.
  */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -19,13 +38,34 @@ const util_1 = require("../../util");
 const index_1 = require("../index");
 const base_1 = __importDefault(require("../demo/base"));
 const index_2 = require("../index");
-const layout_1 = __importDefault(require("@node-novel/layout"));
 const path_1 = __importDefault(require("path"));
 const regexp_cjk_1 = require("regexp-cjk");
 const jsdom_extra_1 = require("jsdom-extra");
 const html_1 = require("../../util/html");
 const util_2 = require("./util");
 //import escapeStringRegexp from 'escape-string-regexp';
+const crypto_1 = __importDefault(require("crypto"));
+const protobuf = __importStar(require("protobufjs"));
+const rsa_key = "MIICXgIBAAKBgQCvJzUdZU5yHyHrOqEViTY95gejrLAxsdLhjKYKW1QqX+vlcJ7iNrLZoWTaEHDONeyM+1qpT821JrvUeHRCpixhBKjoTnVWnofV5NiDz46iLuU25C2UcZGN3STNYbW8+e3f66HrCS5GV6rLHxuRCWrjXPkXAAU3y2+CIhY0jJU7JwIDAQABAoGBAIs/6YtoSjiSpb3Ey+I6RyRo5/PpS98GV/i3gB5Fw6E4x2uO4NJJ2GELXgm7/mMDHgBrqQVoi8uUcsoVxaBjSm25737TGCueoR/oqsY7Qy540gylp4XAe9PPbDSmhDPSJYpersVjKzDAR/b9jy3WLKjAR6j7rSrv0ooHhj3oge1RAkEA4s1ZTb+u4KPfUACL9p/4GuHtMC4s1bmjQVxPPAHTp2mdCzk3p4lRKrz7YFJOt8245dD/6c0M8o4rcHuh6AgCKQJBAMWzrZwptbihKeR7DWlxCU8BO1kH+z6yw+PgaRrTSpII2un+heJXeEGdk0Oqr7Aos0hia4zqTXY1Rie24GDHHM8CQQC7yVjy5g4u06BXxkwdBLDR2VShOupGf/Ercfns7npHuEueel6Zajn5UAY2549j4oMATf9Gn0/kGVDgTo1s6AyZAkApc6PqA0DLxlbPRhGo0v99pid4YlkGa1rxM4M2Eakn911XBHuz2l0nfM98t5QAnngArEoakKHPMBpWh1yCTh03AkEAmcOddu2RrPGQ00q6IKx+9ysPx71+ecBgHoqymHL9vHmrr3ghu4shUdDxQfz/xA2Z8m/on78hBZbnD1CNPmPOxQ==";
+const key = crypto_1.default.createPrivateKey({
+    key: Buffer.from(rsa_key, "base64"),
+    format: "der",
+    type: "pkcs1",
+});
+const block_size = 1024 / 8;
+const root = protobuf.Root.fromJSON(require("./dmzjproto.json"));
+function decrypt(key, input) {
+    const block_count = input.length;
+    const blocks = [];
+    let i = 0;
+    while (i < block_count) {
+        blocks.push(input.slice(i, i += block_size));
+    }
+    return Buffer.concat(blocks.map(p => crypto_1.default.privateDecrypt({
+        key: key,
+        padding: crypto_1.default.constants.RSA_PKCS1_PADDING
+    }, p)));
+}
 let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
     static check(url, ...argv) {
         return util_2.check(url, ...argv);
@@ -133,58 +173,31 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         // @ts-ignore
         return fetch_1.retryRequest(url, optionsRuntime.requestOptions)
             .then(async function (dom) {
-            const $ = dom.$;
-            dom = JSON.parse(dom);
-            let data_meta = await self._get_meta(url, optionsRuntime, {
+            const novel_meta = await self._get_meta(url, optionsRuntime, {
                 dom,
             });
-            url = data_meta.url;
-            let url_data = data_meta.url_data;
-            let _cache_dates = [];
-            let volume_list = [];
-            let currentVolume;
-            let table = dom;
-            table.forEach(function (volumeData) {
-                currentVolume = volume_list[volume_list.length] = {
-                    volume_index: volume_list.length,
-                    volume_title: layout_1.default.trim(volumeData.volume_name),
-                    volume_is: volumeData.volume_id,
-                    volume_order: volumeData.volume_order,
-                    chapter_list: [],
+            const buffer = Buffer.from(dom, "base64");
+            const decrypted = decrypt(key, buffer);
+            const response_type = root.lookupType("NovelChapterResponse");
+            const result = response_type.decode(decrypted);
+            const apiresult = result.Data.map((v) => {
+                return {
+                    id: v.VolumeId,
+                    chapter_list: v.Chapters.map((c) => {
+                        return {
+                            chapter_id: c.ChapterId,
+                            chapter_title: c.ChapterName,
+                            chapter_index: c.ChapterOrder,
+                            chapter_url: new util_2.TxturlCreator(v.VolumeId, c.ChapterId)
+                        };
+                    }),
+                    volume_id: v.VolumeId,
+                    volume_title: v.VolumeName,
+                    volume_index: v.VolumeOrder
                 };
-                volumeData.chapters.forEach(function (chapterData) {
-                    let chapter_url = self.makeUrl({
-                        chapter_id: chapterData.chapter_id,
-                        novel_id: data_meta.novel_id,
-                        volume_id: volumeData.volume_id,
-                    });
-                    let chapter_url_data = self.parseUrl(chapter_url);
-                    currentVolume
-                        .chapter_list
-                        .push({
-                        chapter_index: currentVolume.chapter_list.length,
-                        chapter_title: layout_1.default.trim(chapterData.chapter_name),
-                        chapter_id: chapterData.chapter_id,
-                        chapter_order: chapterData.chapter_order,
-                        chapter_url,
-                        chapter_url_data,
-                    });
-                });
             });
-            let novel_date;
-            if (_cache_dates.length) {
-                _cache_dates.sort();
-                novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
-            }
-            return {
-                url,
-                url_data,
-                ...data_meta,
-                volume_list,
-                //novel_date,
-                checkdate: index_2.moment().local(),
-                imgs: [],
-            };
+            novel_meta.volume_list = apiresult;
+            return novel_meta;
         })
             .tap(function (novel) {
             console.dir(novel, {
@@ -201,40 +214,30 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             //return fromURL(url, optionsRuntime.optionsJSDOM)
             //return Promise.resolve(cache.dom)
             .then(function (domJson) {
-            domJson = JSON.parse(domJson);
-            let data = {};
-            data.novel = {};
-            data.novel.tags = [];
-            let novel_title = domJson.name;
-            let novel_author = domJson.authors;
-            domJson.types = domJson.types || [];
-            domJson.types.forEach(function (s) {
-                data.novel.tags.push(...s.split('\/'));
-            });
-            data.novel.tags.push(domJson.zone);
-            //data.novel.tags.push(domJson.status);
-            data.novel.status = domJson.status;
-            let novel_cover = domJson.cover;
-            let novel_desc = domJson.introduction;
-            let novel_id = domJson.id;
-            let novel_date = index_2.moment.unix(domJson.last_update_time).local();
-            //console.log(domJson);
-            let dmzj_api_json = domJson;
-            let novel_url = self.makeUrl(url_data, 2);
+            const buffer = Buffer.from(domJson, "base64");
+            const decrypted = decrypt(key, buffer);
+            const response_type = root.lookupType("NovelDetailResponse");
+            const result = response_type.decode(decrypted);
+            const vol_list = [];
+            // (<Array<any>>result.Data.Volume).map(v=>{
+            // 	return <IVolume>{
+            // 		chapter_list:[],
+            // 		imgs:[],
+            // 		volume_index:v.VolumeOrder,
+            // 		volume_title:v.VolumeName,
+            // 		id: v.VolumeId,
+            // 		volume_id: v.VolumeId,
+            // 	}
+            // })
             return {
-                url: novel_url,
-                url_data: self.parseUrl(novel_url),
-                url_api: url,
-                url_data_api: url_data,
-                ...data,
-                novel_url,
-                novel_id,
-                novel_title,
-                novel_cover,
-                novel_author,
-                novel_desc,
-                novel_date,
-                dmzj_api_json,
+                url,
+                url_data: util_2.parseUrl(url),
+                novel_author: result.Data.Authors,
+                novel_cover: result.Data.Cover,
+                novel_date: index_2.moment(+result.Data.LastUpdateTime),
+                novel_desc: result.Data.Introduction,
+                novel_title: result.Data.Name,
+                volume_list: vol_list
             };
         });
     }

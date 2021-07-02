@@ -443,7 +443,7 @@ export class NovelSite implements NovelSite.INovelSite
 		chapter: NovelSite.IChapter,
 	}, optionsRuntime?: T & IOptionsRuntime)
 	{
-		return createURL(chapter.chapter_url);
+		return createURL(chapter.chapter_url.toString());
 	}
 
 	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {

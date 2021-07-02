@@ -1,0 +1,188 @@
+{
+  "nested": {
+    "dmzj": {
+      "nested": {
+        "novel": {
+          "nested": {
+            "NovelChapterResponse": {
+              "fields": {
+                "Errno": {
+                  "type": "int32",
+                  "id": 1
+                },
+                "Errmsg": {
+                  "type": "string",
+                  "id": 2
+                },
+                "Data": {
+                  "rule": "repeated",
+                  "type": "NovelChapterVolumeResponse",
+                  "id": 3
+                }
+              }
+            },
+            "NovelChapterVolumeResponse": {
+              "fields": {
+                "VolumeId": {
+                  "type": "int32",
+                  "id": 1
+                },
+                "VolumeName": {
+                  "type": "string",
+                  "id": 2
+                },
+                "VolumeOrder": {
+                  "type": "int32",
+                  "id": 3
+                },
+                "Chapters": {
+                  "rule": "repeated",
+                  "type": "NovelChapterItemResponse",
+                  "id": 4
+                }
+              }
+            },
+            "NovelChapterItemResponse": {
+              "fields": {
+                "ChapterId": {
+                  "type": "int32",
+                  "id": 1
+                },
+                "ChapterName": {
+                  "type": "string",
+                  "id": 2
+                },
+                "ChapterOrder": {
+                  "type": "int32",
+                  "id": 3
+                }
+              }
+            },
+            "NovelDetailResponse": {
+              "fields": {
+                "Errno": {
+                  "type": "int32",
+                  "id": 1
+                },
+                "Errmsg": {
+                  "type": "string",
+                  "id": 2
+                },
+                "Data": {
+                  "type": "NovelDetailInfoResponse",
+                  "id": 3
+                }
+              }
+            },
+            "NovelDetailInfoResponse": {
+              "fields": {
+                "NovelId": {
+                  "type": "int32",
+                  "id": 1
+                },
+                "Name": {
+                  "type": "string",
+                  "id": 2
+                },
+                "Zone": {
+                  "type": "string",
+                  "id": 3
+                },
+                "Status": {
+                  "type": "string",
+                  "id": 4
+                },
+                "LastUpdateVolumeName": {
+                  "type": "string",
+                  "id": 5
+                },
+                "LastUpdateChapterName": {
+                  "type": "string",
+                  "id": 6
+                },
+                "LastUpdateVolumeId": {
+                  "type": "int32",
+                  "id": 7
+                },
+                "LastUpdateChapterId": {
+                  "type": "int32",
+                  "id": 8
+                },
+                "LastUpdateTime": {
+                  "type": "int64",
+                  "id": 9
+                },
+                "Cover": {
+                  "type": "string",
+                  "id": 10
+                },
+                "HotHits": {
+                  "type": "int32",
+                  "id": 11
+                },
+                "Introduction": {
+                  "type": "string",
+                  "id": 12
+                },
+                "Types": {
+                  "rule": "repeated",
+                  "type": "string",
+                  "id": 13
+                },
+                "Authors": {
+                  "type": "string",
+                  "id": 14
+                },
+                "FirstLetter": {
+                  "type": "string",
+                  "id": 15
+                },
+                "SubscribeNum": {
+                  "type": "int32",
+                  "id": 16
+                },
+                "RedisUpdateTime": {
+                  "type": "int64",
+                  "id": 17
+                },
+                "Volume": {
+                  "rule": "repeated",
+                  "type": "NovelDetailInfoVolumeResponse",
+                  "id": 18
+                }
+              }
+            },
+            "NovelDetailInfoVolumeResponse": {
+              "fields": {
+                "VolumeId": {
+                  "type": "int32",
+                  "id": 1
+                },
+                "LnovelId": {
+                  "type": "int32",
+                  "id": 2
+                },
+                "VolumeName": {
+                  "type": "string",
+                  "id": 3
+                },
+                "VolumeOrder": {
+                  "type": "int32",
+                  "id": 4
+                },
+                "Addtime": {
+                  "type": "int64",
+                  "id": 5
+                },
+                "SumChapters": {
+                  "type": "int32",
+                  "id": 6
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

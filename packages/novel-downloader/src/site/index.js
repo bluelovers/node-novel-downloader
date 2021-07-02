@@ -291,7 +291,7 @@ class NovelSite {
         return this.makeUrl(data, true, optionsRuntime);
     }
     _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
-        return url_1.default(chapter.chapter_url);
+        return url_1.default(chapter.chapter_url.toString());
     }
     _fetchChapter(url, optionsRuntime, _cache_) {
         throw new SyntaxError(`Function not implemented`);
