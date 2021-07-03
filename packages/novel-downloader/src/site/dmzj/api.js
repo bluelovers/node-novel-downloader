@@ -170,6 +170,18 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             .then(function (domJson) {
             const decrypted = (0, v4_1.decryptBase64V4)(domJson);
             const result = (0, protobuf_1.lookupTypeNovelDetailResponse)().decode(decrypted);
+            let data = {};
+            data.novel = {};
+            data.novel.tags = [];
+            console.dir(result, {
+                depth: null
+            });
+            data.novel.status = result.Data.Status;
+            result.Data.Types = result.Data.Types || [];
+            result.Data.Types.forEach(function (s) {
+                data.novel.tags.push(...s.split('\/'));
+            });
+            data.novel.tags.push(result.Data.Zone);
             const vol_list = [];
             // (<Array<any>>result.Data.Volume).map(v=>{
             // 	return <IVolume>{
@@ -181,12 +193,14 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             // 		volume_id: v.VolumeId,
             // 	}
             // })
+            let novel_date = index_1.moment.unix((0, protobuf_1.protoLongToNumber)(result.Data.LastUpdateTime)).local();
             return {
+                ...data,
                 url,
                 url_data: (0, util_2.parseUrl)(url),
                 novel_author: result.Data.Authors,
                 novel_cover: result.Data.Cover,
-                novel_date: (0, index_1.moment)(+result.Data.LastUpdateTime),
+                novel_date,
                 novel_desc: result.Data.Introduction,
                 novel_title: result.Data.Name,
                 volume_list: vol_list

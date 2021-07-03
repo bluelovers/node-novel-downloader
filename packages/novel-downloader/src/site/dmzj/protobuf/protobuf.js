@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.lookupTypeNovelDetailResponse = exports.lookupTypeNovelChapterResponse = exports.lookupTypeRoot = exports._lookupType = exports.EnumResponseTypeKey = void 0;
+exports.protoLongToMilliseconds = exports.protoLongToNumber = exports.lookupTypeNovelDetailResponse = exports.lookupTypeNovelChapterResponse = exports.lookupTypeRoot = exports._lookupType = exports.EnumResponseTypeKey = void 0;
 const tslib_1 = require("tslib");
 const protobufjs_1 = (0, tslib_1.__importDefault)(require("protobufjs"));
 const dmzjproto_json_1 = (0, tslib_1.__importDefault)(require("./dmzjproto.json"));
@@ -49,4 +49,14 @@ function lookupTypeNovelDetailResponse() {
     return _lookupType(EnumResponseTypeKey.NovelDetailResponse);
 }
 exports.lookupTypeNovelDetailResponse = lookupTypeNovelDetailResponse;
+function protoLongToNumber(long) {
+    // @ts-ignore
+    //return long.toNumber()
+    return +long;
+}
+exports.protoLongToNumber = protoLongToNumber;
+function protoLongToMilliseconds(long) {
+    return protoLongToNumber(long) * 1000;
+}
+exports.protoLongToMilliseconds = protoLongToMilliseconds;
 //# sourceMappingURL=protobuf.js.map

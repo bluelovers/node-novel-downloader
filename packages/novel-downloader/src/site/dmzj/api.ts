@@ -5,7 +5,7 @@
 import { retryRequest } from '../../fetch';
 import { stripContent } from '../../strip';
 import { escapeRegexp } from '../../util';
-import _NovelSite, { IChapter, IVolume, moment, staticImplements, SYMBOL_CACHE } from '../index';
+import _NovelSite, { IChapter, IMdconfMeta, IVolume, moment, staticImplements, SYMBOL_CACHE } from '../index';
 import NovelSiteBase, { IDownloadOptions, IFetchChapter, INovel, IOptionsRuntime } from '../demo/base';
 //import { URL } from 'jsdom-url';
 import { createJSDOM, IJSDOM } from 'jsdom-extra';
@@ -16,7 +16,11 @@ import { check, makeUrl, parseUrl } from './util';
 
 //import escapeStringRegexp from 'escape-string-regexp';
 import { TxtUrlCreator } from './v4/txtUrlCreator';
-import { lookupTypeNovelChapterResponse, lookupTypeNovelDetailResponse } from './protobuf/protobuf';
+import {
+	lookupTypeNovelChapterResponse,
+	lookupTypeNovelDetailResponse,
+	protoLongToMilliseconds, protoLongToNumber,
+} from './protobuf/protobuf';
 import { decryptBase64V4, key } from './v4/v4';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteTpl>>()
@@ -254,6 +258,24 @@ export class NovelSiteTpl extends NovelSiteBase
 
 				const result = lookupTypeNovelDetailResponse().decode(decrypted)
 
+				let data: IMdconfMeta = {};
+				data.novel = {};
+				data.novel.tags = [];
+
+				console.dir(result, {
+					depth: null
+				})
+
+				data.novel.status = result.Data.Status;
+
+				result.Data.Types = result.Data.Types || [];
+				result.Data.Types.forEach(function (s)
+				{
+					data.novel.tags.push(...s.split('\/'))
+				});
+
+				data.novel.tags.push(result.Data.Zone);
+
 				const vol_list= [] ;
 				// (<Array<any>>result.Data.Volume).map(v=>{
 				// 	return <IVolume>{
@@ -266,15 +288,18 @@ export class NovelSiteTpl extends NovelSiteBase
 				// 	}
 				// })
 
+				let novel_date = moment.unix(protoLongToNumber(result.Data.LastUpdateTime)).local();
 
 				return <INovel>{
+
+					...data,
 
 					url,
 
 					url_data:parseUrl(url),
 					novel_author: result.Data.Authors,
 					novel_cover:result.Data.Cover,
-					novel_date: moment(+result.Data.LastUpdateTime),
+					novel_date,
 					novel_desc:result.Data.Introduction,
 					novel_title:result.Data.Name,
 					volume_list :vol_list
