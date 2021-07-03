@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`support 1279 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "1279",
+  "novel_pid": null,
+  "url": "1279",
+}
+`;
+
+exports[`support 2440 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "2440",
+  "novel_pid": null,
+  "url": "2440",
+}
+`;
+
+exports[`support http://api.dmzj4.com/novel/chapter/784 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://api.dmzj4.com/novel/chapter/784",
+}
+`;
+
+exports[`support http://api.dmzj4.com/novel/chapter/784.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://api.dmzj4.com/novel/chapter/784.json",
+}
+`;
+
+exports[`support http://api.dmzj4.com/novel/chapter/784/ 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://api.dmzj4.com/novel/chapter/784/",
+}
+`;
+
+exports[`support http://api.muwai.com/novel/chapter/784 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://api.muwai.com/novel/chapter/784",
+}
+`;
+
+exports[`support http://api.muwai.com/novel/chapter/784.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://api.muwai.com/novel/chapter/784.json",
+}
+`;
+
+exports[`support http://api.muwai.com/novel/chapter/784/ 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://api.muwai.com/novel/chapter/784/",
+}
+`;
+
+exports[`support http://jurisdiction.dmzj1.com/lnovel/7528_62192.txt?t=1625273472314&k=e833282eb316c122004f04a6e3d416b3 1`] = `
+Object {
+  "chapter_id": "62192",
+  "novel_id": null,
+  "novel_pid": null,
+  "url": "http://jurisdiction.dmzj1.com/lnovel/7528_62192.txt?t=1625273472314&k=e833282eb316c122004f04a6e3d416b3",
+  "volume_id": "7528",
+}
+`;
+
+exports[`support http://nnv3api.dmzj4.com/novel/chapter/784 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv3api.dmzj4.com/novel/chapter/784",
+}
+`;
+
+exports[`support http://nnv3api.dmzj4.com/novel/chapter/784.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv3api.dmzj4.com/novel/chapter/784.json",
+}
+`;
+
+exports[`support http://nnv3api.dmzj4.com/novel/chapter/784/ 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv3api.dmzj4.com/novel/chapter/784/",
+}
+`;
+
+exports[`support http://nnv3api.muwai.com/novel/chapter/784 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv3api.muwai.com/novel/chapter/784",
+}
+`;
+
+exports[`support http://nnv3api.muwai.com/novel/chapter/784.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv3api.muwai.com/novel/chapter/784.json",
+}
+`;
+
+exports[`support http://nnv3api.muwai.com/novel/chapter/784/ 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv3api.muwai.com/novel/chapter/784/",
+}
+`;
+
+exports[`support http://nnv4api.dmzj4.com/novel/chapter/784 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv4api.dmzj4.com/novel/chapter/784",
+}
+`;
+
+exports[`support http://nnv4api.dmzj4.com/novel/chapter/784.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv4api.dmzj4.com/novel/chapter/784.json",
+}
+`;
+
+exports[`support http://nnv4api.dmzj4.com/novel/chapter/784/ 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv4api.dmzj4.com/novel/chapter/784/",
+}
+`;
+
+exports[`support http://nnv4api.muwai.com/novel/chapter/784 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv4api.muwai.com/novel/chapter/784",
+}
+`;
+
+exports[`support http://nnv4api.muwai.com/novel/chapter/784.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv4api.muwai.com/novel/chapter/784.json",
+}
+`;
+
+exports[`support http://nnv4api.muwai.com/novel/chapter/784/ 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "784",
+  "novel_pid": null,
+  "url": "http://nnv4api.muwai.com/novel/chapter/784/",
+}
+`;
+
+exports[`support http://q.dmzj.com/2476/index.shtml 1`] = `
+Object {
+  "chapter_id": undefined,
+  "novel_id": "2476",
+  "novel_pid": null,
+  "url": "http://q.dmzj.com/2476/index.shtml",
+  "volume_id": undefined,
+}
+`;
+
+exports[`support http://v2.api.dmzj.com/novel/2229.json 1`] = `
+Object {
+  "chapter_id": null,
+  "novel_id": "2229",
+  "novel_pid": null,
+  "url": "http://v2.api.dmzj.com/novel/2229.json",
+}
+`;
+
+exports[`support http://v2.api.dmzj.com/novel/download/2229_8303_69136.txt 1`] = `
+Object {
+  "chapter_id": "69136",
+  "novel_id": "2229",
+  "novel_pid": null,
+  "url": "http://v2.api.dmzj.com/novel/download/2229_8303_69136.txt",
+  "volume_id": "8303",
+}
+`;
