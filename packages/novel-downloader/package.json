@@ -42,7 +42,7 @@
   "scripts": {
     "coverage": "npx nyc yarn run test",
     "lint": "npx eslint **/*.ts",
-    "test": "echo \"Error: no test specified\"",
+    "test": "jest",
     "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
     "build:dts-bundle": "node ./test/dts-bundle.js",
     "build:site:list": "ts-node ./script/create-site-list && git add ./src/all",

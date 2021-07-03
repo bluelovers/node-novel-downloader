@@ -173,9 +173,11 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
             let data = {};
             data.novel = {};
             data.novel.tags = [];
+            /*
             console.dir(result, {
                 depth: null
-            });
+            })
+             */
             data.novel.status = result.Data.Status;
             result.Data.Types = result.Data.Types || [];
             result.Data.Types.forEach(function (s) {

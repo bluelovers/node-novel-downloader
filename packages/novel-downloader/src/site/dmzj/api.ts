@@ -262,9 +262,11 @@ export class NovelSiteTpl extends NovelSiteBase
 				data.novel = {};
 				data.novel.tags = [];
 
+				/*
 				console.dir(result, {
 					depth: null
 				})
+				 */
 
 				data.novel.status = result.Data.Status;
 
