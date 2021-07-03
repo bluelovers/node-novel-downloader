@@ -2,45 +2,18 @@
 /**
  * Created by user on 2017/12/6/006.
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteDmzj = void 0;
-const fs_extra_1 = __importDefault(require("fs-extra"));
+const tslib_1 = require("tslib");
+const fs_extra_1 = (0, tslib_1.__importDefault)(require("fs-extra"));
 const util_1 = require("fs-iconv/util");
-const upath2_1 = __importDefault(require("upath2"));
-const node_novel_info_1 = __importDefault(require("node-novel-info"));
+const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
+const node_novel_info_1 = (0, tslib_1.__importDefault)(require("node-novel-info"));
 const jsdom_extra_1 = require("jsdom-extra");
-const index_1 = __importStar(require("../index"));
+const index_1 = (0, tslib_1.__importStar)(require("../index"));
 const index_2 = require("../index");
 const index_3 = require("../index");
-const shortid_1 = __importDefault(require("shortid"));
+const shortid_1 = (0, tslib_1.__importDefault)(require("shortid"));
 const fetch_1 = require("../../fetch");
 const jsdom_1 = require("../../jsdom");
 /**
@@ -92,7 +65,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
             runScripts: 'dangerously',
         });
         */
-        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM, {
+        optionsRuntime.optionsJSDOM = (0, jsdom_1.createOptionsJSDOM)(optionsRuntime.optionsJSDOM, {
             runScripts: 'dangerously',
         });
         let path_main;
@@ -100,7 +73,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
             .bind(self)
             .then(async function () {
             let _data = await self._download_info(url, optionsRuntime);
-            path_main = upath2_1.default.join(self.PATH_NOVEL_MAIN, util_1.trimFilename(`${_data.data.g_lnovel_name}_(${_data.data.g_lnovel_id})`));
+            path_main = upath2_1.default.join(self.PATH_NOVEL_MAIN, (0, util_1.trimFilename)(`${_data.data.g_lnovel_name}_(${_data.data.g_lnovel_id})`));
             let _a = _data.value.reduce(function (a, b) {
                 return a.concat(b.chapter);
             }, []);
@@ -116,10 +89,10 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                     .then(async function (data) {
                     let _file = upath2_1.default.join(path_main, 
                     // @ts-ignore
-                    util_1.trimFilename(`${a.index_volume.toString()
+                    (0, util_1.trimFilename)(`${a.index_volume.toString()
                         .padStart(pad_len, '0')} ${volume_name}_(${data.data.g_volume_id})`), 
                     // @ts-ignore
-                    util_1.trimFilename(`${a.index.toString()
+                    (0, util_1.trimFilename)(`${a.index.toString()
                         .padStart(pad_len, '0')}_${data.data.chapter_name}.${data.data.g_chapter_id}`));
                     await fs_extra_1.default.outputJson(_file + '.json', data, {
                         spaces: "\t",
@@ -137,13 +110,13 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                 return ret;
             });
             // @ts-ignore
-            _data.checkdate = index_3.moment().tz(index_3.moment.tz.guess());
+            _data.checkdate = (0, index_3.moment)().tz(index_3.moment.tz.guess());
             // @ts-ignore
             _data.files = _f;
             return _data;
         })
             .tap(async function (novel) {
-            await fs_extra_1.default.outputJson(upath2_1.default.join(path_main, util_1.trimFilename(`${novel.data.g_lnovel_name}.${novel.data.g_lnovel_id}`)) + '.json', novel, {
+            await fs_extra_1.default.outputJson(upath2_1.default.join(path_main, (0, util_1.trimFilename)(`${novel.data.g_lnovel_name}.${novel.data.g_lnovel_id}`)) + '.json', novel, {
                 spaces: "\t",
             });
             let options = {};
@@ -190,7 +163,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
             data: {},
             value: null,
         };
-        return await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return await (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(function (dom) {
             const $ = dom.$;
             // @ts-ignore
@@ -259,7 +232,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
         })
             .then(function (_data) {
             // @ts-ignore
-            _data.checkdate = index_3.moment().tz(index_3.moment.tz.guess());
+            _data.checkdate = (0, index_3.moment)().tz(index_3.moment.tz.guess());
             return _data;
         });
     }
@@ -275,7 +248,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
         }
         let _data = {};
         let $;
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async (dom) => {
             let window = dom.window;
             $ = dom.$;
@@ -315,7 +288,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                     }
                     return value;
                 });
-                await fetch_1.manyRequest(ua, {
+                await (0, fetch_1.manyRequest)(ua, {
                     // @ts-ignore
                     encoding: null,
                     resolveWithFullResponse: true,
@@ -342,7 +315,7 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
                         // @ts-ignore
                         let _this = $(this);
                         if (_this.prop('src')) {
-                            let id = shortid_1.default();
+                            let id = (0, shortid_1.default)();
                             _c[id] = _this.prop('src');
                             _data.imgs.push(_c[id]);
                             // @ts-ignore
@@ -389,15 +362,15 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
         })
             .then(function (html) {
             _data.value = html;
-            _data.checkdate = index_3.moment().tz(index_3.moment.tz.guess());
+            _data.checkdate = (0, index_3.moment)().tz(index_3.moment.tz.guess());
             return _data;
         });
     }
 };
 NovelSiteDmzj.disabled = true;
 NovelSiteDmzj.IDKEY = 'dmzj';
-NovelSiteDmzj = __decorate([
-    index_1.staticImplements()
+NovelSiteDmzj = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteDmzj);
 exports.NovelSiteDmzj = NovelSiteDmzj;
 exports.default = NovelSiteDmzj;

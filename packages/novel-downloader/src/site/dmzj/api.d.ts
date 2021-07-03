@@ -2,9 +2,7 @@
  * Created by user on 2018/3/25/025.
  */
 import _NovelSite from '../index';
-import { IDownloadOptions, INovel } from '../demo/base';
-import { IFetchChapter, IOptionsRuntime } from '../demo/base';
-import NovelSiteBase from '../demo/base';
+import NovelSiteBase, { IDownloadOptions, IFetchChapter, INovel, IOptionsRuntime } from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
 export declare class NovelSiteTpl extends NovelSiteBase {
     static readonly IDKEY: string;
