@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.28](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.27...novel-downloader@2.0.28) (2021-07-03)
+
+
+### 🐛　Bug Fixes
+
+* 修正日期轉換 與 補回 tag 資訊 ([afc4a85](https://github.com/bluelovers/node-novel-downloader/commit/afc4a85177fb141ecdebcf375988a5ccb711f097))
+* can't reuse createCryptoHash("md5") ([a4b1148](https://github.com/bluelovers/node-novel-downloader/commit/a4b1148d90882c8e90a232065d3959c65e83673a))
+* 修正 v4 相關的網址辨識問題 ([79364f6](https://github.com/bluelovers/node-novel-downloader/commit/79364f6d8c4b10acd0d45e7d26701e33a83c643d))
+
+
+### 📦　Code Refactoring
+
+* code splitting and move ([0fb3de0](https://github.com/bluelovers/node-novel-downloader/commit/0fb3de00456babc8eff456517a1a9ed1840a96f5))
+
+
+### 🚨　Tests
+
+* download dmzj v4 ([5b84f75](https://github.com/bluelovers/node-novel-downloader/commit/5b84f752ca93882ff91f46ab883c9b9ecefc6aff))
+
+
+### 🛠　Build System
+
+* update .js ([6cc42fb](https://github.com/bluelovers/node-novel-downloader/commit/6cc42fbfb768cbad97f079ad2996227834b92c96))
+* update deps and typescript ([d15afb1](https://github.com/bluelovers/node-novel-downloader/commit/d15afb1f022734eda002305e1768fb8340fe991c))
+
+
+### 🔖　Miscellaneous
+
+* . ([0a90b4b](https://github.com/bluelovers/node-novel-downloader/commit/0a90b4b227b4ce183bb203b4ddb82ca629caf22c))
+* 修正v4api地址 ([8999c11](https://github.com/bluelovers/node-novel-downloader/commit/8999c115a75040bab53cae2e015df4b26ad2afa9))
+* dmzj v4 ([f26ba37](https://github.com/bluelovers/node-novel-downloader/commit/f26ba37f00c794a87fcc097b8475682e74080225))
+
+
+### TODO
+
+* fix me
+
+http://nnv4api.muwai.com/novel/2784.json 網址無法讀取
+
+
+
+
+
 ## [2.0.27](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.26...novel-downloader@2.0.27) (2021-02-04)
 
 
