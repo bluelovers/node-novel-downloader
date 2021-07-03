@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.makeUrl = exports.check = void 0;
 const tslib_1 = require("tslib");
-const url_1 = (0, tslib_1.__importStar)(require("../../util/url"));
+const url_1 = tslib_1.__importStar(require("../../util/url"));
 const txtUrlCreator_1 = require("./v4/txtUrlCreator");
 function check(url, options) {
-    return /dmzj\.com/i.test((0, url_1.default)(url).hostname || '');
+    return /dmzj\.com/i.test(url_1.default(url).hostname || '');
 }
 exports.check = check;
 function makeUrl(urlobj, bool, ...argv) {
@@ -21,18 +21,18 @@ function makeUrl(urlobj, bool, ...argv) {
         url = txtUrlCreator_1.TxtUrlCreator.newUrl(urlobj.volume_id, urlobj.chapter_id);
     }
     else if (bool === true && urlobj.novel_id) {
-        //url = `${api_url}/novel/chapter/${urlobj.novel_id}`;
-        url = `${api_url}/novel/chapter/${urlobj.novel_id}.json`;
+        url = `${api_url}/novel/chapter/${urlobj.novel_id}`;
+        // url = `${api_url}/novel/chapter/${urlobj.novel_id}.json`;
     }
     else {
-        //url = `${api_url}/novel/detail/${urlobj.novel_id}`;
-        url = `${api_url}/novel/${urlobj.novel_id}.json`;
+        url = `${api_url}/novel/detail/${urlobj.novel_id}`;
+        // url = `${api_url}/novel/${urlobj.novel_id}.json`;
     }
-    return (0, url_1.default)(url);
+    return url_1.default(url);
 }
 exports.makeUrl = makeUrl;
 function parseUrl(_url, ...argv) {
-    const { urlobj, url } = (0, url_1._handleParseURL)(_url, ...argv);
+    const { urlobj, url } = url_1._handleParseURL(_url, ...argv);
     let r;
     let m;
     r = /(?:api|nnv\dapi)\.(?:dmzj\d?|muwai)\.com\/novel\/(\d+).json/;

@@ -27,13 +27,13 @@ export function makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean | number, .
 	}
 	else if (bool === true && urlobj.novel_id)
 	{
-		//url = `${api_url}/novel/chapter/${urlobj.novel_id}`;
-		url = `${api_url}/novel/chapter/${urlobj.novel_id}.json`;
+		url = `${api_url}/novel/chapter/${urlobj.novel_id}`;
+		// url = `${api_url}/novel/chapter/${urlobj.novel_id}.json`;
 	}
 	else
 	{
-		//url = `${api_url}/novel/detail/${urlobj.novel_id}`;
-		url = `${api_url}/novel/${urlobj.novel_id}.json`;
+		url = `${api_url}/novel/detail/${urlobj.novel_id}`;
+		// url = `${api_url}/novel/${urlobj.novel_id}.json`;
 	}
 
 	return createURL(url);
