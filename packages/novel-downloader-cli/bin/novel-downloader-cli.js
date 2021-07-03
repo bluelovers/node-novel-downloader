@@ -94,6 +94,7 @@ let cli = yargs_1.default
     return args;
 })
     .argv;
+// @ts-ignore
 let url = cli._[0];
 (0, update_notifier_1.updateNotifier)([__dirname, '..']);
 if (!url) {

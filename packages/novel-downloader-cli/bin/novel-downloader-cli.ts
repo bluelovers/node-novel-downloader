@@ -114,6 +114,7 @@ interface ICliArgv extends ITSPartialPick<IOptionsPlusNovelSiteSyosetu, 'disable
 	debug?: boolean,
 }
 
+// @ts-ignore
 let url: string = cli._[0];
 
 updateNotifier([__dirname, '..']);
