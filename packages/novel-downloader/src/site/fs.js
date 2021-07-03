@@ -2,13 +2,11 @@
 /**
  * Created by user on 2018/3/18/018.
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getFilePath = exports.getVolumePath = exports.padStart = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../util");
-const upath2_1 = __importDefault(require("upath2"));
+const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
 function padStart(id, pad = '0', len = 4) {
     return id.toString().padStart(len, '0') + pad;
 }
@@ -39,7 +37,7 @@ function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, v
     if (!optionsRuntime.noFirePrefix) {
         let idxx;
         if (optionsRuntime.filePrefixMode > 1) {
-            if (util_1.isUndef(chapter.chapter_index, '', true)) {
+            if ((0, util_1.isUndef)(chapter.chapter_index, '', true)) {
                 idxx = '';
             }
             else if (optionsRuntime.filePrefixMode == 3 || optionsRuntime.filePrefixMode > 4) {
@@ -52,7 +50,7 @@ function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, v
                 }
             }
         }
-        else if (optionsRuntime.filePrefixMode > 0 || util_1.isUndef(chapter.chapter_index)) {
+        else if (optionsRuntime.filePrefixMode > 0 || (0, util_1.isUndef)(chapter.chapter_index)) {
             idxx = cid;
             if (optionsRuntime.startIndex) {
                 idxx += optionsRuntime.startIndex;

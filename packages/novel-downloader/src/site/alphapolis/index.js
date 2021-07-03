@@ -2,41 +2,33 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteClass = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = __importDefault(require("../demo/base"));
+const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = __importDefault(require("@node-novel/layout"));
-const path_1 = __importDefault(require("path"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const path_1 = (0, tslib_1.__importDefault)(require("path"));
 const util_2 = require("./util");
 let NovelSiteClass = class NovelSiteClass extends base_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     createMainUrl(url, optionsRuntime) {
         let data = this.parseUrl(url);
@@ -64,7 +56,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let url_data = self.parseUrl(dom.url.href);
@@ -81,7 +73,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                 // @ts-ignore
                 let tr = dom.$(this);
                 if (tr.is('h3')) {
-                    let title = layout_1.default.trim(util_1.trim(tr.text())) || 'null';
+                    let title = layout_1.default.trim((0, util_1.trim)(tr.text())) || 'null';
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
                         volume_title: title,
@@ -89,7 +81,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                     };
                 }
                 else if (tr.is('.chapter-rental')) {
-                    let title = layout_1.default.trim(util_1.trim(tr.find('h3').text())) || 'null';
+                    let title = layout_1.default.trim((0, util_1.trim)(tr.find('h3').text())) || 'null';
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
                         volume_title: title,
@@ -121,7 +113,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                             href = self.makeUrl(data);
                             data.url = href;
                         }
-                        let chapter_title = util_1.trim(a.find('> h3').text());
+                        let chapter_title = (0, util_1.trim)(a.find('> h3').text());
                         if (!chapter_title) {
                             console.log(href);
                             console.log(a);
@@ -157,7 +149,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                         href = self.makeUrl(data);
                         data.url = href;
                     }
-                    let chapter_title = util_1.trim(a.find('.title').text());
+                    let chapter_title = (0, util_1.trim)(a.find('.title').text());
                     if (!chapter_title) {
                         console.log(href);
                         console.log(a);
@@ -166,9 +158,9 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                     let chapter_date;
                     let dd;
                     let da = a.find('.open-date');
-                    dd = util_1.trim(da.text());
+                    dd = (0, util_1.trim)(da.text());
                     if (dd) {
-                        chapter_date = index_2.moment(dd, 'YYYY/MM/DD HH:mm').local();
+                        chapter_date = (0, index_2.moment)(dd, 'YYYY/MM/DD HH:mm').local();
                         _cache_dates.push(chapter_date.unix());
                     }
                     currentVolume
@@ -194,7 +186,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                 ...data_meta,
                 volume_list,
                 novel_date,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         })
@@ -214,32 +206,32 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
             const $ = dom.$;
             let data = {};
             data.novel = {};
-            let novel_author = util_1.trim($('#main .content-main .author a:eq(0)').text());
-            let novel_title = util_1.trim($('.content-info .title a').text());
+            let novel_author = (0, util_1.trim)($('#main .content-main .author a:eq(0)').text());
+            let novel_title = (0, util_1.trim)($('.content-info .title a').text());
             let novel_cover;
             let novel_cover2 = $('.content-info .cover img').prop('src') || '';
             if (novel_cover2 && !novel_cover2.match(/no_image\.png/)) {
                 novel_cover = novel_cover2;
             }
-            let novel_desc = util_1.trim($('.content-info .abstract').text());
+            let novel_desc = (0, util_1.trim)($('.content-info .abstract').text());
             let url_data = self.parseUrl(url);
             data.novel.tags = [];
             $('#main .content-tags .tag > a')
                 .each(function () {
                 // @ts-ignore
-                data.novel.tags.push(util_1.trim($(this).text()));
+                data.novel.tags.push((0, util_1.trim)($(this).text()));
             });
-            data.novel.status = util_1.trim($('.content-info .content-statuses .content-status.complete').text());
+            data.novel.status = (0, util_1.trim)($('.content-info .content-statuses .content-status.complete').text());
             {
                 let a = $('.content-info .content-statuses .content-status.novels');
                 if (a.length) {
-                    data.novel.tags.push(util_1.trim(a.text()));
+                    data.novel.tags.push((0, util_1.trim)(a.text()));
                 }
             }
             {
                 let a = $('.content-info .content-statuses .content-status.volume');
                 if (a.length) {
-                    data.novel.tags.push(util_1.trim(a.text()));
+                    data.novel.tags.push((0, util_1.trim)(a.text()));
                 }
             }
             let novel_publisher = self.IDKEY;
@@ -257,8 +249,8 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
     }
 };
 NovelSiteClass.IDKEY = path_1.default.basename(__dirname);
-NovelSiteClass = __decorate([
-    index_1.staticImplements()
+NovelSiteClass = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteClass);
 exports.NovelSiteClass = NovelSiteClass;
 exports.default = NovelSiteClass;

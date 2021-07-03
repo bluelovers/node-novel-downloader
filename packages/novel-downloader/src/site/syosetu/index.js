@@ -1,50 +1,20 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteSyosetu = exports.EnumProtocolMode = void 0;
+const tslib_1 = require("tslib");
 /// <reference types="jquery" />
 const const_1 = require("node-novel-info/lib/const");
 const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
-const NovelSiteDemo = __importStar(require("../demo/base"));
-const layout_1 = __importDefault(require("@node-novel/layout"));
+const NovelSiteDemo = (0, tslib_1.__importStar)(require("../demo/base"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
 const log_1 = require("../../util/log");
 const html_1 = require("../../util/html");
 const mitemin_1 = require("mitemin");
 const util_1 = require("./util");
-const url_1 = __importDefault(require("../../util/url"));
+const url_1 = (0, tslib_1.__importDefault)(require("../../util/url"));
 var EnumProtocolMode;
 (function (EnumProtocolMode) {
     EnumProtocolMode[EnumProtocolMode["NONE"] = 0] = "NONE";
@@ -57,19 +27,19 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         this.optionsInit.retryDelay = this.optionsInit.retryDelay || 25000;
     }
     static check(url, ...argv) {
-        return util_1.check(url, ...argv);
+        return (0, util_1.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_1.makeUrl(urlobj, bool, ...argv);
+        return (0, util_1.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_1.parseUrl(url, ...argv);
+        return (0, util_1.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_1.makeUrl(urlobj, bool, ...argv);
+        return (0, util_1.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_1.parseUrl(url, ...argv);
+        return (0, util_1.parseUrl)(url, ...argv);
     }
     session(optionsRuntime, url) {
         // @ts-ignore
@@ -115,7 +85,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             let img = $(elem);
             let src = img.prop('src');
             cache.chapter.imgs = cache.chapter.imgs || [];
-            await mitemin_1.parseAsync(src)
+            await (0, mitemin_1.parseAsync)(src)
                 .then(data => {
                 if (data.fullsize) {
                     src = data.fullsize;
@@ -129,7 +99,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             cache.novel.imgs.push(src);
         });
         if (optionsRuntime.keepImage) {
-            await html_1._keepImageInContext(_imgs, $, {
+            await (0, html_1._keepImageInContext)(_imgs, $, {
                 prefix: '挿絵',
             });
         }
@@ -138,7 +108,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             $('#novel_honbun'),
             $('#novel_a'),
         ];
-        bodys.forEach(t => html_1.keepFormatTag(t, {
+        bodys.forEach(t => (0, html_1.keepFormatTag)(t, {
             $,
             optionsRuntime,
         }));
@@ -175,7 +145,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     }
     _hackURL(obj, optionsRuntime) {
         if (typeof obj === 'string') {
-            obj = url_1.default(obj);
+            obj = (0, url_1.default)(obj);
         }
         if (obj.hostname === 'ncode.syosetu.com' || obj.hostname === 'novel18.syosetu.com') {
             switch (optionsRuntime.protocolMode) {
@@ -248,7 +218,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                 }
             }
             //console.log(dom.serialize());
-            return jsdom_extra_1.fromURL(url, Object.assign(optionsRuntime.optionsJSDOM, {
+            return (0, jsdom_extra_1.fromURL)(url, Object.assign(optionsRuntime.optionsJSDOM, {
             //cookieJar: dom._options.requestOptions.jar._jar,
             //requestOptions: dom._options.requestOptions,
             }));
@@ -271,14 +241,14 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             ? 'narou18'
             : 'narou'}.${_domain}/search.php?text=${search}&novel=all&genre=all&new_genre=all&length=0&down=0&up=100`;
         log_1.consoleDebug.debug(`試圖取得小說相關資訊 (1)`, _url);
-        return jsdom_extra_1.fromURL(_url, optionsJSDOM);
+        return (0, jsdom_extra_1.fromURL)(_url, optionsJSDOM);
     }
     _getExtraInfoURL2(url_data, optionsRuntime, data_meta) {
         let subdomain = url_data.novel_r18 ? 'novel18' : 'ncode';
         let info_url = `https://${subdomain}.syosetu.com/novelview/infotop/ncode/${url_data.novel_id}/`;
         data_meta = data_meta || {};
         log_1.consoleDebug.debug(`試圖取得小說相關資訊 (2)`, info_url);
-        return jsdom_extra_1.fromURL(info_url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(info_url, optionsRuntime.optionsJSDOM)
             .then(function (dom) {
             let $ = dom.$;
             $('#noveltable1 tr')
@@ -341,7 +311,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         const self = this;
         url = await this.createMainUrl(url, optionsRuntime);
         log_1.consoleDebug.debug(`get_volume_list`, url.toString());
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             return self._novel18(url, dom, optionsRuntime);
         })
@@ -406,7 +376,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                         dd = da.text().replace(/^\s+|\s+$/g, '');
                     }
                     if (dd) {
-                        chapter_date = index_3.moment(dd, 'YYYY/MM/DD HH:mm').local();
+                        chapter_date = (0, index_3.moment)(dd, 'YYYY/MM/DD HH:mm').local();
                         _cache_dates.push(chapter_date.unix());
                     }
                     let href = a.prop('href');
@@ -569,16 +539,16 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                 novel_syosetu_series_id,
                 novel_syosetu_id,
                 volume_list,
-                checkdate: index_3.moment().local(),
+                checkdate: (0, index_3.moment)().local(),
                 imgs: [],
             };
         });
     }
 };
 NovelSiteSyosetu.IDKEY = 'syosetu';
-NovelSiteSyosetu = __decorate([
-    index_1.staticImplements(),
-    __metadata("design:paramtypes", [Object, Object])
+NovelSiteSyosetu = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)(),
+    (0, tslib_1.__metadata)("design:paramtypes", [Object, Object])
 ], NovelSiteSyosetu);
 exports.NovelSiteSyosetu = NovelSiteSyosetu;
 exports.default = NovelSiteSyosetu;

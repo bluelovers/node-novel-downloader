@@ -2,22 +2,20 @@
 /**
  * Created by user on 2019/4/28.
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createRequestPromise = exports.createCachedRequest = exports.createBluebirdPromise = exports.createStealthyRequest = void 0;
+const tslib_1 = require("tslib");
 const bluebird_1 = require("bluebird");
-const cached_request_1 = __importDefault(require("cached-request"));
-const request2_1 = __importDefault(require("request-promise-core/configure/request2"));
-const stealthy_require_1 = __importDefault(require("stealthy-require"));
+const cached_request_1 = (0, tslib_1.__importDefault)(require("cached-request"));
+const request2_1 = (0, tslib_1.__importDefault)(require("request-promise-core/configure/request2"));
+const stealthy_require_1 = (0, tslib_1.__importDefault)(require("stealthy-require"));
 let Bluebird;
 function createStealthyRequest(libRequest) {
     if (libRequest == null) {
         libRequest = 'request';
     }
     if (typeof libRequest === 'string') {
-        libRequest = stealthy_require_1.default(require.cache, function () {
+        libRequest = (0, stealthy_require_1.default)(require.cache, function () {
             return require('request');
         }, function () {
             require('tough-cookie');
@@ -29,7 +27,7 @@ exports.createStealthyRequest = createStealthyRequest;
 function createBluebirdPromise(libPromise) {
     if (libPromise == null) {
         if (Bluebird == null) {
-            Bluebird = bluebird_1.getNewLibraryCopy();
+            Bluebird = (0, bluebird_1.getNewLibraryCopy)();
             Bluebird.config({ cancellation: true });
         }
         libPromise = Bluebird;
@@ -43,14 +41,14 @@ function createBluebirdPromise(libPromise) {
 }
 exports.createBluebirdPromise = createBluebirdPromise;
 function createCachedRequest(libRequest) {
-    return cached_request_1.default(createStealthyRequest(libRequest));
+    return (0, cached_request_1.default)(createStealthyRequest(libRequest));
 }
 exports.createCachedRequest = createCachedRequest;
 function createRequestPromise(options = {}) {
     let { libRequest, libPromise } = options;
     libPromise = createBluebirdPromise(libPromise);
     libRequest = createStealthyRequest(libRequest);
-    request2_1.default({
+    (0, request2_1.default)({
         request: libRequest,
         PromiseImpl: libPromise,
         expose: [

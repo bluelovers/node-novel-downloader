@@ -63,9 +63,9 @@ function char_autoFH(text) {
             s.toLocaleUpperCase(),
         ]);
         a.forEach(function (v) {
-            a.push(str_util_1.toFullWidth(v));
+            a.push((0, str_util_1.toFullWidth)(v));
         });
-        return '[' + util_1.array_unique(a).join('') + ']+';
+        return '[' + (0, util_1.array_unique)(a).join('') + ']+';
     });
 }
 //# sourceMappingURL=strip.js.map

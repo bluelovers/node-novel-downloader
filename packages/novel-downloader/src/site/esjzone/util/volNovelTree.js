@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.volNovelTree = void 0;
 const site_1 = require("esjzone-api/lib/util/site");
 function volNovelTree($, optionsRuntime, self) {
-    const data = site_1._getBookChapters($, $('.container'), {
+    const data = (0, site_1._getBookChapters)($, $('.container'), {
         chapters: [],
     });
     const novelTree = optionsRuntime.novelTree;

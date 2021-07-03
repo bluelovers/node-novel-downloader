@@ -2,19 +2,11 @@
 /**
  * Created by user on 2018/3/17/017.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteESJZone = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = __importDefault(require("../demo/tree"));
+const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = require("../index");
 const fetch_1 = require("../../fetch");
@@ -23,7 +15,7 @@ const regex_1 = require("../../util/regex");
 const html_1 = require("../../util/html");
 const util_2 = require("./util");
 const site_1 = require("esjzone-api/lib/util/site");
-const volNovelTree_1 = __importDefault(require("./util/volNovelTree"));
+const volNovelTree_1 = (0, tslib_1.__importDefault)(require("./util/volNovelTree"));
 const html_2 = require("restful-decorator-plugin-jsdom/lib/html");
 //import { URL } from 'jsdom-url';
 let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
@@ -41,19 +33,19 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
     }
      */
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     async _decodeChapter(ret, optionsRuntime, cache) {
         const { dom } = ret;
@@ -63,7 +55,7 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
             .match(/getTranslation\(['"]([^\'"]+)['"]/i);
         if (m) {
             let code = m[1];
-            await fetch_1.retryRequest(ret.url, {
+            await (0, fetch_1.retryRequest)(ret.url, {
                 // @ts-ignore
                 ...optionsRuntime.requestOptions,
                 method: 'POST',
@@ -102,18 +94,18 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
         const $ = ret.dom.$;
         try {
             let target = ret.dom.$('.container .row:has(.forum-content)');
-            let html = util_1.minifyHTML(target.html());
+            let html = (0, util_1.minifyHTML)(target.html());
             target.html(html);
         }
         catch (e) {
         }
-        const $content = site_1._getChapterDomContent($);
+        const $content = (0, site_1._getChapterDomContent)($);
         if (!$content.html()) {
             throw this._fetchChapterRetryError(`發現防爬蟲機制，將稍後再試圖下載`, ret, optionsRuntime, cache);
         }
-        util_2._remove_ad($);
+        (0, util_2._remove_ad)($);
         //await this._decodeChapter(ret, optionsRuntime, cache);
-        util_2._p_2_br($content.find('> p'), ret.dom.$);
+        (0, util_2._p_2_br)($content.find('> p'), ret.dom.$);
         /*
         let elem = ret.dom.$('.container .forum-content');
 
@@ -124,10 +116,10 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
                 .replace(/(?<=\<br\>)(?=[^\n])/g, '\n')
         });
          */
-        let title = util_1.trim($('.container .row .single-post-meta + h2').text());
-        html_1._saveImageToAttach(ret.dom.$, $content.find('img[src]'), cache);
+        let title = (0, util_1.trim)($('.container .row .single-post-meta + h2').text());
+        (0, html_1._saveImageToAttach)(ret.dom.$, $content.find('img[src]'), cache);
         if (optionsRuntime.keepImage) {
-            await html_1._keepImageInContext($content.find('img[src]'), $);
+            await (0, html_1._keepImageInContext)($content.find('img[src]'), $);
         }
         let txt = $content
             .text()
@@ -137,7 +129,7 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
             txt = txt.slice(title.length + 1)
                 .replace(/^\n+/g, '');
         }
-        let contribute = value_1.dotGetValue(cache, 'novel.contribute', { default: [] });
+        let contribute = (0, value_1.dotGetValue)(cache, 'novel.contribute', { default: [] });
         txt = txt.replace(new regex_1.zhRegExp(/^翻譯：([^\n]+)\n/), (s, v) => {
             v = v.replace(/^[\s　\xA0]+|[\s　\xA0]+$/g, '');
             if (v && !contribute.includes(v)) {
@@ -145,12 +137,12 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
             }
             return '';
         });
-        let v = site_1._getChapterData($).author;
+        let v = (0, site_1._getChapterData)($).author;
         if (v && !contribute.includes(v)) {
             contribute.push(v);
         }
         if (contribute.length) {
-            value_1.dotSetValue(cache, 'novel.contribute', contribute);
+            (0, value_1.dotSetValue)(cache, 'novel.contribute', contribute);
         }
         /*
         let html = elem.html();
@@ -170,11 +162,11 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
         const self = this;
         url = await this.createMainUrl(url, optionsRuntime);
         //console.dir(optionsRuntime.optionsJSDOM)
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let _data = {};
-            let { name: novel_title, authors: novel_author } = site_1._getBookInfo($, _data);
+            let { name: novel_title, authors: novel_author } = (0, site_1._getBookInfo)($, _data);
             let novel_date;
             if (_data.last_update_time) {
                 novel_date = index_1.moment.unix(_data.last_update_time);
@@ -183,7 +175,7 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
             let url_data = self.parseUrl(dom.url.href);
             let volume_list = [];
             //const novelTree = optionsRuntime.novelTree;
-            const novelTree = volNovelTree_1.default($, {
+            const novelTree = (0, volNovelTree_1.default)($, {
                 novelTree: optionsRuntime.novelTree,
             }, self).novelTree;
             /*
@@ -273,20 +265,20 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
             let data_meta = {
                 novel: {},
             };
-            site_1._getBookLinks($)
+            (0, site_1._getBookLinks)($)
                 .forEach(item => {
                 data_meta.link = data_meta.link || [];
                 data_meta.link.push(item.href);
             });
-            site_1._getBookTags($)
+            (0, site_1._getBookTags)($)
                 .forEach(name => {
                 data_meta.novel.tags = data_meta.novel.tags || [];
                 data_meta.novel.tags.push(name);
             });
-            data_meta.novel.cover = site_1._getBookCover($);
-            let $desc = html_2.tryMinifyHTMLOfElem(site_1._getBookElemDesc($));
-            util_2._p_2_br($desc.find('p'), $, true);
-            let novel_desc = util_1.trim($desc.text());
+            data_meta.novel.cover = (0, site_1._getBookCover)($);
+            let $desc = (0, html_2.tryMinifyHTMLOfElem)((0, site_1._getBookElemDesc)($));
+            (0, util_2._p_2_br)($desc.find('p'), $, true);
+            let novel_desc = (0, util_1.trim)($desc.text());
             /*
             console.dir({
                 html: $desc.html(),
@@ -307,15 +299,15 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
                 novel_publisher,
                 //volume_list,
                 novelTree,
-                checkdate: index_1.moment().local(),
+                checkdate: (0, index_1.moment)().local(),
                 imgs: [],
             };
         });
     }
 };
 NovelSiteESJZone.IDKEY = 'esjzone';
-NovelSiteESJZone = __decorate([
-    index_1.staticImplements()
+NovelSiteESJZone = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteESJZone);
 exports.NovelSiteESJZone = NovelSiteESJZone;
 exports.default = NovelSiteESJZone;

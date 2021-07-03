@@ -11,17 +11,17 @@ const hash_1 = require("./hash");
 const fs_extra_1 = require("fs-extra");
 const mdconf2_1 = require("mdconf2");
 async function outputNovelToAttach({ imgs, dirname, keepImage, path_novel, }) {
-    imgs = array_hyper_unique_1.array_unique_overwrite(imgs)
+    imgs = (0, array_hyper_unique_1.array_unique_overwrite)(imgs)
         .filter(v => v);
-    const file = upath2_1.join(dirname, 'ATTACH.md');
+    const file = (0, upath2_1.join)(dirname, 'ATTACH.md');
     let md_data = {
         attach: {
             images: {},
         },
     };
     if (keepImage || 1) {
-        await fs_extra_1.readFile(file)
-            .then(v => mdconf2_1.parse(v))
+        await (0, fs_extra_1.readFile)(file)
+            .then(v => (0, mdconf2_1.parse)(v))
             // @ts-ignore
             .then((data) => {
             data.attach = data.attach || {};
@@ -35,17 +35,17 @@ async function outputNovelToAttach({ imgs, dirname, keepImage, path_novel, }) {
         .entries(imgs)
         .reduce((a, [k, v]) => {
         if (keepImage) {
-            a[hash_1.hashSum(v)] = v;
+            a[(0, hash_1.hashSum)(v)] = v;
         }
         else {
             a[k.toString().padStart(3, '0')] = v;
         }
         return a;
     }, md_data.attach.images);
-    const md = mdconf2_1.stringify(md_data);
-    return fs_extra_1.outputFile(file, md)
+    const md = (0, mdconf2_1.stringify)(md_data);
+    return (0, fs_extra_1.outputFile)(file, md)
         .then(r => {
-        log_1.consoleDebug.success(`[ATTACH]`, `[SAVE]`, `${upath2_1.relative(path_novel, file)}`);
+        log_1.consoleDebug.success(`[ATTACH]`, `[SAVE]`, `${(0, upath2_1.relative)(path_novel, file)}`);
         return md_data;
     });
 }

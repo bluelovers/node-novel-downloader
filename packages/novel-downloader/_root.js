@@ -5,15 +5,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.tempPath = exports.testPath = exports.disablePaths = exports.rootModule = void 0;
 const path_1 = require("path");
-exports.rootModule = path_1.join(__dirname, '');
+exports.rootModule = (0, path_1.join)(__dirname, '');
 exports.disablePaths = [
-    path_1.join(exports.rootModule, 'src'),
-    path_1.join(exports.rootModule, 'node_modules'),
-    path_1.join(exports.rootModule, '.idea'),
-    path_1.join(exports.rootModule, '.git'),
+    (0, path_1.join)(exports.rootModule, 'src'),
+    (0, path_1.join)(exports.rootModule, 'node_modules'),
+    (0, path_1.join)(exports.rootModule, '.idea'),
+    (0, path_1.join)(exports.rootModule, '.git'),
 ];
-exports.testPath = path_1.join(exports.rootModule, 'test');
-exports.tempPath = path_1.join(exports.testPath, 'temp');
+exports.testPath = (0, path_1.join)(exports.rootModule, 'test');
+exports.tempPath = (0, path_1.join)(exports.testPath, 'temp');
 exports.default = {
     rootModule: exports.rootModule,
     disablePaths: exports.disablePaths,

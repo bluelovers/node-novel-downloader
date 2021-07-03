@@ -2,42 +2,34 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteClass = void 0;
+const tslib_1 = require("tslib");
 const strip_1 = require("../../strip");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = __importDefault(require("../demo/base"));
+const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = __importDefault(require("@node-novel/layout"));
-const path_1 = __importDefault(require("path"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const path_1 = (0, tslib_1.__importDefault)(require("path"));
 const util_2 = require("./util");
 let NovelSiteClass = class NovelSiteClass extends base_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     createMainUrl(url, optionsRuntime) {
         let data = this.parseUrl(url);
@@ -49,7 +41,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
         return ret;
     }
     _stripContent(text) {
-        text = strip_1.stripContent(text);
+        text = (0, strip_1.stripContent)(text);
         //process.exit();
         return text
             .replace(/^　　/gm, '')
@@ -64,7 +56,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
         ret.dom.$('.tt2 center').remove();
         let body_selector = '.tt2';
         try {
-            let html = util_1.minifyHTML(ret.dom.$(body_selector).html());
+            let html = (0, util_1.minifyHTML)(ret.dom.$(body_selector).html());
             //html = html.replace(/^(&nbsp;){4}/gm, '');
             html = html.replace(/^\s+|\s+$/g, '');
             ret.dom.$(body_selector).html(html);
@@ -81,7 +73,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             // @ts-ignore
@@ -102,7 +94,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                 .each(function (index) {
                 // @ts-ignore
                 let tr = dom.$(this);
-                let title = layout_1.default.trim(util_1.trim(tr.text())).replace(/^◎/, '');
+                let title = layout_1.default.trim((0, util_1.trim)(tr.text())).replace(/^◎/, '');
                 if (title && tr.find('a').length == 0) {
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
@@ -125,7 +117,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                             href = self.makeUrl(data);
                             data.url = href;
                         }
-                        let chapter_title = util_1.trim(a.text());
+                        let chapter_title = (0, util_1.trim)(a.text());
                         if (!chapter_title) {
                             console.log(href);
                             console.log(a);
@@ -154,7 +146,7 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
                 ...data_meta,
                 volume_list,
                 //novel_date,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         })
@@ -174,8 +166,8 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
             const $ = dom.$;
             let data = {};
             data.novel = {};
-            let novel_author = util_1.trim($('title').text().match(/\(([^()]+)\)\s*$/)[1]);
-            let novel_title = util_1.trim($('body > center > table center font[color="#FF0000"]').text());
+            let novel_author = (0, util_1.trim)($('title').text().match(/\(([^()]+)\)\s*$/)[1]);
+            let novel_title = (0, util_1.trim)($('body > center > table center font[color="#FF0000"]').text());
             let url_data = self.parseUrl(url);
             return {
                 url,
@@ -188,8 +180,8 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
     }
 };
 NovelSiteClass.IDKEY = path_1.default.basename(__dirname);
-NovelSiteClass = __decorate([
-    index_1.staticImplements()
+NovelSiteClass = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteClass);
 exports.NovelSiteClass = NovelSiteClass;
 exports.default = NovelSiteClass;

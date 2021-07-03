@@ -75,7 +75,7 @@ fg.async([
 	${ls.map(([k, v]) => `'./site/${v}' = '${v}',`).join('\n\t')}
 }`;
     ret.push(s);
-    s = `export type EnumNovelSiteListString = '${array_hyper_unique_1.array_unique(ls.map(([k, v]) => v)).join('\' | \'')}';`;
+    s = `export type EnumNovelSiteListString = '${(0, array_hyper_unique_1.array_unique)(ls.map(([k, v]) => v)).join('\' | \'')}';`;
     ret.push(s);
     s = ``;
     let ls2 = await Bluebird.resolve(ls)
@@ -100,9 +100,9 @@ fg.async([
         return a;
     }, [[], [], [], [], {}])
         .then(a => {
-        array_hyper_unique_1.array_unique_overwrite(a[0]);
-        array_hyper_unique_1.array_unique_overwrite(a[1]);
-        array_hyper_unique_1.array_unique_overwrite(a[2]);
+        (0, array_hyper_unique_1.array_unique_overwrite)(a[0]);
+        (0, array_hyper_unique_1.array_unique_overwrite)(a[1]);
+        (0, array_hyper_unique_1.array_unique_overwrite)(a[2]);
         let s = `export enum EnumIDKEYList
 {
 	${a[0].join('\n\t')}
@@ -110,7 +110,7 @@ fg.async([
 	${a[2].join('\n\t')}
 }`;
         ret.push(s);
-        s = `export type EnumIDKEYListString = '${array_hyper_unique_1.array_unique(a[3]).join('\' | \'')}';`;
+        s = `export type EnumIDKEYListString = '${(0, array_hyper_unique_1.array_unique)(a[3]).join('\' | \'')}';`;
         ret.push(s);
         let o = Object.entries(a[4])
             .map(([siteID, IDKEY]) => {

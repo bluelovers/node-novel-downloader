@@ -63,12 +63,12 @@ class NovelTree {
         let name;
         switch (node.get('type')) {
             case 'chapter':
-                name = util_1.trim(node.get('chapter_title'), true);
+                name = (0, util_1.trim)(node.get('chapter_title'), true);
                 node.set('chapter_title', name);
                 node.set('name', name);
                 break;
             case 'volume':
-                name = util_1.trim(node.get('volume_title'), true);
+                name = (0, util_1.trim)(node.get('volume_title'), true);
                 node.set('volume_title', name);
                 node.set('name', name);
                 break;
@@ -88,7 +88,7 @@ class NovelTree {
         return this.tree.root().toJSON();
     }
     static treeToList(novelTree, linkNode) {
-        let list = js_tree_list2_1.TreeToList(novelTree.tree, linkNode);
+        let list = (0, js_tree_list2_1.TreeToList)(novelTree.tree, linkNode);
         return list;
     }
 }

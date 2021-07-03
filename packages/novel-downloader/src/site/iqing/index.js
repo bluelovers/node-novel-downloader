@@ -2,20 +2,12 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteIqing = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = __importDefault(require("../demo/base"));
+const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
@@ -103,7 +95,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                 console.log(666, ret.json.results);
                 throw new Error();
             }
-            cache.chapter.chapter_date = index_2.moment(ret.json.updated_time).local();
+            cache.chapter.chapter_date = (0, index_2.moment)(ret.json.updated_time).local();
             if (cache.chapter.chapter_vip) {
                 text = `付費章节\n\n==========================\n\n${text}`;
             }
@@ -117,7 +109,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let url_data = self.parseUrl(dom.url.href);
@@ -136,7 +128,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                 if (tr.is('.volume')) {
                     currentVolume = volume_list[volume_list.length] = {
                         volume_index: volume_list.length,
-                        volume_title: util_1.trim(tr.find('h3').text()),
+                        volume_title: (0, util_1.trim)(tr.find('h3').text()),
                         chapter_list: [],
                     };
                 }
@@ -157,7 +149,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                     if (chapter_vip) {
                         novel_vip++;
                     }
-                    let chapter_title = util_1.trim(a.text());
+                    let chapter_title = (0, util_1.trim)(a.text());
                     if (!chapter_title) {
                         console.log(href);
                         console.log(a);
@@ -192,7 +184,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                 novel_vip,
                 volume_list,
                 //novel_date,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         })
@@ -219,7 +211,7 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
             $('#cat-list .cat, .book-title .book-tag')
                 .each(function () {
                 // @ts-ignore
-                let t = util_1.trim($(this)
+                let t = (0, util_1.trim)($(this)
                     .text()
                     .replace(/\(\d+\)/g, ''));
                 if (t) {
@@ -237,9 +229,9 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
                     //.replace(/更新：/, '')
                     .trim();
                 //console.log(d);
-                novel_date = index_2.moment(d).local();
+                novel_date = (0, index_2.moment)(d).local();
             }
-            let novel_title = util_1.trim($('.book-title .title').text());
+            let novel_title = (0, util_1.trim)($('.book-title .title').text());
             $('#book-top img.cover[src]').each(function () {
                 // @ts-ignore
                 data.novel.cover = $(this)
@@ -261,8 +253,8 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
 };
 NovelSiteIqing.IDKEY = 'iqing';
 NovelSiteIqing.disabled = true;
-NovelSiteIqing = __decorate([
-    index_1.staticImplements()
+NovelSiteIqing = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteIqing);
 exports.NovelSiteIqing = NovelSiteIqing;
 exports.default = NovelSiteIqing;

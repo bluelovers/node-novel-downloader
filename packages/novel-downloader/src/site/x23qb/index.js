@@ -2,19 +2,11 @@
 /**
  * Created by user on 2018/3/17/017.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteX23qb = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = __importDefault(require("../demo/tree"));
+const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const index_1 = require("../index");
@@ -29,19 +21,19 @@ const util_3 = require("../esjzone/util");
  */
 let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     async _decodeChapter(ret, optionsRuntime, cache) {
         const { dom } = ret;
@@ -51,7 +43,7 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
             .match(/getTranslation\(['"]([^\'"]+)['"]/i);
         if (m) {
             let code = m[1];
-            await fetch_1.retryRequest(ret.url, {
+            await (0, fetch_1.retryRequest)(ret.url, {
                 // @ts-ignore
                 ...optionsRuntime.requestOptions,
                 method: 'POST',
@@ -88,7 +80,7 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
             return '';
         }
         try {
-            let html = util_1.minifyHTML($('#mlfy_main_text').html());
+            let html = (0, util_1.minifyHTML)($('#mlfy_main_text').html());
             $('#mlfy_main_text').html(html);
         }
         catch (e) {
@@ -97,13 +89,13 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
         elem
             .find('> .tp, > .ke, > .rd, > .bd, script')
             .remove();
-        util_3._p_2_br(elem.find('p'), ret.dom.$);
+        (0, util_3._p_2_br)(elem.find('p'), ret.dom.$);
         elem.html(function (i, old) {
             return old
                 .replace(/(\<br\>){3,4}/g, '$1')
                 .replace(/(?<=\<br\>)(?=[^\n])/g, '\n');
         });
-        let title = util_1.trim(ret.dom.$('mlfy_main_text > h1:eq(0)').text());
+        let title = (0, util_1.trim)(ret.dom.$('mlfy_main_text > h1:eq(0)').text());
         if (!this._cache_re) {
             this._cache_re = new regexp_cjk_1.zhRegExp(/^(?:鉛\s*筆\s*小\s*說\(w\s*w\s*w\s*\.\s*x\s*2\s*3\s*q\s*b\s*\.\s*c\s*o\s*m\))$/uigm);
         }
@@ -117,7 +109,7 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
         url = await this.createMainUrl(url, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let novel_title = dom.$('.d_title h1').text();
@@ -146,7 +138,7 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
                 let tr = dom.$(elem);
                 if (1) {
                     let a = tr;
-                    let chapter_title = util_1.trim(a.text(), true);
+                    let chapter_title = (0, util_1.trim)(a.text(), true);
                     let href = a.prop('href');
                     let data = self.parseUrl(href);
                     if (!data.chapter_id) {
@@ -172,7 +164,7 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
                     tags: [],
                 },
             };
-            let novel_date = index_2.moment($('#uptime > span').text());
+            let novel_date = (0, index_2.moment)($('#uptime > span').text());
             let tag = $('.bookright #count li:eq(0) span:eq(0)').text().trim();
             if (tag) {
                 data_meta.novel.tags.push(tag);
@@ -208,15 +200,15 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
                 novel_desc,
                 //volume_list,
                 novelTree,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         });
     }
 };
 NovelSiteX23qb.IDKEY = 'x23qb';
-NovelSiteX23qb = __decorate([
-    index_1.staticImplements()
+NovelSiteX23qb = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteX23qb);
 exports.NovelSiteX23qb = NovelSiteX23qb;
 exports.default = NovelSiteX23qb;

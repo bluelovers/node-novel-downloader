@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`describe https://12243.mitemin.net/userpageimage/viewimagebig/icode/i366014/ 1`] = `
+Object {
+  "authorid": "12243",
+  "fullsize": "https://12243.mitemin.net/userpageimage/viewimage/icode/i366014/",
+  "icode": "i366014",
+  "size": "big",
+  "url": "https://12243.mitemin.net/userpageimage/viewimagebig/icode/i366014/",
+}
+`;
+
+exports[`describe https://img1.mitemin.net/cv/po/bcxka2bnheig0k9hc67bh6orl_177v_1kw_146_7bey.jpg.580.jpg 1`] = `
+Object {
+  "filename": "bcxka2bnheig0k9hc67bh6orl_177v_1kw_146_7bey.jpg",
+  "fullsize": "https://img1.mitemin.net/cv/po/bcxka2bnheig0k9hc67bh6orl_177v_1kw_146_7bey.jpg",
+  "size": "580",
+  "url": "https://img1.mitemin.net/cv/po/bcxka2bnheig0k9hc67bh6orl_177v_1kw_146_7bey.jpg.580.jpg",
+}
+`;
+
+exports[`describe https://img1.mitemin.net/k0/78/84kqizdv2mupf8n135o55zfol2wb_xan_by_go_2f0x.jpg 1`] = `
+Object {
+  "filename": "84kqizdv2mupf8n135o55zfol2wb_xan_by_go_2f0x.jpg",
+  "fullsize": "https://img1.mitemin.net/k0/78/84kqizdv2mupf8n135o55zfol2wb_xan_by_go_2f0x.jpg",
+  "size": undefined,
+  "url": "https://img1.mitemin.net/k0/78/84kqizdv2mupf8n135o55zfol2wb_xan_by_go_2f0x.jpg",
+}
+`;

@@ -2,42 +2,34 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteUukanshu = void 0;
+const tslib_1 = require("tslib");
 const strip_1 = require("../../strip");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = __importDefault(require("../demo/base"));
+const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = __importDefault(require("@node-novel/layout"));
-const path_1 = __importDefault(require("path"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const path_1 = (0, tslib_1.__importDefault)(require("path"));
 const util_2 = require("./util");
 let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     createMainUrl(url, optionsRuntime) {
         let data = this.parseUrl(url);
@@ -49,7 +41,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
         return ret;
     }
     _stripContent(text) {
-        text = strip_1.stripContent(text);
+        text = (0, strip_1.stripContent)(text);
         //process.exit();
         return text
             .replace(/^　　/gm, '')
@@ -62,7 +54,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
         ret.dom.$('.ad_content').remove();
         let body_selector = '#contentbox';
         try {
-            let html = util_1.minifyHTML(ret.dom.$(body_selector).html());
+            let html = (0, util_1.minifyHTML)(ret.dom.$(body_selector).html());
             //html = html.replace(/^(&nbsp;){4}/gm, '');
             html = html.replace(/^\s+|\s+$/g, '');
             ret.dom.$(body_selector).html(html);
@@ -81,7 +73,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             // @ts-ignore
@@ -125,7 +117,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
                             href = self.makeUrl(data);
                             data.url = href;
                         }
-                        let chapter_title = util_1.trim(a.text());
+                        let chapter_title = (0, util_1.trim)(a.text());
                         if (!chapter_title) {
                             console.log(href);
                             console.log(a);
@@ -154,7 +146,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
                 ...data_meta,
                 volume_list,
                 //novel_date,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         })
@@ -174,7 +166,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
             const $ = dom.$;
             let data = {};
             data.novel = {};
-            let novel_author = util_1.trim($('.jieshao_content h2 a').text());
+            let novel_author = (0, util_1.trim)($('.jieshao_content h2 a').text());
             $('.jieshao_content h3:eq(0)').html(function (i, old) {
                 return old.replace(/(<br\/?>)/ig, '$1\n');
             });
@@ -182,7 +174,7 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
                 .text()
                 .trim();
             novel_desc = self._stripContent(novel_desc);
-            let novel_title = util_1.trim($('.jieshao-img .bookImg img').attr('alt')
+            let novel_title = (0, util_1.trim)($('.jieshao-img .bookImg img').attr('alt')
                 || $('.jieshao_content h1 a').text().replace(/最新章节/g, ''));
             let url_data = self.parseUrl(url);
             $(`.jieshao-img .bookImg img`)
@@ -205,8 +197,8 @@ let NovelSiteUukanshu = class NovelSiteUukanshu extends base_1.default {
     }
 };
 NovelSiteUukanshu.IDKEY = path_1.default.basename(__dirname);
-NovelSiteUukanshu = __decorate([
-    index_1.staticImplements()
+NovelSiteUukanshu = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteUukanshu);
 exports.NovelSiteUukanshu = NovelSiteUukanshu;
 exports.default = NovelSiteUukanshu;

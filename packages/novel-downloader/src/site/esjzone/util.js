@@ -1,32 +1,14 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.makeUrl = exports.check = exports._p_2_br = exports._remove_ad = void 0;
-const url_1 = __importStar(require("../../util/url"));
+const tslib_1 = require("tslib");
+const url_1 = (0, tslib_1.__importStar)(require("../../util/url"));
 var site_1 = require("esjzone-api/lib/util/site");
 Object.defineProperty(exports, "_remove_ad", { enumerable: true, get: function () { return site_1._remove_ad; } });
 var jquery_1 = require("restful-decorator-plugin-jsdom/lib/jquery");
 Object.defineProperty(exports, "_p_2_br", { enumerable: true, get: function () { return jquery_1._p_2_br; } });
 function check(url, options) {
-    return /esjzone\.cc/i.test(url_1.default(url).hostname || '');
+    return /esjzone\.cc/i.test((0, url_1.default)(url).hostname || '');
 }
 exports.check = check;
 function makeUrl(urlobj, bool, ...argv) {
@@ -37,11 +19,11 @@ function makeUrl(urlobj, bool, ...argv) {
     else {
         pad = `detail/${urlobj.novel_id}.html`;
     }
-    return url_1.default(`https://www.esjzone.cc/${pad}`);
+    return (0, url_1.default)(`https://www.esjzone.cc/${pad}`);
 }
 exports.makeUrl = makeUrl;
 function parseUrl(_url, ...argv) {
-    const { urlobj, url } = url_1._handleParseURL(_url, ...argv);
+    const { urlobj, url } = (0, url_1._handleParseURL)(_url, ...argv);
     let r;
     let m;
     r = /^(\d{6,})$/;

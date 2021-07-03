@@ -2,40 +2,32 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteSfacg = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = __importDefault(require("../demo/base"));
+const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = __importDefault(require("@node-novel/layout"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
 const util_2 = require("./util");
 let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     createMainUrl(url, optionsRuntime) {
         let data = this.parseUrl(url);
@@ -51,7 +43,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
             return '';
         }
         try {
-            let html = util_1.minifyHTML(ret.dom.$('#ChapterBody').html());
+            let html = (0, util_1.minifyHTML)(ret.dom.$('#ChapterBody').html());
             //html = html.replace(/^(&nbsp;){4}/gm, '');
             html = html.replace(/^\s+|\s+$/g, '');
             ret.dom.$('#ChapterBody').html(html);
@@ -86,7 +78,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                 .text()
                 .replace(/^.+：/g, '')
                 .trim();
-            chapter_date = index_2.moment(d, 'YYYY/MM/DD HH:mm:ss').local();
+            chapter_date = (0, index_2.moment)(d, 'YYYY/MM/DD HH:mm:ss').local();
             cache.chapter.chapter_date = chapter_date;
         }
         catch (e) { }
@@ -95,7 +87,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let url_data = self.parseUrl(dom.url.href);
@@ -138,7 +130,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                         a
                             .find('.icn, .icn_vip')
                             .remove();
-                        let chapter_title = util_1.trim(a.text());
+                        let chapter_title = (0, util_1.trim)(a.text());
                         if (chapter_title === '') {
                             return;
                         }
@@ -177,7 +169,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                 novel_vip,
                 volume_list,
                 //novel_date,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         })
@@ -188,7 +180,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
     async _get_meta(inputUrl, optionsRuntime) {
         const self = this;
         let url = this.makeUrl(this.parseUrl(inputUrl), -1);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(function (dom) {
             const $ = dom.$;
             let data = {};
@@ -215,7 +207,7 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
             $('.main-part .tag-list .tag .text')
                 .each(function () {
                 // @ts-ignore
-                let t = util_1.trim($(this)
+                let t = (0, util_1.trim)($(this)
                     .text()
                     .replace(/\(\d+\)/g, ''));
                 if (t) {
@@ -229,9 +221,9 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
                     .replace(/更新：/, '')
                     .trim();
                 //console.log(d);
-                novel_date = index_2.moment(d, 'YYYY/MM/DD HH:mm:ss').local();
+                novel_date = (0, index_2.moment)(d, 'YYYY/MM/DD HH:mm:ss').local();
             }
-            let novel_title = util_1.trim($('.summary-content .title .text').text());
+            let novel_title = (0, util_1.trim)($('.summary-content .title .text').text());
             let url_data = self.parseUrl(url);
             $(`.d-summary .summary-pic img[src], #hasTicket .left-part a[href*="${url_data.novel_id}"] img[src]`).each(function () {
                 // @ts-ignore
@@ -253,8 +245,8 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
     }
 };
 NovelSiteSfacg.IDKEY = 'sfacg';
-NovelSiteSfacg = __decorate([
-    index_1.staticImplements()
+NovelSiteSfacg = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteSfacg);
 exports.NovelSiteSfacg = NovelSiteSfacg;
 exports.default = NovelSiteSfacg;

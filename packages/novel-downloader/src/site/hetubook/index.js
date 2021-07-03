@@ -2,43 +2,35 @@
 /**
  * Created by user on 2018/3/25/025.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteHetubook = void 0;
+const tslib_1 = require("tslib");
 const strip_1 = require("../../strip");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = __importDefault(require("../demo/base"));
+const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = __importDefault(require("@node-novel/layout"));
-const path_1 = __importDefault(require("path"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const path_1 = (0, tslib_1.__importDefault)(require("path"));
 const { Script } = require("vm");
 const util_2 = require("./util");
 let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     createMainUrl(url, optionsRuntime) {
         let data = this.parseUrl(url);
@@ -50,7 +42,7 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
         return ret;
     }
     _stripContent(text) {
-        text = strip_1.stripContent(text);
+        text = (0, strip_1.stripContent)(text);
         //process.exit();
         return text
             .replace(/^　　/gm, '')
@@ -83,7 +75,7 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
     async get_volume_list(inputUrl, optionsRuntime = {}) {
         const self = this;
         let url = await this.createMainUrl(inputUrl, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let url_data = self.parseUrl(dom.url.href);
@@ -121,7 +113,7 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
                             href = self.makeUrl(data);
                             data.url = href;
                         }
-                        let chapter_title = util_1.trim(a.text());
+                        let chapter_title = (0, util_1.trim)(a.text());
                         if (!chapter_title) {
                             console.log(href);
                             console.log(a);
@@ -150,7 +142,7 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
                 ...data_meta,
                 volume_list,
                 //novel_date,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         })
@@ -170,7 +162,7 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
             const $ = dom.$;
             let data = {};
             data.novel = {};
-            let novel_author = util_1.trim($('.book_info a[href*="/author/"]').text());
+            let novel_author = (0, util_1.trim)($('.book_info a[href*="/author/"]').text());
             $('.jieshao_content h3:eq(0)').html(function (i, old) {
                 return old.replace(/(<br\/?>)/ig, '$1\n');
             });
@@ -180,7 +172,7 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
             if ($('.book_info.finish').length) {
                 data.novel.status = '已完結';
             }
-            let novel_title = util_1.trim($('.book_info > img[alt]').attr('alt'));
+            let novel_title = (0, util_1.trim)($('.book_info > img[alt]').attr('alt'));
             let url_data = self.parseUrl(url);
             data.novel.cover = $(`.book_info > img`).prop('src');
             data.novel.tags = [];
@@ -202,8 +194,8 @@ let NovelSiteHetubook = class NovelSiteHetubook extends base_1.default {
     }
 };
 NovelSiteHetubook.IDKEY = path_1.default.basename(__dirname);
-NovelSiteHetubook = __decorate([
-    index_1.staticImplements()
+NovelSiteHetubook = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteHetubook);
 exports.NovelSiteHetubook = NovelSiteHetubook;
 exports.default = NovelSiteHetubook;

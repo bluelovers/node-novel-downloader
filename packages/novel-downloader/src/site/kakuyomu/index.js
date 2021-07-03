@@ -2,19 +2,11 @@
 /**
  * Created by user on 2018/3/17/017.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteKakuyomu = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = __importDefault(require("../demo/tree"));
+const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const index_1 = require("../index");
@@ -22,19 +14,19 @@ const index_2 = require("../index");
 const util_2 = require("./util");
 let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
@@ -48,7 +40,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
         url = await this.createMainUrl(url, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let novel_title = dom.$('#workTitle').text();
@@ -105,7 +97,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
                         volume_level = 1;
                         throw Error;
                     }
-                    let volume_title = util_1.trim(tr.text(), true);
+                    let volume_title = (0, util_1.trim)(tr.text(), true);
                     let nowVolume;
                     if (currentVolume) {
                         let lastLevel = currentVolume.get('level');
@@ -168,7 +160,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
                         });
                     }
                     let a = tr.find('a:eq(0)');
-                    let chapter_title = util_1.trim(a.find('.widget-toc-episode-titleLabel').text(), true);
+                    let chapter_title = (0, util_1.trim)(a.find('.widget-toc-episode-titleLabel').text(), true);
                     let chapter_date;
                     let dd;
                     let da = a.find('.widget-toc-episode-datePublished');
@@ -176,7 +168,7 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
                         dd = da.attr('datetime').replace(/^\s+|\s+$/g, '');
                     }
                     if (dd) {
-                        chapter_date = index_2.moment(dd).local();
+                        chapter_date = (0, index_2.moment)(dd).local();
                         _cache_dates.push(chapter_date.unix());
                     }
                     let href = a.prop('href');
@@ -268,15 +260,15 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
                 novel_publisher,
                 //volume_list,
                 novelTree,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         });
     }
 };
 NovelSiteKakuyomu.IDKEY = 'kakuyomu';
-NovelSiteKakuyomu = __decorate([
-    index_1.staticImplements()
+NovelSiteKakuyomu = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteKakuyomu);
 exports.NovelSiteKakuyomu = NovelSiteKakuyomu;
 exports.default = NovelSiteKakuyomu;

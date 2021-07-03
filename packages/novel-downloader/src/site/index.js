@@ -2,51 +2,30 @@
 /**
  * Created by user on 2018/2/10/010.
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.staticImplements = exports.EnumPathNovelStyle = exports.NovelSite = exports.SYMBOL_CACHE = exports.PromiseBluebird = exports.bluebirdDecorator = exports.moment = exports.createOptionsJSDOM = exports.defaultJSDOMOptions = void 0;
-const bluebird_1 = __importDefault(require("../decorator/bluebird"));
+const tslib_1 = require("tslib");
+const bluebird_1 = (0, tslib_1.__importDefault)(require("../decorator/bluebird"));
 exports.bluebirdDecorator = bluebird_1.default;
 //import bluebirdDecorator from 'bluebird-decorator';
-const bluebird_2 = __importDefault(require("bluebird"));
+const bluebird_2 = (0, tslib_1.__importDefault)(require("bluebird"));
 exports.PromiseBluebird = bluebird_2.default;
 //import { URL } from 'jsdom-url';
-const upath2_1 = __importDefault(require("upath2"));
-const _root_1 = __importDefault(require("../../_root"));
+const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
+const _root_1 = (0, tslib_1.__importDefault)(require("../../_root"));
 const jsdom_1 = require("../jsdom");
 Object.defineProperty(exports, "defaultJSDOMOptions", { enumerable: true, get: function () { return jsdom_1.defaultJSDOMOptions; } });
 Object.defineProperty(exports, "createOptionsJSDOM", { enumerable: true, get: function () { return jsdom_1.createOptionsJSDOM; } });
-const node_novel_info_1 = __importStar(require("node-novel-info"));
-const fs_extra_1 = __importDefault(require("fs-extra"));
+const node_novel_info_1 = (0, tslib_1.__importStar)(require("node-novel-info"));
+const fs_extra_1 = (0, tslib_1.__importDefault)(require("fs-extra"));
 const util_1 = require("fs-iconv/util");
 const crlf_normalize_1 = require("crlf-normalize");
-const str_util_1 = __importDefault(require("str-util"));
+const str_util_1 = (0, tslib_1.__importDefault)(require("str-util"));
 const const_1 = require("node-novel-info/lib/const");
 const log_1 = require("../util/log");
-const url_1 = __importDefault(require("../util/url"));
+const url_1 = (0, tslib_1.__importDefault)(require("../util/url"));
 //import moment from 'moment';
-const moment_timezone_1 = __importDefault(require("moment-timezone"));
+const moment_timezone_1 = (0, tslib_1.__importDefault)(require("moment-timezone"));
 exports.moment = moment_timezone_1.default;
 const util_2 = require("../util");
 moment_timezone_1.default.fn.toJSON = function () { return this.format(); };
@@ -74,7 +53,7 @@ class NovelSite {
         return false;
     }
     session(optionsRuntime, url) {
-        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+        optionsRuntime.optionsJSDOM = (0, jsdom_1.createOptionsJSDOM)(optionsRuntime.optionsJSDOM);
         if (url) {
             optionsRuntime[exports.SYMBOL_CACHE].url = url;
         }
@@ -173,7 +152,7 @@ class NovelSite {
         optionsRuntime[exports.SYMBOL_CACHE] = (optionsRuntime[exports.SYMBOL_CACHE] || {});
         optionsRuntime.startIndex = optionsRuntime.startIndex || 0;
         // @ts-ignore
-        optionsRuntime.optionsJSDOM = jsdom_1.createOptionsJSDOM(optionsRuntime.optionsJSDOM);
+        optionsRuntime.optionsJSDOM = (0, jsdom_1.createOptionsJSDOM)(optionsRuntime.optionsJSDOM);
         if (optionsRuntime.debugLog != null) {
             optionsRuntime.debugLog = !!optionsRuntime.debugLog;
         }
@@ -195,7 +174,7 @@ class NovelSite {
         return this.trimFilename(name);
     }
     trimFilename(name) {
-        return util_1.trimFilename(util_2._fixVolumeChapterName(name));
+        return (0, util_1.trimFilename)((0, util_2._fixVolumeChapterName)(name));
     }
     trimTag(tag) {
         return tag
@@ -208,7 +187,7 @@ class NovelSite {
     }
     _handleDataForStringify(...argv) {
         // @ts-ignore
-        let mdconf = node_novel_info_1._handleDataForStringify(...argv);
+        let mdconf = (0, node_novel_info_1._handleDataForStringify)(...argv);
         if (mdconf.novel) {
             let bool;
             if (mdconf.novel.tags && Array.isArray(mdconf.novel.tags)) {
@@ -244,10 +223,10 @@ class NovelSite {
     }
     _saveReadme(optionsRuntime, options = {}, ...opts) {
         const self = this;
-        if (util_2.isUndef(optionsRuntime)
-            || util_2.isUndef(optionsRuntime[exports.SYMBOL_CACHE], {})
-            || util_2.isUndef(optionsRuntime[exports.SYMBOL_CACHE].novel, {})
-            || util_2.isUndef(optionsRuntime[exports.SYMBOL_CACHE].path_novel, '')) {
+        if ((0, util_2.isUndef)(optionsRuntime)
+            || (0, util_2.isUndef)(optionsRuntime[exports.SYMBOL_CACHE], {})
+            || (0, util_2.isUndef)(optionsRuntime[exports.SYMBOL_CACHE].novel, {})
+            || (0, util_2.isUndef)(optionsRuntime[exports.SYMBOL_CACHE].path_novel, '')) {
             throw new ReferenceError(`saveReadme`);
         }
         const novel = optionsRuntime[exports.SYMBOL_CACHE].novel;
@@ -291,7 +270,7 @@ class NovelSite {
         return this.makeUrl(data, true, optionsRuntime);
     }
     _createChapterUrl({ novel, volume, chapter, }, optionsRuntime) {
-        return url_1.default(chapter.chapter_url.toString());
+        return (0, url_1.default)(chapter.chapter_url.toString());
     }
     _fetchChapter(url, optionsRuntime, _cache_) {
         throw new SyntaxError(`Function not implemented`);
@@ -323,7 +302,7 @@ class NovelSite {
             if (optionsRuntime.lineBreakCrlf) {
                 let txt1 = context.toString();
                 if (crlf_normalize_1.R_CRLF.test(txt1)) {
-                    let txt2 = crlf_normalize_1.crlf(txt1, crlf_normalize_1.CRLF);
+                    let txt2 = (0, crlf_normalize_1.crlf)(txt1, crlf_normalize_1.CRLF);
                     if (txt1 !== txt2) {
                         context = txt2;
                     }

@@ -1,40 +1,10 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSite = exports.NovelSiteDemo = void 0;
+const tslib_1 = require("tslib");
 const fetch_1 = require("../../fetch");
-const fs_extra_1 = __importDefault(require("fs-extra"));
-const upath2_1 = __importDefault(require("upath2"));
+const fs_extra_1 = (0, tslib_1.__importDefault)(require("fs-extra"));
+const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const fs_1 = require("../fs");
@@ -43,16 +13,16 @@ const helper_1 = require("node-novel-globby/lib/helper");
 const g_1 = require("node-novel-globby/g");
 const layout_reporter_1 = require("@node-novel/layout-reporter");
 const md_1 = require("@node-novel/layout-reporter/lib/md");
-const index_1 = __importStar(require("../index"));
+const index_1 = (0, tslib_1.__importStar)(require("../index"));
 const index_2 = require("../index");
-const content_type_parser_1 = __importDefault(require("content-type-parser"));
-const layout_1 = __importDefault(require("@node-novel/layout"));
+const content_type_parser_1 = (0, tslib_1.__importDefault)(require("content-type-parser"));
+const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
 const lazy_cookies_1 = require("lazy-cookies");
 const jsdom_extra_2 = require("jsdom-extra");
 const log_1 = require("../../util/log");
 const tree_1 = require("../../tree");
 const array_hyper_unique_1 = require("array-hyper-unique");
-const outputNovelToAttach_1 = __importDefault(require("../../util/outputNovelToAttach"));
+const outputNovelToAttach_1 = (0, tslib_1.__importDefault)(require("../../util/outputNovelToAttach"));
 let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
@@ -159,8 +129,8 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 });
             });
             await self._saveReadme(optionsRuntime);
-            let _cache = layout_reporter_1.dummyCache();
-            await g_1.globbyASync([
+            let _cache = (0, layout_reporter_1.dummyCache)();
+            await (0, g_1.globbyASync)([
                 '**/*.txt',
             ], {
                 cwd: path_novel,
@@ -171,7 +141,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 await fs_extra_1.default
                     .readFile(upath2_1.default.join(path_novel, file))
                     .then(buf => {
-                    layout_reporter_1.analyzeJa002({
+                    (0, layout_reporter_1.analyzeJa002)({
                         input: buf.toString(),
                         _cache_key_,
                         _cache,
@@ -179,7 +149,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 });
             })
                 .tap(async () => {
-                let md = md_1.outputJa002({
+                let md = (0, md_1.outputJa002)({
                     inputData: _cache.ja2,
                 });
                 return fs_extra_1.default.outputFile(upath2_1.default.join(path_novel, 'ja2.md'), md);
@@ -201,9 +171,9 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     return;
                 }
                 const dirname = upath2_1.default.join(path_novel, volume.dirname);
-                const imgs = array_hyper_unique_1.array_unique_overwrite(volume.imgs).filter(v => v);
+                const imgs = (0, array_hyper_unique_1.array_unique_overwrite)(volume.imgs).filter(v => v);
                 volume.imgs = imgs;
-                return outputNovelToAttach_1.default({
+                return (0, outputNovelToAttach_1.default)({
                     imgs,
                     dirname,
                     keepImage,
@@ -237,7 +207,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     imgs = imgs.filter(v => v);
                     log_1.consoleDebug.debug(`[ATTACH]`, `${upath2_1.default.relative(path_novel, dirname)}`, imgs.length);
                     if (imgs.length) {
-                        return outputNovelToAttach_1.default({
+                        return (0, outputNovelToAttach_1.default)({
                             imgs,
                             dirname,
                             keepImage,
@@ -269,7 +239,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 let i;
                 let bool = volume.chapter_list.every(function (chapter, j) {
                     let m = (optionsRuntime.filePrefixMode > 3 ?
-                        chapter.chapter_title : helper_1.normalize_val(chapter.chapter_title))
+                        chapter.chapter_title : (0, helper_1.normalize_val)(chapter.chapter_title))
                         .replace(/^\D+/, '')
                         //.replace(/^(\d+).+$/, '$1')
                         .replace(/^(\d+)\D.*$/, '$1');
@@ -306,7 +276,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                 .mapSeries(volume.chapter_list, async (chapter, cid) => {
                 //chapter.chapter_index = (idx++);
                 const current_idx = idx++;
-                let file = fs_1.getFilePath(self, {
+                let file = (0, fs_1.getFilePath)(self, {
                     chapter, cid,
                     ext: '.txt',
                     idx: current_idx,
@@ -425,7 +395,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
         return index_2.PromiseBluebird.resolve().then(async function () {
             log_1.consoleDebug.debug(`fetchChapter`, url.toString());
             let ret = {};
-            let opts = jsdom_1.getOptions(optionsRuntime);
+            let opts = (0, jsdom_1.getOptions)(optionsRuntime);
             if (optionsRuntime.disableDownload) {
                 return null;
             }
@@ -438,15 +408,15 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     // @ts-ignore
                     opts.requestOptions.retry = 1;
                 }
-                await fetch_1.retryRequest(url, opts.requestOptions)
+                await (0, fetch_1.retryRequest)(url, opts.requestOptions)
                     .then(function (res) {
-                    const contentTypeParsed = content_type_parser_1.default(res.headers["content-type"]);
+                    const contentTypeParsed = (0, content_type_parser_1.default)(res.headers["content-type"]);
                     ret.contentTypeParsed = contentTypeParsed;
                     // @ts-ignore
                     ret.url = url;
                     if (contentTypeParsed.isHTML() || contentTypeParsed.isXML()) {
-                        ret.dom = jsdom_extra_1.requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
-                        ret.dom = jsdom_extra_1.packJSDOM(ret.dom);
+                        ret.dom = (0, jsdom_extra_1.requestToJSDOM)(res, url, optionsRuntime.optionsJSDOM);
+                        ret.dom = (0, jsdom_extra_1.packJSDOM)(ret.dom);
                     }
                     else if (contentTypeParsed.subtype == 'json') {
                         ret.json = JSON.parse(res.body.toString());
@@ -457,7 +427,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             }
             else {
                 // @ts-ignore
-                ret.dom = await jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM);
+                ret.dom = await (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM);
                 ret.res = ret.dom._options.Response;
                 ret.body = ret.dom._options.body;
             }
@@ -512,9 +482,9 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     }
 };
 NovelSiteDemo.IDKEY = null;
-NovelSiteDemo = __decorate([
-    index_1.staticImplements(),
-    __metadata("design:paramtypes", [Object, Object])
+NovelSiteDemo = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)(),
+    (0, tslib_1.__metadata)("design:paramtypes", [Object, Object])
 ], NovelSiteDemo);
 exports.NovelSiteDemo = NovelSiteDemo;
 exports.NovelSite = NovelSiteDemo;

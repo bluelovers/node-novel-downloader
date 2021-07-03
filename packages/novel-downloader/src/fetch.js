@@ -2,13 +2,11 @@
 /**
  * Created by user on 2018/2/9/009.
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.manyRequest = exports.retryRequest = void 0;
-const request_promise_1 = __importDefault(require("@bluelovers/request-promise"));
-const bluebird_1 = __importDefault(require("bluebird"));
+const tslib_1 = require("tslib");
+const request_promise_1 = (0, tslib_1.__importDefault)(require("@bluelovers/request-promise"));
+const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const log_1 = require("./util/log");
 function retryRequest(url, options = {}) {
     options = Object.assign({

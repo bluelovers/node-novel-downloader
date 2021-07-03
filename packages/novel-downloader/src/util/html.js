@@ -54,7 +54,7 @@ function _keepImageInContext(_imgs, $, { prefix = '插圖', append = '', } = {})
     _imgs.each((i, elem) => {
         let img = $(elem);
         let src = img.prop('src');
-        img.after(`（${prefix}${hash_1.hashSum(src)}）${append}`);
+        img.after(`（${prefix}${(0, hash_1.hashSum)(src)}）${append}`);
         img.remove();
     });
     return _imgs;

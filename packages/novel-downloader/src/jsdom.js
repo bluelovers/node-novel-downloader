@@ -25,9 +25,9 @@ function createOptionsJSDOM(options = {}, ...opts) {
 }
 exports.createOptionsJSDOM = createOptionsJSDOM;
 function getOptions(options) {
-    let opts = jsdom_extra_3.packOptions(options.optionsJSDOM || options);
-    let fromURLOptions = from_url_1.normalizeFromURLOptions(opts);
-    let requestOptions = from_url_1.normalizeRequestOptions(fromURLOptions);
+    let opts = (0, jsdom_extra_3.packOptions)(options.optionsJSDOM || options);
+    let fromURLOptions = (0, from_url_1.normalizeFromURLOptions)(opts);
+    let requestOptions = (0, from_url_1.normalizeRequestOptions)(fromURLOptions);
     return {
         options: opts,
         fromURLOptions,

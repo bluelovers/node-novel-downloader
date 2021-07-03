@@ -2,19 +2,11 @@
 /**
  * Created by user on 2018/3/17/017.
  */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteESJZone = void 0;
+const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = __importDefault(require("../demo/tree"));
+const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const index_1 = require("../index");
@@ -32,19 +24,19 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
     }
      */
     static check(url, ...argv) {
-        return util_2.check(url, ...argv);
+        return (0, util_2.check)(url, ...argv);
     }
     static makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     static parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     makeUrl(urlobj, bool, ...argv) {
-        return util_2.makeUrl(urlobj, bool, ...argv);
+        return (0, util_2.makeUrl)(urlobj, bool, ...argv);
     }
     parseUrl(url, ...argv) {
-        return util_2.parseUrl(url, ...argv);
+        return (0, util_2.parseUrl)(url, ...argv);
     }
     async _decodeChapter(ret, optionsRuntime, cache) {
         const { dom } = ret;
@@ -92,17 +84,17 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
         url = await this.createMainUrl(url, optionsRuntime);
-        return jsdom_extra_1.fromURL(url, optionsRuntime.optionsJSDOM)
+        return (0, jsdom_extra_1.fromURL)(url, optionsRuntime.optionsJSDOM)
             .then(async function (dom) {
             const $ = dom.$;
             let data_meta = {
                 novel: {},
             };
             let section_works_info = $('#section_works_info');
-            let novel_title = util_1.trim(section_works_info.find('.novel_title').text());
+            let novel_title = (0, util_1.trim)(section_works_info.find('.novel_title').text());
             let novel_publisher = self.IDKEY;
             let url_data = self.parseUrl(dom.url.href);
-            let novel_author = util_1.trim(section_works_info.find('.novel_author').text());
+            let novel_author = (0, util_1.trim)(section_works_info.find('.novel_author').text());
             let novel_date;
             const novelTree = optionsRuntime.novelTree;
             let currentVolume;
@@ -123,7 +115,7 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
                 .each(function (index, elem) {
                 let tr = $(elem);
                 if (tr.is('.chapter')) {
-                    let volume_title = util_1.trim(tr.text());
+                    let volume_title = (0, util_1.trim)(tr.text());
                     if (volume_title != currentVolume.content.volume_title) {
                         currentVolume = novelTree.addVolume({
                             volume_title,
@@ -134,7 +126,7 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
                 }
                 else {
                     let a = tr.find('.episode_link a');
-                    let chapter_title = util_1.trim(a.text(), true);
+                    let chapter_title = (0, util_1.trim)(a.text(), true);
                     let href = a.prop('href');
                     let data = self.parseUrl(href);
                     if (!data.chapter_id) {
@@ -156,12 +148,12 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
                 }
             });
             data_meta.novel.cover = section_works_info.find('.novel_cover img').prop('src');
-            let novel_desc = util_1.trim(section_works_info.find('.novel_synopsis').text());
+            let novel_desc = (0, util_1.trim)(section_works_info.find('.novel_synopsis').text());
             data_meta.novel.tags = data_meta.novel.tags || [];
             $('#section_episode .info_table dd')
                 .find(`a[href*="[tag]"], a[href*="genre[1]"]`)
                 .each((i, elem) => {
-                data_meta.novel.tags.push(util_1.trim($(elem).text()));
+                data_meta.novel.tags.push((0, util_1.trim)($(elem).text()));
             });
             return {
                 ...data_meta,
@@ -174,15 +166,15 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
                 novel_publisher,
                 //volume_list,
                 novelTree,
-                checkdate: index_2.moment().local(),
+                checkdate: (0, index_2.moment)().local(),
                 imgs: [],
             };
         });
     }
 };
 NovelSiteESJZone.IDKEY = 'novelup';
-NovelSiteESJZone = __decorate([
-    index_1.staticImplements()
+NovelSiteESJZone = (0, tslib_1.__decorate)([
+    (0, index_1.staticImplements)()
 ], NovelSiteESJZone);
 exports.NovelSiteESJZone = NovelSiteESJZone;
 exports.default = NovelSiteESJZone;

@@ -2,17 +2,15 @@
 /**
  * Created by user on 2018/1/17/017.
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.download_image = void 0;
-const fs_iconv_1 = __importDefault(require("fs-iconv"));
+const tslib_1 = require("tslib");
+const fs_iconv_1 = (0, tslib_1.__importDefault)(require("fs-iconv"));
 const util_1 = require("fs-iconv/util");
-const request_promise_1 = __importDefault(require("@bluelovers/request-promise"));
+const request_promise_1 = (0, tslib_1.__importDefault)(require("@bluelovers/request-promise"));
 const jsdom_extra_1 = require("jsdom-extra");
-const bluebird_1 = __importDefault(require("bluebird"));
-const upath2_1 = __importDefault(require("upath2"));
+const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
 function download_image(img, options) {
     let dirname = options.dir || upath2_1.default.dirname(options.fromfile);
     if (!dirname) {
@@ -24,9 +22,9 @@ function download_image(img, options) {
     if (typeof options.prefix == 'string') {
         filename = options.prefix + filename;
     }
-    filename = util_1.trimFilename(filename);
+    filename = (0, util_1.trimFilename)(filename);
     let file = upath2_1.default.join(dirname, filename);
-    let ret = request_promise_1.default(url.href, {
+    let ret = (0, request_promise_1.default)(url.href, {
         encoding: null,
         resolveWithFullResponse: true,
     })
