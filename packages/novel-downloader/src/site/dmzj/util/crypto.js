@@ -30,10 +30,8 @@ function createPrivateKeyV4(rsa_key) {
     });
 }
 exports.createPrivateKeyV4 = createPrivateKeyV4;
-let _CryptoMD5;
 function md5_hex(data) {
-    _CryptoMD5 !== null && _CryptoMD5 !== void 0 ? _CryptoMD5 : (_CryptoMD5 = (0, crypto_2.createHash)("md5"));
-    return _CryptoMD5.update(data).digest('hex').toLowerCase();
+    return (0, crypto_2.createHash)("md5").update(data).digest('hex').toLowerCase();
 }
 exports.md5_hex = md5_hex;
 //# sourceMappingURL=crypto.js.map

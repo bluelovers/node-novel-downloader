@@ -36,11 +36,7 @@ export function createPrivateKeyV4(rsa_key: string)
 	})
 }
 
-let _CryptoMD5: Hash;
-
 export function md5_hex(data: BinaryLike)
 {
-	_CryptoMD5 ??= createCryptoHash("md5");
-
-	return _CryptoMD5.update(data).digest('hex').toLowerCase()
+	return createCryptoHash("md5").update(data).digest('hex').toLowerCase()
 }
