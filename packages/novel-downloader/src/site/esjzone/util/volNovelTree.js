@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.volNovelTree = void 0;
 const site_1 = require("esjzone-api/lib/util/site");
+const log_1 = require("../../../util/log");
 function volNovelTree($, optionsRuntime, self) {
     const data = (0, site_1._getBookChapters)($, $('.container'), {
         chapters: [],
@@ -36,6 +37,9 @@ function volNovelTree($, optionsRuntime, self) {
                     total_idx: total_idx++,
                 };
                 novelTree.addChapter(chapter, currentVolume);
+            }
+            else {
+                log_1.consoleDebug.warn(`[不支援下載站外連結]`, _chapter.chapter_name, "\n" + _chapter.chapter_link);
             }
         });
     });

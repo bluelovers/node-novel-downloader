@@ -1,6 +1,7 @@
 import { NovelTree, TreeNode, IRowVolume, IRowChapter } from '../../../tree';
 import { _getBookChapters } from 'esjzone-api/lib/util/site';
 import { NovelSiteESJZone } from '../index';
+import { console, consoleDebug } from '../../../util/log';
 
 export function volNovelTree($: JQueryStatic, optionsRuntime: {
 	novelTree: NovelTree,
@@ -52,6 +53,10 @@ export function volNovelTree($: JQueryStatic, optionsRuntime: {
 						};
 
 						novelTree.addChapter(chapter, currentVolume)
+					}
+					else
+					{
+						consoleDebug.warn(`[不支援下載站外連結]`, _chapter.chapter_name, "\n" + _chapter.chapter_link)
 					}
 
 				})

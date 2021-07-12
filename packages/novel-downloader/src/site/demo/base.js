@@ -135,6 +135,10 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             ], {
                 cwd: path_novel,
             })
+                .catch(e => {
+                log_1.consoleDebug.warn('沒有下載任何章節內容');
+                return [];
+            })
                 .mapSeries(async (file) => {
                 let _p = upath2_1.default.parse(file);
                 const _cache_key_ = upath2_1.default.join(_p.dir, _p.name);

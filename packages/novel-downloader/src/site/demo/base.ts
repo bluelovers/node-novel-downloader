@@ -237,6 +237,11 @@ export class NovelSiteDemo extends _NovelSite
 				], {
 					cwd: path_novel,
 				})
+					.catch(e => {
+						consoleDebug.warn('沒有下載任何章節內容');
+
+						return [] as string[]
+					})
 					.mapSeries(async (file) =>
 					{
 						let _p = path.parse(file);
