@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.31](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.30...novel-downloader@2.0.31) (2021-07-12)
+
+
+### ✨　Features
+
+* 修正沒有下載任何章節內容時產生無法理解為什麼的錯誤 ([aca0e83](https://github.com/bluelovers/node-novel-downloader/commit/aca0e835725f7641b99cd1fceb6f0291f3dcc7e1))
+
+
+### 🔖　Miscellaneous
+
+* . ([0c9112d](https://github.com/bluelovers/node-novel-downloader/commit/0c9112da8e931e7a6761ac803065ef931d79b164))
+
+
+
+
+
 ## [2.0.30](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.29...novel-downloader@2.0.30) (2021-07-11)
 
 
