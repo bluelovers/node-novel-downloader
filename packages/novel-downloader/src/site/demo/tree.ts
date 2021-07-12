@@ -210,7 +210,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 							volume, vid,
 						}, optionsRuntime);
 
-						name = path.relative('~temp', name);
+						name = path.relative('~temp', name as any);
 
 						let ps = pnode.parent.get('dirname');
 						dirname = path.join(ps, name);
