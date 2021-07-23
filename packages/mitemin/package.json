@@ -26,7 +26,7 @@
     "tsc:esm": "tsc -p tsconfig.esm.json"
   },
   "dependencies": {
-    "lazy-url": "^1.0.10",
+    "lazy-url": "^1.0.12",
     "tslib": "^2.3.0"
   },
   "gitHead": "2cae1343b29979515aed7e759559b6d77d8182da"
