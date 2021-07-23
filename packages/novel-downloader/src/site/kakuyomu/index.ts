@@ -18,6 +18,7 @@ import NovelSite, { staticImplements, defaultJSDOMOptions, SYMBOL_CACHE } from '
 import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import { parseUrl, makeUrl, check } from './util';
+import { keepFormatTag } from '../../util/html';
 
 @staticImplements<NovelSite.INovelSiteStatic<NovelSiteKakuyomu>>()
 export class NovelSiteKakuyomu extends NovelSiteDemo
@@ -55,6 +56,11 @@ export class NovelSiteKakuyomu extends NovelSiteDemo
 		{
 			return '';
 		}
+
+		keepFormatTag(ret.dom.$('#contentMain .widget-episodeBody'), {
+			$: ret.dom.$,
+			optionsRuntime,
+		});
 
 		return ret.dom.$('#contentMain .widget-episodeBody').text();
 	}

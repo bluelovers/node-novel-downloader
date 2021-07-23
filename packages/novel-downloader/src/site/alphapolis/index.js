@@ -14,6 +14,7 @@ const index_2 = require("../index");
 const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
 const path_1 = (0, tslib_1.__importDefault)(require("path"));
 const util_2 = require("./util");
+const html_1 = require("../../util/html");
 let NovelSiteClass = class NovelSiteClass extends base_1.default {
     static check(url, ...argv) {
         return (0, util_2.check)(url, ...argv);
@@ -49,6 +50,10 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
             return '';
         }
         let body_selector = '#novelBoby';
+        (0, html_1.keepFormatTag)(ret.dom.$(body_selector), {
+            $,
+            optionsRuntime,
+        });
         let text = ret.dom.$(body_selector).text();
         text = this._stripContent(text);
         return text;

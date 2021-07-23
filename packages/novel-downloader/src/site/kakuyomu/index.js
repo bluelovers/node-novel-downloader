@@ -12,6 +12,7 @@ const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const util_2 = require("./util");
+const html_1 = require("../../util/html");
 let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
     static check(url, ...argv) {
         return (0, util_2.check)(url, ...argv);
@@ -32,6 +33,10 @@ let NovelSiteKakuyomu = class NovelSiteKakuyomu extends tree_1.default {
         if (!ret) {
             return '';
         }
+        (0, html_1.keepFormatTag)(ret.dom.$('#contentMain .widget-episodeBody'), {
+            $: ret.dom.$,
+            optionsRuntime,
+        });
         return ret.dom.$('#contentMain .widget-episodeBody').text();
     }
     /**

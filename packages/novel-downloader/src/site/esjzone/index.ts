@@ -11,7 +11,7 @@ import NovelSite, { staticImplements, moment } from '../index';
 import { retryRequest } from '../../fetch';
 import { dotSetValue, dotGetValue } from '../../util/value';
 import { zhRegExp } from '../../util/regex';
-import { _keepImageInContext, _saveImageToAttach } from '../../util/html';
+import { _keepImageInContext, _saveImageToAttach, keepFormatTag } from '../../util/html';
 import { parseUrl, makeUrl, check, _p_2_br, _remove_ad } from './util';
 import { SYMBOL_RAW } from 'jsdom-extra/lib/const';
 import { _getBookInfo, _getBookLinks, _getBookTags, _getBookCover, _getBookElemDesc, _getChapterDomContent, _getChapterData } from 'esjzone-api/lib/util/site';
@@ -19,6 +19,7 @@ import { IESJzoneRecentUpdateRowBook } from 'esjzone-api/lib/types';
 import tryMinifyHTML from 'restful-decorator-plugin-jsdom/lib/html';
 import volNovelTree from './util/volNovelTree';
 import { tryMinifyHTMLOfElem } from 'restful-decorator-plugin-jsdom/lib/html';
+import { toFullWidth } from 'str-util/lib/fullhalf';
 
 //import { URL } from 'jsdom-url';
 
@@ -192,6 +193,11 @@ export class NovelSiteESJZone extends NovelSiteDemo
 		{
 			await _keepImageInContext($content.find('img[src]'), $);
 		}
+
+		keepFormatTag($content, {
+			$,
+			optionsRuntime,
+		});
 
 		let txt: string = $content
 			.text()

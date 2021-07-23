@@ -18,6 +18,7 @@ import path from "path";
 import StrUtil from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { parseUrl, makeUrl, check } from './util';
+import { keepFormatTag } from '../../util/html';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteClass>>()
 export class NovelSiteClass extends NovelSiteBase
@@ -81,6 +82,11 @@ export class NovelSiteClass extends NovelSiteBase
 		}
 
 		let body_selector = '#novelBoby';
+
+		keepFormatTag(ret.dom.$(body_selector), {
+			$,
+			optionsRuntime,
+		});
 
 		let text = ret.dom.$(body_selector).text();
 

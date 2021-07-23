@@ -11,7 +11,7 @@ import NovelSiteBase, { IDownloadOptions, IFetchChapter, INovel, IOptionsRuntime
 import { createJSDOM, IJSDOM } from 'jsdom-extra';
 import path from "path";
 import { zhRegExp } from 'regexp-cjk';
-import { _keepImageInContext, _saveImageToAttach } from '../../util/html';
+import { _keepImageInContext, _saveImageToAttach, keepFormatTag } from '../../util/html';
 import { check, makeUrl, parseUrl } from './util';
 
 //import escapeStringRegexp from 'escape-string-regexp';
@@ -143,11 +143,21 @@ export class NovelSiteTpl extends NovelSiteBase
 
 		if (ret.dom)
 		{
+			keepFormatTag(ret.dom.$(body_selector), {
+				$: ret.dom.$,
+				optionsRuntime,
+			});
+
 			text = ret.dom.$(body_selector).text();
 		}
 		else
 		{
 			ret.dom = createJSDOM(ret.body.toString());
+
+			keepFormatTag(ret.dom.$(body_selector), {
+				$: ret.dom.$,
+				optionsRuntime,
+			});
 
 			text = ret.dom.$(body_selector).text();
 		}

@@ -92,10 +92,18 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         }
         let text;
         if (ret.dom) {
+            (0, html_1.keepFormatTag)(ret.dom.$(body_selector), {
+                $: ret.dom.$,
+                optionsRuntime,
+            });
             text = ret.dom.$(body_selector).text();
         }
         else {
             ret.dom = (0, jsdom_extra_1.createJSDOM)(ret.body.toString());
+            (0, html_1.keepFormatTag)(ret.dom.$(body_selector), {
+                $: ret.dom.$,
+                optionsRuntime,
+            });
             text = ret.dom.$(body_selector).text();
         }
         const $ = ret.dom.$;

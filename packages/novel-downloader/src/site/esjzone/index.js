@@ -121,6 +121,10 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
         if (optionsRuntime.keepImage) {
             await (0, html_1._keepImageInContext)($content.find('img[src]'), $);
         }
+        (0, html_1.keepFormatTag)($content, {
+            $,
+            optionsRuntime,
+        });
         let txt = $content
             .text()
             .replace(this._reContext, '')
