@@ -16,7 +16,8 @@ function makeUrl(urlobj, bool, ...argv) {
     else {
         pad = `book/${urlobj.novel_id}/`;
     }
-    url = `https://www.x23qb.com/${pad}`;
+    //url = `https://www.x23qb.com/${pad}`;
+    url = `https://www.23qb.com/${pad}`;
     return (0, url_1.default)(url);
 }
 exports.makeUrl = makeUrl;
