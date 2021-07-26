@@ -90,6 +90,7 @@
     "regexp-cjk": "^3.3.94",
     "regexp-cjk-plugin-escape-unicode-property": "^1.0.25",
     "regexp-cjk-plugin-extra": "^1.0.34",
+    "regexp-cjk-with-plugin-enabled": "^1.0.1",
     "request-promise": "npm:@bluelovers/request-promise",
     "set-value": "^4.0.0",
     "shortid": "^2.2.16",

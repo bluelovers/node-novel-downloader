@@ -5,6 +5,7 @@
 import { toFullWidth } from 'str-util';
 import { zhRegExp } from 'regexp-cjk';
 import { array_unique } from './util';
+import zhRegExpWithPluginEnabled from 'regexp-cjk-with-plugin-enabled';
 
 let inited: RegExp[];
 
@@ -40,19 +41,19 @@ export function stripInit()
 
 	].reduce(function (a, v)
 	{
-		let s = char_autoFH(v);
+		let s = v;
 
-		if (s.indexOf('^') != 0)
+		if (s.indexOf('^') !== 0)
 		{
 			s = ' *' + s;
 		}
 
-		if (s[s.length - 1] != '$')
+		if (s[s.length - 1] !== '$')
 		{
 			s = s + ' *';
 		}
 
-		let r = new zhRegExp(s, 'igm');
+		let r = new zhRegExpWithPluginEnabled(s, 'igm');
 
 		a.push(r);
 
@@ -60,9 +61,11 @@ export function stripInit()
 	}, [] as RegExp[]);
 }
 
+console.dir(stripInit())
+
 export function stripContent(text: string)
 {
-	if (!inited || !inited.length)
+	if (!inited?.length)
 	{
 		inited = stripInit();
 	}

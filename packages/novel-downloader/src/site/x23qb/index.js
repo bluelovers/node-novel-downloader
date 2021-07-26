@@ -12,9 +12,9 @@ const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const fetch_1 = require("../../fetch");
-const regexp_cjk_1 = require("regexp-cjk");
 const util_2 = require("./util");
 const util_3 = require("../esjzone/util");
+const regexp_cjk_with_plugin_enabled_1 = (0, tslib_1.__importDefault)(require("regexp-cjk-with-plugin-enabled"));
 /**
  * 铅笔小说
  * @example https://www.x23qb.com/book/284/
@@ -97,7 +97,7 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
         });
         let title = (0, util_1.trim)(ret.dom.$('mlfy_main_text > h1:eq(0)').text());
         if (!this._cache_re) {
-            this._cache_re = new regexp_cjk_1.zhRegExp(/^(?:鉛\s*筆\s*小\s*說\(w\s*w\s*w\s*\.\s*x\s*2\s*3\s*q\s*b\s*\.\s*c\s*o\s*m\))$/uigm);
+            this._cache_re = new regexp_cjk_with_plugin_enabled_1.default(/^(?:鉛\s*筆\s*小\s*說\(w\s*w\s*w\s*\.\s*x\s*2\s*3\s*q\s*b\s*\.\s*c\s*o\s*m\))$/uigm);
         }
         let txt = elem
             .text()

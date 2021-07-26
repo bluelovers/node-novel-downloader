@@ -4,9 +4,10 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripContent = exports.stripInit = void 0;
+const tslib_1 = require("tslib");
 const str_util_1 = require("str-util");
-const regexp_cjk_1 = require("regexp-cjk");
 const util_1 = require("./util");
+const regexp_cjk_with_plugin_enabled_1 = (0, tslib_1.__importDefault)(require("regexp-cjk-with-plugin-enabled"));
 let inited;
 function stripInit() {
     return [
@@ -28,21 +29,22 @@ function stripInit() {
         `(?:<a>)?UU看书欢迎广大书友光临阅读，最新、最快、最火的连载作品尽在UU看书！(?:<\\/a>)?;?(?:(?:<a>)?UU看书。(?:<\\/a>)?;?)?`,
         `(?:<a>)?UU看书。(?:<\\/a>)?;?`,
     ].reduce(function (a, v) {
-        let s = char_autoFH(v);
-        if (s.indexOf('^') != 0) {
+        let s = v;
+        if (s.indexOf('^') !== 0) {
             s = ' *' + s;
         }
-        if (s[s.length - 1] != '$') {
+        if (s[s.length - 1] !== '$') {
             s = s + ' *';
         }
-        let r = new regexp_cjk_1.zhRegExp(s, 'igm');
+        let r = new regexp_cjk_with_plugin_enabled_1.default(s, 'igm');
         a.push(r);
         return a;
     }, []);
 }
 exports.stripInit = stripInit;
+console.dir(stripInit());
 function stripContent(text) {
-    if (!inited || !inited.length) {
+    if (!(inited === null || inited === void 0 ? void 0 : inited.length)) {
         inited = stripInit();
     }
     inited.forEach(function (r) {

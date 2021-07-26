@@ -1,3 +1,2 @@
-import _zhRegExp from 'regexp-cjk';
-export declare const zhRegExp: typeof _zhRegExp;
-export default zhRegExp;
+export { zhRegExpWithPluginEnabled as zhRegExp } from 'regexp-cjk-with-plugin-enabled';
+export { zhRegExpWithPluginEnabled as default } from 'regexp-cjk-with-plugin-enabled';

@@ -21,6 +21,7 @@ import { retryRequest } from '../../fetch';
 import { zhRegExp } from 'regexp-cjk';
 import { parseUrl, makeUrl, check } from './util';
 import { _p_2_br } from '../esjzone/util';
+import zhRegExpWithPluginEnabled from 'regexp-cjk-with-plugin-enabled';
 
 /**
  * 铅笔小说
@@ -164,7 +165,7 @@ export class NovelSiteX23qb extends NovelSiteDemo
 
 		if (!this._cache_re)
 		{
-			this._cache_re = new zhRegExp(/^(?:鉛\s*筆\s*小\s*說\(w\s*w\s*w\s*\.\s*x\s*2\s*3\s*q\s*b\s*\.\s*c\s*o\s*m\))$/uigm)
+			this._cache_re = new zhRegExpWithPluginEnabled(/^(?:鉛\s*筆\s*小\s*說\(w\s*w\s*w\s*\.\s*x\s*2\s*3\s*q\s*b\s*\.\s*c\s*o\s*m\))$/uigm)
 		}
 
 		let txt: string = elem
