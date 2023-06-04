@@ -2,13 +2,14 @@
   "name": "mitemin",
   "version": "1.0.9",
   "description": "parse mitemin url",
-  "homepage": "https://github.com/bluelovers/node-novel-downloader#readme",
+  "homepage": "https://github.com/bluelovers/node-novel-downloader/tree/master/packages/mitemin#readme",
   "bugs": {
     "url": "https://github.com/bluelovers/node-novel-downloader/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bluelovers/node-novel-downloader.git"
+    "url": "git+https://github.com/bluelovers/node-novel-downloader.git",
+    "directory": "packages/mitemin"
   },
   "license": "ISC",
   "author": "",
@@ -17,17 +18,24 @@
     "coverage": "npx nyc yarn run test",
     "lint": "npx eslint **/*.ts",
     "test": "ts-node ./test/demo",
+    "test:jest": "jest --passWithNoTests",
+    "test:jest:coverage": "yarn run test:jest -- --coverage",
+    "test:jest:snapshot": "yarn run test:jest -- -u",
+    "test:snapshot": "yarn run test -- -u",
+    "test:tsd": "ynpx tsd",
     "npm:publish": "npm publish",
+    "preversion": "yarn run test",
     "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
     "postpublish_": "git commit -m \"publish new version\" .",
     "ncu": "npx yarn-tool ncu -u",
     "sort-package-json": "npx sort-package-json ./package.json",
     "tsc:default": "tsc -p tsconfig.json",
-    "tsc:esm": "tsc -p tsconfig.esm.json"
+    "tsc:esm": "tsc -p tsconfig.esm.json",
+    "tsc:showConfig": "ynpx get-current-tsconfig -p"
   },
   "dependencies": {
-    "lazy-url": "^1.0.12",
-    "tslib": "^2.3.0"
+    "lazy-url": "^2.0.4",
+    "tslib": "^2.5.3"
   },
   "gitHead": "2cae1343b29979515aed7e759559b6d77d8182da"
 }

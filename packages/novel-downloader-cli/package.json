@@ -20,13 +20,14 @@
     "txt",
     "wenku8"
   ],
-  "homepage": "https://github.com/bluelovers/node-novel-downloader#readme",
+  "homepage": "https://github.com/bluelovers/node-novel-downloader/tree/master/packages/novel-downloader-cli#readme",
   "bugs": {
     "url": "https://github.com/bluelovers/node-novel-downloader/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bluelovers/node-novel-downloader.git"
+    "url": "git+https://github.com/bluelovers/node-novel-downloader.git",
+    "directory": "packages/novel-downloader-cli"
   },
   "license": "ISC",
   "author": "bluelovers",
@@ -42,7 +43,12 @@
     "coverage": "npx nyc yarn run test",
     "lint": "npx eslint **/*.ts",
     "test": "ts-node ./bin/novel-downloader-cli \"http://ncode.syosetu.com/n0611em/\"",
+    "test:jest": "jest --passWithNoTests",
+    "test:jest:coverage": "yarn run test:jest -- --coverage",
+    "test:jest:snapshot": "yarn run test:jest -- -u",
     "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
+    "test:snapshot": "yarn run test -- -u",
+    "test:tsd": "ynpx tsd",
     "npm:publish": "npm publish",
     "preversion": "yarn run test",
     "prepublish:lockfile": "npx sync-lockfile .",
@@ -51,23 +57,24 @@
     "ncu": "npx yarn-tool ncu -u",
     "sort-package-json": "npx yarn-tool sort",
     "tsc:default": "tsc -p tsconfig.json",
-    "tsc:esm": "tsc -p tsconfig.esm.json"
+    "tsc:esm": "tsc -p tsconfig.esm.json",
+    "tsc:showConfig": "ynpx get-current-tsconfig -p"
   },
   "dependencies": {
-    "@yarn-tool/is-npx": "^1.0.7",
-    "@yarn-tool/update-notifier": "^1.0.20",
-    "array-hyper-unique": "^1.1.10",
+    "@yarn-tool/is-npx": "^1.0.17",
+    "@yarn-tool/update-notifier": "^1.0.38",
+    "array-hyper-unique": "^2.1.4",
     "bluebird": "^3.7.2",
     "cross-spawn-extra": "^2.1.0",
-    "debug-color2": "^1.2.7",
-    "diff": "^5.0.0",
-    "moment": "^2.29.1",
+    "debug-color2": "^1.3.2",
+    "diff": "^5.1.0",
+    "moment": "^2.29.4",
     "node-alias": "^1.0.4",
-    "node-novel-info": "^3.0.14",
+    "node-novel-info": "^3.0.16",
     "novel-downloader": "^2.0.32",
-    "ts-type": "^1.2.39",
-    "tslib": "^2.3.0",
-    "yargs": "^17.0.1"
+    "ts-type": "^3.0.1",
+    "tslib": "^2.5.3",
+    "yargs": "^17.7.2"
   },
   "engines": {
     "node": ">= 13"

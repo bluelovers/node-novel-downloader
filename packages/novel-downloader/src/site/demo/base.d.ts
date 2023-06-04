@@ -3,13 +3,13 @@ import { IJSDOM } from 'jsdom-extra';
 import _NovelSite from '../index';
 import { PromiseBluebird } from '../index';
 import parseContentType from 'content-type-parser';
-export declare type IOptionsPlus = {};
-export declare type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus;
-export declare type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus;
+export type IOptionsPlus = {};
+export type IDownloadOptions = _NovelSite.IDownloadOptions & _NovelSite.IOptions & IOptionsPlus;
+export type IOptionsRuntime = _NovelSite.IOptionsRuntime & IOptionsPlus;
 export import INovel = _NovelSite.INovel;
 import { ResponseRequest } from 'request';
 import { IRowChapter, IRowVolume } from '../../tree';
-export declare type IFetchChapter = {
+export type IFetchChapter = {
     body?: any;
     dom?: IJSDOM;
     res?: ResponseRequest;
@@ -17,7 +17,7 @@ export declare type IFetchChapter = {
     url?: URL;
     contentTypeParsed?: ReturnType<parseContentType>;
 };
-export declare type ISessionData = {
+export type ISessionData = {
     [key: string]: any;
 };
 export declare class NovelSiteDemo extends _NovelSite {

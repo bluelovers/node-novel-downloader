@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteESJZone = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
+const tree_1 = tslib_1.__importDefault(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = require("../index");
 const fetch_1 = require("../../fetch");
@@ -14,11 +14,11 @@ const value_1 = require("../../util/value");
 const html_1 = require("../../util/html");
 const util_2 = require("./util");
 const site_1 = require("esjzone-api/lib/util/site");
-const volNovelTree_1 = (0, tslib_1.__importDefault)(require("./util/volNovelTree"));
+const volNovelTree_1 = tslib_1.__importDefault(require("./util/volNovelTree"));
 const html_2 = require("restful-decorator-plugin-jsdom/lib/html");
-const regexp_cjk_with_plugin_enabled_1 = (0, tslib_1.__importDefault)(require("regexp-cjk-with-plugin-enabled"));
+const regexp_cjk_with_plugin_enabled_1 = tslib_1.__importDefault(require("regexp-cjk-with-plugin-enabled"));
 //import { URL } from 'jsdom-url';
-let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
+let NovelSiteESJZone = exports.NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
     _constructor(...argv) {
         // @ts-ignore
         super._constructor(...argv);
@@ -310,9 +310,8 @@ let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
     }
 };
 NovelSiteESJZone.IDKEY = 'esjzone';
-NovelSiteESJZone = (0, tslib_1.__decorate)([
+exports.NovelSiteESJZone = NovelSiteESJZone = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteESJZone);
-exports.NovelSiteESJZone = NovelSiteESJZone;
 exports.default = NovelSiteESJZone;
 //# sourceMappingURL=index.js.map

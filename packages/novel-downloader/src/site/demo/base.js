@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSite = exports.NovelSiteDemo = void 0;
 const tslib_1 = require("tslib");
 const fetch_1 = require("../../fetch");
-const fs_extra_1 = (0, tslib_1.__importDefault)(require("fs-extra"));
-const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
+const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
+const upath2_1 = tslib_1.__importDefault(require("upath2"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const fs_1 = require("../fs");
@@ -13,17 +13,17 @@ const helper_1 = require("node-novel-globby/lib/helper");
 const g_1 = require("node-novel-globby/g");
 const layout_reporter_1 = require("@node-novel/layout-reporter");
 const md_1 = require("@node-novel/layout-reporter/lib/md");
-const index_1 = (0, tslib_1.__importStar)(require("../index"));
+const index_1 = tslib_1.__importStar(require("../index"));
 const index_2 = require("../index");
-const content_type_parser_1 = (0, tslib_1.__importDefault)(require("content-type-parser"));
-const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const content_type_parser_1 = tslib_1.__importDefault(require("content-type-parser"));
+const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
 const lazy_cookies_1 = require("lazy-cookies");
 const jsdom_extra_2 = require("jsdom-extra");
 const log_1 = require("../../util/log");
 const tree_1 = require("../../tree");
 const array_hyper_unique_1 = require("array-hyper-unique");
-const outputNovelToAttach_1 = (0, tslib_1.__importDefault)(require("../../util/outputNovelToAttach"));
-let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
+const outputNovelToAttach_1 = tslib_1.__importDefault(require("../../util/outputNovelToAttach"));
+let NovelSiteDemo = exports.NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
     }
@@ -486,11 +486,10 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     }
 };
 NovelSiteDemo.IDKEY = null;
-NovelSiteDemo = (0, tslib_1.__decorate)([
+exports.NovelSiteDemo = NovelSiteDemo = tslib_1.__decorate([
     (0, index_1.staticImplements)(),
-    (0, tslib_1.__metadata)("design:paramtypes", [Object, Object])
+    tslib_1.__metadata("design:paramtypes", [Object, Object])
 ], NovelSiteDemo);
-exports.NovelSiteDemo = NovelSiteDemo;
 exports.NovelSite = NovelSiteDemo;
 exports.default = NovelSiteDemo;
 //# sourceMappingURL=base.js.map

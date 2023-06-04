@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 /**
  * Created by user on 2020/1/6.
  */
-const lazy_url_1 = (0, tslib_1.__importDefault)(require("lazy-url"));
+const lazy_url_1 = tslib_1.__importDefault(require("lazy-url"));
 function parse(input) {
     let u = new lazy_url_1.default(input);
     if (!/\.mitemin/.test(u.host)) {

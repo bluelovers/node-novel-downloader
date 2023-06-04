@@ -7,7 +7,7 @@ exports.stripContent = exports.stripInit = void 0;
 const tslib_1 = require("tslib");
 const str_util_1 = require("str-util");
 const util_1 = require("./util");
-const regexp_cjk_with_plugin_enabled_1 = (0, tslib_1.__importDefault)(require("regexp-cjk-with-plugin-enabled"));
+const regexp_cjk_with_plugin_enabled_1 = tslib_1.__importDefault(require("regexp-cjk-with-plugin-enabled"));
 let inited;
 function stripInit() {
     return [
