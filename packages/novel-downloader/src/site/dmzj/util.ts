@@ -14,7 +14,8 @@ export function makeUrl(urlobj: NovelSite.IParseUrl, bool ?: boolean | number, .
 
 	//const api_url = 'http://v2.api.dmzj.com';
 	//const api_url = 'http://nnv3api.dmzj1.com';
-	const api_url = 'http://nnv4api.muwai.com';
+	//const api_url = 'http://nnv4api.muwai.com';
+	const api_url = 'http://nnv4api.dmzj.com';
 
 	if (bool === 2 && urlobj.novel_id)
 	{
