@@ -1,6 +1,6 @@
 import { getTokenV4 } from './v4';
 
-export const txtUrlPrefix = 'http://jurisdiction.muwai.com' as const;
+export const txtUrlPrefix = 'http://jurisdiction.dmzj.com' as const;
 
 export class TxtUrlCreator
 {
