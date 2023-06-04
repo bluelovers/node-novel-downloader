@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.10](https://github.com/bluelovers/node-novel-downloader/compare/mitemin@1.0.9...mitemin@1.0.10) (2023-06-04)
+
+
+### BREAKING CHANGES
+
+* update deps
+
+
+
+### 📌　Dependencies
+
+* update deps ([0423e8e](https://github.com/bluelovers/node-novel-downloader/commit/0423e8e3056601e8c5a69e524475ef918a53db7f))
+
+
+
 ## [1.0.9](https://github.com/bluelovers/node-novel-downloader/compare/mitemin@1.0.8...mitemin@1.0.9) (2021-07-23)
 
 

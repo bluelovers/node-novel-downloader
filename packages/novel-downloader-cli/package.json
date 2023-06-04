@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader-cli",
-  "version": "1.0.61",
+  "version": "1.0.62",
   "description": "novel-downloader 的 CLI 版本",
   "keywords": [
     "acg",
@@ -71,7 +71,7 @@
     "moment": "^2.29.4",
     "node-alias": "^1.0.4",
     "node-novel-info": "^3.0.16",
-    "novel-downloader": "^2.0.32",
+    "novel-downloader": "^2.0.33",
     "ts-type": "^3.0.1",
     "tslib": "^2.5.3",
     "yargs": "^17.7.2"

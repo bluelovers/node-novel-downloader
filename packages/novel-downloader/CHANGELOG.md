@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.33](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.32...novel-downloader@2.0.33) (2023-06-04)
+
+
+### BREAKING CHANGES
+
+* update deps
+
+
+
+### ✨　Features
+
+* 鉛筆小說網 改用新域名 ([02b44a9](https://github.com/bluelovers/node-novel-downloader/commit/02b44a9dbdef5397dfcfadf83b42d1b0aa0ffab9))
+
+
+### 📦　Code Refactoring
+
+* use `regexp-cjk-with-plugin-enabled` ([3275c40](https://github.com/bluelovers/node-novel-downloader/commit/3275c409242a74ff26e8d1d18d25975741c41ad3))
+
+
+### 📌　Dependencies
+
+* update deps ([0423e8e](https://github.com/bluelovers/node-novel-downloader/commit/0423e8e3056601e8c5a69e524475ef918a53db7f))
+
+
+### 🔖　Miscellaneous
+
+* Update txtUrlCreator.js ([d1c918d](https://github.com/bluelovers/node-novel-downloader/commit/d1c918d47451d0a90d0c4c982e0b59544607a055))
+* Update util.js ([3aa98c5](https://github.com/bluelovers/node-novel-downloader/commit/3aa98c55cf8471c3bd26cc6c5723596143ffa694))
+* Update txtUrlCreator.ts ([20e93ae](https://github.com/bluelovers/node-novel-downloader/commit/20e93ae855a359d09a91bf6f1ca747fc7604921b))
+* Update util.ts ([1c9bdeb](https://github.com/bluelovers/node-novel-downloader/commit/1c9bdebb5aab2d1eef8ec89127c1aeeca8c55dff))
+
+
+
 ## [2.0.32](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.31...novel-downloader@2.0.32) (2021-07-23)
 
 

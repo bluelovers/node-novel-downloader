@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader",
-  "version": "2.0.32",
+  "version": "2.0.33",
   "description": "novel downloader for node-novel style , include site ( dmzj / wenku8 / syosetu / ...etc )",
   "keywords": [
     "acg",
@@ -89,7 +89,7 @@
     "js-tree-list2": "^1.1.19",
     "jsdom-extra": "^3.0.7",
     "jsdom-url": "^3.0.1",
-    "mitemin": "^1.0.9",
+    "mitemin": "^1.0.10",
     "moment-timezone": "^0.5.43",
     "node-novel-globby": "^2.0.23",
     "node-novel-info": "^3.0.16",
