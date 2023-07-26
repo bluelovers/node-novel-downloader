@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TxtUrlCreator = exports.txtUrlPrefix = void 0;
 const v4_1 = require("./v4");
-exports.txtUrlPrefix = 'http://jurisdiction.dmzj.com';
+exports.txtUrlPrefix = 'https://jurisdiction.idmzj.com';
 class TxtUrlCreator {
     constructor(volid, chapterid) {
         this.volid = volid;
