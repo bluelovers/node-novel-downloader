@@ -3,9 +3,9 @@
  */
 import { Tree, Node, ITreeToList } from 'js-tree-list2';
 import { IChapter, IVolume } from '../site/index';
-export declare type ITreeID = string | number;
+export type ITreeID = string | number;
 export { ITreeToList };
-export declare type TreeNode<T = IRowRoot | IRowVolume | IRowChapter> = Node<T>;
+export type TreeNode<T = IRowRoot | IRowVolume | IRowChapter> = Node<T>;
 export interface ITree {
     level?: number;
     type?: string;
@@ -13,14 +13,14 @@ export interface ITree {
     idx?: number;
     name?: string;
 }
-export declare type IRowVolume<T = {}> = T & IVolume & ITree & {
+export type IRowVolume<T = {}> = T & IVolume & ITree & {
     type?: 'volume';
     volume_index?: string | number;
     volume_title: string;
     dirname?: string;
     volume_level?: string | number;
 };
-export declare type IRowChapter<T = {}> = T & IChapter & ITree & {
+export type IRowChapter<T = {}> = T & IChapter & ITree & {
     type?: 'chapter';
     chapter_index?: string | number;
     chapter_title: string;
@@ -30,10 +30,10 @@ export declare type IRowChapter<T = {}> = T & IChapter & ITree & {
     chapter_date?: any;
     path?: string;
 };
-export declare type IRowRoot<T = {}> = ITree & {
+export type IRowRoot<T = {}> = ITree & {
     type?: 'root';
 } & T;
-export declare type IRowNovel = IRowVolume | IRowChapter;
+export type IRowNovel = IRowVolume | IRowChapter;
 export declare class NovelTree {
     tree: Tree<IRowRoot | IRowVolume | IRowChapter>;
     cache: {

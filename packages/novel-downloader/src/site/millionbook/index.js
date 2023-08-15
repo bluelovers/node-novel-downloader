@@ -8,12 +8,12 @@ const tslib_1 = require("tslib");
 const strip_1 = require("../../strip");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
+const base_1 = tslib_1.__importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
-const path_1 = (0, tslib_1.__importDefault)(require("path"));
+const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
+const path_1 = tslib_1.__importDefault(require("path"));
 const util_2 = require("./util");
 let NovelSiteClass = class NovelSiteClass extends base_1.default {
     static check(url, ...argv) {
@@ -179,10 +179,10 @@ let NovelSiteClass = class NovelSiteClass extends base_1.default {
         });
     }
 };
+exports.NovelSiteClass = NovelSiteClass;
 NovelSiteClass.IDKEY = path_1.default.basename(__dirname);
-NovelSiteClass = (0, tslib_1.__decorate)([
+exports.NovelSiteClass = NovelSiteClass = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteClass);
-exports.NovelSiteClass = NovelSiteClass;
 exports.default = NovelSiteClass;
 //# sourceMappingURL=index.js.map

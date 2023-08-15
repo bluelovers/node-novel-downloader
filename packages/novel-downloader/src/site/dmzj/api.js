@@ -9,10 +9,10 @@ const fetch_1 = require("../../fetch");
 const strip_1 = require("../../strip");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
+const base_1 = tslib_1.__importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
-const path_1 = (0, tslib_1.__importDefault)(require("path"));
+const path_1 = tslib_1.__importDefault(require("path"));
 const regexp_cjk_1 = require("regexp-cjk");
 const html_1 = require("../../util/html");
 const util_2 = require("./util");
@@ -218,10 +218,10 @@ let NovelSiteTpl = class NovelSiteTpl extends base_1.default {
         });
     }
 };
+exports.NovelSiteTpl = NovelSiteTpl;
 NovelSiteTpl.IDKEY = path_1.default.basename(__dirname);
-NovelSiteTpl = (0, tslib_1.__decorate)([
+exports.NovelSiteTpl = NovelSiteTpl = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteTpl);
-exports.NovelSiteTpl = NovelSiteTpl;
 exports.default = NovelSiteTpl;
 //# sourceMappingURL=api.js.map

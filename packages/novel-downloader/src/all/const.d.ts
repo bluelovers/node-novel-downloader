@@ -57,7 +57,7 @@ export declare enum EnumNovelSiteList {
     './site/wenku8' = "wenku8",
     './site/x23qb' = "x23qb"
 }
-export declare type EnumNovelSiteListString = 'alphapolis' | 'demo/base' | 'demo/demo' | 'demo/tree' | 'dmzj/api' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
+export type EnumNovelSiteListString = 'alphapolis' | 'demo/base' | 'demo/demo' | 'demo/tree' | 'dmzj/api' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
 export declare enum EnumIDKEYList {
     NovelSiteAlphapolis = "alphapolis",
     NovelSiteDmzjApi = "dmzj",
@@ -108,7 +108,7 @@ export declare enum EnumIDKEYList {
     './site/wenku8' = "wenku8",
     './site/x23qb' = "x23qb"
 }
-export declare type EnumIDKEYListString = 'alphapolis' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
+export type EnumIDKEYListString = 'alphapolis' | 'dmzj' | 'esjzone' | 'hetubook' | 'iqing' | 'kakuyomu' | 'millionbook' | 'novelba' | 'novelup' | 'sfacg' | 'syosetu' | 'uukanshu' | 'webqxs' | 'wenku8' | 'x23qb';
 export declare enum EnumIDKEYToSiteID {
     'alphapolis' = "alphapolis",
     'dmzj' = "dmzj/api",

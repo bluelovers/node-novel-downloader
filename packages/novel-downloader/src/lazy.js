@@ -8,7 +8,7 @@ const tslib_1 = require("tslib");
 const const_1 = require("./all/const");
 const all_1 = require("./all");
 //import { URL } from 'jsdom-url';
-const url_1 = (0, tslib_1.__importDefault)(require("./util/url"));
+const url_1 = tslib_1.__importDefault(require("./util/url"));
 function getEnumNovelSiteList() {
     return Object.values(const_1.EnumIDKEYToSiteID);
 }

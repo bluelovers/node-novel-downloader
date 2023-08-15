@@ -1,4 +1,6 @@
 /// <reference types="jquery" />
+/// <reference types="jquery" />
+/// <reference types="jquery" />
 import NovelSite from '../site/index';
 export declare function keepFormatTag<O = NovelSite.IOptionsRuntime, E extends unknown | JQueryStatic = unknown>(target: E, opts: {
     $: JQueryStatic;

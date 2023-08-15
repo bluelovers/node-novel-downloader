@@ -4,7 +4,11 @@
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -62,7 +66,7 @@ fg.async([
     //console.log(ls);
     ls = await Bluebird.resolve(ls)
         .filter(async ([k, v]) => {
-        let m = await Promise.resolve().then(() => __importStar(require(`../src/site/${v}`))).then(m => m.default)
+        let m = await Promise.resolve(`${`../src/site/${v}`}`).then(s => __importStar(require(s))).then(m => m.default)
             .catch(e => null);
         return typeof m === 'function' && m.prototype;
     });
@@ -80,7 +84,7 @@ fg.async([
     s = ``;
     let ls2 = await Bluebird.resolve(ls)
         .reduce(async (a, [k, v]) => {
-        let IDKEY = await Promise.resolve().then(() => __importStar(require(`../src/site/${v}`))).then(m => m.default.IDKEY)
+        let IDKEY = await Promise.resolve(`${`../src/site/${v}`}`).then(s => __importStar(require(s))).then(m => m.default.IDKEY)
             .catch(e => null);
         if (IDKEY) {
             a.push([k, v, IDKEY]);

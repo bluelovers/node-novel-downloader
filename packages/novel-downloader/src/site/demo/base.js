@@ -23,7 +23,7 @@ const log_1 = require("../../util/log");
 const tree_1 = require("../../tree");
 const array_hyper_unique_1 = require("array-hyper-unique");
 const outputNovelToAttach_1 = tslib_1.__importDefault(require("../../util/outputNovelToAttach"));
-let NovelSiteDemo = exports.NovelSiteDemo = class NovelSiteDemo extends index_1.default {
+let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
     constructor(options, ...argv) {
         super(options, ...argv);
     }
@@ -485,6 +485,7 @@ let NovelSiteDemo = exports.NovelSiteDemo = class NovelSiteDemo extends index_1.
         throw new SyntaxError();
     }
 };
+exports.NovelSiteDemo = NovelSiteDemo;
 NovelSiteDemo.IDKEY = null;
 exports.NovelSiteDemo = NovelSiteDemo = tslib_1.__decorate([
     (0, index_1.staticImplements)(),

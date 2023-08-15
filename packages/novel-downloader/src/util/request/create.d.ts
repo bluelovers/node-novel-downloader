@@ -4,9 +4,9 @@
 import _request from 'request';
 import BluebirdPromise from 'bluebird';
 import RequestPromise from '@bluelovers/request-promise';
-export declare type IRequest = typeof _request;
-export declare type IRequestPromise = typeof RequestPromise;
-export declare type IBluebirdPromise = typeof BluebirdPromise;
+export type IRequest = typeof _request;
+export type IRequestPromise = typeof RequestPromise;
+export type IBluebirdPromise = typeof BluebirdPromise;
 export declare function createStealthyRequest<T extends IRequest>(libRequest?: string | T): T;
 export declare function createBluebirdPromise<P extends IBluebirdPromise>(libPromise?: string | P): P;
 export declare function createCachedRequest<T extends IRequest>(libRequest?: string | T): T;

@@ -7,11 +7,11 @@ exports.NovelSiteWebqxs = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
+const base_1 = tslib_1.__importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
 let NovelSiteWebqxs = class NovelSiteWebqxs extends base_1.default {
     makeUrl(urlobj, bool, optionsRuntime) {
         let url;
@@ -164,11 +164,11 @@ let NovelSiteWebqxs = class NovelSiteWebqxs extends base_1.default {
         });
     }
 };
+exports.NovelSiteWebqxs = NovelSiteWebqxs;
 NovelSiteWebqxs.IDKEY = 'webqxs';
 NovelSiteWebqxs.disabled = true;
-NovelSiteWebqxs = (0, tslib_1.__decorate)([
+exports.NovelSiteWebqxs = NovelSiteWebqxs = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteWebqxs);
-exports.NovelSiteWebqxs = NovelSiteWebqxs;
 exports.default = NovelSiteWebqxs;
 //# sourceMappingURL=index.js.map

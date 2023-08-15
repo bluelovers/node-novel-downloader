@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.makeUrl = exports.check = exports._p_2_br = exports._remove_ad = void 0;
 const tslib_1 = require("tslib");
-const url_1 = (0, tslib_1.__importStar)(require("../../util/url"));
+const url_1 = tslib_1.__importStar(require("../../util/url"));
 var site_1 = require("esjzone-api/lib/util/site");
 Object.defineProperty(exports, "_remove_ad", { enumerable: true, get: function () { return site_1._remove_ad; } });
 var jquery_1 = require("restful-decorator-plugin-jsdom/lib/jquery");

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getFilePath = exports.getVolumePath = exports.padStart = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../util");
-const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
+const upath2_1 = tslib_1.__importDefault(require("upath2"));
 function padStart(id, pad = '0', len = 4) {
     return id.toString().padStart(len, '0') + pad;
 }

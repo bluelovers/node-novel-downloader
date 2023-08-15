@@ -5,10 +5,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSite = exports.NovelSiteDemo = exports.NovelTree = void 0;
 const tslib_1 = require("tslib");
-const base_1 = (0, tslib_1.__importDefault)(require("./base"));
+const base_1 = tslib_1.__importDefault(require("./base"));
 const fs_1 = require("../fs");
 const index_1 = require("../index");
-const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
+const upath2_1 = tslib_1.__importDefault(require("upath2"));
 const helper_1 = require("node-novel-globby/lib/helper");
 const sort_1 = require("node-novel-globby/lib/sort");
 //import { URL } from 'jsdom-url';
@@ -213,11 +213,11 @@ let NovelSiteDemo = class NovelSiteDemo extends base_1.default {
         return super._saveReadme(optionsRuntime, options, ...opts);
     }
 };
-NovelSiteDemo = (0, tslib_1.__decorate)([
+exports.NovelSiteDemo = NovelSiteDemo;
+exports.NovelSiteDemo = NovelSiteDemo = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteDemo);
-exports.NovelSiteDemo = NovelSiteDemo;
 exports.NovelSite = NovelSiteDemo;
 exports.default = NovelSiteDemo;
-(0, tslib_1.__exportStar)(require("./base"), exports);
+tslib_1.__exportStar(require("./base"), exports);
 //# sourceMappingURL=tree.js.map

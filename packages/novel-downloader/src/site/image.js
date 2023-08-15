@@ -5,12 +5,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.download_image = void 0;
 const tslib_1 = require("tslib");
-const fs_iconv_1 = (0, tslib_1.__importDefault)(require("fs-iconv"));
+const fs_iconv_1 = tslib_1.__importDefault(require("fs-iconv"));
 const util_1 = require("fs-iconv/util");
-const request_promise_1 = (0, tslib_1.__importDefault)(require("@bluelovers/request-promise"));
+const request_promise_1 = tslib_1.__importDefault(require("@bluelovers/request-promise"));
 const jsdom_extra_1 = require("jsdom-extra");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
-const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
+const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
+const upath2_1 = tslib_1.__importDefault(require("upath2"));
 function download_image(img, options) {
     let dirname = options.dir || upath2_1.default.dirname(options.fromfile);
     if (!dirname) {

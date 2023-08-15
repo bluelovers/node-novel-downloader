@@ -18,7 +18,7 @@ const volNovelTree_1 = tslib_1.__importDefault(require("./util/volNovelTree"));
 const html_2 = require("restful-decorator-plugin-jsdom/lib/html");
 const regexp_cjk_with_plugin_enabled_1 = tslib_1.__importDefault(require("regexp-cjk-with-plugin-enabled"));
 //import { URL } from 'jsdom-url';
-let NovelSiteESJZone = exports.NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
+let NovelSiteESJZone = class NovelSiteESJZone extends tree_1.default {
     _constructor(...argv) {
         // @ts-ignore
         super._constructor(...argv);
@@ -309,6 +309,7 @@ let NovelSiteESJZone = exports.NovelSiteESJZone = class NovelSiteESJZone extends
         });
     }
 };
+exports.NovelSiteESJZone = NovelSiteESJZone;
 NovelSiteESJZone.IDKEY = 'esjzone';
 exports.NovelSiteESJZone = NovelSiteESJZone = tslib_1.__decorate([
     (0, index_1.staticImplements)()

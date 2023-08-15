@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.protoLongToMilliseconds = exports.protoLongToNumber = exports.lookupTypeNovelDetailResponse = exports.lookupTypeNovelChapterResponse = exports.lookupTypeRoot = exports._lookupType = exports.EnumResponseTypeKey = void 0;
 const tslib_1 = require("tslib");
-const protobufjs_1 = (0, tslib_1.__importDefault)(require("protobufjs"));
-const dmzjproto_json_1 = (0, tslib_1.__importDefault)(require("./dmzjproto.json"));
+const protobufjs_1 = tslib_1.__importDefault(require("protobufjs"));
+const dmzjproto_json_1 = tslib_1.__importDefault(require("./dmzjproto.json"));
 var EnumResponseTypeKey;
 (function (EnumResponseTypeKey) {
     EnumResponseTypeKey["Root"] = "Root";
     EnumResponseTypeKey["NovelChapterResponse"] = "NovelChapterResponse";
     EnumResponseTypeKey["NovelDetailResponse"] = "NovelDetailResponse";
-})(EnumResponseTypeKey = exports.EnumResponseTypeKey || (exports.EnumResponseTypeKey = {}));
+})(EnumResponseTypeKey || (exports.EnumResponseTypeKey = EnumResponseTypeKey = {}));
 const _cache = new Map();
 function _cacheGet(key, fn) {
     let value = _cache.get(key);

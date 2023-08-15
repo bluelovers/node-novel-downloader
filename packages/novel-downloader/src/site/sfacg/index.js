@@ -7,11 +7,11 @@ exports.NovelSiteSfacg = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
+const base_1 = tslib_1.__importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
-const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
 const util_2 = require("./util");
 let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
     static check(url, ...argv) {
@@ -244,10 +244,10 @@ let NovelSiteSfacg = class NovelSiteSfacg extends base_1.default {
         });
     }
 };
+exports.NovelSiteSfacg = NovelSiteSfacg;
 NovelSiteSfacg.IDKEY = 'sfacg';
-NovelSiteSfacg = (0, tslib_1.__decorate)([
+exports.NovelSiteSfacg = NovelSiteSfacg = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteSfacg);
-exports.NovelSiteSfacg = NovelSiteSfacg;
 exports.default = NovelSiteSfacg;
 //# sourceMappingURL=index.js.map

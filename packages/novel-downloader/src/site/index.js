@@ -5,27 +5,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.staticImplements = exports.EnumPathNovelStyle = exports.NovelSite = exports.SYMBOL_CACHE = exports.PromiseBluebird = exports.bluebirdDecorator = exports.moment = exports.createOptionsJSDOM = exports.defaultJSDOMOptions = void 0;
 const tslib_1 = require("tslib");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("../decorator/bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("../decorator/bluebird"));
 exports.bluebirdDecorator = bluebird_1.default;
 //import bluebirdDecorator from 'bluebird-decorator';
-const bluebird_2 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_2 = tslib_1.__importDefault(require("bluebird"));
 exports.PromiseBluebird = bluebird_2.default;
 //import { URL } from 'jsdom-url';
-const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
-const _root_1 = (0, tslib_1.__importDefault)(require("../../_root"));
+const upath2_1 = tslib_1.__importDefault(require("upath2"));
+const _root_1 = tslib_1.__importDefault(require("../../_root"));
 const jsdom_1 = require("../jsdom");
 Object.defineProperty(exports, "defaultJSDOMOptions", { enumerable: true, get: function () { return jsdom_1.defaultJSDOMOptions; } });
 Object.defineProperty(exports, "createOptionsJSDOM", { enumerable: true, get: function () { return jsdom_1.createOptionsJSDOM; } });
-const node_novel_info_1 = (0, tslib_1.__importStar)(require("node-novel-info"));
-const fs_extra_1 = (0, tslib_1.__importDefault)(require("fs-extra"));
+const node_novel_info_1 = tslib_1.__importStar(require("node-novel-info"));
+const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const util_1 = require("fs-iconv/util");
 const crlf_normalize_1 = require("crlf-normalize");
-const str_util_1 = (0, tslib_1.__importDefault)(require("str-util"));
+const str_util_1 = tslib_1.__importDefault(require("str-util"));
 const const_1 = require("node-novel-info/lib/const");
 const log_1 = require("../util/log");
-const url_1 = (0, tslib_1.__importDefault)(require("../util/url"));
+const url_1 = tslib_1.__importDefault(require("../util/url"));
 //import moment from 'moment';
-const moment_timezone_1 = (0, tslib_1.__importDefault)(require("moment-timezone"));
+const moment_timezone_1 = tslib_1.__importDefault(require("moment-timezone"));
 exports.moment = moment_timezone_1.default;
 const util_2 = require("../util");
 moment_timezone_1.default.fn.toJSON = function () { return this.format(); };
@@ -89,7 +89,7 @@ class NovelSite {
         let name;
         let novel_id = this._pathNovelID(novel, optionsRuntime);
         if (optionsRuntime.pathNovelStyle) {
-            if (optionsRuntime.pathNovelStyle == 1 /* NOVELID */) {
+            if (optionsRuntime.pathNovelStyle == 1 /* NovelSite.EnumPathNovelStyle.NOVELID */) {
                 name = novel_id;
             }
         }
@@ -330,7 +330,7 @@ exports.EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
         EnumPathNovelStyle[EnumPathNovelStyle["DEFAULT"] = 0] = "DEFAULT";
         EnumPathNovelStyle[EnumPathNovelStyle["NOVELID"] = 1] = "NOVELID";
     })(EnumPathNovelStyle = NovelSite.EnumPathNovelStyle || (NovelSite.EnumPathNovelStyle = {}));
-})(NovelSite = exports.NovelSite || (exports.NovelSite = {}));
+})(NovelSite || (exports.NovelSite = NovelSite = {}));
 function staticImplements() {
     return (constructor) => { };
 }

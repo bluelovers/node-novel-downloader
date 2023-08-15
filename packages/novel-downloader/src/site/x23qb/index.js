@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteX23qb = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
+const tree_1 = tslib_1.__importDefault(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const index_1 = require("../index");
@@ -14,7 +14,7 @@ const index_2 = require("../index");
 const fetch_1 = require("../../fetch");
 const util_2 = require("./util");
 const util_3 = require("../esjzone/util");
-const regexp_cjk_with_plugin_enabled_1 = (0, tslib_1.__importDefault)(require("regexp-cjk-with-plugin-enabled"));
+const regexp_cjk_with_plugin_enabled_1 = tslib_1.__importDefault(require("regexp-cjk-with-plugin-enabled"));
 /**
  * 铅笔小说
  * @example https://www.x23qb.com/book/284/
@@ -206,10 +206,10 @@ let NovelSiteX23qb = class NovelSiteX23qb extends tree_1.default {
         });
     }
 };
+exports.NovelSiteX23qb = NovelSiteX23qb;
 NovelSiteX23qb.IDKEY = 'x23qb';
-NovelSiteX23qb = (0, tslib_1.__decorate)([
+exports.NovelSiteX23qb = NovelSiteX23qb = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteX23qb);
-exports.NovelSiteX23qb = NovelSiteX23qb;
 exports.default = NovelSiteX23qb;
 //# sourceMappingURL=index.js.map

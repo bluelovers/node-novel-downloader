@@ -6,7 +6,7 @@ import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
-export declare type ISessionData = {
+export type ISessionData = {
     sessionid: string;
     steins_csrf_token: string;
     online?: 1 | '1';

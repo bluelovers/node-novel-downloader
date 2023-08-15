@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteNovelba = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../../util");
-const tree_1 = (0, tslib_1.__importDefault)(require("../demo/tree"));
+const tree_1 = tslib_1.__importDefault(require("../demo/tree"));
 const jsdom_extra_1 = require("jsdom-extra");
 //import { URL } from 'jsdom-url';
 const index_1 = require("../index");
@@ -163,10 +163,10 @@ let NovelSiteNovelba = class NovelSiteNovelba extends tree_1.default {
         });
     }
 };
+exports.NovelSiteNovelba = NovelSiteNovelba;
 NovelSiteNovelba.IDKEY = 'novelba';
-NovelSiteNovelba = (0, tslib_1.__decorate)([
+exports.NovelSiteNovelba = NovelSiteNovelba = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteNovelba);
-exports.NovelSiteNovelba = NovelSiteNovelba;
 exports.default = NovelSiteNovelba;
 //# sourceMappingURL=index.js.map

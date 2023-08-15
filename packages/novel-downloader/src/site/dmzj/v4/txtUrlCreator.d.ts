@@ -1,4 +1,4 @@
-export declare const txtUrlPrefix: "http://jurisdiction.muwai.com";
+export declare const txtUrlPrefix: "https://jurisdiction.idmzj.com";
 export declare class TxtUrlCreator {
     volid: number;
     chapterid: number;

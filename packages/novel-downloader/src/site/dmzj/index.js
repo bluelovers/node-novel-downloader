@@ -5,15 +5,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NovelSiteDmzj = void 0;
 const tslib_1 = require("tslib");
-const fs_extra_1 = (0, tslib_1.__importDefault)(require("fs-extra"));
+const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const util_1 = require("fs-iconv/util");
-const upath2_1 = (0, tslib_1.__importDefault)(require("upath2"));
-const node_novel_info_1 = (0, tslib_1.__importDefault)(require("node-novel-info"));
+const upath2_1 = tslib_1.__importDefault(require("upath2"));
+const node_novel_info_1 = tslib_1.__importDefault(require("node-novel-info"));
 const jsdom_extra_1 = require("jsdom-extra");
-const index_1 = (0, tslib_1.__importStar)(require("../index"));
+const index_1 = tslib_1.__importStar(require("../index"));
 const index_2 = require("../index");
 const index_3 = require("../index");
-const shortid_1 = (0, tslib_1.__importDefault)(require("shortid"));
+const shortid_1 = tslib_1.__importDefault(require("shortid"));
 const fetch_1 = require("../../fetch");
 const jsdom_1 = require("../../jsdom");
 /**
@@ -367,11 +367,11 @@ let NovelSiteDmzj = class NovelSiteDmzj extends index_1.default {
         });
     }
 };
+exports.NovelSiteDmzj = NovelSiteDmzj;
 NovelSiteDmzj.disabled = true;
 NovelSiteDmzj.IDKEY = 'dmzj';
-NovelSiteDmzj = (0, tslib_1.__decorate)([
+exports.NovelSiteDmzj = NovelSiteDmzj = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteDmzj);
-exports.NovelSiteDmzj = NovelSiteDmzj;
 exports.default = NovelSiteDmzj;
 //# sourceMappingURL=index.js.map

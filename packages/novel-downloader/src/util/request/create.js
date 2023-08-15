@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createRequestPromise = exports.createCachedRequest = exports.createBluebirdPromise = exports.createStealthyRequest = void 0;
 const tslib_1 = require("tslib");
 const bluebird_1 = require("bluebird");
-const cached_request_1 = (0, tslib_1.__importDefault)(require("cached-request"));
-const request2_1 = (0, tslib_1.__importDefault)(require("request-promise-core/configure/request2"));
-const stealthy_require_1 = (0, tslib_1.__importDefault)(require("stealthy-require"));
+const cached_request_1 = tslib_1.__importDefault(require("cached-request"));
+const request2_1 = tslib_1.__importDefault(require("request-promise-core/configure/request2"));
+const stealthy_require_1 = tslib_1.__importDefault(require("stealthy-require"));
 let Bluebird;
 function createStealthyRequest(libRequest) {
     if (libRequest == null) {

@@ -7,7 +7,7 @@ exports.NovelSiteIqing = void 0;
 const tslib_1 = require("tslib");
 const util_1 = require("../../util");
 const index_1 = require("../index");
-const base_1 = (0, tslib_1.__importDefault)(require("../demo/base"));
+const base_1 = tslib_1.__importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
@@ -251,11 +251,11 @@ let NovelSiteIqing = class NovelSiteIqing extends base_1.default {
         });
     }
 };
+exports.NovelSiteIqing = NovelSiteIqing;
 NovelSiteIqing.IDKEY = 'iqing';
 NovelSiteIqing.disabled = true;
-NovelSiteIqing = (0, tslib_1.__decorate)([
+exports.NovelSiteIqing = NovelSiteIqing = tslib_1.__decorate([
     (0, index_1.staticImplements)()
 ], NovelSiteIqing);
-exports.NovelSiteIqing = NovelSiteIqing;
 exports.default = NovelSiteIqing;
 //# sourceMappingURL=index.js.map

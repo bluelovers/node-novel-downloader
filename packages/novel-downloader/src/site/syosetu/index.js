@@ -8,19 +8,19 @@ const jsdom_extra_1 = require("jsdom-extra");
 const index_1 = require("../index");
 const index_2 = require("../index");
 const index_3 = require("../index");
-const NovelSiteDemo = (0, tslib_1.__importStar)(require("../demo/base"));
-const layout_1 = (0, tslib_1.__importDefault)(require("@node-novel/layout"));
+const NovelSiteDemo = tslib_1.__importStar(require("../demo/base"));
+const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
 const log_1 = require("../../util/log");
 const html_1 = require("../../util/html");
 const mitemin_1 = require("mitemin");
 const util_1 = require("./util");
-const url_1 = (0, tslib_1.__importDefault)(require("../../util/url"));
+const url_1 = tslib_1.__importDefault(require("../../util/url"));
 var EnumProtocolMode;
 (function (EnumProtocolMode) {
     EnumProtocolMode[EnumProtocolMode["NONE"] = 0] = "NONE";
     EnumProtocolMode[EnumProtocolMode["HTTPS"] = 1] = "HTTPS";
     EnumProtocolMode[EnumProtocolMode["HTTP"] = 2] = "HTTP";
-})(EnumProtocolMode = exports.EnumProtocolMode || (exports.EnumProtocolMode = {}));
+})(EnumProtocolMode || (exports.EnumProtocolMode = EnumProtocolMode = {}));
 let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     constructor(options, ...argv) {
         super(options, ...argv);
@@ -149,11 +149,11 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         }
         if (obj.hostname === 'ncode.syosetu.com' || obj.hostname === 'novel18.syosetu.com') {
             switch (optionsRuntime.protocolMode) {
-                case 2 /* HTTP */:
+                case 2 /* EnumProtocolMode.HTTP */:
                     obj.protocol = 'http';
                     break;
                 case true:
-                case 1 /* HTTPS */:
+                case 1 /* EnumProtocolMode.HTTPS */:
                     obj.protocol = 'https';
                     break;
             }
@@ -545,11 +545,11 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         });
     }
 };
-NovelSiteSyosetu.IDKEY = 'syosetu';
-NovelSiteSyosetu = (0, tslib_1.__decorate)([
-    (0, index_1.staticImplements)(),
-    (0, tslib_1.__metadata)("design:paramtypes", [Object, Object])
-], NovelSiteSyosetu);
 exports.NovelSiteSyosetu = NovelSiteSyosetu;
+NovelSiteSyosetu.IDKEY = 'syosetu';
+exports.NovelSiteSyosetu = NovelSiteSyosetu = tslib_1.__decorate([
+    (0, index_1.staticImplements)(),
+    tslib_1.__metadata("design:paramtypes", [Object, Object])
+], NovelSiteSyosetu);
 exports.default = NovelSiteSyosetu;
 //# sourceMappingURL=index.js.map

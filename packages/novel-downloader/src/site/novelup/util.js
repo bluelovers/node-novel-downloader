@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.makeUrl = exports.check = void 0;
 const tslib_1 = require("tslib");
-const url_1 = (0, tslib_1.__importStar)(require("../../util/url"));
+const url_1 = tslib_1.__importStar(require("../../util/url"));
 function check(url, options) {
     return /novelup/i.test((0, url_1.default)(url).hostname || '');
 }

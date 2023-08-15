@@ -60,7 +60,7 @@ var EnumNovelSiteList;
     EnumNovelSiteList["./site/webqxs"] = "webqxs";
     EnumNovelSiteList["./site/wenku8"] = "wenku8";
     EnumNovelSiteList["./site/x23qb"] = "x23qb";
-})(EnumNovelSiteList = exports.EnumNovelSiteList || (exports.EnumNovelSiteList = {}));
+})(EnumNovelSiteList || (exports.EnumNovelSiteList = EnumNovelSiteList = {}));
 var EnumIDKEYList;
 (function (EnumIDKEYList) {
     EnumIDKEYList["NovelSiteAlphapolis"] = "alphapolis";
@@ -111,7 +111,7 @@ var EnumIDKEYList;
     EnumIDKEYList["./site/webqxs"] = "webqxs";
     EnumIDKEYList["./site/wenku8"] = "wenku8";
     EnumIDKEYList["./site/x23qb"] = "x23qb";
-})(EnumIDKEYList = exports.EnumIDKEYList || (exports.EnumIDKEYList = {}));
+})(EnumIDKEYList || (exports.EnumIDKEYList = EnumIDKEYList = {}));
 var EnumIDKEYToSiteID;
 (function (EnumIDKEYToSiteID) {
     EnumIDKEYToSiteID["alphapolis"] = "alphapolis";
@@ -129,5 +129,5 @@ var EnumIDKEYToSiteID;
     EnumIDKEYToSiteID["webqxs"] = "webqxs";
     EnumIDKEYToSiteID["wenku8"] = "wenku8";
     EnumIDKEYToSiteID["x23qb"] = "x23qb";
-})(EnumIDKEYToSiteID = exports.EnumIDKEYToSiteID || (exports.EnumIDKEYToSiteID = {}));
+})(EnumIDKEYToSiteID || (exports.EnumIDKEYToSiteID = EnumIDKEYToSiteID = {}));
 //# sourceMappingURL=const.js.map

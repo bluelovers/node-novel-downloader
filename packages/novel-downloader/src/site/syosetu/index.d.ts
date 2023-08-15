@@ -4,7 +4,7 @@ import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
 import * as NovelSiteDemo from '../demo/base';
-export declare type INovel = NovelSiteDemo.INovel & {
+export type INovel = NovelSiteDemo.INovel & {
     novel_syosetu_id: string;
 };
 export declare const enum EnumProtocolMode {
@@ -12,15 +12,15 @@ export declare const enum EnumProtocolMode {
     HTTPS = 1,
     HTTP = 2
 }
-export declare type IOptionsPlus = {
+export type IOptionsPlus = {
     /**
      * 不使用小說家提供的 txt 下載連結
      */
     disableTxtdownload?: boolean;
     protocolMode?: EnumProtocolMode | boolean;
 };
-export declare type IDownloadOptions = NovelSiteDemo.IDownloadOptions & IOptionsPlus;
-export declare type IOptionsRuntime = NovelSiteDemo.IOptionsRuntime & IDownloadOptions & IOptionsPlus;
+export type IDownloadOptions = NovelSiteDemo.IDownloadOptions & IOptionsPlus;
+export type IOptionsRuntime = NovelSiteDemo.IOptionsRuntime & IDownloadOptions & IOptionsPlus;
 export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
     static readonly IDKEY = "syosetu";
     constructor(options: IDownloadOptions, ...argv: any[]);

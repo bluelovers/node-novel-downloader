@@ -5,7 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hashSum = void 0;
 const tslib_1 = require("tslib");
-const hash_sum_1 = (0, tslib_1.__importDefault)(require("hash-sum"));
+const hash_sum_1 = tslib_1.__importDefault(require("hash-sum"));
 function hashSum(value) {
     return (0, hash_sum_1.default)(value);
 }

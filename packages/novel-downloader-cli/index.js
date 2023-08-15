@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleOptions = exports.download = exports.createSite = void 0;
 const tslib_1 = require("tslib");
 const lazy_1 = require("novel-downloader/src/lazy");
-const novel_downloader_1 = (0, tslib_1.__importStar)(require("novel-downloader"));
+const novel_downloader_1 = tslib_1.__importStar(require("novel-downloader"));
 function createSite(siteID, options) {
     let o = (0, novel_downloader_1.default)(siteID);
     // @ts-ignore

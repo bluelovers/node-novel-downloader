@@ -4,10 +4,10 @@
 import _NovelSiteBase, { IDownloadOptions, IOptionsRuntime as _IOptionsRuntime, INovel as _INovel } from './base';
 import { IRowChapter, IRowVolume, NovelTree } from '../../tree/index';
 export { NovelTree };
-export declare type IOptionsRuntime = _IOptionsRuntime & {
+export type IOptionsRuntime = _IOptionsRuntime & {
     novelTree?: NovelTree;
 };
-export declare type INovel = _INovel & {
+export type INovel = _INovel & {
     volume_list?: never;
     novelTree: NovelTree;
 };
