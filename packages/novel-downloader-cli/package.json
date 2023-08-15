@@ -73,7 +73,7 @@
     "node-novel-info": "^3.0.16",
     "novel-downloader": "^2.0.33",
     "ts-type": "^3.0.1",
-    "tslib": "^2.5.3",
+    "tslib": "^2.6.1",
     "yargs": "^17.7.2"
   },
   "engines": {
