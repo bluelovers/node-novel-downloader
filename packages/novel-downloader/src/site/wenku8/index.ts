@@ -69,7 +69,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		{
 			return '';
 		}
-
+		const delay = new Promise(resolve => setTimeout(resolve, 3500));
 		const $ = ret.dom.$;
 
 		{
@@ -119,7 +119,7 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		}
 
 		//console.log(ret.dom.serialize());
-
+		await delay;
 		return ret.dom.$('#content').text();
 	}
 
