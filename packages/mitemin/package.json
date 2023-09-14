@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "lazy-url": "^2.0.4",
-    "tslib": "^2.6.1"
+    "tslib": "^2.6.2"
   },
   "gitHead": "2cae1343b29979515aed7e759559b6d77d8182da"
 }
