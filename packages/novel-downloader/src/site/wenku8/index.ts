@@ -63,13 +63,17 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		return ret;
 	}
 
+	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, cache, ...argv)
+	{
+		return PromiseBluebird.delay(3500).then(() => super._fetchChapter(url, optionsRuntime, cache))
+	}
+
 	protected async _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache)
 	{
 		if (!ret)
 		{
 			return '';
 		}
-		const delay = new Promise(resolve => setTimeout(resolve, 3500));
 		const $ = ret.dom.$;
 
 		{
@@ -119,7 +123,6 @@ export class NovelSiteWenku8 extends NovelSiteBase
 		}
 
 		//console.log(ret.dom.serialize());
-		await delay;
 		return ret.dom.$('#content').text();
 	}
 

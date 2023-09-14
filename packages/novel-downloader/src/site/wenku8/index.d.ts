@@ -1,11 +1,13 @@
 /**
  * Created by user on 2018/3/25/025.
  */
+/// <reference types="bluebird" />
 import _NovelSite, { IMdconfMeta } from '../index';
 import { IDownloadOptions, INovel } from '../demo/base';
 import { IFetchChapter, IOptionsRuntime } from '../demo/base';
 import NovelSiteBase from '../demo/base';
 import { IJSDOM } from 'jsdom-extra';
+import { PromiseBluebird } from '../index';
 export declare class NovelSiteWenku8 extends NovelSiteBase {
     static readonly IDKEY = "wenku8";
     static check(url: string | URL | _NovelSite.IParseUrl, ...argv: any[]): boolean;
@@ -14,6 +16,7 @@ export declare class NovelSiteWenku8 extends NovelSiteBase {
     makeUrl(urlobj: _NovelSite.IParseUrl, bool?: boolean | number, ...argv: any[]): URL;
     parseUrl(url: string | URL | number, ...argv: any[]): import("../../util/url").IParseUrlRuntime;
     createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
+    protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, cache: any, ...argv: any[]): PromiseBluebird<IFetchChapter>;
     protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: any): Promise<string>;
     get_volume_list<T = IOptionsRuntime>(inputUrl: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
     protected _get_meta(inputUrl: any, optionsRuntime: any, cache: {

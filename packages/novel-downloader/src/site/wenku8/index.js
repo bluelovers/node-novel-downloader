@@ -11,6 +11,7 @@ const base_1 = tslib_1.__importDefault(require("../demo/base"));
 //import { URL } from 'jsdom-url';
 const jsdom_extra_1 = require("jsdom-extra");
 const index_2 = require("../index");
+const index_3 = require("../index");
 const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
 const const_1 = require("node-novel-info/lib/const");
 const html_1 = require("../../util/html");
@@ -39,6 +40,9 @@ let NovelSiteWenku8 = class NovelSiteWenku8 extends base_1.default {
         }
         let ret = this.makeUrl(data, true, optionsRuntime);
         return ret;
+    }
+    _fetchChapter(url, optionsRuntime, cache, ...argv) {
+        return index_2.PromiseBluebird.delay(3500).then(() => super._fetchChapter(url, optionsRuntime, cache));
     }
     async _parseChapter(ret, optionsRuntime, cache) {
         if (!ret) {
@@ -137,7 +141,7 @@ let NovelSiteWenku8 = class NovelSiteWenku8 extends base_1.default {
             let novel_date;
             if (_cache_dates.length) {
                 _cache_dates.sort();
-                novel_date = index_2.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
+                novel_date = index_3.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             }
             return {
                 url: dom.url,
@@ -145,7 +149,7 @@ let NovelSiteWenku8 = class NovelSiteWenku8 extends base_1.default {
                 ...data_meta,
                 volume_list,
                 //novel_date,
-                checkdate: (0, index_2.moment)().local(),
+                checkdate: (0, index_3.moment)().local(),
                 imgs: [],
             };
         })
@@ -181,7 +185,7 @@ let NovelSiteWenku8 = class NovelSiteWenku8 extends base_1.default {
                 }
                 else if (t.match(/(?:更新)：\s*(.+)/)) {
                     novel_date = (0, util_1.trim)(RegExp.$1);
-                    novel_date = (0, index_2.moment)(novel_date).local();
+                    novel_date = (0, index_3.moment)(novel_date).local();
                 }
                 else if (t.match(/(?:文库分类)：\s*(.+)/)) {
                     novel_publisher = (0, util_1.trim)(RegExp.$1);
