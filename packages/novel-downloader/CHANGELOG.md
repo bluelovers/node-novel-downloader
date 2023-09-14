@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.35](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.34...novel-downloader@2.0.35) (2023-09-14)
+
+
+
+### 📦　Code Refactoring
+
+* _fetchChapter ([3f3844f](https://github.com/bluelovers/node-novel-downloader/commit/3f3844fb7f097864ee14a0c6569da582e6ad7e12))
+
+
+### 📌　Dependencies
+
+* update deps ([d22a9a8](https://github.com/bluelovers/node-novel-downloader/commit/d22a9a8aaf96aa2e94bedc29bd029d3313f42cc6))
+
+
+### 🔖　Miscellaneous
+
+* 增加一點點延遲, 讓他們的CF高興 ([3ba83b4](https://github.com/bluelovers/node-novel-downloader/commit/3ba83b48d35dc0df27506a83f2bdc09b4c7e441b))
+
+
+
 ## [2.0.34](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.33...novel-downloader@2.0.34) (2023-08-15)
 
 
