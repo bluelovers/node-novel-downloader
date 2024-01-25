@@ -68,7 +68,7 @@
     "cross-spawn-extra": "^2.1.0",
     "debug-color2": "^1.3.2",
     "diff": "^5.1.0",
-    "moment": "^2.29.4",
+    "moment": "^2.30.1",
     "node-alias": "^1.0.4",
     "node-novel-info": "^3.0.16",
     "novel-downloader": "^2.0.35",

@@ -1,7 +1,7 @@
 /**
  * Created by user on 2020/1/6.
  */
-import LazyURL from 'lazy-url';
+import { LazyURL } from 'lazy-url';
 
 export function parse(input: string | URL)
 {
