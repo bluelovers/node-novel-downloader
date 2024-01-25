@@ -17,7 +17,7 @@ export declare class NovelSiteDemo extends _NovelSiteBase {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
-        content: IRowVolume<{}> | IRowChapter<{}> | import("../../tree/index").IRowRoot<{}>;
+        content: import("../../tree/index").IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
     }[]>;
     _processNovel<T>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;

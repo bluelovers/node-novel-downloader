@@ -1,5 +1,5 @@
 import type NovelSite from '../index';
-import createURL, { _handleParseURL } from '../../util/url';
+import { createURL, _handleParseURL } from '../../util/url';
 import { TxtUrlCreator } from './v4/txtUrlCreator';
 import { IParseUrlRuntime } from '../../util/url';
 

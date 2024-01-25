@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.makeUrl = exports.check = void 0;
-const tslib_1 = require("tslib");
-const url_1 = tslib_1.__importStar(require("../../util/url"));
+const url_1 = require("../../util/url");
 function check(url, options) {
-    return /book\.sfacg/i.test((0, url_1.default)(url).hostname || '');
+    return /book\.sfacg/i.test((0, url_1.createURL)(url).hostname || '');
 }
 exports.check = check;
 function makeUrl(urlobj, bool, ...argv) {
@@ -19,7 +18,7 @@ function makeUrl(urlobj, bool, ...argv) {
         let cid = (!bool && urlobj.chapter_id) ? [urlobj.novel_pid, urlobj.chapter_id].join('/') : 'MainIndex';
         url = `http://book.sfacg.com/Novel/${urlobj.novel_id}/${cid}/`;
     }
-    return (0, url_1.default)(url);
+    return (0, url_1.createURL)(url);
 }
 exports.makeUrl = makeUrl;
 function parseUrl(_url, ...argv) {

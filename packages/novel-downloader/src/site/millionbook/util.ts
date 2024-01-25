@@ -1,5 +1,5 @@
 import type NovelSite from '../index';
-import createURL, { _handleParseURL, IParseUrlRuntime } from '../../util/url';
+import { createURL, _handleParseURL, IParseUrlRuntime } from '../../util/url';
 
 export function check(url: string | URL | NovelSite.IParseUrl, options?): boolean
 {
