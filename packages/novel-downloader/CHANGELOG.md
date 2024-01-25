@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.36](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.35...novel-downloader@2.0.36) (2024-01-25)
+
+
+
+### 🐛　Bug Fixes
+
+* not allow parse unsafe url ([9408f07](https://github.com/bluelovers/node-novel-downloader/commit/9408f075db297de4a37868f35b4339d727ad33e3))
+* [#9](https://github.com/bluelovers/node-novel-downloader/issues/9) ([f131880](https://github.com/bluelovers/node-novel-downloader/commit/f131880671e12f367b02e475a3059e6224722ca2))
+
+
+### 📌　Dependencies
+
+* update deps ([595d9f2](https://github.com/bluelovers/node-novel-downloader/commit/595d9f295dcc406b2caeb87f7172332381defe01))
+
+
+
 ## [2.0.35](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.34...novel-downloader@2.0.35) (2023-09-14)
 
 
