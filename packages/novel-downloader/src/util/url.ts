@@ -2,10 +2,12 @@ import { URL as _URL, URLImplCore } from 'jsdom-url';
 import type NovelSite from '../site/index';
 import { ITSOverwrite } from 'ts-type';
 import { console } from './log';
+import { LazyURL } from 'lazy-url';
 
 export function createURL(...argv: ConstructorParameters<typeof URL>): URL
 {
-	return new _URL(...argv) as any
+	//return new _URL(...argv) as any
+	return new LazyURL(...argv) as any
 }
 
 export function isURL(obj): obj is URL

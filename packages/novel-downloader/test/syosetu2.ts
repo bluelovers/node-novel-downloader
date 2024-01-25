@@ -22,7 +22,7 @@ import path from 'path';
 
 //		'https://ncode.syosetu.com/n3711cs/',
 
-		'https://ncode.syosetu.com/n5191ey/',
+//		'https://ncode.syosetu.com/n5191ey/',
 //		'https://ncode.syosetu.com/n7933eb/',
 
 //		'https://novel18.syosetu.com/n6111fe/',
@@ -34,6 +34,8 @@ import path from 'path';
 //		'http://ncode.syosetu.com/n5964cj/',
 //
 //		'https://ncode.syosetu.com/n0865em',
+
+		'https://ncode.syosetu.com/n9551ee',
 
 	],async function (value, index, array)
 	{
@@ -67,7 +69,7 @@ import path from 'path';
 
 		}).then(function (novel)
 		{
-			//console.log(novel);
+			console.log(novel);
 
 			console.log(novel.novel_title);
 		})

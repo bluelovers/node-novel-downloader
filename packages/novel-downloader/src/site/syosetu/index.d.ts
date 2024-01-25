@@ -4,6 +4,7 @@ import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';
 import { PromiseBluebird } from '../index';
 import * as NovelSiteDemo from '../demo/base';
+import { INumbers, IUrlOrString } from '../../types';
 export type INovel = NovelSiteDemo.INovel & {
     novel_syosetu_id: string;
 };
@@ -41,14 +42,14 @@ export declare class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
         file: string;
         md: string;
     }>;
-    _hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime): URL;
+    _hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime, page?: INumbers): URL;
     protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
         novel: INovel;
     }): PromiseBluebird<NovelSiteDemo.IFetchChapter>;
     _novel18<T = NovelSite.IOptionsRuntime>(url: any, dom: IJSDOM, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<IJSDOM>;
     protected _getExtraInfoURL<T>(search: string, url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>): PromiseBluebird<IJSDOM>;
     protected _getExtraInfoURL2<T, M extends Partial<INovel & IMdconfMeta>>(url_data: NovelSite.IParseUrl, optionsRuntime: Partial<T & IDownloadOptions>, data_meta: M): PromiseBluebird<M>;
-    createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime): URL;
-    get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
+    createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime, page?: INumbers): URL;
+    get_volume_list<T = NovelSite.IOptionsRuntime>(url: IUrlOrString, optionsRuntime?: Partial<T & IDownloadOptions>): Promise<INovel>;
 }
 export default NovelSiteSyosetu;

@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports._handleParseURL = exports.isURL = exports.createURL = void 0;
 const jsdom_url_1 = require("jsdom-url");
 const log_1 = require("./log");
+const lazy_url_1 = require("lazy-url");
 function createURL(...argv) {
-    return new jsdom_url_1.URL(...argv);
+    //return new _URL(...argv) as any
+    return new lazy_url_1.LazyURL(...argv);
 }
 exports.createURL = createURL;
 function isURL(obj) {

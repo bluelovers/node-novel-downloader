@@ -25,6 +25,8 @@ import { hashSum } from '../../util/hash';
 import { parseAsync } from 'mitemin';
 import { parseUrl, makeUrl, check } from './util';
 import createURL from '../../util/url';
+import { INumbers, IUrlOrString } from '../../types';
+import { _get_volume_list_main } from './util/get_volume_list';
 
 export type INovel = NovelSiteDemo.INovel & {
 	novel_syosetu_id: string,
@@ -242,7 +244,7 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 		}, ...opts);
 	}
 
-	_hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime)
+	_hackURL(obj: URL | string, optionsRuntime: IOptionsRuntime, page?: INumbers)
 	{
 		if (typeof obj === 'string')
 		{
@@ -254,13 +256,22 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			switch (optionsRuntime.protocolMode)
 			{
 				case EnumProtocolMode.HTTP:
-					obj.protocol = 'http';
+					obj.protocol = 'http:';
 					break;
 				case true:
 				case EnumProtocolMode.HTTPS:
-					obj.protocol = 'https';
+					obj.protocol = 'https:';
 					break;
 			}
+		}
+
+		if (page > 1)
+		{
+			obj.searchParams.set('p', page)
+		}
+		else if (page)
+		{
+			obj.searchParams.delete('p')
 		}
 
 		return obj
@@ -507,12 +518,12 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 			;
 	}
 
-	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime)
+	createMainUrl<T>(url: string | URL, optionsRuntime: T & IOptionsRuntime, page?: INumbers)
 	{
-		return this._hackURL(super.createMainUrl(url as any, optionsRuntime), optionsRuntime)
+		return this._hackURL(super.createMainUrl(url as any, optionsRuntime), optionsRuntime, page)
 	}
 
-	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
+	async get_volume_list<T = NovelSite.IOptionsRuntime>(url: IUrlOrString,
 		optionsRuntime: Partial<T & IDownloadOptions> = {},
 	): Promise<INovel>
 	{
@@ -545,14 +556,6 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 
 				let url_data = self.parseUrl(dom.url.href);
 
-				let volume_list = [] as NovelSite.IVolume[];
-
-				let currentVolume: NovelSite.IVolume;
-
-				let table = dom.$('.index_box').find('> .chapter_title, .novel_sublist2');
-
-				let _cache_dates = [];
-
 				let novel_syosetu_id;
 
 				{
@@ -577,111 +580,14 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					}
 				}
 
-				table
-					.each(function (index)
-					{
-						// @ts-ignore
-						let tr = dom.$(this);
+				let {
+					page,
+					volume_list,
+					_cache_dates,
 
-						if (tr.is('.chapter_title'))
-						{
-							currentVolume = volume_list[volume_list.length] = {
-								volume_index: volume_list.length,
-								volume_title: tr.text().replace(/^\s+|\s+$/g, ''),
-								chapter_list: [],
-							};
-						}
-						else
-						{
-							if (!currentVolume)
-							{
-								currentVolume = volume_list[volume_list.length] = {
-									volume_index: volume_list.length,
-									volume_title: 'null',
-									chapter_list: [],
-								};
-							}
-
-							let a = tr.find('.subtitle a');
-
-							let chapter_date;
-							let dd;
-							let da = tr.find('.long_update');
-
-							if (da.find('span[title*="/"]').length)
-							{
-								dd = da.find('span[title*="/"]').attr('title').replace(/改稿|^\s+|\s+$/g, '');
-							}
-
-							if (!dd)
-							{
-								da.find('*').remove();
-								dd = da.text().replace(/^\s+|\s+$/g, '');
-							}
-
-							if (dd)
-							{
-								chapter_date = moment(dd, 'YYYY/MM/DD HH:mm').local();
-								_cache_dates.push(chapter_date.unix());
-							}
-
-							let href = a.prop('href');
-
-							let data = self.parseUrl(href);
-
-							if (!data.chapter_id)
-							{
-
-								if (tr.find('.bookmarker_now').length)
-								{
-									/**
-									 * fix https://ncode.syosetu.com/n7637dj/
-									 */
-									return;
-								}
-
-								console.log(tr.prop("outerHTML"));
-								console.log(a.prop("outerHTML"));
-								console.log(a);
-								console.log(data);
-								console.log(href);
-								console.log(a.attr('href'));
-								// @ts-ignore
-								console.log(new URL(href, dom.url));
-
-								console.log(dom._options);
-
-								throw new Error()
-							}
-							else
-							{
-								data = {
-									url: null,
-									novel_pid: novel_syosetu_id as string,
-									chapter_id: data.chapter_id as string,
-								} as any;
-
-								href = self._hackURL(self.makeUrl(data), optionsRuntime);
-
-								data.url = href;
-							}
-
-							currentVolume
-								.chapter_list
-								.push({
-									chapter_index: currentVolume.chapter_list.length,
-									chapter_title: a.text().replace(/^\s+|\s+$/g, ''),
-									chapter_id: data.chapter_id,
-									chapter_url: href,
-									chapter_url_data: data,
-									chapter_date,
-								})
-							;
-						}
-					})
-				;
-
-				_cache_dates.sort();
+					volume_length,
+					chapter_length,
+				} = await _get_volume_list_main(self, url, optionsRuntime, dom, novel_syosetu_id)
 
 				let novel_date = moment.unix(_cache_dates[_cache_dates.length - 1]).local();
 
@@ -859,6 +765,8 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					url: dom.url,
 					url_data,
 
+					page,
+
 					novel_title,
 					novel_author,
 
@@ -874,6 +782,9 @@ export class NovelSiteSyosetu extends NovelSiteDemo.NovelSite
 					volume_list,
 
 					checkdate: moment().local(),
+
+					volume_length,
+					chapter_length,
 
 					imgs: [] as string[],
 				} as INovel;

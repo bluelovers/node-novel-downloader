@@ -18,6 +18,8 @@ import NovelSite from '../src/site/wenku8/index';
 
 	Promise.mapSeries([
 
+		'https://www.wenku8.net/book/2523.htm',
+
 		//'http://www.wenku8.com/novel/2/2283/index.htm',
 //		'http://www.wenku8.com/novel/0/173/index.htm',
 
@@ -86,6 +88,8 @@ import NovelSite from '../src/site/wenku8/index';
 			//disableCheckExists: true,
 
 			startIndex: 1,
+
+			debugLog: true,
 
 		}).then(function (novel)
 		{

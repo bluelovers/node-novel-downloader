@@ -15,6 +15,7 @@ const html_1 = require("../../util/html");
 const mitemin_1 = require("mitemin");
 const util_1 = require("./util");
 const url_1 = tslib_1.__importDefault(require("../../util/url"));
+const get_volume_list_1 = require("./util/get_volume_list");
 var EnumProtocolMode;
 (function (EnumProtocolMode) {
     EnumProtocolMode[EnumProtocolMode["NONE"] = 0] = "NONE";
@@ -143,20 +144,26 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             },
         }, ...opts);
     }
-    _hackURL(obj, optionsRuntime) {
+    _hackURL(obj, optionsRuntime, page) {
         if (typeof obj === 'string') {
             obj = (0, url_1.default)(obj);
         }
         if (obj.hostname === 'ncode.syosetu.com' || obj.hostname === 'novel18.syosetu.com') {
             switch (optionsRuntime.protocolMode) {
                 case 2 /* EnumProtocolMode.HTTP */:
-                    obj.protocol = 'http';
+                    obj.protocol = 'http:';
                     break;
                 case true:
                 case 1 /* EnumProtocolMode.HTTPS */:
-                    obj.protocol = 'https';
+                    obj.protocol = 'https:';
                     break;
             }
+        }
+        if (page > 1) {
+            obj.searchParams.set('p', page);
+        }
+        else if (page) {
+            obj.searchParams.delete('p');
         }
         return obj;
     }
@@ -304,8 +311,8 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             return data_meta;
         });
     }
-    createMainUrl(url, optionsRuntime) {
-        return this._hackURL(super.createMainUrl(url, optionsRuntime), optionsRuntime);
+    createMainUrl(url, optionsRuntime, page) {
+        return this._hackURL(super.createMainUrl(url, optionsRuntime), optionsRuntime, page);
     }
     async get_volume_list(url, optionsRuntime = {}) {
         const self = this;
@@ -326,10 +333,6 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
             let novel_desc = dom.$('#novel_ex').text();
             let novel_publisher = self.IDKEY;
             let url_data = self.parseUrl(dom.url.href);
-            let volume_list = [];
-            let currentVolume;
-            let table = dom.$('.index_box').find('> .chapter_title, .novel_sublist2');
-            let _cache_dates = [];
             let novel_syosetu_id;
             {
                 let $ = dom.$;
@@ -345,82 +348,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                     throw new Error(`官方 txt 下載功能遭禁用，或請使用 cookies 登入，或將 disableTxtdownload 設為 true`);
                 }
             }
-            table
-                .each(function (index) {
-                // @ts-ignore
-                let tr = dom.$(this);
-                if (tr.is('.chapter_title')) {
-                    currentVolume = volume_list[volume_list.length] = {
-                        volume_index: volume_list.length,
-                        volume_title: tr.text().replace(/^\s+|\s+$/g, ''),
-                        chapter_list: [],
-                    };
-                }
-                else {
-                    if (!currentVolume) {
-                        currentVolume = volume_list[volume_list.length] = {
-                            volume_index: volume_list.length,
-                            volume_title: 'null',
-                            chapter_list: [],
-                        };
-                    }
-                    let a = tr.find('.subtitle a');
-                    let chapter_date;
-                    let dd;
-                    let da = tr.find('.long_update');
-                    if (da.find('span[title*="/"]').length) {
-                        dd = da.find('span[title*="/"]').attr('title').replace(/改稿|^\s+|\s+$/g, '');
-                    }
-                    if (!dd) {
-                        da.find('*').remove();
-                        dd = da.text().replace(/^\s+|\s+$/g, '');
-                    }
-                    if (dd) {
-                        chapter_date = (0, index_3.moment)(dd, 'YYYY/MM/DD HH:mm').local();
-                        _cache_dates.push(chapter_date.unix());
-                    }
-                    let href = a.prop('href');
-                    let data = self.parseUrl(href);
-                    if (!data.chapter_id) {
-                        if (tr.find('.bookmarker_now').length) {
-                            /**
-                             * fix https://ncode.syosetu.com/n7637dj/
-                             */
-                            return;
-                        }
-                        log_1.console.log(tr.prop("outerHTML"));
-                        log_1.console.log(a.prop("outerHTML"));
-                        log_1.console.log(a);
-                        log_1.console.log(data);
-                        log_1.console.log(href);
-                        log_1.console.log(a.attr('href'));
-                        // @ts-ignore
-                        log_1.console.log(new URL(href, dom.url));
-                        log_1.console.log(dom._options);
-                        throw new Error();
-                    }
-                    else {
-                        data = {
-                            url: null,
-                            novel_pid: novel_syosetu_id,
-                            chapter_id: data.chapter_id,
-                        };
-                        href = self._hackURL(self.makeUrl(data), optionsRuntime);
-                        data.url = href;
-                    }
-                    currentVolume
-                        .chapter_list
-                        .push({
-                        chapter_index: currentVolume.chapter_list.length,
-                        chapter_title: a.text().replace(/^\s+|\s+$/g, ''),
-                        chapter_id: data.chapter_id,
-                        chapter_url: href,
-                        chapter_url_data: data,
-                        chapter_date,
-                    });
-                }
-            });
-            _cache_dates.sort();
+            let { page, volume_list, _cache_dates, volume_length, chapter_length, } = await (0, get_volume_list_1._get_volume_list_main)(self, url, optionsRuntime, dom, novel_syosetu_id);
             let novel_date = index_3.moment.unix(_cache_dates[_cache_dates.length - 1]).local();
             let a = await self._getExtraInfoURL(url_data.novel_id, url_data, optionsRuntime)
                 .then(function (dom) {
@@ -530,6 +458,7 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                 ...a,
                 url: dom.url,
                 url_data,
+                page,
                 novel_title,
                 novel_author,
                 novel_desc,
@@ -540,6 +469,8 @@ let NovelSiteSyosetu = class NovelSiteSyosetu extends NovelSiteDemo.NovelSite {
                 novel_syosetu_id,
                 volume_list,
                 checkdate: (0, index_3.moment)().local(),
+                volume_length,
+                chapter_length,
                 imgs: [],
             };
         });
