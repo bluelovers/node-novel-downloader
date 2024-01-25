@@ -44,7 +44,7 @@ export function _handleParseURL(url: string | URL | number, ...argv)
 
 	try
 	{
-		urlobj.url = createURL(url as string);
+		urlobj.url = new URL(url as string);
 		url = urlobj.url.href;
 	}
 	catch (e)

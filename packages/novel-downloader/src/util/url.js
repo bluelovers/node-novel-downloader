@@ -27,7 +27,7 @@ function _handleParseURL(url, ...argv) {
         chapter_id: null,
     };
     try {
-        urlobj.url = createURL(url);
+        urlobj.url = new URL(url);
         url = urlobj.url.href;
     }
     catch (e) {

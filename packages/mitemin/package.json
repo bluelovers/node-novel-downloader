@@ -1,6 +1,6 @@
 {
   "name": "mitemin",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "parse mitemin url",
   "homepage": "https://github.com/bluelovers/node-novel-downloader/tree/master/packages/mitemin#readme",
   "bugs": {
