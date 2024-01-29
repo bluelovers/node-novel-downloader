@@ -15,8 +15,6 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 import novelText from '@node-novel/layout';
 import path from "path";
-import StrUtil from 'str-util';
-import { zhRegExp } from 'regexp-cjk';
 import { parseUrl, makeUrl, check } from './util';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteClass>>()

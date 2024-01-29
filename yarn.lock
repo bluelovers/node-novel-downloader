@@ -661,6 +661,26 @@
   resolved "https://registry.npmjs.org/@lazy-assert/check-basic/-/check-basic-1.0.13.tgz#010345c39f1991f50870b8979569f99a2e849e12"
   integrity sha512-M+8yyRdXgPjiEk5zXmHICygCwxTL2NpgtAhbgSNYg1A2QlT2JWO7VeI1KU+6iBRtHvK4QoSmIi093d6ZVxqoeA==
 
+"@lazy-cjk/fullhalf-char-code@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-cjk/fullhalf-char-code/-/fullhalf-char-code-1.0.1.tgz#22a47eaa39c2b093dfd97f374889929effd4e35c"
+  integrity sha512-PvQqO22KAZ0RdmctE/CVDwYUCJRpPh7El05tAAw0Rpbv6jwT7ry3LdA1ZP4n9D+Rn90vmyHWuyI9RHxASJAi3Q==
+
+"@lazy-cjk/fullhalf-data@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-cjk/fullhalf-data/-/fullhalf-data-1.0.1.tgz#42a179e6dbadab49019bffaf2f9cf9e0a324b320"
+  integrity sha512-3LSLcX/orvQUTfsBCMJk7RpKCzmfxIJN8NGPiZuvw1oRQAlg3BgXKlD3Db9PsghxT5VNamAIqfWsKKLPu0JLnw==
+
+"@lazy-cjk/fullhalf@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-cjk/fullhalf/-/fullhalf-1.0.1.tgz#f6e96bb44e0863f467b06934c4cadcd8462d2504"
+  integrity sha512-c3yB9u2K1SV+tTpGOWog/vF+f1J+/rWl0fvQUYYvCNJFmFn0esXDZ8zq9S1v2XzhNuZ/hJUzTeLMzq+q9+KqNw==
+  dependencies:
+    "@lazy-cjk/fullhalf-char-code" "^1.0.1"
+    "@lazy-cjk/fullhalf-data" "^1.0.1"
+    deepmerge "^4.3.1"
+    uni-string "^2.0.7"
+
 "@lazy-cjk/japanese@^1.2.33":
   version "1.2.33"
   resolved "https://registry.npmjs.org/@lazy-cjk/japanese/-/japanese-1.2.33.tgz#3be19cb5098215f56a6b6cb9705c37a2b11b43c1"
@@ -4947,10 +4967,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-runes2@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npmjs.org/runes2/-/runes2-1.1.3.tgz#290c7f1a42baade01ce27d34f150cda30be952d0"
-  integrity sha512-sJ/0iVFLne4f2S7cMB1OckBtC9lqkzP5a/wPnDIkbrWzgUsJ+JMQv6y7hk76U7zvbua+je5GltfpsZazUhG05w==
+runes2@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/runes2/-/runes2-1.1.4.tgz#aa38d3d7946e147ac4718ed0fb19b22340ae5c66"
+  integrity sha512-LNPnEDPOOU4ehF71m5JoQyzT2yxwD6ZreFJ7MxZUAoMKNMY1XrAo60H1CUoX5ncSm0rIuKlqn9JZNRrRkNou2g==
 
 safe-buffer@^5.0.1, safe-buffer@^5.1.2:
   version "5.2.1"
@@ -5427,13 +5447,13 @@ undici-types@~5.26.4:
   resolved "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz#bcd539893d00b56e964fd2657a4866b221a65617"
   integrity sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==
 
-uni-string@^2.0.2, uni-string@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/uni-string/-/uni-string-2.0.6.tgz#07c1f9d62505e36fdc53a4f04689ae854d7ce66e"
-  integrity sha512-AxPce9mrwUA8Q86ryfcH3omFVOfaRXbnHnVW0P/COyurfL2Gxpnn7UqJJQK9tg4DUr6/yOdVlQ43rJHyrDL5kQ==
+uni-string@^2.0.2, uni-string@^2.0.6, uni-string@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.npmjs.org/uni-string/-/uni-string-2.0.7.tgz#54ebd48a9cd44b1a9b3bad3c40eb2eb51a179efc"
+  integrity sha512-hFR/ZccPmldF5Ldrr7BpR4dIuugP7XAVtMgGekWobcgZOuKSrVb6YeoSh1r3NrgfPgWFusGmjndoBDjgdPwFxA==
   dependencies:
     es6-class-prototype "^2.0.0"
-    runes2 "^1.1.3"
+    runes2 "^1.1.4"
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"

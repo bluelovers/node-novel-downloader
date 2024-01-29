@@ -19,7 +19,6 @@ import { IESJzoneRecentUpdateRowBook } from 'esjzone-api/lib/types';
 import tryMinifyHTML from 'restful-decorator-plugin-jsdom/lib/html';
 import volNovelTree from './util/volNovelTree';
 import { tryMinifyHTMLOfElem } from 'restful-decorator-plugin-jsdom/lib/html';
-import { toFullWidth } from 'str-util/lib/fullhalf';
 import zhRegExpWithPluginEnabled from 'regexp-cjk-with-plugin-enabled';
 
 //import { URL } from 'jsdom-url';

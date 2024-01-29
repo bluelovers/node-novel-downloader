@@ -5,7 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripContent = exports.stripInit = void 0;
 const tslib_1 = require("tslib");
-const str_util_1 = require("str-util");
+const fullhalf_1 = require("@lazy-cjk/fullhalf");
 const util_1 = require("./util");
 const regexp_cjk_with_plugin_enabled_1 = tslib_1.__importDefault(require("regexp-cjk-with-plugin-enabled"));
 let inited;
@@ -65,7 +65,7 @@ function char_autoFH(text) {
             s.toLocaleUpperCase(),
         ]);
         a.forEach(function (v) {
-            a.push((0, str_util_1.toFullWidth)(v));
+            a.push((0, fullhalf_1.toFullWidth)(v));
         });
         return '[' + (0, util_1.array_unique)(a).join('') + ']+';
     });

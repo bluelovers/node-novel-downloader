@@ -96,7 +96,7 @@
     "@types/jsdom": "^21.1.6",
     "@types/mocha": "^10",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^20.11.6",
+    "@types/node": "^20.11.10",
     "@types/request": "^2.48.12",
     "@types/request-promise": "^4",
     "@types/set-value": "^4.0.3",

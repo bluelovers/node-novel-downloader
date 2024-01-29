@@ -20,7 +20,7 @@ const node_novel_info_1 = tslib_1.__importStar(require("node-novel-info"));
 const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const util_1 = require("fs-iconv/util");
 const crlf_normalize_1 = require("crlf-normalize");
-const str_util_1 = tslib_1.__importDefault(require("str-util"));
+const fullhalf_1 = require("@lazy-cjk/fullhalf");
 const const_1 = require("node-novel-info/lib/const");
 const log_1 = require("../util/log");
 const url_1 = tslib_1.__importDefault(require("../util/url"));
@@ -179,7 +179,7 @@ class NovelSite {
     trimTag(tag) {
         return tag
             .replace(/[\[\]\/\\]/g, (s) => {
-            return str_util_1.default.toFullWidth(s);
+            return (0, fullhalf_1.toFullWidth)(s);
         });
     }
     _exportDownloadOptions(optionsRuntime) {

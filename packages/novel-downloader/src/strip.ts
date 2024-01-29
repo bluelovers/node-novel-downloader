@@ -2,7 +2,7 @@
  * Created by user on 2018/4/28/028.
  */
 
-import { toFullWidth } from 'str-util';
+import { toFullWidth } from '@lazy-cjk/fullhalf';
 import { zhRegExp } from 'regexp-cjk';
 import { array_unique } from './util';
 import zhRegExpWithPluginEnabled from 'regexp-cjk-with-plugin-enabled';

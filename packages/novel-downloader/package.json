@@ -69,13 +69,14 @@
   },
   "dependencies": {
     "@bluelovers/request-promise": "^4.2.5",
+    "@lazy-cjk/fullhalf": "^1.0.1",
     "@node-novel/layout": "^2.0.20",
     "@node-novel/layout-reporter": "^2.0.1",
     "array-hyper-unique": "^2.1.4",
     "bluebird": "^3.7.2",
     "cached-request": "^3.0.0",
     "content-type-parser": "^1.0.2",
-    "crlf-normalize": "^1.0.19",
+    "crlf-normalize": "^1.0.20",
     "debug-color2": "^1.3.2",
     "decorator-utils": "^2.0.0",
     "env-bool": "^2.0.1",
@@ -102,12 +103,11 @@
     "request-promise": "npm:@bluelovers/request-promise",
     "set-value": "^4.1.0",
     "shortid": "^2.2.16",
-    "str-util": "^2.3.41",
     "symbol.inspect": "^1.0.3",
     "ts-type": "^3.0.1",
     "tslib": "^2.6.2",
     "upath2": "^3.1.19",
-    "zero-width": "^1.0.27"
+    "zero-width": "^1.0.28"
   },
   "peerDependencies": {
     "request": "^2.88.2"

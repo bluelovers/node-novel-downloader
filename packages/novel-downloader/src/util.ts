@@ -2,7 +2,7 @@
  * Created by user on 2018/3/18/018.
  */
 
-import { toFullWidth } from 'str-util';
+import { toFullWidth } from '@lazy-cjk/fullhalf';
 import novelText from '@node-novel/layout';
 // @ts-ignore
 import { minifyHTML } from 'jsdom-extra/lib/html';

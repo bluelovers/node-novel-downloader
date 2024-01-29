@@ -23,7 +23,7 @@ import { LazyCookie, LazyCookieJar } from 'jsdom-extra';
 import fs from 'fs-extra';
 import { trimFilename } from 'fs-iconv/util';
 import { crlf, CRLF, R_CRLF } from 'crlf-normalize';
-import StrUtil from 'str-util';
+import { toFullWidth } from '@lazy-cjk/fullhalf';
 import { EnumNovelStatus } from 'node-novel-info/lib/const';
 import { INovel } from './syosetu';
 import { consoleDebug } from '../util/log';
@@ -304,7 +304,7 @@ export class NovelSite implements NovelSite.INovelSite
 		return (tag as string)
 			.replace(/[\[\]\/\\]/g, (s) =>
 			{
-				return StrUtil.toFullWidth(s)
+				return toFullWidth(s)
 			})
 			;
 	}
