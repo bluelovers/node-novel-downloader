@@ -690,32 +690,32 @@
     lodash "^4.17.21"
     tslib ">=2"
 
-"@lazy-cjk/jp-table-alias@^1.0.41":
-  version "1.0.41"
-  resolved "https://registry.npmjs.org/@lazy-cjk/jp-table-alias/-/jp-table-alias-1.0.41.tgz#42dc7c50239f194559d5f5082ddcbc13982a30cc"
-  integrity sha512-Sv0vw0JhJqtYEhF5HgQVQ+eSRSejFCUdcHEafstaMCQ3juVaVSfe6b4LOj339+rucUEduBznnMy6LqXMp7MJ7A==
+"@lazy-cjk/jp-table-alias@^1.0.41", "@lazy-cjk/jp-table-alias@^1.0.42":
+  version "1.0.42"
+  resolved "https://registry.npmjs.org/@lazy-cjk/jp-table-alias/-/jp-table-alias-1.0.42.tgz#1ed06d23160c3b163d16068ea581bb096507d7d3"
+  integrity sha512-wr5k9/AiXUJKWNwyQ6lsBUYy0H/kQoQXdFspxm8m7OEBnVVzR6giBjvAvBHA1E4/6HsMUo9zzuESqhezuwk7tg==
   dependencies:
-    "@lazy-cjk/jp-table-convert" "^1.0.46"
+    "@lazy-cjk/jp-table-convert" "^1.0.47"
     array-hyper-unique "^2.1.4"
     tslib ">=2"
 
-"@lazy-cjk/jp-table-comparison@^1.0.29":
-  version "1.0.29"
-  resolved "https://registry.npmjs.org/@lazy-cjk/jp-table-comparison/-/jp-table-comparison-1.0.29.tgz#c12997efed3f0754f85705393b9726fc9edc2b58"
-  integrity sha512-yy+KrAk9ORhjJHB3VOWiQ/Wrx+CGP2PwCjixqRuw7xU1v2p8QRSiDAcPvh1FX+ObD/fenRq09NMEAw3X8pJlJg==
+"@lazy-cjk/jp-table-comparison@^1.0.29", "@lazy-cjk/jp-table-comparison@^1.0.30":
+  version "1.0.30"
+  resolved "https://registry.npmjs.org/@lazy-cjk/jp-table-comparison/-/jp-table-comparison-1.0.30.tgz#b2dbeefc12fbfbf9822ea013a47f06a637fd328f"
+  integrity sha512-UaWLYPh8JtVfu+Vq7uhcAz4W7wyOS2/xqJHnoNn3gxohLm0s5GniX1h3BpUJHecGaRIs3HuFaGfawRXyyKkYQA==
   dependencies:
     array-hyper-unique "^2.1.4"
     tslib ">=2"
 
-"@lazy-cjk/jp-table-convert@^1.0.46":
-  version "1.0.46"
-  resolved "https://registry.npmjs.org/@lazy-cjk/jp-table-convert/-/jp-table-convert-1.0.46.tgz#c608977ef46b681e58ddd188afcc48337531f110"
-  integrity sha512-VhOGMBm1WGh0rUNCwJmVKPIuXVV5KcOqvynrwZUm7HJ6zsccNDPR7PsxFX0L5uS0xC7JdKgjlr2WrmgzY5lXGA==
+"@lazy-cjk/jp-table-convert@^1.0.46", "@lazy-cjk/jp-table-convert@^1.0.47":
+  version "1.0.47"
+  resolved "https://registry.npmjs.org/@lazy-cjk/jp-table-convert/-/jp-table-convert-1.0.47.tgz#e50043beb245895ba856d186b72d3a361687654a"
+  integrity sha512-ISxg5Ecfa6B4OZQPOM5PXz+6G5TBnDg9FJ7gHleNBhe//Ep3LmZFZCEE7cgVKtCuRaou6O3hqmnzZ9FdVl5yhQ==
   dependencies:
-    "@lazy-cjk/jp-table-comparison" "^1.0.29"
-    regexp-helper "^1.0.37"
+    "@lazy-cjk/jp-table-comparison" "^1.0.30"
+    regexp-helper "^1.0.38"
     tslib ">=2"
-    uni-string "^2.0.2"
+    uni-string "^2.0.7"
 
 "@lazy-cjk/jp-table-voice@^1.0.37":
   version "1.0.37"
@@ -735,17 +735,22 @@
     "@lazy-cjk/zh-convert" "^1.0.48"
     tslib ">=2"
 
-"@lazy-cjk/regexp-range-table@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@lazy-cjk/regexp-range-table/-/regexp-range-table-1.0.4.tgz#e797ca42dbb79331e98211f6024e3236ffaae345"
-  integrity sha512-Awt1XSFQQjxEgHORhJPkMfbPpxs2cvQXDFXqpK0fXYy3OyhJDUzZMS8wEWhf208kbbMefEWmVtbC2T2E+GagvQ==
+"@lazy-cjk/regexp-range-table@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@lazy-cjk/regexp-range-table/-/regexp-range-table-1.0.5.tgz#b64fe29687f8f803c6dff2f90b4117e33d15f242"
+  integrity sha512-bWcDibMURgC6sE19BTDh5l/4MCz6d9/w5hwvQOy3ClpfrfQsOAksQV9wl+bUN0FGF8svlk+Mil5WFVPD1xwwkg==
 
-"@lazy-cjk/static-build-zh-convert@^1.0.51":
-  version "1.0.51"
-  resolved "https://registry.npmjs.org/@lazy-cjk/static-build-zh-convert/-/static-build-zh-convert-1.0.51.tgz#7f17f70ebefafb06285d15c8e4855024de490772"
-  integrity sha512-COEoNSL/wX08D2Epf8sItnSMFA9t2/imYJM5N+sglLY0sWaWM9T/bNcBAQTpLggslmylUX/IOZ14XxbJjkmzPg==
+"@lazy-cjk/static-build-zh-convert@^1.0.52":
+  version "1.0.52"
+  resolved "https://registry.npmjs.org/@lazy-cjk/static-build-zh-convert/-/static-build-zh-convert-1.0.52.tgz#66938847716d7ff73c864772a61e61af7dbc9474"
+  integrity sha512-CX/szifUpiZIUtmzCbvTiuqGk7/397CwRQXbUF9bx3gHRVin5nosEgMcFMKs9csVwJSAQs1icAUYqeSOSZ6pyQ==
   dependencies:
     tslib ">=2"
+
+"@lazy-cjk/str-util-char-code-at@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-cjk/str-util-char-code-at/-/str-util-char-code-at-1.0.1.tgz#3de9a15102438435b9569a0e6cfc87d19143900f"
+  integrity sha512-4u992lU3Tj6CRdiDRldVmEzrgafgCegNVI2XPXOedKlc5AnnrEnPtk52WB4T33UR32XAL69pUFfDSEgthnBu3g==
 
 "@lazy-cjk/util@^1.0.18":
   version "1.0.18"
@@ -762,16 +767,16 @@
   dependencies:
     tslib ">=2"
 
-"@lazy-cjk/zh-convert@^1.0.48":
-  version "1.0.48"
-  resolved "https://registry.npmjs.org/@lazy-cjk/zh-convert/-/zh-convert-1.0.48.tgz#c61b96caaf0d4d1741b5d0a61b96a0371568bc76"
-  integrity sha512-yRf5K24JAtpysXYloI4FhLmzcdbDleR5T25/H7QHoz+Qx+lj86/Bf1Ta9mLnElv9liFgE0RWGEeppKs5rZqQzA==
+"@lazy-cjk/zh-convert@^1.0.48", "@lazy-cjk/zh-convert@^1.0.49":
+  version "1.0.49"
+  resolved "https://registry.npmjs.org/@lazy-cjk/zh-convert/-/zh-convert-1.0.49.tgz#d030c256916732aa5bc0eb3ef6d3f902e241044a"
+  integrity sha512-83+VJl2l1BQqU21/Sq8RgMcsgpVr5Jdxkcjbi/Kxu94JFlC2DRJZmfQOarrYekz2bFMcuxBPlWqwWbNxeOLZuQ==
   dependencies:
-    "@lazy-cjk/static-build-zh-convert" "^1.0.51"
+    "@lazy-cjk/static-build-zh-convert" "^1.0.52"
     array-hyper-unique "^2.1.4"
-    regexp-helper "^1.0.37"
+    regexp-helper "^1.0.38"
     tslib ">=2"
-    uni-string "^2.0.2"
+    uni-string "^2.0.7"
 
 "@lazy-cjk/zh-slugify@^1.0.85", "@lazy-cjk/zh-slugify@^1.0.86":
   version "1.0.86"
@@ -782,38 +787,46 @@
     "@lazy-cjk/zh-table-list" "^1.0.84"
     tslib ">=2"
 
-"@lazy-cjk/zh-table-alias@^1.0.62":
-  version "1.0.62"
-  resolved "https://registry.npmjs.org/@lazy-cjk/zh-table-alias/-/zh-table-alias-1.0.62.tgz#4f5b33e64d1d34c40e87cdd544502502cc8e0976"
-  integrity sha512-ppNQ4VGP+zaBGUGvXPeLANc8zy6Yi9r3pzVySB+ypy+n3C43QOpJJoWtIvEuKfmFGju4ZKO6CucCwEnf9U3mwQ==
+"@lazy-cjk/zh-table-alias@^1.0.62", "@lazy-cjk/zh-table-alias@^1.0.63":
+  version "1.0.63"
+  resolved "https://registry.npmjs.org/@lazy-cjk/zh-table-alias/-/zh-table-alias-1.0.63.tgz#3eafae15e06879256886ac44d6019ef4b7561945"
+  integrity sha512-eIuoge6/vK8H4EdEDyOgHBZOtzeTfLu5dyjZdFkYEouBMFV5Et5B2SVv0iMlUj09tcC4Q/gSMj8iBlxGELO5xw==
   dependencies:
-    "@lazy-cjk/jp-table-alias" "^1.0.41"
-    "@lazy-cjk/zh-convert" "^1.0.48"
+    "@lazy-cjk/jp-table-alias" "^1.0.42"
+    "@lazy-cjk/zh-convert" "^1.0.49"
     array-hyper-unique "^2.1.4"
-    deepmerge-plus "^2.1.3"
+    deepmerge-plus "^3.0.2"
     ts-type ">=2"
     tslib ">=2"
 
-"@lazy-cjk/zh-table-greedy@^1.0.90":
-  version "1.0.90"
-  resolved "https://registry.npmjs.org/@lazy-cjk/zh-table-greedy/-/zh-table-greedy-1.0.90.tgz#22dd8e14df3cb137c6a61d59aa8ae3dc63b48712"
-  integrity sha512-ktk6dH9yuGPJEmEZtliYCNALbKO6jfmXjSFabnF1hgNW/uk2rg5r5nydyFXa4rECclSbk88xT0sXe2cBTOf30A==
+"@lazy-cjk/zh-table-greedy@^1.0.90", "@lazy-cjk/zh-table-greedy@^1.0.91":
+  version "1.0.91"
+  resolved "https://registry.npmjs.org/@lazy-cjk/zh-table-greedy/-/zh-table-greedy-1.0.91.tgz#1b03d8684d9040bfda0144e9c6b7b8af60046156"
+  integrity sha512-qD05ycGusmldwQBDz4k0fshHSP5rE3xh/be+faA5CqmYeHJbht8cR4NzEuCiUv33u7wzvBidZULr040gTl2jGA==
   dependencies:
     array-hyper-unique "^2.1.4"
     tslib ">=2"
-    uni-string "^2.0.2"
+    uni-string "^2.0.7"
 
-"@lazy-cjk/zh-table-list@^1.0.84":
-  version "1.0.84"
-  resolved "https://registry.npmjs.org/@lazy-cjk/zh-table-list/-/zh-table-list-1.0.84.tgz#e560bb625d30e67988522698bf94508a2fce08ca"
-  integrity sha512-xzzQf2rDSmovYT98gHTN2LXGITsy1NNIbu6Klp2zC2Tk0SjeUcRhMxJjVWQUtXBbBQ3UlSZKrTvutpRFjVja0g==
+"@lazy-cjk/zh-table-list@^1.0.84", "@lazy-cjk/zh-table-list@^1.0.85":
+  version "1.0.85"
+  resolved "https://registry.npmjs.org/@lazy-cjk/zh-table-list/-/zh-table-list-1.0.85.tgz#209d5fbad6f2194017a3c57420566977fd0e909f"
+  integrity sha512-wU7TbZ7clEDB5zakXb8a56hvVx+1C8R4oVijNEChA5bb0WwmpAA8siFj0+7M/XvImjuissO8lCe0SJs87urtPg==
   dependencies:
-    "@lazy-cjk/jp-table-convert" "^1.0.46"
-    "@lazy-cjk/zh-convert" "^1.0.48"
-    "@lazy-cjk/zh-table-alias" "^1.0.62"
-    "@lazy-cjk/zh-table-greedy" "^1.0.90"
+    "@lazy-cjk/jp-table-convert" "^1.0.47"
+    "@lazy-cjk/zh-convert" "^1.0.49"
+    "@lazy-cjk/zh-table-alias" "^1.0.63"
+    "@lazy-cjk/zh-table-greedy" "^1.0.91"
     tslib ">=2"
-    uni-string "^2.0.2"
+    uni-string "^2.0.7"
+
+"@lazy-cjk/zh2num@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-cjk/zh2num/-/zh2num-1.0.1.tgz#d534cbbd1d1d778a90a9107f6f57330403181410"
+  integrity sha512-2UaP6by8tCQFSEM1v94ylGzE8TlyIJMQcuh26wgCw22dfz2iWzUVwpO4fOFKPbmSfDw+a5J96PMiCGNcGy4P3A==
+  dependencies:
+    "@lazy-cjk/japanese" "^1.2.33"
+    chinese-parseint2 "^2.0.6"
 
 "@lazy-glob/sort-entries@^1.0.11":
   version "1.0.11"
@@ -872,16 +885,16 @@
     ts-type "^3.0.1"
     tslib "^2"
 
-"@node-novel/layout@^2.0.20":
-  version "2.0.20"
-  resolved "https://registry.npmjs.org/@node-novel/layout/-/layout-2.0.20.tgz#5d63697987c7fe584d2eb7bf0ce07676aa029a7b"
-  integrity sha512-GBH3hmmmAMfDLnlptsP9Aj6w6OMmhvIdGKlucVcoO7A0Blmda7FyHeVIJZgb5HqDPBXKOt+57UrQI6J/xZOWrg==
+"@node-novel/layout@^2.0.23":
+  version "2.0.23"
+  resolved "https://registry.npmjs.org/@node-novel/layout/-/layout-2.0.23.tgz#d7a0a428d5c3db81c287a084daa21bdc056d29e3"
+  integrity sha512-CliOXvkIAMS4R5+T3X1g+fcqNL/2NFi7FsNQEKQTy1vH/GubW0aNy/E4Inc7oZOjGq0zZA+Fm4ZG6H6s3ETJKQ==
   dependencies:
     array-hyper-unique "^2.1.4"
-    blank-line "^2.0.3"
-    crlf-normalize "^1.0.18"
+    blank-line "^2.0.7"
+    crlf-normalize "^1.0.20"
     env-bool "^2.0.1"
-    str-util "^2.3.37"
+    str-util "^3.0.1"
     tslib "^2"
 
 "@node-novel/normalize@^1.0.30":
@@ -1000,36 +1013,36 @@
     clone-regexp "<3 >=2.2"
     tslib ">=2"
 
-"@regexp-cjk/escape-unicode-property@^1.0.26":
-  version "1.0.26"
-  resolved "https://registry.npmjs.org/@regexp-cjk/escape-unicode-property/-/escape-unicode-property-1.0.26.tgz#e7058badd5a71295903681e2f70229e2e330b0ef"
-  integrity sha512-Bg1Lp6mQz7uqbmO6VMj3WABqotAbgEgE73h0f01MuPJKAG2GnAIi/AlqQ15pfkqsDigbeG+DULC0ng50YxZgmw==
+"@regexp-cjk/escape-unicode-property@^1.0.27":
+  version "1.0.27"
+  resolved "https://registry.npmjs.org/@regexp-cjk/escape-unicode-property/-/escape-unicode-property-1.0.27.tgz#798b2219e8bdb5b43662de14394f8739d343ca34"
+  integrity sha512-x+JcCaJw6SmxhzgP8F+lXyaXOfwroawe1StuXGWQsSUlAGQ38PNqfk/cS5KjKLejJ8ezj6beZEta6/+xbd1h7A==
   dependencies:
-    "@regexp-cjk/rewrite-pattern" "^1.0.31"
+    "@regexp-cjk/rewrite-pattern" "^1.0.32"
     lodash "^4.17.21"
     tslib ">=2"
 
-"@regexp-cjk/regexpu-core-v4@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@regexp-cjk/regexpu-core-v4/-/regexpu-core-v4-1.0.8.tgz#af1fea8f065e40024f7f584f5185e8383526b9df"
-  integrity sha512-5wnd4BFIs8G/e/a6Of65DA9xGZoCvzwh5ML4pA8VGNwd9fMO9Pi9l76CJsaUf8QLuoNNndp42vZpPChk2DqV6w==
+"@regexp-cjk/regexpu-core-v4@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@regexp-cjk/regexpu-core-v4/-/regexpu-core-v4-1.0.9.tgz#d2eeb16aca4932f73d053e963deea2f0f2a543a8"
+  integrity sha512-rdrP911s51Y79JRaiD9zpmSuYNuBQ9pEUfIZoYaiSCcZ1fre15irfEBQy1VxeUU6PFeMGm0zO6E7veUvtN6xzw==
   dependencies:
     regexpu-core "<5 >=4.8.0"
 
-"@regexp-cjk/rewrite-flags@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.npmjs.org/@regexp-cjk/rewrite-flags/-/rewrite-flags-1.0.20.tgz#b0c769f4c44f277b69b605bafe601aa4f4205706"
-  integrity sha512-17JMgLWWWJkMN499GehriS9g4/0XyzRPPbRNXrzVVJvcfcH4HbyONaHF85cnmU90CBIlWG7OZF7tCaAUVKlEZg==
+"@regexp-cjk/rewrite-flags@^1.0.20", "@regexp-cjk/rewrite-flags@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.npmjs.org/@regexp-cjk/rewrite-flags/-/rewrite-flags-1.0.21.tgz#3f4921dcace1ca5b76752d51ca450098b673f806"
+  integrity sha512-FBjInvE5L1DqVGgvRFbm7tCawDhbxhC3Xv1EFP7vUqJ8EpVWJZ1yT4PH4DuS3fifYyu+qHIaFzVANgvCJ+kWXg==
   dependencies:
     tslib ">=2"
 
-"@regexp-cjk/rewrite-pattern@^1.0.31":
-  version "1.0.31"
-  resolved "https://registry.npmjs.org/@regexp-cjk/rewrite-pattern/-/rewrite-pattern-1.0.31.tgz#c9ed41e214faeffbac0fa2bb00013b8af4c97a9b"
-  integrity sha512-+iQVPB3dlbDyq8mW+RKdoiYbGRbGVxwFouLnaP+4Ek9h665YOo2qjhv/81mRlatmZTRIsGbD4azWsh6RK19r8g==
+"@regexp-cjk/rewrite-pattern@^1.0.32":
+  version "1.0.32"
+  resolved "https://registry.npmjs.org/@regexp-cjk/rewrite-pattern/-/rewrite-pattern-1.0.32.tgz#4e98f116105e14026fcd621c7e3d1ec4fb5c5b76"
+  integrity sha512-VB4UebJElyLVl1ut9jt1a9orEYchJ+33IJI7wICo1SvPYiOXV+l+9eJOYwfFrGase85cjwnvgTugoxxunoflBQ==
   dependencies:
-    "@regexp-cjk/regexpu-core-v4" "^1.0.8"
-    "@regexp-cjk/rewrite-flags" "^1.0.20"
+    "@regexp-cjk/regexpu-core-v4" "^1.0.9"
+    "@regexp-cjk/rewrite-flags" "^1.0.21"
     lodash "^4.17.21"
     tslib ">=2"
 
@@ -1285,10 +1298,10 @@
   dependencies:
     moment "*"
 
-"@types/node@*", "@types/node@>=13.7.0", "@types/node@^20.11.6":
-  version "20.11.6"
-  resolved "https://registry.npmjs.org/@types/node/-/node-20.11.6.tgz#6adf4241460e28be53836529c033a41985f85b6e"
-  integrity sha512-+EOokTnksGVgip2PbYbr3xnR7kZigh4LbybAfBAw5BpnQ+FqBYUsvCEjYd70IXKlbohQ64mzEYmMtlWUY8q//Q==
+"@types/node@*", "@types/node@>=13.7.0", "@types/node@^20.11.10":
+  version "20.11.10"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.11.10.tgz#6c3de8974d65c362f82ee29db6b5adf4205462f9"
+  integrity sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1730,10 +1743,10 @@ big.js@^6.2.1:
   resolved "https://registry.npmjs.org/big.js/-/big.js-6.2.1.tgz#7205ce763efb17c2e41f26f121c420c6a7c2744f"
   integrity sha512-bCtHMwL9LeDIozFn+oNhhFoq+yQ3BNdnsLSASUxLciOb1vgvpHsIO1dsENiGMgbb4SkP5TrzWzRiLddn8ahVOQ==
 
-blank-line@^2.0.3:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/blank-line/-/blank-line-2.0.6.tgz#216248d40a04e960e5fdbbc5614760603ce0effc"
-  integrity sha512-qRBvOgQ1Uk1uhclntkSP9LDGgYqqd3YJxgenDLo6o9xw/Y5sVAqwswxM16/s50vZQX9/ZMeH1Y1WW7rOULFHNA==
+blank-line@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.npmjs.org/blank-line/-/blank-line-2.0.7.tgz#726225dd2181f44ced551d67050cd0a82e64ccca"
+  integrity sha512-yaT1HBeDNh30vZPC9K1sseLcgeUtY5/irdzx71pEev+AfGIV9dfOe7b65h8dy3uFzYK7vg6ehsZFe15yyxUJKA==
   dependencies:
     execall2 "^2.0.23"
 
@@ -1896,7 +1909,7 @@ caseless@~0.12.0:
   resolved "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
-chai@^4.3.6:
+"chai@<5 >=4.4.1":
   version "4.4.1"
   resolved "https://registry.npmjs.org/chai/-/chai-4.4.1.tgz#3603fa6eba35425b0f2ac91a009fe924106e50d1"
   integrity sha512-13sOfMv2+DWduEU+/xbun3LScLoqN17nBeTLUsmDfKdoiC1fr0n9PU4guu4AhRcOVFk/sW8LyZWHuhWtQZiF+g==
@@ -2152,10 +2165,10 @@ create-jest@^29.7.0:
     jest-util "^29.7.0"
     prompts "^2.0.1"
 
-crlf-normalize@^1.0.18, crlf-normalize@^1.0.19, crlf-normalize@^1.0.6:
-  version "1.0.19"
-  resolved "https://registry.npmjs.org/crlf-normalize/-/crlf-normalize-1.0.19.tgz#8eace5c6cf2e4d481cfba8f623c5b23ee70abd9b"
-  integrity sha512-cpV1h7YwFtIA36NHtyWuMMMPGxUp6zrzxjRnFEDLh1ZH0SPNUqCWmM8RlKVycxvKHgZOxWXs3XxX/DAlBAjFzA==
+crlf-normalize@^1.0.19, crlf-normalize@^1.0.20, crlf-normalize@^1.0.6:
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/crlf-normalize/-/crlf-normalize-1.0.20.tgz#0b3105d3de807bce8a7599113235d725fe9361a8"
+  integrity sha512-h/rBerTd3YHQGfv7tNT25mfhWvRq2BBLCZZ80GFarFxf6HQGbpW6iqDL3N+HBLpjLfAdcBXfWAzVlLfHkRUQBQ==
   dependencies:
     ts-type ">=2"
 
@@ -2296,6 +2309,13 @@ deepmerge-plus@^2.1.3:
   dependencies:
     is-mergeable-object "1.1.0"
 
+deepmerge-plus@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/deepmerge-plus/-/deepmerge-plus-3.0.2.tgz#4a517b04fdd6ff636906c443d0302613cebe45cd"
+  integrity sha512-4g/xydqbqbgoC8KZANfr60a/9H8sB34+Kv3eAbr1aSkD9ptLK5pBojGxkugqLS/rdJOFhmgENZNb5BMQ/05SQQ==
+  dependencies:
+    is-mergeable-object "1.1.1"
+
 deepmerge@^4.2.2, deepmerge@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/deepmerge/-/deepmerge-4.3.1.tgz#44b5f2147cd3b00d4b56137685966f26fd25dd4a"
@@ -2380,7 +2400,7 @@ emittery@^0.13.1:
   resolved "https://registry.npmjs.org/emittery/-/emittery-0.13.1.tgz#c04b8c3457490e0847ae51fced3af52d338e3dad"
   integrity sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==
 
-emoji-regex@^10.2.1:
+emoji-regex@^10.3.0:
   version "10.3.0"
   resolved "https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.3.0.tgz#76998b9268409eb3dae3de989254d456e70cfe23"
   integrity sha512-QpLs9D9v9kArv4lfDEgg1X/gN5XLnf/A6l9cs8SPZLRZR3ZkY9+kwIQTxm+fsSej5UMYGE8fdoaZVIBlqG0XTw==
@@ -3222,6 +3242,11 @@ is-mergeable-object@1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/is-mergeable-object/-/is-mergeable-object-1.1.0.tgz#a846e8cf0e2bad6a8cf8b243b63b4c43b9907990"
   integrity sha512-JfyDDwUdtS4yHCgUpxOyKB9dnfZ0gecufxB0eytX6BmSXSE+8dbxDGt+V7CNRIRJ9sYFV/WQt2KJG6hNob2sBw==
+
+is-mergeable-object@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/is-mergeable-object/-/is-mergeable-object-1.1.1.tgz#faaa3ed1cfce87d6f7d2f5885e92cc30af3e2ebf"
+  integrity sha512-CPduJfuGg8h8vW74WOxHtHmtQutyQBzR+3MjQ6iDHIYdbOnm1YC7jv43SqCoU8OPGTJD4nibmiryA4kmogbGrA==
 
 is-npm@^5.0.0:
   version "5.0.0"
@@ -4103,16 +4128,16 @@ md5@^2.2.1, md5@^2.3.0:
     crypt "0.0.2"
     is-buffer "~1.1.6"
 
-mdconf2@^2.0.17:
-  version "2.0.17"
-  resolved "https://registry.npmjs.org/mdconf2/-/mdconf2-2.0.17.tgz#ceb0e251bf6644db15b567c4ad384638a15339b1"
-  integrity sha512-QhQbtoIhdqYaKyT0MKcpHZ8scazaDoGsM7fS7G+mkOcyZeaHTsLdv+WyKO9UD3N4LqyzbBaz5P6aLQTgG5UFzA==
+mdconf2@^2.0.18:
+  version "2.0.18"
+  resolved "https://registry.npmjs.org/mdconf2/-/mdconf2-2.0.18.tgz#c0b666de4b0f3e3e03268d67680a163a90895747"
+  integrity sha512-88qCMZrSCOLoFMLKIxbmbD2W449077dUkQ+Q6WtK/xZuAmnBPJr9Xe3Dzu27x4IgXyXv0KtCPVFifJaNb7Sj2w==
   dependencies:
-    crlf-normalize "^1.0.18"
-    deepmerge-plus "^2.1.3"
+    crlf-normalize "^1.0.20"
+    deepmerge-plus "^3.0.2"
     is-plain-object "^5.0.0"
     marked "<1 >=0.8.2"
-    moment "^2.29.4"
+    moment "^2.30.1"
     tslib "^2"
 
 merge-stream@^2.0.0:
@@ -4238,23 +4263,23 @@ node-novel-globby@^2.0.23:
     tslib "^2"
     upath2 "^3.1.19"
 
-node-novel-info@^3.0.16:
-  version "3.0.16"
-  resolved "https://registry.npmjs.org/node-novel-info/-/node-novel-info-3.0.16.tgz#3a31f3f2ff6b51b2eef9f2dd6f0677b2eae75fcc"
-  integrity sha512-W5YtYACH1hIkhVgDegv5kgXmRRBMgxmDkBMdx19jUFTQeHzprVhWU1w5A9I4tAXzdzklogVlDY77k+0naXMDKg==
+node-novel-info@^3.0.17:
+  version "3.0.17"
+  resolved "https://registry.npmjs.org/node-novel-info/-/node-novel-info-3.0.17.tgz#486d9fb4f9b74fb4898cfe45cb1e39e67af106d8"
+  integrity sha512-KoouUrRKW8AHKA/QXJycqc1qUFcSe44UcTNTLuUtdFwpVCRETzS/V8Izt22w4DPPc6RIJkFKoKZRBCHGhIGKLA==
   dependencies:
     array-hyper-unique "^2.1.4"
-    chai "^4.3.6"
-    crlf-normalize "^1.0.18"
-    deepmerge-plus "^2.1.3"
+    chai "<5 >=4.4.1"
+    crlf-normalize "^1.0.20"
+    deepmerge-plus "^3.0.2"
     env-bool "^2.0.1"
     hex-lib "^1.0.2"
     is-plain-object "^5.0.0"
     jsdom-url "^3.0.1"
     lodash "^4.17.21"
     lodash-decorators "^6.0.1"
-    mdconf2 "^2.0.17"
-    moment "^2.29.4"
+    mdconf2 "^2.0.18"
+    moment "^2.30.1"
     sort-object-keys2 "^3.0.5"
     tslib "^2"
 
@@ -4642,106 +4667,106 @@ regenerate@^1.4.2:
   resolved "https://registry.npmjs.org/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
 
-regexp-cjk-plugin-escape-unicode-property@^1.0.36:
-  version "1.0.36"
-  resolved "https://registry.npmjs.org/regexp-cjk-plugin-escape-unicode-property/-/regexp-cjk-plugin-escape-unicode-property-1.0.36.tgz#8b70eba8f9ff8f122706fed59a76db2bf83738f3"
-  integrity sha512-Nt671EAxVykDwgcEB9O14523fyP+bB04148YshgfqmPeQs7zXWocPJspwKoMh2tBTmrY/eEwMdsSY2g51JOoWw==
-  dependencies:
-    "@regexp-cjk/escape-unicode-property" "^1.0.26"
-    tslib ">=2"
-
-regexp-cjk-plugin-extra@^1.0.42:
-  version "1.0.42"
-  resolved "https://registry.npmjs.org/regexp-cjk-plugin-extra/-/regexp-cjk-plugin-extra-1.0.42.tgz#d95e84c092f0d3034d0d500281d27edaf626a1d5"
-  integrity sha512-W5xenDsjwpnD42kwkQQUqX0v8sk1QFR6UKwx66PBQw7mCrqHh7YHennykzlI1HMInbBvA3qGplBWDZlEtSAp9g==
-  dependencies:
-    array-hyper-unique "^2.1.4"
-    lodash "^4.17.21"
-    str-util "^2.3.36"
-    tslib ">=2"
-    uni-string "^2.0.2"
-
-regexp-cjk-with-plugin-enabled@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/regexp-cjk-with-plugin-enabled/-/regexp-cjk-with-plugin-enabled-1.0.16.tgz#b4eec843dd9a28e3d873dd0579903bf1ebf85d4a"
-  integrity sha512-SURAG32tMmU0L6+ZMFWqy7mUdgAW/o5/SBPKU40dX4AzDVDVQOwyBPL530yNZKVbm4KB6SA+GSIcx61zoeitvg==
-  dependencies:
-    regexp-cjk "^3.3.110"
-    regexp-cjk-plugin-escape-unicode-property "^1.0.36"
-    regexp-cjk-plugin-extra "^1.0.42"
-    tslib ">=2"
-
-regexp-cjk@^3.3.110:
-  version "3.3.110"
-  resolved "https://registry.npmjs.org/regexp-cjk/-/regexp-cjk-3.3.110.tgz#e9a345f2c730b1a5558243890ee494710b7f6dd7"
-  integrity sha512-j8xVAGrxtah6YsFOaNqg9E+XhBwblzuvqDLdIHx2j5+cwJwhWAT06sd+zt4Eht3bmrGkJskffSUtEgnXPn8lnQ==
-  dependencies:
-    "@lazy-cjk/zh-table-list" "^1.0.84"
-    array-hyper-unique "^2.1.4"
-    lodash "^4.17.21"
-    regexp-helper "^1.0.37"
-    regexp-parser-event "^1.1.43"
-    regexp-parser-literal "^1.1.36"
-    regexp-range "^2.0.3"
-    tslib ">=2"
-
-regexp-helper-core@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/regexp-helper-core/-/regexp-helper-core-2.0.7.tgz#f75b3998e0ec0f148a498d82dd4399bc28ebc891"
-  integrity sha512-Os9hhbLSriww8+83t5JQ/ZD2kSTXliPQ0OZ5zY4OYIrNiGI9gl2mBfGW7yoLdhFobN8V8UqI4GgM5LgpaiRNjQ==
-
-regexp-helper@^1.0.37:
+regexp-cjk-plugin-escape-unicode-property@^1.0.37:
   version "1.0.37"
-  resolved "https://registry.npmjs.org/regexp-helper/-/regexp-helper-1.0.37.tgz#bdb00b1d1e936c9fa6d97fa10234e7439a0118fc"
-  integrity sha512-ljaT9d0l9tbvAnfQad9LajUOBYOJv6dG4ERN523rzoHHtqYsTDKpUX5TrMzzR4VYB/hUKO9nrF8x8EtOyJssoA==
+  resolved "https://registry.npmjs.org/regexp-cjk-plugin-escape-unicode-property/-/regexp-cjk-plugin-escape-unicode-property-1.0.37.tgz#c0e0ce364506db28ffc6b1dd07273b21770ff195"
+  integrity sha512-7dneafEAOuURZMoaY0BaA/kq/Ji6S3fZnZ7E5ixgVpaapCSGfXNCV/b3foi/LW5a4Jvx1w8WIL3Efec1FNUV5g==
   dependencies:
-    regexp-helper-core "^2.0.7"
-    regexp-support "^1.0.52"
+    "@regexp-cjk/escape-unicode-property" "^1.0.27"
     tslib ">=2"
 
-regexp-parser-event@^1.1.43:
-  version "1.1.43"
-  resolved "https://registry.npmjs.org/regexp-parser-event/-/regexp-parser-event-1.1.43.tgz#53113688e786fce6dba6c3a681517fb53ff25174"
-  integrity sha512-yGNjt4JLfhjjW4ApnPMgCSzfWjPEFORm9m8ePjMg1LaxU194e3Jd698wqE6xgIo7A/HrrlBIELJaYK0tNugxQg==
+regexp-cjk-plugin-extra@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.npmjs.org/regexp-cjk-plugin-extra/-/regexp-cjk-plugin-extra-1.0.43.tgz#4ca9900edc0865cc16c557a9c13df7a679ffed16"
+  integrity sha512-sq5SX7lfU6ofDubLQWASF4MA4GJCk98HsLfAyexB01s/SBSEAHmglTftW4cpJGhwhB2fPP4vQv4Ts/qeJLekyQ==
+  dependencies:
+    "@lazy-cjk/fullhalf" "^1.0.1"
+    array-hyper-unique "^2.1.4"
+    lodash "^4.17.21"
+    tslib ">=2"
+    uni-string "^2.0.7"
+
+regexp-cjk-with-plugin-enabled@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.npmjs.org/regexp-cjk-with-plugin-enabled/-/regexp-cjk-with-plugin-enabled-1.0.17.tgz#8b44f36927ee8388729f990a2031e14dc70a3693"
+  integrity sha512-77hNuhWeUzLCP7d0R5OjEecHiZCvLBT/bwWmgUcf9aXGn5SoEb0yCDEgi1pAUNMZmR/aZI1Zdz8WctlJdVuIvQ==
+  dependencies:
+    regexp-cjk "^3.3.111"
+    regexp-cjk-plugin-escape-unicode-property "^1.0.37"
+    regexp-cjk-plugin-extra "^1.0.43"
+    tslib ">=2"
+
+regexp-cjk@^3.3.111:
+  version "3.3.111"
+  resolved "https://registry.npmjs.org/regexp-cjk/-/regexp-cjk-3.3.111.tgz#8c715d5b7455c386a5d820e59fb861c9568b8e26"
+  integrity sha512-ZweGaHJyFKLihkozdAjf5Wr8k0ytAZCMJaQphIr92Q90d6IDQOuZeDDILEpNArq+1NtWNBKd0e+Fb3M1yDwXKg==
+  dependencies:
+    "@lazy-cjk/zh-table-list" "^1.0.85"
+    array-hyper-unique "^2.1.4"
+    lodash "^4.17.21"
+    regexp-helper "^1.0.38"
+    regexp-parser-event "^1.1.44"
+    regexp-parser-literal "^1.1.37"
+    regexp-range "^2.0.4"
+    tslib ">=2"
+
+regexp-helper-core@^2.0.7, regexp-helper-core@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/regexp-helper-core/-/regexp-helper-core-2.0.8.tgz#fb0f4f59fff38949aef0f23e1ffdafcb69436a96"
+  integrity sha512-UxZ/RFz8AYcVn/hGWg20miNUmSt6W8nWr7xr/WhroVnzexLabXU4vgat1CBt/3zVY0ED6tI8JgBgDGhY+qdZww==
+
+regexp-helper@^1.0.38:
+  version "1.0.38"
+  resolved "https://registry.npmjs.org/regexp-helper/-/regexp-helper-1.0.38.tgz#843d866b4c41db457e8f9c5f55aa508562049228"
+  integrity sha512-bJOySBXSwRNIcmeGlSPUilb6i/VV1rg/l3HCqk8L8vUFbTmUP4wrd00hBMJFe+G3Jk82OknHP25zUdwDzxh7Yw==
+  dependencies:
+    regexp-helper-core "^2.0.8"
+    regexp-support "^1.0.53"
+    tslib ">=2"
+
+regexp-parser-event@^1.1.44:
+  version "1.1.44"
+  resolved "https://registry.npmjs.org/regexp-parser-event/-/regexp-parser-event-1.1.44.tgz#e32e6a8071ebe7d3fd18c0dfdfc09a9b1d925441"
+  integrity sha512-cJfrEt7bTdDd4BUqnfihsj9kPsRjzFh+qSVFcXvSea4mehYhih6c6o4RKSVpbO4+vIGPHU/WXB+BU2kktkvd+w==
   dependencies:
     array-hyper-unique "^2.1.4"
-    regexp-parser-literal "^1.1.36"
-    regexpp2 "^1.3.32"
+    regexp-parser-literal "^1.1.37"
+    regexpp2 "^1.3.33"
     ts-type ">=2"
     tslib ">=2"
 
-regexp-parser-literal@^1.1.36:
-  version "1.1.36"
-  resolved "https://registry.npmjs.org/regexp-parser-literal/-/regexp-parser-literal-1.1.36.tgz#5175153b94e774683bc2f4134a5a9ec4c862842d"
-  integrity sha512-voha1jKjL9fpoX+YT/5SSTT5MqZR+X909WTA5umRdBLO1ifU2K0uJYA1EcWAh4PL2wMDH8b8Fv2Iq/Znh/eVtw==
+regexp-parser-literal@^1.1.37:
+  version "1.1.37"
+  resolved "https://registry.npmjs.org/regexp-parser-literal/-/regexp-parser-literal-1.1.37.tgz#233535968d60cb1c18675290cb1f0735644d9f26"
+  integrity sha512-BKa4QW2D2SbkXZwJ+VTX4fol9kS8iXAt+pXop1XvE6nQVt70V4kb0ViSq3vwkzN6tn+8NIDZY/5Qmy/JttRryg==
   dependencies:
     array-hyper-unique "^2.1.4"
-    emoji-regex "^10.2.1"
-    regexpp2 "^1.3.32"
+    emoji-regex "^10.3.0"
+    regexpp2 "^1.3.33"
     tslib ">=2"
-    uni-string "^2.0.2"
+    uni-string "^2.0.7"
 
-regexp-range@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/regexp-range/-/regexp-range-2.0.3.tgz#83b67196dfc2ae36ee0c7948626ef6a82dd29429"
-  integrity sha512-DdhZLQrwdEvOUSrJ6dttQYkZUr3ePn/AVacMgGpe9vRUDwGokgd5PtjryzY+DetZmo488JnEZQRWJDgKObKwMg==
+regexp-range@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/regexp-range/-/regexp-range-2.0.4.tgz#26f7d1cfaa25380f566d0f8b04bbe0f3e1354974"
+  integrity sha512-qZbiaCRdSy9MLEHVQnA4hfBtO5dfcE1OeEtJMSHPeMQwWUcFslf6Vui7zlYUaqehfub4NRIj/SkMWAB0Dgk1bg==
   dependencies:
     "@bluelovers/fill-range" "^7.0.2"
-    "@lazy-cjk/regexp-range-table" "^1.0.4"
+    "@lazy-cjk/regexp-range-table" "^1.0.5"
     array-hyper-unique "^2.1.4"
 
-regexp-support@^1.0.52:
-  version "1.0.52"
-  resolved "https://registry.npmjs.org/regexp-support/-/regexp-support-1.0.52.tgz#6223fa213631535cd009b4dc22313c6121c5c205"
-  integrity sha512-xrQ04NSjNZuUycj60MavZm3johOZSpob/lOKdu2lPPM/NPXeGxqN70bl8VmlkL16Bltf760ACPGBxbpD0SE+2g==
+regexp-support@^1.0.53:
+  version "1.0.53"
+  resolved "https://registry.npmjs.org/regexp-support/-/regexp-support-1.0.53.tgz#3bc7efb27b3558e6b11cb6434e7a9b38b887967f"
+  integrity sha512-FuMd+0Hr1jVfFCrtflGiKSsfvOgPyFC5g319p8j6A1quOR5mE1fVDExNZHEfD0dxZkl6G2H2rnw4JOKUw8lQ8g==
   dependencies:
-    sort-object-keys2 "^3.0.4"
+    sort-object-keys2 "^3.0.5"
     tslib ">=2"
 
-regexpp2@^1.3.32:
-  version "1.3.32"
-  resolved "https://registry.npmjs.org/regexpp2/-/regexpp2-1.3.32.tgz#f393a5e745d718a536d24789f5267541195be880"
-  integrity sha512-vVwdpd23k3459hqLaEB2JeKhGM7fuuqVhWzT9ltdEXLC00yf7jcWltJxl0nM0tj2pLre90kXzJT6NvWdbc/6AA==
+regexpp2@^1.3.33:
+  version "1.3.33"
+  resolved "https://registry.npmjs.org/regexpp2/-/regexpp2-1.3.33.tgz#19e6d2510b5de66730b149ac163ef93b7ac33113"
+  integrity sha512-esUq3QsJu0tRYRiVaCeY0+l5G50AoJpXAEm5q+iBA0TlOj1zLLRA8OkHL/EoUqw+aSbsOhph1SFYVnPcuGIZGw==
   dependencies:
     tslib ">=2"
 
@@ -5060,7 +5085,7 @@ sort-object-keys2@^1.1.0:
   resolved "https://registry.npmjs.org/sort-object-keys2/-/sort-object-keys2-1.1.0.tgz#713b0c2e693f72ce120a45fbf0ccdc3900f3d4a5"
   integrity sha512-yV3GAWYQp+xOqDw8f484cmZY8NACX1fITTM/dUlXteRAdZHOmdJUI0ibuDHH+454kIvorXuJiJCA5evUtPfoVw==
 
-sort-object-keys2@^3.0.4, sort-object-keys2@^3.0.5:
+sort-object-keys2@^3.0.5:
   version "3.0.5"
   resolved "https://registry.npmjs.org/sort-object-keys2/-/sort-object-keys2-3.0.5.tgz#244c300a48cfa9e13ebc8d55c3afbb0e5cef12c2"
   integrity sha512-Q5fNSFbM4xXeTp1OtH62o67j+gzr2jPhZE0ES9bspDS26ScYfc2z5fL2vyRfVs947pkXCTS95Z/73lcbXuSJfg==
@@ -5112,7 +5137,7 @@ stealthy-require@^1.1.1:
   resolved "https://registry.npmjs.org/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha512-ZnWpYnYugiOVEY5GkcuJK1io5V8QmNYChG62gSit9pQVGErXtrKuPC55ITaVSukmMta5qpMU7vqLt2Lnni4f/g==
 
-str-util@^2.3.36, str-util@^2.3.37, str-util@^2.3.41:
+str-util@^2.3.37:
   version "2.3.41"
   resolved "https://registry.npmjs.org/str-util/-/str-util-2.3.41.tgz#771859964b9a44d04da69d078a7fd960dade8bae"
   integrity sha512-6v08b96AZ0b927H1boZs/HnD0tEu8+sESSb53mur6lZ68OfhRNu9VNssEx1aQCeMPg98m7TfZ7x87pMEv3oZTA==
@@ -5125,6 +5150,23 @@ str-util@^2.3.36, str-util@^2.3.37, str-util@^2.3.41:
     strip-ansi "<7 >=6"
     tslib "^2"
     uni-string "^2.0.6"
+
+str-util@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/str-util/-/str-util-3.0.1.tgz#ae99731ce3a17b83e276fefab11f6f0ef0d4615e"
+  integrity sha512-cYvWI65zf/o+RLXzSNQxVM0dZWWeszMoD9WgXrfKKtkyjqCTI54mZ04yYeYPV64+4iHAYIWFDuku9jvNTy0ljw==
+  dependencies:
+    "@lazy-cjk/fullhalf" "^1.0.1"
+    "@lazy-cjk/japanese" "^1.2.33"
+    "@lazy-cjk/str-util-char-code-at" "^1.0.1"
+    "@lazy-cjk/zh2num" "^1.0.1"
+    chinese-parseint2 "^2.0.6"
+    cjk-conv ">=1"
+    deepmerge "^4.3.1"
+    is-fullwidth-code-point "<4 >=3"
+    strip-ansi "<7 >=6"
+    tslib "^2"
+    uni-string "^2.0.7"
 
 string-detect-indent@^1.0.7:
   version "1.0.7"
@@ -5789,10 +5831,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zero-width@^1.0.16, zero-width@^1.0.24, zero-width@^1.0.27:
-  version "1.0.27"
-  resolved "https://registry.npmjs.org/zero-width/-/zero-width-1.0.27.tgz#aa14d455318dddf5e2b6cffc190c10f851604be8"
-  integrity sha512-ZwFzdKvuQeaJ72L6DVv90ggXsv7iKZOO0VsJrQY/KjHG1WWqkPHss67HIaQPFtaym6b/XPjPt8rDyyTegjxxAw==
+zero-width@^1.0.16, zero-width@^1.0.24, zero-width@^1.0.28:
+  version "1.0.28"
+  resolved "https://registry.npmjs.org/zero-width/-/zero-width-1.0.28.tgz#8085244e3e089b329ad0e1c02f17a5544363c029"
+  integrity sha512-ty3ECpsoQaJoen9fxURXiY2t5FnzDd3aZzbvCtaqz0STnoq1CO8qPAf8xEyblczCsPvcwFAw0IY8qk9ioakRqA==
   dependencies:
     regexp-helper-core "^2.0.7"
     tslib "^2"
