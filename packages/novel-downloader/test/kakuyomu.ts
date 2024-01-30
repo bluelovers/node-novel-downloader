@@ -33,7 +33,11 @@ import NovelSite from '../src/site/kakuyomu/index';
 
 //		'1177354054886310394',
 
-		'https://kakuyomu.jp/works/1177354054884578516',
+		//'https://kakuyomu.jp/works/1177354054884578516',
+
+		'https://kakuyomu.jp/works/16817139556288291993',
+
+		'https://kakuyomu.jp/works/16817330658683197420',
 
 	], async function (value, index, array)
 	{
