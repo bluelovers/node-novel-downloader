@@ -8,6 +8,7 @@ const dom_1 = require("../dom");
 const index_1 = require("../../index");
 const util_1 = require("../../../util");
 const util_2 = require("../util");
+const title_1 = require("../../../util/title");
 async function _get_volume_list(dom, optionsRuntime) {
     const $ = dom.$;
     const _main = (0, dom_1._jQueryClassStartWith)($, '#app main', '_workId__main__', ':eq(0)');
@@ -39,28 +40,68 @@ function _getDataRecord(name, _propData) {
     return _propData.props.pageProps.__APOLLO_STATE__[name];
 }
 exports._getDataRecord = _getDataRecord;
+/**
+ * 無章節分級
+ * https://kakuyomu.jp/works/16817139556288291993
+ *
+ * 普通章節分級
+ * https://kakuyomu.jp/works/16817330658683197420
+ *
+ * 複雜多級
+ * https://kakuyomu.jp/works/1177354054880238351
+ */
 function _get_volume_list_loop(_propData, optionsRuntime) {
     const { novel_id, _workData, } = _getWorkData(_propData);
     let volume_list = [];
     const novelTree = optionsRuntime.novelTree;
     let currentVolume;
     let total_idx = 0;
-    _workData.tableOfContents.forEach(ref => {
+    _workData.tableOfContents.forEach((ref, idx, arr) => {
         var _a, _b;
         const toc = _getDataRecord(ref.__ref, _propData);
         let chapter = _getDataRecord((_a = toc.chapter) === null || _a === void 0 ? void 0 : _a.__ref, _propData);
         let volume_title = 'null';
         let volume_level = null;
         if (chapter) {
-            volume_title = chapter.title;
+            volume_title = (0, util_1.trim)(chapter.title);
             volume_level = chapter.level;
         }
-        currentVolume = novelTree.addVolume({
-            volume_title,
-            volume_level,
-            volume_index: novelTree.root().size(),
-            total_idx: total_idx++,
-        });
+        let nowVolume;
+        if (currentVolume) {
+            let lastLevel = currentVolume.get('level');
+            let parentVolume;
+            if (volume_level > 1) {
+                if (lastLevel == volume_level) {
+                    parentVolume = currentVolume.parent;
+                }
+                else if (lastLevel = (volume_level + 1)) {
+                    parentVolume = currentVolume;
+                }
+                else {
+                    throw Error;
+                }
+                if (!(volume_title === null || volume_title === void 0 ? void 0 : volume_title.length)) {
+                    nowVolume = parentVolume;
+                }
+                if (!nowVolume) {
+                    nowVolume = novelTree.addVolume({
+                        volume_title: (0, title_1.nullTitle)(volume_title),
+                        volume_level,
+                        volume_index: parentVolume.size(),
+                        total_idx: total_idx++,
+                    }, parentVolume);
+                }
+            }
+        }
+        if (!nowVolume) {
+            nowVolume = novelTree.addVolume({
+                volume_title: (0, title_1.nullTitle)(volume_title),
+                volume_level,
+                volume_index: novelTree.root().size(),
+                total_idx: total_idx++,
+            });
+        }
+        currentVolume = nowVolume;
         (_b = toc.episodeUnions) === null || _b === void 0 ? void 0 : _b.forEach(ref => {
             let episode = _getDataRecord(ref.__ref, _propData);
             let chapter_id = episode.id;

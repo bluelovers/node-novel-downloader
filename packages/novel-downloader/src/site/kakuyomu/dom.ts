@@ -1,5 +1,5 @@
 
-export function _classStartWith<T extends string, T2 extends string>(prefix: T, suffix?: T2)
+export function _classStartWith<T extends string, T2 extends string>(prefix: T, suffix?: T2): `[class^="${T}"]` | `[class^="${T}"]${T2}`
 {
 	return `[class^="${prefix}"]${suffix ?? ''}` as const
 }

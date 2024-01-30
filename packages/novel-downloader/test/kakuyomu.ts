@@ -39,6 +39,8 @@ import NovelSite from '../src/site/kakuyomu/index';
 
 		'https://kakuyomu.jp/works/16817330658683197420',
 
+		'https://kakuyomu.jp/works/1177354054880238351',
+
 	], async function (value, index, array)
 	{
 		await Site.download(value, {

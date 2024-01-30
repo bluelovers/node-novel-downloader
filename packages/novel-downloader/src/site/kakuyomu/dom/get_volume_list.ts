@@ -13,6 +13,7 @@ import { trim } from '../../../util';
 import _NovelSite from '../../index';
 import { IMdconfMeta, _handleDataForStringify } from 'node-novel-info';
 import { makeUrl } from '../util';
+import { nullTitle } from '../../../util/title';
 
 export async function _get_volume_list<T extends IOptionsRuntime>(dom: IJSDOM, optionsRuntime: Partial<T & IDownloadOptions>,)
 {
@@ -63,6 +64,16 @@ export function _getDataRecord<T extends IPagePropDataRecordKeys>(name: T, _prop
 	return _propData.props.pageProps.__APOLLO_STATE__[name]
 }
 
+/**
+ * 無章節分級
+ * https://kakuyomu.jp/works/16817139556288291993
+ *
+ * 普通章節分級
+ * https://kakuyomu.jp/works/16817330658683197420
+ *
+ * 複雜多級
+ * https://kakuyomu.jp/works/1177354054880238351
+ */
 function _get_volume_list_loop<T extends IOptionsRuntime>(_propData: IPagePropData,
 	optionsRuntime: Partial<T & IDownloadOptions>)
 {
@@ -78,7 +89,7 @@ function _get_volume_list_loop<T extends IOptionsRuntime>(_propData: IPagePropDa
 
 	let total_idx = 0;
 
-	_workData.tableOfContents.forEach(ref => {
+	_workData.tableOfContents.forEach((ref, idx, arr) => {
 
 		const toc = _getDataRecord(ref.__ref, _propData);
 
@@ -89,16 +100,60 @@ function _get_volume_list_loop<T extends IOptionsRuntime>(_propData: IPagePropDa
 
 		if (chapter)
 		{
-			volume_title = chapter.title;
+			volume_title = trim(chapter.title);
 			volume_level = chapter.level;
 		}
 
-		currentVolume = novelTree.addVolume({
-			volume_title,
-			volume_level,
-			volume_index: novelTree.root().size(),
-			total_idx: total_idx++,
-		});
+		let nowVolume: TreeNode<IRowVolume>;
+
+		if (currentVolume)
+		{
+			let lastLevel = currentVolume.get<number>('level') as number;
+			let parentVolume: TreeNode<IRowVolume>;
+
+			if (volume_level > 1)
+			{
+				if (lastLevel == volume_level)
+				{
+					parentVolume = currentVolume.parent;
+				}
+				else if (lastLevel = (volume_level + 1))
+				{
+					parentVolume = currentVolume;
+				}
+				else
+				{
+					throw Error
+				}
+
+				if (!volume_title?.length)
+				{
+					nowVolume = parentVolume;
+				}
+
+				if (!nowVolume)
+				{
+					nowVolume = novelTree.addVolume({
+						volume_title: nullTitle(volume_title),
+						volume_level,
+						volume_index: parentVolume.size(),
+						total_idx: total_idx++,
+					}, parentVolume);
+				}
+			}
+		}
+
+		if (!nowVolume)
+		{
+			nowVolume = novelTree.addVolume({
+				volume_title: nullTitle(volume_title),
+				volume_level,
+				volume_index: novelTree.root().size(),
+				total_idx: total_idx++,
+			});
+		}
+
+		currentVolume = nowVolume;
 
 		toc.episodeUnions?.forEach(ref => {
 			let episode = _getDataRecord(ref.__ref, _propData);
