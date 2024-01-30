@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.38](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.37...novel-downloader@2.0.38) (2024-01-30)
+
+
+### BREAKING CHANGES
+
+* use @lazy-cjk/fullhalf
+
+
+
+### 🐛　Bug Fixes
+
+* [#8](https://github.com/bluelovers/node-novel-downloader/issues/8) ([53b7589](https://github.com/bluelovers/node-novel-downloader/commit/53b7589bf2941fc3dd151548f5f24146a7a6ae66))
+* [#8](https://github.com/bluelovers/node-novel-downloader/issues/8) ([445dbc9](https://github.com/bluelovers/node-novel-downloader/commit/445dbc90ce9f8f9f50323d83d45696c51011ace9))
+
+
+### 📌　Dependencies
+
+* use @lazy-cjk/fullhalf ([2749b62](https://github.com/bluelovers/node-novel-downloader/commit/2749b6241e8bc294f565b169180b4ea4fd0a5700))
+
+
+### 🔖　Miscellaneous
+
+* . ([dd1b778](https://github.com/bluelovers/node-novel-downloader/commit/dd1b778ed9f2a8b88b0d403b7f5be1fc8355338f))
+
+
+
 ## [2.0.37](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.36...novel-downloader@2.0.37) (2024-01-25)
 
 
