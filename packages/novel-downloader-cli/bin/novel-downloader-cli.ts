@@ -203,17 +203,15 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 			parser.load(<string>cli.cookiesFile)
 			let cookies  = parser.parse( );
 
-			// let cookies = cookieFile.toResponseHeader();
 			siteOptions.optionsJSDOM = {}
 			siteOptions.optionsJSDOM.cookieJar = new LazyCookieJar();
 			for (let cookie of cookies) {
-				// let cookiedata = Cookie.parse(cookie.replace(/^set-cookie: /i,""))
 				siteOptions.optionsJSDOM.cookieJar.setCookieSync(new Cookie({
 					key: cookie.name,
 					value: cookie.value,
 					domain: cookie.domain.replace(/^./,""), // BUG: 不知為何不能喂入前面有點的 domain
 					path:cookie.path,
-					// secure: cookie.secure,
+					secure: cookie.secure,
 					expires: new Date(cookie.expires*1000),
 				}));
 			}
