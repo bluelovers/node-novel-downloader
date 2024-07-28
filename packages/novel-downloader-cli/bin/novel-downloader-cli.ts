@@ -12,7 +12,9 @@ import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
 import { isNpx } from '@yarn-tool/is-npx';
 import { ITSPartialPick } from 'ts-type';
 import NovelSiteSyosetu, { IOptionsPlus as IOptionsPlusNovelSiteSyosetu } from 'novel-downloader/src/site/syosetu/index';
-
+import {CookieJar  as CookiesParser} from 'netscape-cookies-parser';
+import {LazyCookieJar} from "jsdom-extra";
+import {Cookie} from "tough-cookie";
 
 let cli = yargs
 	.option('outputDir', {
@@ -93,6 +95,9 @@ let cli = yargs
 	})
 	.option('protocolMode', {
 		desc: `強制使用 http = 2 / https = 1 (僅限支援的模組)`,
+	})
+	.option('cookiesFile', {
+		desc: `加載 cookies.txt 檔案`,
 	})
 	.command('list', '顯示出目前的模組名稱', function (args)
 	{
@@ -190,6 +195,34 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 	downloadOptions.protocolMode = cli.protocolMode;
 
 	siteOptions.outputDir = cli.outputDir;
+
+	if (cli.cookiesFile)
+	{
+		try {
+			var parser =new CookiesParser();
+			parser.load(<string>cli.cookiesFile)
+			let cookies  = parser.parse( );
+
+			// let cookies = cookieFile.toResponseHeader();
+			siteOptions.optionsJSDOM = {}
+			siteOptions.optionsJSDOM.cookieJar = new LazyCookieJar();
+			for (let cookie of cookies) {
+				// let cookiedata = Cookie.parse(cookie.replace(/^set-cookie: /i,""))
+				siteOptions.optionsJSDOM.cookieJar.setCookieSync(new Cookie({
+					key: cookie.name,
+					value: cookie.value,
+					domain: cookie.domain.replace(/^./,""), // BUG: 不知為何不能喂入前面有點的 domain
+					path:cookie.path,
+					// secure: cookie.secure,
+					expires: new Date(cookie.expires*1000),
+				}));
+			}
+
+		} catch {
+			console.error(`加載 cookies 檔案 ${cli.cookiesFile} 失敗`);
+		}
+
+	}
 
 	return { cli, downloadOptions, siteOptions };
 }
