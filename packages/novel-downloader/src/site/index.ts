@@ -257,7 +257,6 @@ export class NovelSite implements NovelSite.INovelSite
 
 		optionsRuntime.startIndex = optionsRuntime.startIndex || 0;
 
-		// @ts-ignore
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
 
@@ -605,7 +604,9 @@ export namespace NovelSite
 
 		outputDir?: string,
 		cwd?: string,
-
+		optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
+			cookieJar?: Partial<LazyCookieJar>,
+		}
 	} & IOptionsPlus;
 
 	export const enum EnumPathNovelStyle

@@ -74,7 +74,8 @@
     "novel-downloader": "^2.0.38",
     "ts-type": "^3.0.1",
     "tslib": "^2.6.2",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "netscape-cookies-parser": "^1.0.2"
   },
   "engines": {
     "node": ">= 13"
