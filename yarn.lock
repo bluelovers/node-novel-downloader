@@ -4226,10 +4226,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-netscape-cookies-parser@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/netscape-cookies-parser/-/netscape-cookies-parser-1.0.2.tgz#06e82b6df8ed63961b9a8e5d3eb78967713042c6"
-  integrity sha512-ESacct66yI9q2V5voU179o1Y6kInEaFNn91BRSVOFFdwDbss7e4JOd9RIOThYZZUfh1uFMPnq/X36GEYI8nqtg==
+netscape-cookies-parser2@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/netscape-cookies-parser2/-/netscape-cookies-parser2-1.0.3.tgz#4c383ff4fa692b478722076b6948c788d8f0f45b"
+  integrity sha512-v3JUuUEVz7Qpe351iZo01ymNMt75mlNnDOhlh/QGo8GGhfo2OOenvG63sdPWAP+YAYRpwtgWVB5piQ6F1sKgXA==
 
 no-case@^2.2.0:
   version "2.3.2"
