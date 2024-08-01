@@ -1,4 +1,3 @@
-/// <reference types="jquery" />
 import { NovelTree } from '../../../tree';
 import { NovelSiteESJZone } from '../index';
 export declare function volNovelTree($: JQueryStatic, optionsRuntime: {

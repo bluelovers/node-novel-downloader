@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.nullTitle = void 0;
+exports.nullTitle = nullTitle;
 const util_1 = require("../util");
 function nullTitle(title) {
     title = (0, util_1.trim)(title);
@@ -9,5 +9,4 @@ function nullTitle(title) {
     }
     return title;
 }
-exports.nullTitle = nullTitle;
 //# sourceMappingURL=title.js.map

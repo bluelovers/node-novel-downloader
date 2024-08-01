@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseUrl = exports.makeUrl = exports.check = void 0;
+exports.check = check;
+exports.makeUrl = makeUrl;
+exports.parseUrl = parseUrl;
 const url_1 = require("../../util/url");
 const txtUrlCreator_1 = require("./v4/txtUrlCreator");
 function check(url, options) {
     return /dmzj\.com/i.test((0, url_1.createURL)(url).hostname || '');
 }
-exports.check = check;
 function makeUrl(urlobj, bool, ...argv) {
     let url;
     //const api_url = 'http://v2.api.dmzj.com';
@@ -30,7 +31,6 @@ function makeUrl(urlobj, bool, ...argv) {
     }
     return (0, url_1.createURL)(url);
 }
-exports.makeUrl = makeUrl;
 function parseUrl(_url, ...argv) {
     const { urlobj, url } = (0, url_1._handleParseURL)(_url, ...argv);
     let r;
@@ -79,5 +79,4 @@ function parseUrl(_url, ...argv) {
     }
     return urlobj;
 }
-exports.parseUrl = parseUrl;
 //# sourceMappingURL=util.js.map

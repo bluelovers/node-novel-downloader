@@ -3,7 +3,9 @@
  * Created by user on 2018/3/18/018.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOptions = exports.createOptionsJSDOM = exports.defaultJSDOMOptions = exports.LazyCookieJar = exports.LazyCookie = exports.VirtualConsole = void 0;
+exports.defaultJSDOMOptions = exports.LazyCookieJar = exports.LazyCookie = exports.VirtualConsole = void 0;
+exports.createOptionsJSDOM = createOptionsJSDOM;
+exports.getOptions = getOptions;
 const jsdom_extra_1 = require("jsdom-extra");
 Object.defineProperty(exports, "VirtualConsole", { enumerable: true, get: function () { return jsdom_extra_1.VirtualConsole; } });
 const jsdom_extra_2 = require("jsdom-extra");
@@ -23,7 +25,6 @@ function createOptionsJSDOM(options = {}, ...opts) {
     options.cookieJar = options.cookieJar || new jsdom_extra_2.LazyCookieJar();
     return options;
 }
-exports.createOptionsJSDOM = createOptionsJSDOM;
 function getOptions(options) {
     let opts = (0, jsdom_extra_3.packOptions)(options.optionsJSDOM || options);
     let fromURLOptions = (0, from_url_1.normalizeFromURLOptions)(opts);
@@ -34,5 +35,4 @@ function getOptions(options) {
         requestOptions,
     };
 }
-exports.getOptions = getOptions;
 //# sourceMappingURL=jsdom.js.map

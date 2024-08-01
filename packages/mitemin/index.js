@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseAsync = exports.parse = void 0;
+exports.parse = parse;
+exports.parseAsync = parseAsync;
 /**
  * Created by user on 2020/1/6.
  */
@@ -49,10 +50,8 @@ function parse(input) {
     }
     throw new Error(`unknown url ${u.toString()}`);
 }
-exports.parse = parse;
 async function parseAsync(input) {
     return parse(input);
 }
-exports.parseAsync = parseAsync;
 exports.default = parse;
 //# sourceMappingURL=index.js.map

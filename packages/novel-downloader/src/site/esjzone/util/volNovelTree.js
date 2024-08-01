@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.volNovelTree = void 0;
+exports.volNovelTree = volNovelTree;
 const site_1 = require("esjzone-api/lib/util/site");
 const log_1 = require("../../../util/log");
 function volNovelTree($, optionsRuntime, self) {
@@ -47,6 +47,5 @@ function volNovelTree($, optionsRuntime, self) {
         novelTree,
     };
 }
-exports.volNovelTree = volNovelTree;
 exports.default = volNovelTree;
 //# sourceMappingURL=volNovelTree.js.map

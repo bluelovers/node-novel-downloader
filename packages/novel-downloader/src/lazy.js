@@ -3,7 +3,8 @@
  * Created by user on 2019/1/7/007.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchSiteID = exports.getEnumNovelSiteList = void 0;
+exports.getEnumNovelSiteList = getEnumNovelSiteList;
+exports.searchSiteID = searchSiteID;
 const tslib_1 = require("tslib");
 const const_1 = require("./all/const");
 const all_1 = require("./all");
@@ -12,7 +13,6 @@ const url_1 = tslib_1.__importDefault(require("./util/url"));
 function getEnumNovelSiteList() {
     return Object.values(const_1.EnumIDKEYToSiteID);
 }
-exports.getEnumNovelSiteList = getEnumNovelSiteList;
 function searchSiteID(url) {
     let href;
     try {
@@ -36,5 +36,4 @@ function searchSiteID(url) {
         }
     }
 }
-exports.searchSiteID = searchSiteID;
 //# sourceMappingURL=lazy.js.map

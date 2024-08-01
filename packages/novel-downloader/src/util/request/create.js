@@ -3,7 +3,10 @@
  * Created by user on 2019/4/28.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRequestPromise = exports.createCachedRequest = exports.createBluebirdPromise = exports.createStealthyRequest = void 0;
+exports.createStealthyRequest = createStealthyRequest;
+exports.createBluebirdPromise = createBluebirdPromise;
+exports.createCachedRequest = createCachedRequest;
+exports.createRequestPromise = createRequestPromise;
 const tslib_1 = require("tslib");
 const bluebird_1 = require("bluebird");
 const cached_request_1 = tslib_1.__importDefault(require("cached-request"));
@@ -23,7 +26,6 @@ function createStealthyRequest(libRequest) {
     }
     return libRequest;
 }
-exports.createStealthyRequest = createStealthyRequest;
 function createBluebirdPromise(libPromise) {
     if (libPromise == null) {
         if (Bluebird == null) {
@@ -39,11 +41,9 @@ function createBluebirdPromise(libPromise) {
     }
     return libPromise;
 }
-exports.createBluebirdPromise = createBluebirdPromise;
 function createCachedRequest(libRequest) {
     return (0, cached_request_1.default)(createStealthyRequest(libRequest));
 }
-exports.createCachedRequest = createCachedRequest;
 function createRequestPromise(options = {}) {
     let { libRequest, libPromise } = options;
     libPromise = createBluebirdPromise(libPromise);
@@ -71,6 +71,5 @@ function createRequestPromise(options = {}) {
     };
     return libRequest;
 }
-exports.createRequestPromise = createRequestPromise;
 exports.default = createRequestPromise;
 //# sourceMappingURL=create.js.map

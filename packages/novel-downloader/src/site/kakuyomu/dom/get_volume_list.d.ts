@@ -12,15 +12,16 @@ export declare function _get_volume_list<T extends IOptionsRuntime>(dom: IJSDOM,
     novelTree: (T & {
         disableDownload?: boolean;
         disableCheckExists?: boolean;
-        optionsJSDOM?: import("jsdom-extra").IFromUrlOptions & import("jsdom-extra").IOptionsCreateQuery & import("jsdom-extra").IOptions & {
-            minifyHTML?: boolean;
-        } & import("@jsdom-extra/resource-loader").IOptionsWithWindowOptionsWithResourceLoader & {
+        optionsJSDOM?: import("jsdom-extra").IFromUrlOptions & import("jsdom-extra").IOptionsJSDOM & {
             cookieJar?: Partial<import("jsdom-extra").LazyCookieJar>;
         };
         pathNovelStyle?: NovelSite.EnumPathNovelStyle;
     } & NovelSite.IOptionsPlus & {
         outputDir?: string;
         cwd?: string;
+        optionsJSDOM?: import("jsdom-extra").IFromUrlOptions & import("jsdom-extra").IOptionsJSDOM & {
+            cookieJar?: Partial<import("jsdom-extra").LazyCookieJar>;
+        };
     } & import("../../syosetu/index").IOptionsPlus)["novelTree"];
     novel_title: string;
     novel_desc: string;

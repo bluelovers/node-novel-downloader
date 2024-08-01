@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requireNovelSiteClass = exports.EnumNovelSiteList = void 0;
+exports.EnumNovelSiteList = void 0;
+exports.requireNovelSiteClass = requireNovelSiteClass;
 const const_1 = require("./all/const");
 Object.defineProperty(exports, "EnumNovelSiteList", { enumerable: true, get: function () { return const_1.EnumNovelSiteList; } });
 function requireNovelSiteClass(siteID) {
@@ -9,6 +10,5 @@ function requireNovelSiteClass(siteID) {
     }
     return require(`./site/${const_1.EnumNovelSiteList[siteID]}`).default;
 }
-exports.requireNovelSiteClass = requireNovelSiteClass;
 exports.default = requireNovelSiteClass;
 //# sourceMappingURL=all.js.map

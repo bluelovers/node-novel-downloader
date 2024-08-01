@@ -3,7 +3,8 @@
  * Created by user on 2018/2/9/009.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.manyRequest = exports.retryRequest = void 0;
+exports.retryRequest = retryRequest;
+exports.manyRequest = manyRequest;
 const tslib_1 = require("tslib");
 const request_promise_1 = tslib_1.__importDefault(require("@bluelovers/request-promise"));
 const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
@@ -38,7 +39,6 @@ function retryRequest(url, options = {}) {
         log_1.console.error(err);
     });
 }
-exports.retryRequest = retryRequest;
 function manyRequest(url_arr, options = {}) {
     options = Object.assign({
         retry: 3,
@@ -57,5 +57,4 @@ function manyRequest(url_arr, options = {}) {
         log_1.console.error(err);
     });
 }
-exports.manyRequest = manyRequest;
 //# sourceMappingURL=fetch.js.map

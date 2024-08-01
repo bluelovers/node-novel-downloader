@@ -3,7 +3,11 @@
  * Created by user on 2024/1/30.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._parseWorkMeta = exports._pagePropData = exports._getDataRecord = exports._getWorkData = exports._get_volume_list = void 0;
+exports._get_volume_list = _get_volume_list;
+exports._getWorkData = _getWorkData;
+exports._getDataRecord = _getDataRecord;
+exports._pagePropData = _pagePropData;
+exports._parseWorkMeta = _parseWorkMeta;
 const dom_1 = require("../dom");
 const index_1 = require("../../index");
 const util_1 = require("../../../util");
@@ -26,7 +30,6 @@ async function _get_volume_list(dom, optionsRuntime) {
         novelTree,
     };
 }
-exports._get_volume_list = _get_volume_list;
 function _getWorkData(_propData) {
     const novel_id = _propData.query.workId;
     const _workData = _getDataRecord(`Work:${novel_id}`, _propData);
@@ -35,11 +38,9 @@ function _getWorkData(_propData) {
         _workData,
     };
 }
-exports._getWorkData = _getWorkData;
 function _getDataRecord(name, _propData) {
     return _propData.props.pageProps.__APOLLO_STATE__[name];
 }
-exports._getDataRecord = _getDataRecord;
 /**
  * 無章節分級
  * https://kakuyomu.jp/works/16817139556288291993
@@ -129,7 +130,6 @@ function _get_volume_list_loop(_propData, optionsRuntime) {
 function _pagePropData(dom) {
     return JSON.parse(dom.$('script#__NEXT_DATA__:eq(0)').html());
 }
-exports._pagePropData = _pagePropData;
 function _parseWorkMeta(_workData) {
     var _a, _b;
     let data_meta = {
@@ -161,5 +161,4 @@ function _parseWorkMeta(_workData) {
         data_meta,
     };
 }
-exports._parseWorkMeta = _parseWorkMeta;
 //# sourceMappingURL=get_volume_list.js.map

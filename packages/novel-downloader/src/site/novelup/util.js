@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseUrl = exports.makeUrl = exports.check = void 0;
+exports.check = check;
+exports.makeUrl = makeUrl;
+exports.parseUrl = parseUrl;
 const url_1 = require("../../util/url");
 function check(url, options) {
     return /novelup/i.test((0, url_1.createURL)(url).hostname || '');
 }
-exports.check = check;
 function makeUrl(urlobj, bool, ...argv) {
     let pad;
     pad = `story/${urlobj.novel_id}`;
@@ -15,7 +16,6 @@ function makeUrl(urlobj, bool, ...argv) {
     let url = `https://novelup.plus/${pad}`;
     return (0, url_1.createURL)(url);
 }
-exports.makeUrl = makeUrl;
 function parseUrl(_url, ...argv) {
     const { urlobj, url } = (0, url_1._handleParseURL)(_url, ...argv);
     let r;
@@ -33,5 +33,4 @@ function parseUrl(_url, ...argv) {
     }
     return urlobj;
 }
-exports.parseUrl = parseUrl;
 //# sourceMappingURL=util.js.map

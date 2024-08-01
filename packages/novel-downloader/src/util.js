@@ -3,7 +3,11 @@
  * Created by user on 2018/3/18/018.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._fixVolumeChapterName = exports.escapeRegexp = exports.trim = exports.isUndef = exports.array_unique = exports.minifyHTML = void 0;
+exports.array_unique = exports.minifyHTML = void 0;
+exports.isUndef = isUndef;
+exports.trim = trim;
+exports.escapeRegexp = escapeRegexp;
+exports._fixVolumeChapterName = _fixVolumeChapterName;
 const tslib_1 = require("tslib");
 const fullhalf_1 = require("@lazy-cjk/fullhalf");
 const layout_1 = tslib_1.__importDefault(require("@node-novel/layout"));
@@ -25,7 +29,6 @@ function isUndef(v, opts = null, strict) {
     }
     return bool;
 }
-exports.isUndef = isUndef;
 function trim(str, bool) {
     let t = layout_1.default.trim(str, {
         trim: '　',
@@ -35,13 +38,10 @@ function trim(str, bool) {
     }
     return t;
 }
-exports.trim = trim;
 function escapeRegexp(str) {
     return str.replace(/[|\\{}()\[\]^$+*?.\/]/g, '\\$&');
 }
-exports.escapeRegexp = escapeRegexp;
 function _fixVolumeChapterName(name) {
     return name.replace(/[?@!$#\\\/<>\[\]{}()*]+/g, s => (0, fullhalf_1.toFullWidth)(s));
 }
-exports._fixVolumeChapterName = _fixVolumeChapterName;
 //# sourceMappingURL=util.js.map

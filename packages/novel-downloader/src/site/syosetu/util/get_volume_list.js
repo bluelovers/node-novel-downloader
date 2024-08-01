@@ -1,7 +1,8 @@
 "use strict";
 /// <reference types="jquery" />
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._get_volume_list_page = exports._get_volume_list_main = void 0;
+exports._get_volume_list_main = _get_volume_list_main;
+exports._get_volume_list_page = _get_volume_list_page;
 const tslib_1 = require("tslib");
 const index_1 = require("../../index");
 const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
@@ -34,7 +35,6 @@ function _get_volume_list_main(self, url, optionsRuntime, dom, novel_syosetu_id)
         cache._cache_dates = cache._cache_dates.sort();
     });
 }
-exports._get_volume_list_main = _get_volume_list_main;
 async function _get_volume_list_page(self, optionsRuntime, cache) {
     var _a, _b;
     let { url, dom, _cache_dates, currentVolume, volume_list, novel_syosetu_id, } = cache;
@@ -133,5 +133,4 @@ async function _get_volume_list_page(self, optionsRuntime, cache) {
     }
     return cache;
 }
-exports._get_volume_list_page = _get_volume_list_page;
 //# sourceMappingURL=get_volume_list.js.map

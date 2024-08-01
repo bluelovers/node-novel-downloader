@@ -3,7 +3,8 @@
  * Created by user on 2018/2/10/010.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.staticImplements = exports.EnumPathNovelStyle = exports.NovelSite = exports.SYMBOL_CACHE = exports.PromiseBluebird = exports.bluebirdDecorator = exports.moment = exports.createOptionsJSDOM = exports.defaultJSDOMOptions = void 0;
+exports.EnumPathNovelStyle = exports.NovelSite = exports.SYMBOL_CACHE = exports.PromiseBluebird = exports.bluebirdDecorator = exports.moment = exports.createOptionsJSDOM = exports.defaultJSDOMOptions = void 0;
+exports.staticImplements = staticImplements;
 const tslib_1 = require("tslib");
 const bluebird_1 = tslib_1.__importDefault(require("../decorator/bluebird"));
 exports.bluebirdDecorator = bluebird_1.default;
@@ -151,7 +152,6 @@ class NovelSite {
     _fixOptionsRuntime(optionsRuntime) {
         optionsRuntime[exports.SYMBOL_CACHE] = (optionsRuntime[exports.SYMBOL_CACHE] || {});
         optionsRuntime.startIndex = optionsRuntime.startIndex || 0;
-        // @ts-ignore
         optionsRuntime.optionsJSDOM = (0, jsdom_1.createOptionsJSDOM)(optionsRuntime.optionsJSDOM);
         if (optionsRuntime.debugLog != null) {
             optionsRuntime.debugLog = !!optionsRuntime.debugLog;
@@ -334,6 +334,5 @@ exports.EnumPathNovelStyle = NovelSite.EnumPathNovelStyle;
 function staticImplements() {
     return (constructor) => { };
 }
-exports.staticImplements = staticImplements;
 exports.default = NovelSite;
 //# sourceMappingURL=index.js.map

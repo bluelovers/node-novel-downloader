@@ -3,7 +3,7 @@
  * Created by user on 2020/3/30.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.outputNovelToAttach = void 0;
+exports.outputNovelToAttach = outputNovelToAttach;
 const array_hyper_unique_1 = require("array-hyper-unique");
 const upath2_1 = require("upath2");
 const log_1 = require("./log");
@@ -49,6 +49,5 @@ async function outputNovelToAttach({ imgs, dirname, keepImage, path_novel, }) {
         return md_data;
     });
 }
-exports.outputNovelToAttach = outputNovelToAttach;
 exports.default = outputNovelToAttach;
 //# sourceMappingURL=outputNovelToAttach.js.map

@@ -1,7 +1,10 @@
 "use strict";
 /// <reference types="jquery" />
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._tagToFormat = exports._keepImageInContext = exports._saveImageToAttach = exports.keepFormatTag = void 0;
+exports.keepFormatTag = keepFormatTag;
+exports._saveImageToAttach = _saveImageToAttach;
+exports._keepImageInContext = _keepImageInContext;
+exports._tagToFormat = _tagToFormat;
 const hash_1 = require("./hash");
 function keepFormatTag(target, opts) {
     let { optionsRuntime, $ } = opts;
@@ -28,7 +31,6 @@ function keepFormatTag(target, opts) {
     }
     return _target;
 }
-exports.keepFormatTag = keepFormatTag;
 function _saveImageToAttach($, _imgs, cache, cb) {
     if (_imgs.length) {
         cache.chapter.imgs = cache.chapter.imgs || [];
@@ -49,7 +51,6 @@ function _saveImageToAttach($, _imgs, cache, cb) {
         });
     }
 }
-exports._saveImageToAttach = _saveImageToAttach;
 function _keepImageInContext(_imgs, $, { prefix = '插圖', append = '', } = {}) {
     _imgs.each((i, elem) => {
         let img = $(elem);
@@ -59,7 +60,6 @@ function _keepImageInContext(_imgs, $, { prefix = '插圖', append = '', } = {})
     });
     return _imgs;
 }
-exports._keepImageInContext = _keepImageInContext;
 function _tagToFormat(_target, tag, $) {
     _target.find(tag)
         .each((i, elem) => {
@@ -69,5 +69,4 @@ function _tagToFormat(_target, tag, $) {
     });
     return _target;
 }
-exports._tagToFormat = _tagToFormat;
 //# sourceMappingURL=html.js.map

@@ -43,12 +43,13 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
         if (optionsRuntime.sessionData && Object.keys(optionsRuntime.sessionData).length) {
             Object.entries(optionsRuntime.sessionData)
                 .forEach(function (data) {
+                var _a;
                 let c;
                 let typec = typeof data[1];
-                if (data[1] && typec == 'object') {
+                if (data[1] && typec === 'object') {
                     c = data[1];
                 }
-                else if (typec === null || typec != 'object') {
+                else if (data[1] == null || typec !== 'object') {
                     let [key, value] = data;
                     c = {
                         key,
@@ -59,13 +60,9 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     c = data[1];
                 }
                 if (c) {
-                    if (typeof c == 'object') {
-                        if (!c.path) {
-                            c.path = '/';
-                        }
-                        if (c.hostOnly == null) {
-                            c.hostOnly = false;
-                        }
+                    if (typeof c === 'object') {
+                        c.path || (c.path = '/');
+                        (_a = c.hostOnly) !== null && _a !== void 0 ? _a : (c.hostOnly = false);
                     }
                     // @ts-ignore
                     if (!(typeof c === 'string' || c instanceof lazy_cookies_1.LazyCookie || c instanceof jsdom_extra_2.toughCookie.Cookie)) {
@@ -74,11 +71,11 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     }
                     optionsRuntime.optionsJSDOM.cookieJar
                         .setCookieSync(c.toString(), url.href);
-                    if (typeof c == 'object' && !c.domain) {
+                    if (typeof c === 'object' && !c.domain) {
                         if (domain) {
                             c.domain = domain;
                         }
-                        else if (url && url.host) {
+                        else if (url === null || url === void 0 ? void 0 : url.host) {
                             c.domain = url.host;
                         }
                         try {
@@ -250,7 +247,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                     //console.log(m, chapter.chapter_title);
                     if (/^\d+$/.test(m)) {
                         let m2 = parseInt(m);
-                        if (j == 0) {
+                        if (j === 0) {
                             i = m2;
                             return true;
                         }
@@ -389,7 +386,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
             return value;
         })
             .then(function (text) {
-            if (typeof text == 'string') {
+            if (typeof text === 'string') {
                 return layout_1.default.toStr(text);
             }
             return text;
@@ -422,7 +419,7 @@ let NovelSiteDemo = class NovelSiteDemo extends index_1.default {
                         ret.dom = (0, jsdom_extra_1.requestToJSDOM)(res, url, optionsRuntime.optionsJSDOM);
                         ret.dom = (0, jsdom_extra_1.packJSDOM)(ret.dom);
                     }
-                    else if (contentTypeParsed.subtype == 'json') {
+                    else if (contentTypeParsed.subtype === 'json') {
                         ret.json = JSON.parse(res.body.toString());
                     }
                     ret.res = res;

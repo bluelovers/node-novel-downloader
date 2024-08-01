@@ -1,8 +1,6 @@
 /**
  * Created by user on 2018/2/10/010.
  */
-/// <reference types="node" />
-/// <reference types="node" />
 import bluebirdDecorator from '../decorator/bluebird';
 import PromiseBluebird from 'bluebird';
 import { defaultJSDOMOptions, IFromUrlOptions, IOptionsJSDOM, createOptionsJSDOM } from '../jsdom';
@@ -121,6 +119,9 @@ export declare namespace NovelSite {
     type IOptions = {
         outputDir?: string;
         cwd?: string;
+        optionsJSDOM?: IFromUrlOptions & IOptionsJSDOM & {
+            cookieJar?: Partial<LazyCookieJar>;
+        };
     } & IOptionsPlus;
     const enum EnumPathNovelStyle {
         DEFAULT = 0,

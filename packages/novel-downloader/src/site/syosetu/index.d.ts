@@ -1,4 +1,3 @@
-/// <reference types="bluebird" />
 import { IMdconfMeta } from 'node-novel-info';
 import { IJSDOM } from 'jsdom-extra';
 import NovelSite from '../index';

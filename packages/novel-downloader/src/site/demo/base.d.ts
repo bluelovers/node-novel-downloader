@@ -1,4 +1,3 @@
-/// <reference types="bluebird" />
 import { IJSDOM } from 'jsdom-extra';
 import _NovelSite from '../index';
 import { PromiseBluebird } from '../index';
@@ -41,7 +40,7 @@ export declare class NovelSiteDemo extends _NovelSite {
         id?: string | number;
         parent?: string | number;
         uuid?: string;
-        content: import("../../tree").IRowRoot<{}> | IRowVolume<{}> | IRowChapter<{}>;
+        content: IRowVolume<{}> | IRowChapter<{}> | import("../../tree").IRowRoot<{}>;
     }[]>;
     protected _processNovel<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
         url: URL;

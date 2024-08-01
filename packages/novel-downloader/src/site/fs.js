@@ -3,14 +3,15 @@
  * Created by user on 2018/3/18/018.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFilePath = exports.getVolumePath = exports.padStart = void 0;
+exports.padStart = padStart;
+exports.getVolumePath = getVolumePath;
+exports.getFilePath = getFilePath;
 const tslib_1 = require("tslib");
 const util_1 = require("../util");
 const upath2_1 = tslib_1.__importDefault(require("upath2"));
 function padStart(id, pad = '0', len = 4) {
     return id.toString().padStart(len, '0') + pad;
 }
-exports.padStart = padStart;
 function getVolumePath(self, { volume, vid, path_novel, }, optionsRuntime) {
     let dirname;
     let _vid = '';
@@ -28,7 +29,6 @@ function getVolumePath(self, { volume, vid, path_novel, }, optionsRuntime) {
     dirname = upath2_1.default.join(path_novel, `${_vid}${dirname}`);
     return dirname;
 }
-exports.getVolumePath = getVolumePath;
 function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, vid, }, optionsRuntime = {}) {
     let file;
     let prefix = '';
@@ -79,7 +79,6 @@ function getFilePath(self, { chapter, cid, dirname, ext = '.txt', idx, volume, v
     let fullfile = upath2_1.default.join(dirname, `${prefix}${file}${pad}${ext}`);
     return fullfile;
 }
-exports.getFilePath = getFilePath;
 function _createError(msg, _data) {
     let e = new RangeError(msg);
     // @ts-ignore

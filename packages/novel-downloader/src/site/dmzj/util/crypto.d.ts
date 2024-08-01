@@ -1,5 +1,3 @@
-/// <reference types="node" />
-/// <reference types="node" />
 import { KeyObject } from "crypto";
 import { BinaryLike } from "crypto";
 export declare function decryptBuffer(key: KeyObject, buffer: Buffer): Buffer;

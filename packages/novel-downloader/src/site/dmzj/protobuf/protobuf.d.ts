@@ -7,7 +7,7 @@ export declare enum EnumResponseTypeKey {
 }
 export declare function _lookupType<T extends Type>(path: EnumResponseTypeKey): protobuf.Type;
 export declare function lookupTypeRoot(): protobuf.Root;
-export declare function lookupTypeNovelChapterResponse(): ITSOverwrite<protobuf.Type, {
+export declare function lookupTypeNovelChapterResponse(): ITSOverwrite<Type, {
     decode(reader: (Reader | Uint8Array), length?: number): {
         Data: {
             VolumeId: number;
@@ -21,7 +21,7 @@ export declare function lookupTypeNovelChapterResponse(): ITSOverwrite<protobuf.
         }[];
     };
 }>;
-export declare function lookupTypeNovelDetailResponse(): ITSOverwrite<protobuf.Type, {
+export declare function lookupTypeNovelDetailResponse(): ITSOverwrite<Type, {
     decode(reader: (Reader | Uint8Array), length?: number): {
         Data: {
             Authors: string;

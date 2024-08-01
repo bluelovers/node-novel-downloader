@@ -3,7 +3,7 @@
  * Created by user on 2018/1/17/017.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.download_image = void 0;
+exports.download_image = download_image;
 const tslib_1 = require("tslib");
 const fs_iconv_1 = tslib_1.__importDefault(require("fs-iconv"));
 const util_1 = require("fs-iconv/util");
@@ -42,7 +42,6 @@ function download_image(img, options) {
     // @ts-ignore
     return bluebird_1.default.resolve(ret);
 }
-exports.download_image = download_image;
 exports.default = download_image;
 //export default exports;
 //# sourceMappingURL=image.js.map

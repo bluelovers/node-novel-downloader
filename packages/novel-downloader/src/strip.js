@@ -3,7 +3,8 @@
  * Created by user on 2018/4/28/028.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stripContent = exports.stripInit = void 0;
+exports.stripInit = stripInit;
+exports.stripContent = stripContent;
 const tslib_1 = require("tslib");
 const fullhalf_1 = require("@lazy-cjk/fullhalf");
 const util_1 = require("./util");
@@ -41,7 +42,6 @@ function stripInit() {
         return a;
     }, []);
 }
-exports.stripInit = stripInit;
 console.dir(stripInit());
 function stripContent(text) {
     if (!(inited === null || inited === void 0 ? void 0 : inited.length)) {
@@ -52,7 +52,6 @@ function stripContent(text) {
     });
     return text;
 }
-exports.stripContent = stripContent;
 function char_autoFH(text) {
     return text
         .replace(/([a-z])(\1)*/ig, function (ss, s) {

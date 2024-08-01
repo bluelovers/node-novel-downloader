@@ -52,10 +52,10 @@ export declare class NovelSiteSfacg extends NovelSiteBase {
             sources?: string[];
             publisher?: string;
             publishers?: string[];
-            novel_status?: number;
+            novel_status?: import("node-novel-info/lib/const").EnumNovelStatus | number;
         };
         contribute?: string[];
-        options?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
+        options?: import("node-novel-info").IMdconfMetaOptionsBase & {
             dmzj?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
             kakuyomu?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
             wenku8?: import("node-novel-info").IMdconfMetaOptionsNovelSite;
@@ -63,14 +63,14 @@ export declare class NovelSiteSfacg extends NovelSiteBase {
             syosetu?: import("node-novel-info").IMdconfMetaOptionsNovelSite & {
                 txtdownload_id: import("node-novel-info").INumber;
             };
-            novel?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
+            novel?: import("node-novel-info").IMdconfMetaOptionsBase & {
                 pattern?: string;
             };
-            textlayout?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
+            textlayout?: import("node-novel-info").IMdconfMetaOptionsBase & {
                 allow_lf2?: boolean;
                 allow_lf3?: boolean;
             };
-            downloadOptions?: import("node-novel-info").IMdconfMetaOptionsBase<any> & {
+            downloadOptions?: import("node-novel-info").IMdconfMetaOptionsBase & {
                 noFirePrefix?: boolean;
                 noFilePadend?: boolean;
                 filePrefixMode?: number;

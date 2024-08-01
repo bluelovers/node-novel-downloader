@@ -3,7 +3,8 @@
  * Created by user on 2018/2/10/010.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bluebirdDecorator2 = exports.bluebirdDecorator = exports.PromiseBluebird = void 0;
+exports.bluebirdDecorator = exports.PromiseBluebird = void 0;
+exports.bluebirdDecorator2 = bluebirdDecorator2;
 const decorator_utils_1 = require("decorator-utils");
 const Bluebird = require("bluebird");
 const PromiseBluebird = require("bluebird");
@@ -34,6 +35,5 @@ function bluebirdDecorator2(target, propertyKey, descriptor) {
     descriptor.value = PromiseBluebird.method(descriptor.value);
     return descriptor;
 }
-exports.bluebirdDecorator2 = bluebirdDecorator2;
 exports.default = bluebirdDecorator2;
 //# sourceMappingURL=bluebird.js.map
