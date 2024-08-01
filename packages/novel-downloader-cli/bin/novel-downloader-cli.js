@@ -4,10 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const __1 = require("..");
 const yargs_1 = tslib_1.__importDefault(require("yargs"));
-const path_1 = tslib_1.__importDefault(require("path"));
+const path_1 = require("path");
 const novel_downloader_1 = require("novel-downloader");
-const log_1 = tslib_1.__importDefault(require("../lib/log"));
+const log_1 = require("../lib/log");
 const update_notifier_1 = require("@yarn-tool/update-notifier");
+const netscape_cookies_parser2_1 = require("netscape-cookies-parser2");
 let cli = yargs_1.default
     .option('outputDir', {
     alias: ['o'],
@@ -88,8 +89,11 @@ let cli = yargs_1.default
     .option('protocolMode', {
     desc: `強制使用 http = 2 / https = 1 (僅限支援的模組)`,
 })
+    .option('cookiesFile', {
+    desc: `加載 cookies.txt 檔案`,
+})
     .command('list', '顯示出目前的模組名稱', function (args) {
-    log_1.default.log(Object.keys(novel_downloader_1.EnumNovelSiteList).filter(v => /^[a-z]/i.test(v)));
+    log_1.console.log(Object.keys(novel_downloader_1.EnumNovelSiteList).filter(v => /^[a-z]/i.test(v)));
     process.exit();
     return args;
 })
@@ -104,29 +108,30 @@ else {
     let downloadOptions = {};
     let siteOptions = {};
     ({ downloadOptions, siteOptions } = fixOptions(cli, downloadOptions, siteOptions));
-    log_1.default.dir({
+    log_1.console.dir({
         cli,
         downloadOptions,
         siteOptions,
     });
     (0, __1.download)(url, downloadOptions, cli.siteID, siteOptions)
         .tap(function (novel) {
-        log_1.default.success(novel.novel_title);
+        log_1.console.success(novel.novel_title);
     })
         .tapCatch(function () {
         yargs_1.default.showHelp();
     });
 }
 function fixOptions(cli, downloadOptions, siteOptions) {
+    var _a;
     if (cli.outputDir) {
-        let s1 = path_1.default.normalize(cli.outputDir);
+        let s1 = (0, path_1.normalize)(cli.outputDir);
         [
             __dirname,
-            path_1.default.join(__dirname, '..'),
+            (0, path_1.join)(__dirname, '..'),
         ].some(function (v) {
-            let s2 = path_1.default.normalize(v);
+            let s2 = (0, path_1.normalize)(v);
             if (s1 == s2) {
-                cli.outputDir = path_1.default.join(__dirname, '..', 'test/temp');
+                cli.outputDir = (0, path_1.join)(__dirname, '..', 'test/temp');
                 return true;
             }
         });
@@ -149,6 +154,27 @@ function fixOptions(cli, downloadOptions, siteOptions) {
     // @ts-ignore
     downloadOptions.protocolMode = cli.protocolMode;
     siteOptions.outputDir = cli.outputDir;
+    if (cli.cookiesFile) {
+        try {
+            const parser = new netscape_cookies_parser2_1.CookieJar();
+            parser.load(cli.cookiesFile);
+            let cookies = parser.parse();
+            (_a = siteOptions.sessionData) !== null && _a !== void 0 ? _a : (siteOptions.sessionData = {});
+            for (let cookie of cookies) {
+                siteOptions.sessionData[cookie.name] = {
+                    key: cookie.name,
+                    value: cookie.value,
+                    domain: cookie.domain.replace(/^./, ""), // BUG: 不知為何不能喂入前面有點的 domain
+                    path: cookie.path,
+                    secure: cookie.secure,
+                    expires: new Date(cookie.expires * 1000),
+                };
+            }
+        }
+        catch {
+            log_1.console.error(`加載 cookies 檔案 ${cli.cookiesFile} 失敗`);
+        }
+    }
     return { cli, downloadOptions, siteOptions };
 }
 //# sourceMappingURL=novel-downloader-cli.js.map

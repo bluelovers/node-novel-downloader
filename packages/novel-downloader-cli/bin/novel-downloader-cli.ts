@@ -1,20 +1,14 @@
 #!/usr/bin/env node
 
 import { download } from '..';
-import yargs from "yargs";
-import path from "path";
-import { Arguments } from 'yargs';
-import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downloader"
-import console from '../lib/log';
-import PACKAGE_JSON from '../package.json';
+import yargs, { Arguments } from "yargs";
+import { join, normalize } from "path";
+import { EnumNovelSiteList, NovelSite } from "novel-downloader"
+import { console } from '../lib/log';
 import { updateNotifier } from '@yarn-tool/update-notifier';
-import { EnumPathNovelStyle } from 'novel-downloader/src/site/index';
-import { isNpx } from '@yarn-tool/is-npx';
-import { ITSPartialPick } from 'ts-type';
-import NovelSiteSyosetu, { IOptionsPlus as IOptionsPlusNovelSiteSyosetu } from 'novel-downloader/src/site/syosetu/index';
-import {CookieJar  as CookiesParser} from 'netscape-cookies-parser';
-import {LazyCookieJar} from "jsdom-extra";
-import {Cookie} from "tough-cookie";
+import { ITSPartialPick } from 'ts-type/lib/type/record';
+import { IOptionsPlus as IOptionsPlusNovelSiteSyosetu } from 'novel-downloader/src/site/syosetu/index';
+import { CookieJar as CookiesParser } from 'netscape-cookies-parser2';
 
 let cli = yargs
 	.option('outputDir', {
@@ -153,21 +147,24 @@ else
 	;
 }
 
-function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownloadOptions, siteOptions: NovelSite.IOptions)
+function fixOptions(cli: Arguments<ICliArgv>,
+	downloadOptions: NovelSite.IDownloadOptions,
+	siteOptions: NovelSite.IOptions,
+)
 {
 	if (cli.outputDir)
 	{
-		let s1 = path.normalize(cli.outputDir);
+		let s1 = normalize(cli.outputDir);
 
 		[
 			__dirname as string,
-			path.join(__dirname, '..'),
+			join(__dirname, '..'),
 		].some(function (v)
 		{
-			let s2 = path.normalize(v);
+			let s2 = normalize(v);
 			if (s1 == s2)
 			{
-				cli.outputDir = path.join(__dirname, '..', 'test/temp');
+				cli.outputDir = join(__dirname, '..', 'test/temp');
 				return true;
 			}
 		})
@@ -198,25 +195,29 @@ function fixOptions(cli: Arguments<ICliArgv>, downloadOptions: NovelSite.IDownlo
 
 	if (cli.cookiesFile)
 	{
-		try {
-			var parser =new CookiesParser();
+		try
+		{
+			const parser = new CookiesParser();
 			parser.load(<string>cli.cookiesFile)
-			let cookies  = parser.parse( );
+			let cookies = parser.parse();
 
-			siteOptions.optionsJSDOM = {}
-			siteOptions.optionsJSDOM.cookieJar = new LazyCookieJar();
-			for (let cookie of cookies) {
-				siteOptions.optionsJSDOM.cookieJar.setCookieSync(new Cookie({
+			siteOptions.sessionData ??= {};
+
+			for (let cookie of cookies)
+			{
+				siteOptions.sessionData[cookie.name] = {
 					key: cookie.name,
 					value: cookie.value,
-					domain: cookie.domain.replace(/^./,""), // BUG: 不知為何不能喂入前面有點的 domain
-					path:cookie.path,
+					domain: cookie.domain.replace(/^./, ""), // BUG: 不知為何不能喂入前面有點的 domain
+					path: cookie.path,
 					secure: cookie.secure,
-					expires: new Date(cookie.expires*1000),
-				}));
+					expires: new Date(cookie.expires * 1000),
+				}
 			}
 
-		} catch {
+		}
+		catch
+		{
 			console.error(`加載 cookies 檔案 ${cli.cookiesFile} 失敗`);
 		}
 

@@ -5,7 +5,7 @@
 import { searchSiteID } from 'novel-downloader/src/lazy';
 import { console } from './lib/log';
 import Bluebird from "bluebird";
-import requireNovelSiteClass, { EnumNovelSiteList, NovelSite } from "novel-downloader"
+import { requireNovelSiteClass, EnumNovelSiteList, NovelSite } from "novel-downloader"
 
 export function createSite<T extends NovelSite, O extends NovelSite.IOptions>(siteID?: EnumNovelSiteList,
 	options?: O & {

@@ -75,7 +75,7 @@
     "ts-type": "^3.0.1",
     "tslib": "^2.6.2",
     "yargs": "^17.7.2",
-    "netscape-cookies-parser": "^1.0.2"
+    "netscape-cookies-parser2": "^1.0.3"
   },
   "engines": {
     "node": ">= 13"
