@@ -96,11 +96,11 @@ export class NovelSiteDemo extends _NovelSite
 					let c: Partial<LazyCookie>;
 					let typec = typeof data[1];
 
-					if (data[1] && typec == 'object')
+					if (data[1] && typec === 'object')
 					{
 						c = data[1];
 					}
-					else if (typec === null || typec != 'object')
+					else if (data[1] == null || typec !== 'object')
 					{
 						let [key, value] = data;
 
@@ -117,17 +117,10 @@ export class NovelSiteDemo extends _NovelSite
 					if (c)
 					{
 
-						if (typeof c == 'object')
+						if (typeof c === 'object')
 						{
-							if (!c.path)
-							{
-								c.path = '/';
-							}
-
-							if (c.hostOnly == null)
-							{
-								c.hostOnly = false;
-							}
+							c.path ||= '/';
+							c.hostOnly ??= false;
 						}
 
 						// @ts-ignore
@@ -141,13 +134,13 @@ export class NovelSiteDemo extends _NovelSite
 							.setCookieSync(c.toString(), url.href)
 						;
 
-						if (typeof c == 'object' && !c.domain)
+						if (typeof c === 'object' && !c.domain)
 						{
 							if (domain)
 							{
 								c.domain = domain;
 							}
-							else if (url && url.host)
+							else if (url?.host)
 							{
 								c.domain = url.host;
 							}
@@ -423,7 +416,7 @@ export class NovelSiteDemo extends _NovelSite
 						{
 							let m2 = parseInt(m);
 
-							if (j == 0)
+							if (j === 0)
 							{
 								i = m2;
 
@@ -655,7 +648,7 @@ export class NovelSiteDemo extends _NovelSite
 			})
 			.then(function (text)
 			{
-				if (typeof text == 'string')
+				if (typeof text === 'string')
 				{
 					return novelText.toStr(text);
 				}
@@ -709,7 +702,7 @@ export class NovelSiteDemo extends _NovelSite
 							ret.dom = requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
 							ret.dom = packJSDOM(ret.dom);
 						}
-						else if (contentTypeParsed.subtype == 'json')
+						else if (contentTypeParsed.subtype === 'json')
 						{
 							ret.json = JSON.parse(res.body.toString());
 						}
