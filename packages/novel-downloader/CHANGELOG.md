@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.39](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.38...novel-downloader@2.0.39) (2024-08-01)
+
+
+
+### 📦　Code Refactoring
+
+* update code ([1c860c5](https://github.com/bluelovers/node-novel-downloader/commit/1c860c5b028c8e8da2a32df9ebcb5f93529039b7))
+
+
+### 🛠　Build System
+
+* update build ([2fd46de](https://github.com/bluelovers/node-novel-downloader/commit/2fd46de084d39511f7c13eed33451d77283087be))
+
+
+### 📌　Dependencies
+
+* update deps ([2f91464](https://github.com/bluelovers/node-novel-downloader/commit/2f91464b49bef7ad2b562aaff339f61b81bc3416))
+
+
+### 🔖　Miscellaneous
+
+* 新增 cookiestxt 的支援 ([8a1054e](https://github.com/bluelovers/node-novel-downloader/commit/8a1054e34c8f197e57b4e6eed240f7fea3b221e9))
+
+
+
 ## [2.0.38](https://github.com/bluelovers/node-novel-downloader/compare/novel-downloader@2.0.37...novel-downloader@2.0.38) (2024-01-30)
 
 

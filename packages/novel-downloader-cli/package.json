@@ -1,6 +1,6 @@
 {
   "name": "novel-downloader-cli",
-  "version": "1.0.67",
+  "version": "1.0.68",
   "description": "novel-downloader 的 CLI 版本",
   "keywords": [
     "acg",
@@ -69,13 +69,13 @@
     "debug-color2": "^1.3.2",
     "diff": "^5.2.0",
     "moment": "^2.30.1",
+    "netscape-cookies-parser2": "^1.0.3",
     "node-alias": "^1.0.4",
     "node-novel-info": "^3.0.18",
-    "novel-downloader": "^2.0.38",
+    "novel-downloader": "^2.0.39",
     "ts-type": "^3.0.1",
     "tslib": "^2.6.3",
-    "yargs": "^17.7.2",
-    "netscape-cookies-parser2": "^1.0.3"
+    "yargs": "^17.7.2"
   },
   "engines": {
     "node": ">= 13"
