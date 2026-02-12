@@ -4,6 +4,10 @@
 
 import { Console, chalkByConsole } from 'debug-color2';
 
+/**
+ * 帶有顏色的控制台輸出
+ * Console output with colors
+ */
 export const console = new Console(null, {
 	inspectOptions: {
 		colors: true,
@@ -12,6 +16,10 @@ export const console = new Console(null, {
 
 console.enabledColor = true;
 
+/**
+ * 用於除錯的控制台輸出，包含時間和標籤
+ * Console output for debugging, including time and label
+ */
 export const consoleDebug = new Console(null, {
 	inspectOptions: {
 		colors: true,

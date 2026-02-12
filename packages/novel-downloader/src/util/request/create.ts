@@ -16,6 +16,10 @@ export type IBluebirdPromise = typeof BluebirdPromise;
 
 let Bluebird: IBluebirdPromise;
 
+/**
+ * 創建隱身請求 (繞過某些保護/檢測)
+ * Create stealthy request (bypasses some protections/detections)
+ */
 export function createStealthyRequest<T extends IRequest>(libRequest?: string | T): T
 {
 	if (libRequest == null)
@@ -32,12 +36,16 @@ export function createStealthyRequest<T extends IRequest>(libRequest?: string | 
 		{
 			require('tough-cookie');
 		}, module) as T
-		;
+			;
 	}
 
 	return libRequest;
 }
 
+/**
+ * 創建 Bluebird Promise 實例
+ * Create Bluebird Promise instance
+ */
 export function createBluebirdPromise<P extends IBluebirdPromise>(libPromise?: string | P): P
 {
 	if (libPromise == null)
@@ -55,7 +63,7 @@ export function createBluebirdPromise<P extends IBluebirdPromise>(libPromise?: s
 	{
 		libPromise = (require(libPromise) as typeof BluebirdPromise)
 			.getNewLibraryCopy() as P
-		;
+			;
 
 		libPromise.config({ cancellation: true });
 	}
@@ -63,11 +71,19 @@ export function createBluebirdPromise<P extends IBluebirdPromise>(libPromise?: s
 	return libPromise
 }
 
+/**
+ * 創建帶有緩存的請求
+ * Create cached request
+ */
 export function createCachedRequest<T extends IRequest>(libRequest?: string | T): T
 {
 	return _createCachedRequest(createStealthyRequest(libRequest))
 }
 
+/**
+ * 創建帶有 Bluebird 支持的請求 Promise
+ * Create request promise with Bluebird support
+ */
 export function createRequestPromise<R extends IRequest, P extends IBluebirdPromise>(options: {
 	libRequest?: string | R,
 	libPromise?: string | P,

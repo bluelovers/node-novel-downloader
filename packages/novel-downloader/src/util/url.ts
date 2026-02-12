@@ -4,15 +4,23 @@ import { ITSOverwrite } from 'ts-type';
 import { console } from './log';
 import { LazyURL } from 'lazy-url';
 
-export function createURL(...argv: ConstructorParameters<typeof URL>): URL
+/**
+ * 創建 URL 實例
+ * Create URL instance
+ */
+export function createURL(...argv: ConstructorParameters<typeof URL>): URL 
 {
 	//return new _URL(...argv) as any
 	return new LazyURL(...argv) as any
 }
 
-export function isURL(obj): obj is URL
+/**
+ * 檢查輸入是否為 URL 實例
+ * Check if the input is a URL instance
+ */
+export function isURL(obj): obj is URL 
 {
-	if (obj instanceof URL || obj instanceof _URL || obj instanceof URLImplCore)
+	if (obj instanceof URL || obj instanceof _URL || obj instanceof URLImplCore) 
 	{
 		return true
 	}
@@ -22,14 +30,18 @@ export function isURL(obj): obj is URL
 
 export interface IParseUrlRuntime extends ITSOverwrite<NovelSite.IParseUrl, {
 	url: URL,
-}>
+}> 
 {
 
 }
 
+/**
+ * 處理並解析 URL
+ * Handle and parse URL
+ */
 export function _handleParseURL(url: string | URL | number, ...argv)
 {
-	if (typeof url === 'number')
+	if (typeof url === 'number') 
 	{
 		url = String(url);
 	}
