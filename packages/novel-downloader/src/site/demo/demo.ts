@@ -13,23 +13,31 @@ import { PromiseBluebird, bluebirdDecorator } from '../index';
 import { moment } from '../index';
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()
-export class NovelSiteDemo extends NovelSiteBase
+export class NovelSiteDemo extends NovelSiteBase 
 {
 	public static readonly IDKEY = '';
 
-	makeUrl(urlobj: _NovelSite.IParseUrl, ...argv): URL
+	/**
+	 * 生成 URL
+	 * Make URL
+	 */
+	makeUrl(urlobj: _NovelSite.IParseUrl, ...argv): URL 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	parseUrl(url: URL | string | number, ...argv): _NovelSite.IParseUrl
+	/**
+	 * 解析 URL
+	 * Parse URL
+	 */
+	parseUrl(url: URL | string | number, ...argv): _NovelSite.IParseUrl 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
 	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, _cache_: {
 		novel: INovel,
-	}): string
+	}): string 
 	{
 		if (!ret)
 		{
@@ -39,9 +47,13 @@ export class NovelSiteDemo extends NovelSiteBase
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 取得卷列表
+	 * Get volume list
+	 */
 	async get_volume_list<T = IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & IOptionsRuntime> = {}
-	): Promise<INovel>
+	): Promise<INovel> 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}

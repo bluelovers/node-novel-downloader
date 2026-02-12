@@ -71,22 +71,34 @@ export class NovelSite implements NovelSite.INovelSite
 		this._constructor(options, ...argv);
 	}
 
-	_constructor(options: NovelSite.IOptions, ...argv)
+	/**
+	 * 建構子初始化
+	 * Constructor initialization
+	 */
+	_constructor(options: NovelSite.IOptions, ...argv) 
 	{
 		consoleDebug.debug('root._constructor');
 	}
 
-	static create(options: NovelSite.IOptions, ...argv)
+	static create(options: NovelSite.IOptions, ...argv) 
 	{
 		return new this(options, ...argv);
 	}
 
-	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean
+	/**
+	 * 檢查 URL 是否符合此站點
+	 * Check if the URL matches this site
+	 */
+	static check(url: string | URL | NovelSite.IParseUrl, options?): boolean 
 	{
 		return false;
 	}
 
-	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime, url?: URL)
+	/**
+	 * 初始化 session
+	 * Initialize session
+	 */
+	session<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime, url?: URL) 
 	{
 		optionsRuntime.optionsJSDOM = createOptionsJSDOM(optionsRuntime.optionsJSDOM);
 
@@ -98,24 +110,40 @@ export class NovelSite implements NovelSite.INovelSite
 		return this;
 	}
 
-	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel>
+	/**
+	 * 下載小說
+	 * Download novel
+	 */
+	download(url: string | URL, options?: NovelSite.IDownloadOptions): PromiseBluebird<NovelSite.INovel> 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 取得卷列表
+	 * Get volume list
+	 */
 	get_volume_list<T = NovelSite.IOptionsRuntime>(url: string | URL,
 		optionsRuntime: Partial<T & NovelSite.IDownloadOptions> = {},
-	): Promise<NovelSite.INovel>
+	): Promise<NovelSite.INovel> 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	makeUrl<T extends NovelSite.IOptionsRuntime>(urlobj: NovelSite.IParseUrl, options?, optionsRuntime?: T): URL
+	/**
+	 * 生成 URL
+	 * Make URL
+	 */
+	makeUrl<T extends NovelSite.IOptionsRuntime>(urlobj: NovelSite.IParseUrl, options?, optionsRuntime?: T): URL 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
 
-	parseUrl(url: URL | string, options?): NovelSite.IParseUrl
+	/**
+	 * 解析 URL
+	 * Parse URL
+	 */
+	parseUrl(url: URL | string, options?): NovelSite.IParseUrl 
 	{
 		throw new SyntaxError(`Function not implemented`);
 	}
@@ -143,6 +171,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return novel.url_data.novel_id;
 	}
 
+	/**
+	 * 取得小說路徑
+	 * Get novel path
+	 */
 	getPathNovel<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(PATH_NOVEL_MAIN: string,
 		novel: N,
 		optionsRuntime: T,
@@ -170,6 +202,7 @@ export class NovelSite implements NovelSite.INovelSite
 
 	/**
 	 * 如果已經下載過 則試圖從 README.md 內讀取缺漏的下載設定
+	 * If downloaded, try to read missing download settings from README.md
 	 *
 	 * @private
 	 */
@@ -202,13 +235,17 @@ export class NovelSite implements NovelSite.INovelSite
 								optionsRuntime[k] = v;
 							}
 						})
-					;
+						;
 				}
 			}
 		}
 	}
 
-	getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions]
+	/**
+	 * 取得輸出目錄
+	 * Get output directory
+	 */
+	getOutputDir<T>(options?: T & NovelSite.IOptions, novelName?: string): [string, T & NovelSite.IOptions] 
 	{
 		options = Object.assign({}, this.optionsInit, options);
 
@@ -293,7 +330,11 @@ export class NovelSite implements NovelSite.INovelSite
 		return this.trimFilename(name);
 	}
 
-	trimFilename(name): string
+	/**
+	 * 修剪檔名
+	 * Trim filename
+	 */
+	trimFilename(name): string 
 	{
 		return trimFilename(_fixVolumeChapterName(name));
 	}
@@ -313,7 +354,11 @@ export class NovelSite implements NovelSite.INovelSite
 		return void (0);
 	}
 
-	protected _handleDataForStringify(...argv): IMdconfMeta
+	/**
+	 * 處理用於 stringify 的資料
+	 * Handle data for stringify
+	 */
+	protected _handleDataForStringify(...argv): IMdconfMeta 
 	{
 		// @ts-ignore
 		let mdconf: IMdconfMeta = _handleDataForStringify(...argv);
@@ -363,7 +408,11 @@ export class NovelSite implements NovelSite.INovelSite
 		return mdconf;
 	}
 
-	protected _saveReadme(optionsRuntime?: IOptionsRuntime, options = {}, ...opts)
+	/**
+	 * 保存 README.md
+	 * Save README.md
+	 */
+	protected _saveReadme(optionsRuntime?: IOptionsRuntime, options = {}, ...opts) 
 	{
 		const self = this;
 
@@ -418,7 +467,11 @@ export class NovelSite implements NovelSite.INovelSite
 			;
 	}
 
-	createMainUrl<T = IOptionsRuntime>(url: string | URL, optionsRuntime?: T & IOptionsRuntime): URL
+	/**
+	 * 創建主 URL
+	 * Create main URL
+	 */
+	createMainUrl<T = IOptionsRuntime>(url: string | URL, optionsRuntime?: T & IOptionsRuntime): URL 
 	{
 		let data = this.parseUrl(url);
 
@@ -432,6 +485,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return this.makeUrl(data, true, optionsRuntime);
 	}
 
+	/**
+	 * 創建章節 URL
+	 * Create chapter URL
+	 */
 	protected _createChapterUrl<T = IOptionsRuntime>({
 		novel,
 		volume,
@@ -462,6 +519,10 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 取得額外資訊
+	 * Get extra info
+	 */
 	getExtraInfo<T, M extends Partial<INovel & IMdconfMeta>, C extends unknown>(urlobj: NovelSite.IParseUrl,
 		optionsRuntime: T & IOptionsRuntime,
 		data_meta?: M,
@@ -471,6 +532,10 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 檢查檔案是否存在
+	 * Check if file exists
+	 */
 	protected _checkExists(optionsRuntime: IOptionsRuntime, file: string): boolean
 	{
 		if (!optionsRuntime.disableCheckExists && fs.existsSync(file))
@@ -492,6 +557,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return [event, bool];
 	}
 
+	/**
+	 * 保存檔案
+	 * Save file
+	 */
 	_saveFile<T = NovelSite.IOptionsRuntime>(opts: {
 		file: string,
 		context: string | Buffer,
@@ -534,7 +603,7 @@ export class NovelSite implements NovelSite.INovelSite
 						return r;
 					})
 			})
-		;
+			;
 	}
 
 }

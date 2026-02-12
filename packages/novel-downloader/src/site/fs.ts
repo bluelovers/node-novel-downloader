@@ -8,11 +8,23 @@ import { isUndef } from '../util';
 import NovelSite, { IOptionsRuntime } from './index';
 import path from 'upath2';
 
-export function padStart(id, pad = '0', len = 4): string
+/**
+ * 填充字串到指定長度
+ * Pad string to specified length
+ */
+export function padStart(id, pad = '0', len = 4): string 
 {
 	return id.toString().padStart(len, '0') + pad;
 }
 
+/**
+ * 取得卷目錄路徑
+ * Get volume directory path
+ * 
+ * @param self NovelSite 實例
+ * @param param1 包含卷資訊、卷 ID 和小說路徑的物件
+ * @param optionsRuntime 運行時選項
+ */
 export function getVolumePath(self: NovelSite, {
 	volume,
 	vid,
@@ -21,7 +33,7 @@ export function getVolumePath(self: NovelSite, {
 	volume: NovelSite.IVolume,
 	vid: number,
 	path_novel: string,
-}, optionsRuntime: IOptionsRuntime): string
+}, optionsRuntime: IOptionsRuntime): string 
 {
 	let dirname: string;
 	let _vid = '';
@@ -52,6 +64,14 @@ export function getVolumePath(self: NovelSite, {
 	return dirname;
 }
 
+/**
+ * 取得章節檔案路徑
+ * Get chapter file path
+ * 
+ * @param self NovelSite 實例
+ * @param param1 包含章節、目錄和其他資訊的物件
+ * @param optionsRuntime 運行時選項
+ */
 export function getFilePath(self: NovelSite, {
 	chapter,
 	cid,
@@ -72,7 +92,7 @@ export function getFilePath(self: NovelSite, {
 
 	volume?: NovelSite.IVolume,
 	vid?: number,
-}, optionsRuntime: IOptionsRuntime = {}): string
+}, optionsRuntime: IOptionsRuntime = {}): string 
 {
 	let file: string;
 	let prefix = '';

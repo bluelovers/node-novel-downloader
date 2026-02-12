@@ -32,9 +32,13 @@ export type INovel = _INovel & {
 }
 
 @staticImplements<_NovelSite.INovelSiteStatic<NovelSiteDemo>>()
-export class NovelSiteDemo extends _NovelSiteBase
+export class NovelSiteDemo extends _NovelSiteBase 
 {
-	getOutputDir<T extends IOptionsRuntime & IDownloadOptions>(options: T, novelName?: string): [string, T]
+	/**
+	 * 取得輸出目錄
+	 * Get output directory
+	 */
+	getOutputDir<T extends IOptionsRuntime & IDownloadOptions>(options: T, novelName?: string): [string, T] 
 	{
 		const [PATH_NOVEL_MAIN, optionsRuntime] = super.getOutputDir<T>(options, novelName);
 
@@ -43,7 +47,11 @@ export class NovelSiteDemo extends _NovelSiteBase
 		return [PATH_NOVEL_MAIN, optionsRuntime];
 	}
 
-	protected async _processNovelListName(novel: INovel, optionsRuntime: IOptionsRuntime, ...argv)
+	/**
+	 * 處理小說列表名稱
+	 * Process novel list name
+	 */
+	protected async _processNovelListName(novel: INovel, optionsRuntime: IOptionsRuntime, ...argv) 
 	{
 		const self = this;
 		let treeList = NovelTree.treeToList(novel.novelTree, true);
@@ -73,7 +81,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 					node.set('name', self.trimFilenameVolume(value.name));
 				}
 			})
-		;
+			;
 
 		treeList
 			.forEach(function (listRow)
@@ -98,8 +106,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 				}
 
 				if (hasChild && (
-						0 && (currentLevel == 0 && !optionsRuntime.noDirPrefix)
-						|| (currentLevel > 0 && !optionsRuntime.noFirePrefix)
+					0 && (currentLevel == 0 && !optionsRuntime.noDirPrefix)
+					|| (currentLevel > 0 && !optionsRuntime.noFirePrefix)
 					) && optionsRuntime.filePrefixMode >= 2)
 				{
 					//console.log(777);
@@ -220,17 +228,21 @@ export class NovelSiteDemo extends _NovelSiteBase
 					//console.log(dirname);
 				}
 			})
-		;
+			;
 
 		//process.exit();
 
 		return treeList;
 	}
 
+	/**
+	 * 處理小說
+	 * Process novel
+	 */
 	async _processNovel<T>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
 		url: URL,
 		path_novel: string,
-	}, ...argv)
+	}, ...argv) 
 	{
 		const self = this;
 
@@ -298,13 +310,13 @@ export class NovelSiteDemo extends _NovelSiteBase
 				}, optionsRuntime);
 
 				await self._fetchChapterMain({
-						url,
-						file,
-						volume,
-						chapter,
-					}, optionsRuntime, {
-						novel,
-					})
+					url,
+					file,
+					volume,
+					chapter,
+				}, optionsRuntime, {
+					novel,
+				})
 					.then(async (text: string) =>
 					{
 						await this._saveFile({
@@ -315,7 +327,7 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 						return text;
 					})
-				;
+					;
 
 				return file;
 			})

@@ -10,6 +10,14 @@ import Bluebird from "bluebird";
 
 import path from 'upath2';
 
+/**
+ * 下載圖片
+ * Download image
+ * 
+ * @param img 圖片 URL 或字串
+ * @param options 選項，包含檔名、目錄、前綴等
+ * @returns Bluebird Promise 包含下載結果
+ */
 export function download_image(img: string | URL, options: {
 	name?: string,
 
@@ -64,7 +72,7 @@ export function download_image(img: string | URL, options: {
 				outputFile: file,
 			}
 		})
-	;
+		;
 
 	// @ts-ignore
 	return Bluebird.resolve(ret);

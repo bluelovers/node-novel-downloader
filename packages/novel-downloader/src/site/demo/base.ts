@@ -73,25 +73,31 @@ export class NovelSiteDemo extends _NovelSite
 
 	/**
 	 * @todo 讓此方法有意義
+	 * @todo Make this method meaningful
 	 *
 	 * 用來說明目前站點的所需 session cookies
+	 * Explains the required session cookies for the current site
 	 *
 	 * @param {T} data
 	 * @returns {T}
 	 */
-	checkSessionData<T = ISessionData>(data: T, optionsRuntime: IOptionsRuntime = {})
+	checkSessionData<T = ISessionData>(data: T, optionsRuntime: IOptionsRuntime = {}) 
 	{
 		return data;
 	}
 
-	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL, domain?: string)
+	/**
+	 * 設定 session
+	 * Set session
+	 */
+	session<T = IOptionsRuntime>(optionsRuntime: Partial<T & IDownloadOptions>, url: URL, domain?: string) 
 	{
 		super.session(optionsRuntime, url);
 
 		if (optionsRuntime.sessionData && Object.keys(optionsRuntime.sessionData).length)
 		{
 			Object.entries(optionsRuntime.sessionData)
-				.forEach(function (data)
+				.forEach(function (data) 
 				{
 					let c: Partial<LazyCookie>;
 					let typec = typeof data[1];
@@ -132,7 +138,7 @@ export class NovelSiteDemo extends _NovelSite
 
 						optionsRuntime.optionsJSDOM.cookieJar
 							.setCookieSync(c.toString(), url.href)
-						;
+							;
 
 						if (typeof c === 'object' && !c.domain)
 						{
@@ -149,7 +155,7 @@ export class NovelSiteDemo extends _NovelSite
 							{
 								optionsRuntime.optionsJSDOM.cookieJar
 									.setCookieSync(c as any, url.href)
-								;
+									;
 							}
 							catch (e)
 							{
@@ -158,7 +164,7 @@ export class NovelSiteDemo extends _NovelSite
 						}
 					}
 				})
-			;
+				;
 
 			consoleDebug.debug(`session`, optionsRuntime.optionsJSDOM.cookieJar);
 		}
@@ -166,7 +172,11 @@ export class NovelSiteDemo extends _NovelSite
 		return this;
 	}
 
-	download(inputUrl: string | URL, downloadOptions: IDownloadOptions = {})
+	/**
+	 * 下載流程核心
+	 * Download flow core
+	 */
+	download(inputUrl: string | URL, downloadOptions: IDownloadOptions = {}) 
 	{
 		const self = this;
 		let url = inputUrl as URL;
@@ -212,14 +222,14 @@ export class NovelSiteDemo extends _NovelSite
 					{
 						let file = path.join(path_novel,
 							`${self.trimFilenameNovel(novel.novel_title)}.${novel.url_data.novel_id}.json`,
-							)
-						;
+						)
+							;
 
 						return fs.outputJSON(file, novel, {
 							spaces: "\t",
 						});
 					})
-				;
+					;
 
 				await self._saveReadme(optionsRuntime);
 
@@ -250,7 +260,7 @@ export class NovelSiteDemo extends _NovelSite
 									_cache,
 								});
 							})
-						;
+							;
 					})
 					.tap(async () =>
 					{
@@ -261,13 +271,17 @@ export class NovelSiteDemo extends _NovelSite
 
 						return fs.outputFile(path.join(path_novel, 'ja2.md'), md)
 					})
-				;
+					;
 
 				return novel;
 			})
 			;
 	}
 
+	/**
+	 * 輸出附件 (圖片)
+	 * Output attachments (images)
+	 */
 	protected async _outputAttach<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
 		url: URL,
 		path_novel: string,
@@ -365,10 +379,14 @@ export class NovelSiteDemo extends _NovelSite
 		return PromiseBluebird.resolve()
 	}
 
+	/**
+	 * 處理小說 (內部方法)
+	 * Process novel (internal method)
+	 */
 	protected async _processNovel<T = any>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
 		url: URL,
 		path_novel: string,
-	}, ...argv)
+	}, ...argv) 
 	{
 		const self = this;
 		let idx = optionsRuntime.startIndex || 0;
@@ -403,12 +421,12 @@ export class NovelSiteDemo extends _NovelSite
 					let bool = volume.chapter_list.every(function (chapter, j)
 					{
 						let m = (optionsRuntime.filePrefixMode > 3 ?
-								chapter.chapter_title : normalize_val(chapter.chapter_title)
-							)
+							chapter.chapter_title : normalize_val(chapter.chapter_title)
+						)
 							.replace(/^\D+/, '')
 							//.replace(/^(\d+).+$/, '$1')
 							.replace(/^(\d+)\D.*$/, '$1')
-						;
+							;
 
 						//console.log(m, chapter.chapter_title);
 
@@ -487,13 +505,13 @@ export class NovelSiteDemo extends _NovelSite
 						//consoleDebug.debug(url.toString());
 
 						await self._fetchChapterMain({
-								url,
-								file,
-								volume,
-								chapter,
-							}, optionsRuntime, {
-								novel,
-							})
+							url,
+							file,
+							volume,
+							chapter,
+						}, optionsRuntime, {
+							novel,
+						})
 
 							.then(async (text: string) =>
 							{
@@ -505,7 +523,7 @@ export class NovelSiteDemo extends _NovelSite
 
 								return text;
 							})
-						;
+							;
 
 						return file;
 					})
@@ -518,6 +536,10 @@ export class NovelSiteDemo extends _NovelSite
 			;
 	}
 
+	/**
+	 * 處理小說 (入口方法)
+	 * Process novel (entry method)
+	 */
 	processNovel<T>(novel: INovel, optionsRuntime: IOptionsRuntime, _cache_: {
 		url: URL,
 		path_novel: string,
@@ -544,11 +566,19 @@ export class NovelSiteDemo extends _NovelSite
 			;
 	}
 
+	/**
+	 * 去除內容中的多餘部分
+	 * Strip redundant parts from content
+	 */
 	protected _stripContent(text: string)
 	{
 		return text;
 	}
 
+	/**
+	 * 解析章節內容
+	 * Parse chapter content
+	 */
 	protected _parseChapter<T>(ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
 		file: string,
 		novel: _NovelSite.INovel,
@@ -565,6 +595,10 @@ export class NovelSiteDemo extends _NovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 處理章節獲取重試錯誤
+	 * Handle chapter fetch retry error
+	 */
 	protected _fetchChapterRetryError<T>(message: string, ret: IFetchChapter, optionsRuntime: T & IOptionsRuntime, cache: {
 		file: string,
 		novel: _NovelSite.INovel,
@@ -584,6 +618,10 @@ export class NovelSiteDemo extends _NovelSite
 		return e
 	}
 
+	/**
+	 * 獲取章節主要邏輯 (包含重試機制)
+	 * Fetch chapter main logic (including retry mechanism)
+	 */
 	protected _fetchChapterMain<T>(argv: {
 		url: URL,
 		file: string,
@@ -609,8 +647,8 @@ export class NovelSiteDemo extends _NovelSite
 					_do = false;
 
 					value = await self._fetchChapter(url, optionsRuntime, {
-							novel,
-						})
+						novel,
+					})
 						.then(async (ret) =>
 						{
 							return self._parseChapter(ret, optionsRuntime, {
@@ -658,6 +696,10 @@ export class NovelSiteDemo extends _NovelSite
 			;
 	}
 
+	/**
+	 * 實際執行獲取章節動作
+	 * Actually execute fetch chapter action
+	 */
 	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
 		novel: INovel,
 	})
@@ -710,7 +752,7 @@ export class NovelSiteDemo extends _NovelSite
 						ret.res = res;
 						ret.body = res.body;
 					})
-				;
+					;
 			}
 			else
 			{
@@ -725,7 +767,11 @@ export class NovelSiteDemo extends _NovelSite
 		});
 	}
 
-	protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): Partial<T & IOptionsRuntime>
+	/**
+	 * 導出下載選項
+	 * Export download options
+	 */
+	protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): Partial<T & IOptionsRuntime> 
 	{
 		let opts: Partial<T & IOptionsRuntime> = {};
 
@@ -757,7 +803,11 @@ export class NovelSiteDemo extends _NovelSite
 		return opts;
 	}
 
-	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts)
+	/**
+	 * 保存 README.md
+	 * Save README.md
+	 */
+	protected _saveReadme(optionsRuntime: IOptionsRuntime, options = {}, ...opts) 
 	{
 		if (this.IDKEY)
 		{
