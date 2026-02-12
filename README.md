@@ -48,3 +48,4 @@ yt add novel-downloader-cli
 
 -   [一般說明文件 (General Documentation)](docs/README.md)
 -   [開發者指南 (Development Guide)](docs/DEVELOPMENT.md) - 了解核心架構與如何新增站點。
+-   [站點模組分類說明 (Site Modules Classification)](docs/SITE_MODULES_CLASSIFICATION.md) - 各站點實作方式分類與選擇指南。
