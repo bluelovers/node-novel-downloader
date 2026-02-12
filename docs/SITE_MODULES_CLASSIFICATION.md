@@ -63,8 +63,9 @@ demo/base.ts (NovelSiteDemo) - 基本核心實作
 | **uukanshu** | `NovelSiteUukanshu` | `uukanshu/index.ts` | UU看書（中文小說網站） |
 | **webqxs** | `NovelSiteWebqxs` | `webqxs/index.ts` | 網橋小說（中文小說網站） |
 | **wenku8** | `NovelSiteWenku8` | `wenku8/index.ts` | 輕小說文庫（中文輕小說網站） |
+| **dmzj (API)** | `NovelSiteTpl` | `dmzj/api.ts` | 動漫之家 API 版（使用 Protobuf/V4 接口） |
 
-**共計**: 9 個站點
+**共計**: 10 個站點
 
 ### 🌲 基於 Tree 核心（樹狀結構）
 
@@ -80,12 +81,24 @@ demo/base.ts (NovelSiteDemo) - 基本核心實作
 
 **共計**: 5 個站點
 
-### ⚠️ 特殊實作
+### ⚠️ 特殊狀況與實作
 
 | 站點名稱 | 類別名稱 | 檔案路徑 | 說明 |
 |---------|---------|---------|------|
-| **dmzj** | `NovelSiteDmzj` | `dmzj/index.ts` | 動漫之家（中文輕小說網站）<br/>*註: 直接繼承 `NovelSite`，已標記為 `@deprecated` 和 `disabled = true`* |
+| **dmzj (Legacy)** | `NovelSiteDmzj` | `dmzj/index.ts` | 動漫之家舊版實作（直接繼承 `NovelSite`）<br/>*註: 已標記為 `@deprecated` 與 `disabled = true`* |
+| **dmzj (API)** | `NovelSiteTpl` | `dmzj/api.ts` | 動漫之家現行實作（基於 Base 核心，但使用 API/Protobuf） |
 | **pixiv** | - | `pixiv/` | 目錄為空，尚未實作 |
+
+---
+
+## 實作技術細節
+
+### API/Protobuf 實作 (dmzj/api.ts)
+
+這一類模組雖然繼承自 **Base 核心**，但其獲取資料的方式並非解析 HTML，而是：
+- 使用 `protobufjs` 處理二進制協定。
+- 使用 `decryptBase64V4` 進行資料解密。
+- 直接對接站點的手機版 API。
 
 ---
 
@@ -117,11 +130,11 @@ demo/base.ts (NovelSiteDemo) - 基本核心實作
 ## 實作統計
 
 ```
-總站點數: 16
-├─ 基於 Base 核心: 9 (56.25%)
-├─ 基於 Tree 核心: 5 (31.25%)
-├─ 特殊實作: 1 (6.25%)
-└─ 未實作: 1 (6.25%)
+總模組數: 17 (包含 Legacy 與 API)
+├─ 基於 Base 核心: 10 (58.8%)
+├─ 基於 Tree 核心: 5 (29.4%)
+├─ 特殊/Legacy: 1 (5.9%)
+└─ 未實作: 1 (5.9%)
 ```
 
 ---
