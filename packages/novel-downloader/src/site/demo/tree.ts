@@ -60,6 +60,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 		if (novel.novelTree.cache.depth > 2)
 		{
+			// 如果樹深度大於 2，強制開啟某些選項
+			// If tree depth is greater than 2, force enable some options
 			let bool = false;
 			if (optionsRuntime.noDirPrefix && optionsRuntime.noFirePrefix)
 			{
@@ -83,6 +85,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 			})
 			;
 
+		// 遍歷樹列表，處理目錄和檔案名稱
+		// Traverse the tree list, handle directory and file names
 		treeList
 			.forEach(function (listRow)
 			{
@@ -105,6 +109,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 					}
 				}
 
+				// 檢查是否有子節點，並根據選項決定是否處理前綴
+				// Check if there are children, and decide whether to process prefixes based on options
 				if (hasChild && (
 					0 && (currentLevel == 0 && !optionsRuntime.noDirPrefix)
 					|| (currentLevel > 0 && !optionsRuntime.noFirePrefix)
@@ -138,6 +144,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 						if (i !== 0)
 						{
+							// 檢查是否需要排序
+							// Check if sorting is needed
 							let k = defaultSortCallback(last_val, name_val);
 
 							if (typeof k != 'number' || k > -1)
@@ -153,6 +161,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 						last_val = name_val;
 					}
 
+					// 如果順序正確，則清除索引
+					// If the order is correct, clear the index
 					if (!bool)
 					{
 						for (let node of pnode.children)
@@ -177,10 +187,14 @@ export class NovelSiteDemo extends _NovelSiteBase
 				{
 					pnode.children.forEach(function (node, idx)
 					{
+						// 設定索引
+						// Set index
 						node.set('idx', idx);
 					});
 				}
 
+				// 設置目錄路徑
+				// Set directory path
 				if (hasChild)
 				{
 					let dirname: string;
@@ -252,6 +266,8 @@ export class NovelSiteDemo extends _NovelSiteBase
 
 		//console.log(optionsRuntime);
 
+		// 遍歷章節列表
+		// Iterate through chapter list
 		return PromiseBluebird
 			.mapSeries(treeList.slice(1), async (listRow) =>
 			{
@@ -303,12 +319,16 @@ export class NovelSiteDemo extends _NovelSiteBase
 					return file;
 				}
 
+				// 創建章節 URL
+				// Create chapter URL
 				let url = self._createChapterUrl({
 					novel,
 					volume,
 					chapter,
 				}, optionsRuntime);
 
+				// 獲取章節內容
+				// Fetch chapter content
 				await self._fetchChapterMain({
 					url,
 					file,

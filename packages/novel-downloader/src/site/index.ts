@@ -148,6 +148,10 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 取得靜態屬性
+	 * Get static properties
+	 */
 	getStatic<T = typeof NovelSite>(): T
 	{
 		// @ts-ignore
@@ -166,6 +170,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return key;
 	}
 
+	/**
+	 * 取得小說 ID 路徑片段
+	 * Get novel ID path segment
+	 */
 	protected _pathNovelID<N extends NovelSite.INovel, T extends NovelSite.IOptionsRuntime>(novel: N, optionsRuntime: T)
 	{
 		return novel.url_data.novel_id;
@@ -210,6 +218,8 @@ export class NovelSite implements NovelSite.INovelSite
 	{
 		let file = path.resolve(path_novel, 'README.md');
 
+		// 檢查 README.md 是否存在
+		// Check if README.md exists
 		if (fs.pathExistsSync(file))
 		{
 			let md = fs.readFileSync(file).toString();
@@ -227,6 +237,8 @@ export class NovelSite implements NovelSite.INovelSite
 				{
 					consoleDebug.debug('載入並且合併已存在的設定');
 
+					// 合併設定
+					// Merge settings
 					Object.entries(conf.options.downloadOptions || conf.options.downloadoptions)
 						.forEach(function ([k, v])
 						{
@@ -254,6 +266,8 @@ export class NovelSite implements NovelSite.INovelSite
 			throw new ReferenceError(`options: outputDir is not set`);
 		}
 
+		// 處理 IDKEY 和前綴
+		// Handle IDKEY and prefix
 		let p = path.join(options.outputDir, options.disableOutputDirPrefix ? '' : this.IDKEY);
 
 		if (!path.isAbsolute(p))
@@ -265,6 +279,8 @@ export class NovelSite implements NovelSite.INovelSite
 		{
 			if (p.indexOf(__dirname) == 0)
 			{
+				// 防止路徑指向原始碼目錄
+				// Prevent path from pointing to source code directory
 				throw new ReferenceError(`path not allow "${p}"`)
 			}
 		});
@@ -284,6 +300,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return [p, options];
 	}
 
+	/**
+	 * 修正運行時選項
+	 * Fix runtime options
+	 */
 	protected _fixOptionsRuntime<T = NovelSite.IOptionsRuntime>(optionsRuntime: T & NovelSite.IOptionsRuntime): T & NovelSite.IOptionsRuntime
 	{
 		optionsRuntime[SYMBOL_CACHE] = (optionsRuntime[SYMBOL_CACHE] || {}) as {
@@ -315,16 +335,28 @@ export class NovelSite implements NovelSite.INovelSite
 		return optionsRuntime;
 	}
 
+	/**
+	 * 修剪章節檔名
+	 * Trim chapter filename
+	 */
 	trimFilenameChapter(name): string
 	{
 		return this.trimFilename(name);
 	}
 
+	/**
+	 * 修剪卷檔名
+	 * Trim volume filename
+	 */
 	trimFilenameVolume(name): string
 	{
 		return this.trimFilename(name);
 	}
 
+	/**
+	 * 修剪小說檔名
+	 * Trim novel filename
+	 */
 	trimFilenameNovel(name): string
 	{
 		return this.trimFilename(name);
@@ -339,6 +371,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return trimFilename(_fixVolumeChapterName(name));
 	}
 
+	/**
+	 * 修剪標籤
+	 * Trim tag
+	 */
 	trimTag(tag): string
 	{
 		return (tag as string)
@@ -349,6 +385,10 @@ export class NovelSite implements NovelSite.INovelSite
 			;
 	}
 
+	/**
+	 * 導出下載選項
+	 * Export download options
+	 */
 	protected _exportDownloadOptions<T = IOptionsRuntime>(optionsRuntime?: T & IOptionsRuntime): unknown
 	{
 		return void (0);
@@ -502,6 +542,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return createURL(chapter.chapter_url.toString());
 	}
 
+	/**
+	 * 獲取章節 (抽象方法)
+	 * Fetch chapter (abstract method)
+	 */
 	protected _fetchChapter<T>(url: URL, optionsRuntime: T & IOptionsRuntime, _cache_: {
 		novel: INovel,
 	})
@@ -509,6 +553,10 @@ export class NovelSite implements NovelSite.INovelSite
 		throw new SyntaxError(`Function not implemented`);
 	}
 
+	/**
+	 * 解析章節 (抽象方法)
+	 * Parse chapter (abstract method)
+	 */
 	protected _parseChapter<T>(dom, optionsRuntime: T & IOptionsRuntime, cache: {
 		file: string,
 		novel: NovelSite.INovel,
@@ -551,6 +599,10 @@ export class NovelSite implements NovelSite.INovelSite
 		return false
 	}
 
+	/**
+	 * 發送事件
+	 * Emit event
+	 */
 	protected emit(event: EventEmitter, eventName: string, ...argv)
 	{
 		let bool = event.emit(eventName, this, ...argv);
@@ -576,8 +628,12 @@ export class NovelSite implements NovelSite.INovelSite
 				{
 					let txt1 = context.toString();
 
+					// 檢測是否包含 CRLF
+					// Check if CRLF is contained
 					if (R_CRLF.test(txt1))
 					{
+						// 標準化 CRLF
+						// Normalize CRLF
 						let txt2 = crlf(txt1, CRLF);
 
 						if (txt1 !== txt2)

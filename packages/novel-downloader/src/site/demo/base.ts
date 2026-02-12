@@ -99,6 +99,8 @@ export class NovelSiteDemo extends _NovelSite
 			Object.entries(optionsRuntime.sessionData)
 				.forEach(function (data) 
 				{
+					// 處理 cookie 資料
+					// Handle cookie data
 					let c: Partial<LazyCookie>;
 					let typec = typeof data[1];
 
@@ -197,8 +199,12 @@ export class NovelSiteDemo extends _NovelSite
 
 				let novel = await self.get_volume_list<IOptionsRuntime & IDownloadOptions>(url, optionsRuntime);
 
+				// 取得小說路徑
+				// Get novel path
 				let path_novel = self.getPathNovel(PATH_NOVEL_MAIN, novel, optionsRuntime);
 
+				// 嘗試載入已存在的設定
+				// Try loading existing configuration
 				self._loadExistsConf(url, optionsRuntime, novel, path_novel);
 
 				let idx = optionsRuntime.startIndex || 0;
@@ -225,6 +231,8 @@ export class NovelSiteDemo extends _NovelSite
 						)
 							;
 
+						// 輸出小說資訊 JSON
+						// Output novel info JSON
 						return fs.outputJSON(file, novel, {
 							spaces: "\t",
 						});
@@ -234,6 +242,9 @@ export class NovelSiteDemo extends _NovelSite
 				await self._saveReadme(optionsRuntime);
 
 				let _cache = dummyCache();
+
+				// 分析已下載的 txt 檔案
+				// Analyze downloaded txt files
 
 				await globbyASync([
 					'**/*.txt',
@@ -300,6 +311,8 @@ export class NovelSiteDemo extends _NovelSite
 				{
 					let volume = listRow.content as IRowVolume;
 
+					// 僅處理有圖片的卷
+					// Only process volumes with images
 					if (volume.type !== 'volume' || !volume.imgs?.length)
 					{
 						return;
@@ -414,12 +427,16 @@ export class NovelSiteDemo extends _NovelSite
 
 				consoleDebug.debug(vid, volume.volume_title);
 
+				// 處理檔案前綴
+				// Handle file prefix
 				if (!optionsRuntime.noFirePrefix && optionsRuntime.filePrefixMode >= 2)
 				{
 					let i: number;
 
 					let bool = volume.chapter_list.every(function (chapter, j)
 					{
+						// 智能檢測章節編號
+						// Smart detection of chapter numbering
 						let m = (optionsRuntime.filePrefixMode > 3 ?
 							chapter.chapter_title : normalize_val(chapter.chapter_title)
 						)
@@ -451,6 +468,8 @@ export class NovelSiteDemo extends _NovelSite
 
 					//console.log(bool);
 
+					// 如果章節標題已經包含正確的序號，則移除自動生成的索引
+					// If the chapter title already contains the correct serial number, remove the auto-generated index
 					if (bool)
 					{
 						volume.chapter_list.forEach(function (chapter)
@@ -471,6 +490,8 @@ export class NovelSiteDemo extends _NovelSite
 					});
 				}
 
+				// 遍歷章節並下載
+				// Iterate through chapters and download
 				return PromiseBluebird
 					.mapSeries(volume.chapter_list, async (chapter, cid) =>
 					{
@@ -478,6 +499,8 @@ export class NovelSiteDemo extends _NovelSite
 
 						const current_idx = idx++;
 
+						// 取得檔案路徑
+						// Get file path
 						let file = getFilePath(self, {
 							chapter, cid,
 							ext: '.txt',
@@ -488,6 +511,8 @@ export class NovelSiteDemo extends _NovelSite
 							volume, vid,
 						}, optionsRuntime);
 
+						// 檢查檔案是否存在 (如果存在則跳過)
+						// Check if file exists (skip if exists)
 						if (self._checkExists(optionsRuntime, file))
 						{
 							consoleDebug.debug(`[SKIP]`, vid, cid, chapter.chapter_title);
@@ -646,6 +671,8 @@ export class NovelSiteDemo extends _NovelSite
 				{
 					_do = false;
 
+					// 執行獲取章節
+					// Execute fetch chapter
 					value = await self._fetchChapter(url, optionsRuntime, {
 						novel,
 					})
@@ -671,6 +698,8 @@ export class NovelSiteDemo extends _NovelSite
 
 								console.warn(e.message, doRetry, delay);
 
+								// 重試延遲
+								// Retry delay
 								await PromiseBluebird.delay(delay);
 
 								return
@@ -714,6 +743,8 @@ export class NovelSiteDemo extends _NovelSite
 
 			if (optionsRuntime.disableDownload)
 			{
+				// 禁用下載
+				// Disable download
 				return null;
 			}
 			else if (true)
@@ -739,11 +770,15 @@ export class NovelSiteDemo extends _NovelSite
 						// @ts-ignore
 						ret.url = url;
 
+						// 處理 HTML 或 XML
+						// Handle HTML or XML
 						if (contentTypeParsed.isHTML() || contentTypeParsed.isXML())
 						{
 							ret.dom = requestToJSDOM(res, url, optionsRuntime.optionsJSDOM);
 							ret.dom = packJSDOM(ret.dom);
 						}
+						// 處理 JSON
+						// Handle JSON
 						else if (contentTypeParsed.subtype === 'json')
 						{
 							ret.json = JSON.parse(res.body.toString());
@@ -822,6 +857,8 @@ export class NovelSiteDemo extends _NovelSite
 			}
 		}
 
+		// 導出下載選項
+		// Export download options
 		let downloadOptions = this._exportDownloadOptions(optionsRuntime);
 
 		return super._saveReadme(optionsRuntime, options, {
